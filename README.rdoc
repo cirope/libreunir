@@ -1,12 +1,12 @@
 = Libreunir
 
-=== Build Status {<img src="https://secure.travis-ci.org/cirope/libreunir.png"/>}[http://travis-ci.org/cirope/libreunir]
+=== Build Status {<img src="https://secure.travis-ci.org/kainlite/libreunir.png"/>}[http://travis-ci.org/kainlite/libreunir]
 
-=== Dependency Status {<img src="https://gemnasium.com/cirope/libreunir.png?travis"/>}[https://gemnasium.com/cirope/libreunir]
+=== Dependency Status {<img src="https://gemnasium.com/kainlite/libreunir.png?travis"/>}[https://gemnasium.com/kainlite/libreunir]
 
 == (The MIT License)
 
-Copyright (c) 2012 Franco Catena
+Copyright (c) 2013 Franco Catena
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
