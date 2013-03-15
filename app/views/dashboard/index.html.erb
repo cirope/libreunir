@@ -1,0 +1,68 @@
+<div class="row readonly-data">
+  <div class="span12">
+      <h3><%= t 'view.dashboard.dashboard' %></h3>
+        <%= simple_form_for @date, url: dashboard_path do |f| %>
+        <div class="row">
+          <div class="span3">
+            <%= f.input :start, as: :date_picker, input_html: { autofocus: true } %>
+          </div>
+          <div class="span3">
+            <%= f.input :end, as: :date_picker, input_html: { autofocus: true } %>
+          </div>
+        </div>
+          <%= f.button :submit, t('view.dashboard.apply'), class: 'btn-primary' %>
+        <% end %>
+    <div class="row">
+      <div class="span6">
+        <h3><%= t 'view.dashboard.dead_people' %></h3>
+         <table class="table table-condensed" border="0">
+          <thead>
+            <th>
+              Cliente
+            </th>
+            <th>
+              Expiro
+            </th>
+          </thead>
+          <tbody>
+            <% @dead_people.each do |fee| %>
+              <tr>
+                <td>
+                  <%= fee.client.try(:name) %>
+                </td>
+                <td>
+                  <%= I18n.l(fee.expiration_date, format: :minimal) %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <div class="span6">
+        <h3><%= t 'view.dashboard.close_to_death' %></h3>
+        <table class="table table-condensed" border="0">
+          <thead>
+            <th>
+              Cliente
+            </th>
+            <th>
+              Expira
+            </th>
+          </thead>
+          <tbody>
+            <% @close_to_death.each do |fee| %>
+              <tr>
+                <td>
+                  <%= fee.client.try(:name) %>
+                </td>
+                <td>
+                  <%= I18n.l(fee.expiration_date, format: :minimal) %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

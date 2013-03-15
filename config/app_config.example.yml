@@ -8,3 +8,14 @@ smtp:
   enable_starttls_auto: true
   
 public_host: 'public.domain.com'
+
+ftps:
+  address: ''
+  port: 990
+  user: ''
+  password: ''
+
+zip:
+  path: ''
+  filename: ''
+  password: ''

@@ -18,6 +18,10 @@ gem 'magick_columns', git: 'https://github.com/kainlite/magick_columns.git'
 gem 'validates_timeliness'
 gem 'sidekiq'
 gem 'capistrano'
+gem 'smarter_csv'
+gem 'archive-zip'
+gem 'double-bag-ftps', git: 'https://github.com/kainlite/double-bag-ftps.git'
+gem 'whenever', :require => false
 
 group :assets do
   gem 'sass-rails', '~> 4.0.0.beta1'
@@ -29,6 +33,8 @@ group :development do
   gem 'pry'
   gem 'pry-rails'
   gem 'thin'
+  gem 'pry'
+  gem 'pry-rails'
 end
 
 group :test do

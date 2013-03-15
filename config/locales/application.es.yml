@@ -1,5 +1,5 @@
 'es':
-  app_name: 'LibreUnir'
+  app_name: 'Libreunir'
   
   attributes:
     created_at: 'Creación'
@@ -10,7 +10,7 @@
       user:
         one: 'Usuario'
         other: 'Usuarios'
-      
+        
     attributes:
       user:
         name: 'Nombre'
@@ -43,6 +43,7 @@
     actions:
       logout: 'Salir de la aplicación'
     users: 'Usuarios'
+    dashboard: 'Tablero'
     
   messages:
     confirmation: '¿Está seguro?'
@@ -72,3 +73,6 @@
       roles:
         admin: 'Administrador'
         regular: 'Normal'
+    dashboard:
+      dashboard: 'Tablero'
+      apply: 'Aplicar filtros'

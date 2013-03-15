@@ -14,13 +14,19 @@ class User < ActiveRecord::Base
   attr_accessible :name, :lastname, :email, :password, :password_confirmation,
     :role, :remember_me, :lock_version
   
-  # Defaul order
+  # Scopes
   default_scope order('lastname ASC')
   
   # Validations
   validates :name, presence: true
   validates :name, :lastname, :email, length: { maximum: 255 }, allow_nil: true,
     allow_blank: true
+
+  # Relations
+
+  # Callbacks
+  
+  # Instance or Class methods
   
   def initialize(attributes = nil, options = {})
     super(attributes, options)
