@@ -4,6 +4,9 @@ Libreunir::Application.configure do
   # Code is not reloaded between requests
   config.cache_classes = true
 
+  # eager load
+  config.eager_load = false  
+
   # Full error reports are disabled and caching is turned on
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
