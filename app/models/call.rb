@@ -2,7 +2,8 @@ class Call < ActiveRecord::Base
   has_paper_trail
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :product_id, :call
+  # Deprecated in rails 4                                                                                                                                                
+  # attr_accessible :product_id, :call
 
   # Scopes                                                                                                                                                    
 

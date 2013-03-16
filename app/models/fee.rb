@@ -1,12 +1,12 @@
 class Fee < ActiveRecord::Base
   has_paper_trail
 
-  # TODO: remove product_id, is replaced by client_id
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :loan, :amount, :expiration_date, :payment_date, :product_id, :fee_number, :total_amount, :client_id
+  # Deprecated in rails 4                                                                                                                                                
+  # attr_accessible :loan, :amount, :expiration_date, :payment_date, :product_id, :fee_number, :total_amount, :client_id
 
   # Scopes
-  default_scope order('expiration_date ASC')
+  default_scope -> { order('expiration_date ASC') }
 
   # Validations
 

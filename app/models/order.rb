@@ -2,7 +2,8 @@ class Order < ActiveRecord::Base
   has_paper_trail
   
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :order_id, :adviser_id, :segment_id, :branch_id, :zone_id, :assigned_adviser_id
+  # Deprecated in rails 4                                                                                                                                                
+  # attr_accessible :order_id, :adviser_id, :segment_id, :branch_id, :zone_id, :assigned_adviser_id
 
   # Scopes
 

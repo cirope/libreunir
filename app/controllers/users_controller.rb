@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, :parameters
   before_filter :load_current_user, only: [:edit_profile, :update_profile]
   
   check_authorization
@@ -123,5 +123,9 @@ class UsersController < ApplicationController
   
   def load_current_user
     @user = current_user
+  end
+
+  def parameters
+    params.permit!
   end
 end

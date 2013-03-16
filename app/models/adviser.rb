@@ -2,7 +2,8 @@ class Adviser < ActiveRecord::Base
   has_paper_trail
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :adviser_id, :branch_id, :description, :bundle, :name, :identification, :product_id
+  # Deprecated in rails 4                                                                                                                                                
+  # attr_accessible :adviser_id, :branch_id, :description, :bundle, :name, :identification, :product_id
 
   # Scopes                                                                                                                                                    
 

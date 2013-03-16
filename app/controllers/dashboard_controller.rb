@@ -1,5 +1,5 @@
 class DashboardController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, :parameters
 
   def index
     @title = t 'view.dashboard.index_title'
@@ -10,5 +10,11 @@ class DashboardController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
     end 
+  end
+
+  private
+
+  def parameters
+    params.permit!
   end
 end
