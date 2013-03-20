@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130320005330) do
+ActiveRecord::Schema.define(version: 20130320140006) do
 
   create_table "addresses", force: true do |t|
     t.string   "street"
@@ -78,7 +78,7 @@ ActiveRecord::Schema.define(version: 20130320005330) do
   add_index "fees", ["loan_id"], name: "index_fees_on_loan_id"
 
   create_table "loans", force: true do |t|
-    t.integer  "client_id"
+    t.string   "client_id"
     t.integer  "adviser_id"
     t.decimal  "amount",            precision: 23, scale: 8
     t.datetime "grant_date"

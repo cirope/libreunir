@@ -2,13 +2,14 @@ class Fee < ActiveRecord::Base
   has_paper_trail
 
   # Setup accessible (or protected) attributes for your model
-  # Deprecated in rails 4                                                                                                                                                
+  # Deprecated in rails 4
   # attr_accessible :loan, :amount, :expiration_date, :payment_date, :product_id, :fee_number, :total_amount, :client_id
 
   # Scopes
   default_scope -> { order('expiration_date ASC') }
 
   # Validations
+  validates :client_id, presence: true
 
   # Relations
   belongs_to :client, primary_key: 'product_id', inverse_of: :fees
@@ -18,7 +19,7 @@ class Fee < ActiveRecord::Base
 
   # Instance or Class methods
   def self.filtered_list(query)
-    query.present? ? magick_search(query) : all                                                                                                                          
+    query.present? ? magick_search(query) : all
   end
 
   def late_average

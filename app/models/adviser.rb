@@ -2,13 +2,15 @@ class Adviser < ActiveRecord::Base
   has_paper_trail
 
   # Setup accessible (or protected) attributes for your model
-  # Deprecated in rails 4                                                                                                                                                
+  # Deprecated in rails 4
   # attr_accessible :adviser_id, :branch_id, :description, :bundle, :name, :identification, :product_id
 
-  # Scopes                                                                                                                                                    
+  # Scopes
 
   # Validations
-  
+  validates :name, presence: true
+  validates :name, uniqueness: true, allow_nil: true, allow_blank: true
+
   # Relations
   belongs_to :branch
   has_many :loans, primary_key: 'product_id'

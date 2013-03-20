@@ -2,13 +2,14 @@ class Parameters < ActiveRecord::Base
   has_paper_trail
 
   # Setup accessible (or protected) attributes for your model
-  # Deprecated in rails 4                                                                                                                                                
+  # Deprecated in rails 4
   # attr_accessible :rate
 
-  # Scopes                                                                                                                                                    
+  # Scopes
 
   # Validations
-  
+  validates :rate, presence: true
+
   # Relations
 
   # Callbacks

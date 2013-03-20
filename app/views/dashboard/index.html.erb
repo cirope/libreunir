@@ -1,4 +1,4 @@
-<div class="row readonly-data">
+<div class="row">
   <div class="span12">
       <h3><%= t 'view.dashboard.dashboard' %></h3>
       <%= simple_form_for @date, url: dashboard_path do |f| %>
@@ -17,7 +17,7 @@
         <h3>
           <%= link_to t('view.dashboard.expired'), expired_path(date_range: { start: @date.start, end: @date.end }) %>
         </h3>
-        <table class="table resource-list expired table-condensed">
+        <table id="expired" class="table resource-list expired table-condensed">
           <thead>
             <th>
               <%= t 'view.dashboard.client' %>
@@ -52,7 +52,7 @@
         <h3>
           <%= link_to t('view.dashboard.close_to_expire'), close_to_expire_path(date_range: { start: @date.start, end: @date.end }) %>
         </h3>
-        <table class="table close_to_expire resource-list table-condensed">
+        <table id="close_to_expire" class="table close_to_expire resource-list table-condensed">
           <thead>
             <th>
               <%= t 'view.dashboard.client' %>

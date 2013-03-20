@@ -5,5 +5,5 @@ Fabricator(:address) do
   floor { 100 * rand }
   location { Faker::Lorem.sentence }
   postal_code { 100 * rand }
-  address { Faker::Address.address }
+  address { Faker::Address.street_address }
 end

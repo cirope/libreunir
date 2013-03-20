@@ -34,9 +34,9 @@ group :development do
 end
 
 group :test do
-  gem 'turn', require: false
-  gem 'minitest', require: false
-  gem 'capybara', require: false
+  gem 'turn'
+  gem 'minitest'
+  gem 'capybara'
   gem 'database_cleaner' # For Capybara
   gem 'fabrication', git: 'git://github.com/raphaelmolesim/fabrication.git', branch: 'activerecord4'
   gem 'faker'

@@ -8,6 +8,8 @@ class Client < ActiveRecord::Base
   # Scopes
 
   # Validations
+  validates :name, presence: true
+  validates :name, uniqueness: true, allow_nil: true, allow_blank: true
 
   # Relations
   has_many :loans, primary_key: 'product_id'

@@ -1,5 +1,5 @@
 Fabricator(:order) do
-  order_id {  Fabricate(:order).id }
+  order_id {  100 * rand }
   adviser_id { Fabricate(:adviser).id }
   segment_id { Fabricate(:segment).id }
   branch_id { Fabricate(:branch).id }

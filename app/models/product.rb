@@ -2,13 +2,13 @@ class Product < ActiveRecord::Base
   has_paper_trail
 
   # Setup accessible (or protected) attributes for your model
-  # Deprecated in rails 4                                                                                                                                                
+  # Deprecated in rails 4
   # attr_accessible :product_id, :branch_id, :delay_date, :expired_debt, :total_debt, :expired_fees, :fees_to_expire
 
-  # Scopes                                                                                                                                                    
+  # Scopes
 
   # Validations
-  
+
   # Relations
   belongs_to :branch
 

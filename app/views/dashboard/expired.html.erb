@@ -1,4 +1,4 @@
-<div class="row readonly-data">
+<div class="row">
   <div class="span12">
     <h3>
       <%= link_to t('view.dashboard.expired'), expired_path(date_range: { start: @date.start, end: @date.end }) %>
@@ -14,7 +14,7 @@
       </div>
       <%= f.button :submit, t('view.dashboard.apply'), class: 'btn-primary' %>
     <% end %>
-    <table class="table resource-list expired table-condensed" data-endless-container="true">
+    <table id="expired" class="table resource-list expired table-condensed" data-endless-container="true">
       <thead>
         <th>
           <%= t 'view.dashboard.client' %>
@@ -29,7 +29,7 @@
           <%= t 'view.dashboard.phone' %>
         </th>
         <th>
-          <%= t 'view.dashboad.address' %>
+          <%= t 'view.dashboard.address' %>
         </th>
       </thead>
       <tbody>
