@@ -4,6 +4,7 @@ class CreateSegments < ActiveRecord::Migration
       t.string :segment_id
       t.string :description
       t.integer :status
+      t.integer :lock_version, null: false, default: 0
 
       t.timestamps
     end

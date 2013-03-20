@@ -1,10 +1,10 @@
 class UsersController < ApplicationController
   before_filter :authenticate_user!, :parameters
-  before_filter :load_current_user, only: [:edit_profile, :update_profile]
-  
+  before_filter :load_current_user, only: [:edit_profile, :update_profile, :relatives]
+
   check_authorization
   load_and_authorize_resource
-  
+
   # GET /users
   # GET /users.json
   def index
@@ -13,9 +13,18 @@ class UsersController < ApplicationController
     @users = @users.filtered_list(params[:q]).page(params[:page])
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.json { render json: @users }
-      format.js   # index.js.erb
+      format.js
+    end
+  end
+
+  def relatives
+    @users = current_user.admin? ? User.filtered_list(params[:q]).page(params[:page]) :
+      @user.relatives.only_dependents.filtered_list(params[:q]).page(params[:page])
+
+    respond_to do |format|
+      format.json { render json: @users }
     end
   end
 
@@ -23,11 +32,6 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @title = t 'view.users.show_title'
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @user }
-    end
   end
 
   # GET /users/new
@@ -77,22 +81,22 @@ class UsersController < ApplicationController
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
-    
+
   rescue ActiveRecord::StaleObjectError
     flash.alert = t 'view.users.stale_object_error'
     redirect_to edit_user_url(@user)
   end
-  
+
   # GET /users/1/edit_profile
   def edit_profile
     @title = t('view.users.edit_profile')
   end
-  
+
   # PUT /users/1/update_profile
   # PUT /users/1/update_profile.xml
   def update_profile
     @title = t('view.users.edit_profile')
-    
+
     respond_to do |format|
       if @user.update_attributes(params[:user])
         format.html { redirect_to(edit_profile_user_url(@user), notice: t('view.users.profile_correctly_updated')) }
@@ -118,9 +122,9 @@ class UsersController < ApplicationController
       format.json { head :no_content }
     end
   end
-  
+
   private
-  
+
   def load_current_user
     @user = current_user
   end

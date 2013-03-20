@@ -1,0 +1,32 @@
+<% if @filtrable %>
+  <div class="not-printable">
+    <%= simple_form_for @date, url: request.env['PATH_INFO'] do |f| %>
+      <div class="row">
+        <div class="span3">
+          <%= f.input :start, as: :date_picker, label: t('view.dashboard.start') %>
+        </div>
+        <div class="span3">
+          <%= f.input :end, as: :date_picker, label: t('view.dashboard.end') %>
+        </div>
+        <div class="span3">
+          <%= f.button :submit, t('view.dashboard.apply'), class: 'btn-primary' %>
+        </div>
+    <% end %>
+    <div class="span8">
+      <%= simple_fields_for :users do |j_f| %>
+        <%= render partial: "users/autocomplete.html.erb", locals: { f: j_f } %>
+      <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
+<% if @printable %>
+  <div class="pull-right">
+    <%= link_to(
+        t('view.dashboard.print', default: :'label.print'),
+        "#{request.fullpath}&print=true", class: 'btn btn-mini print not-printable',
+        remote: true
+      ) if can? :read, DateRange
+    %>
+  </div>
+<% end %>

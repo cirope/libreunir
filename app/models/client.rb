@@ -13,7 +13,7 @@ class Client < ActiveRecord::Base
 
   # Relations
   has_many :loans, primary_key: 'product_id'
-  has_many :fees, primary_key: 'product_id', inverse_of: :client
+  has_many :fees, primary_key: 'product_id', foreign_key: 'loan_id', inverse_of: :client
   has_many :addresses, primary_key: 'product_id', inverse_of: :client
   has_many :phones, primary_key: 'product_id', inverse_of: :client
   has_many :calls, primary_key: 'product_id'

@@ -1,53 +1,32 @@
 class User < ActiveRecord::Base
-  include RoleModel
-  
-  roles :admin, :regular
-  
+  include Users::Comparable
+  include Users::DeviseCustomization
+  include Users::Relations
+  include Users::MagickColumns
+  include Users::Overrides
+  include Users::Roles
+
   has_paper_trail
-  
-  has_magick_columns name: :string, lastname: :string, email: :email
-  
-  devise :database_authenticatable, :recoverable, :rememberable, :trackable,
-    :validatable
+
+  attr_accessor :welcome
 
   # Setup accessible (or protected) attributes for your model
-  # Deprecated in rails 4                                                                                                                                                
+  # Deprecated in rails 4
   # attr_accessible :name, :lastname, :email, :password, :password_confirmation,
   #  :role, :remember_me, :lock_version
-  
+
   # Scopes
-  default_scope -> { order('lastname ASC') }
-  
+  default_scope -> { order("#{table_name}.lastname ASC") }
+  scope :only_dependents, -> { where("relations.relation = ?", 'dependent') }
+
   # Validations
   validates :name, presence: true
   validates :name, :lastname, :email, length: { maximum: 255 }, allow_nil: true,
     allow_blank: true
 
   # Relations
+  has_many :orders, primary_key: 'adviser_id'
+  has_many :fees, through: :orders
 
   # Callbacks
-  
-  # Instance or Class methods
-  
-  def initialize(attributes = nil, options = {})
-    super(attributes)
-    
-    self.role ||= :regular
-  end
-  
-  def to_s
-    [self.name, self.lastname].compact.join(' ')
-  end
-  
-  def role
-    self.roles.first.try(:to_sym)
-  end
-  
-  def role=(role)
-    self.roles = [role]
-  end
-  
-  def self.filtered_list(query)
-    query.present? ? magick_search(query) : all
-  end
 end

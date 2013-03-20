@@ -14,11 +14,11 @@ class LoanTest < ActiveSupport::TestCase
   test 'update' do
     assert_difference 'Version.count' do
       assert_no_difference 'Loan.count' do
-        assert @loan.update_attributes(client_id: 'Updated')
+        assert @loan.update_attributes(order_id: 1)
       end
     end
 
-    assert_equal 'Updated', @loan.reload.client_id
+    assert_equal 1, @loan.reload.order_id
   end
 
   test 'destroy' do
@@ -28,11 +28,11 @@ class LoanTest < ActiveSupport::TestCase
   end
 
   test 'validates blank attributes' do
-    @loan.client_id = ''
+    @loan.order_id = ''
 
     assert @loan.invalid?
     assert_equal 1, @loan.errors.size
-    assert_equal [error_message_from_model(@loan, :client_id, :blank)],
-      @loan.errors[:client_id]
+    assert_equal [error_message_from_model(@loan, :order_id, :blank)],
+      @loan.errors[:order_id]
   end
 end

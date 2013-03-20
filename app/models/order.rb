@@ -15,6 +15,8 @@ class Order < ActiveRecord::Base
   belongs_to :branch
   belongs_to :segment
   belongs_to :zone
+  has_one :loan, primary_key: 'order_id'
+  has_many :fees, through: :loan
 
   # Callbacks
 

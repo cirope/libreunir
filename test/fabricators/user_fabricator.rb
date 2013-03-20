@@ -6,5 +6,6 @@ Fabricator(:user) do
   }
   password { Faker::Lorem.sentence }
   password_confirmation { |attrs| attrs[:password] }
+  adviser_id { Faker::Name.first_name }
   role :admin
 end

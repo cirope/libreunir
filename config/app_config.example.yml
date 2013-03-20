@@ -29,3 +29,4 @@ field_maps_tablename:
     ['column1', 'column2']: 'dest_column'
   many_to_one_association_key:
     dest_column: 'field_id'       
+  fake_fields: ['email']

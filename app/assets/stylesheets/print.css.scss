@@ -1,0 +1,29 @@
+@media print {
+  a {
+    font-size: 16px;
+  }
+
+  a[href]:after {
+      content: "";
+  }
+ 
+  a[href^="#"]:after,
+  a[href^="javascript"]:after {
+    content: "";
+  }
+  
+  .body {
+    font-size: 12px;
+    page-break-after: always;
+    page-break-inside: avoid;
+    display: block;
+  }
+
+  .not-printable {
+    display: block;
+  }
+ 
+  table { page: tables; }
+  thead { display: table-header-group; }
+  tfoot { display: table-footer-group; }
+}

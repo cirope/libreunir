@@ -5,5 +5,4 @@ Fabricator(:fee) do
   payment_date { rand(1.year).ago }
   fee_number { 100 * rand }
   total_amount { 100 * rand }
-  client_id { Fabricate(:client).product_id }
 end

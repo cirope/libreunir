@@ -23,4 +23,7 @@
 //= require endless_pagination
 //= require mobile
 //= require users
+//= require autocomplete
+//= require dynamic_form
+//= require effect_helper
 //= require dashboard

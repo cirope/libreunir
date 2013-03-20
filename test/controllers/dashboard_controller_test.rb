@@ -18,7 +18,7 @@ class DashboardControllerTest < ActionController::TestCase
     post :expired, date_range: { start: 3.year.ago, end: Date.today }, format: 'js'
 
     assert_response :success
-    assert_template "dashboard/expired"
+    assert_template "dashboard/debts"
   end
 
   test "should get close to expire" do
@@ -27,7 +27,7 @@ class DashboardControllerTest < ActionController::TestCase
     post :expired, date_range: { start: Date.today-7, end: Date.today }, format: 'js'
 
     assert_response :success
-    assert_template "fees/_fee"
+    assert_template "dashboard/debts"
   end
 
   test "should get more info on fee" do

@@ -7,6 +7,7 @@ class CreateOrders < ActiveRecord::Migration
       t.integer :branch_id
       t.string :zone_id
       t.string :assigned_adviser_id
+      t.integer :lock_version, null: false, default: 0
 
       t.timestamps
     end

@@ -4,14 +4,31 @@
   <div class="row">
     <div class="span12">
       <div class="form-inputs">
-            <%= f.input :name, input_html: { autofocus: true, maxlength: 255 } %>
-            <%= f.input :lastname, input_html: { maxlength: 255 } %>
-            <%= f.input :email, required: true, input_html: { maxlength: 255 } %>
+        <%= f.input :name, input_html: { autofocus: true, maxlength: 255 } %>
+        <%= f.input :lastname, input_html: { maxlength: 255 } %>
+        <%= f.input :email, required: true, input_html: { maxlength: 255 } %>
 
-            <% if ['new', 'create'].include?(action_name) %>
-              <%= f.input :password, required: true, input_html: { maxlength: 255 } %>
-              <%= f.input :password_confirmation, input_html: { maxlength: 255 } %>
-            <% end %>
+        <% if ['new', 'create'].include?(action_name) %>
+          <%= f.input :password, required: true, input_html: { maxlength: 255 } %>
+          <%= f.input :password_confirmation, input_html: { maxlength: 255 } %>
+        <% end %>
+
+        <div class="row-fluid form-inputs">
+          <div class="span12">
+            <h5><%= Relation.human_attribute_name 'relation', count: @user.relatives.size %></h5>
+          </div>
+
+          <div class="row-fluid">
+            <div id="relations" class="span12">
+              <% @user.relations.build %>
+              <%= f.simple_fields_for :relations do |j_f| %>
+                <%= render partial: 'relation', locals: { f: j_f } %>
+              <% end %>
+
+              <%= link_to_add_fields(t('view.users.new_relation'), f, :relations) %>
+            </div>
+          </div>
+        </div>
 
         <% if can? :assign_roles, @user %>
           <label><%= User.human_attribute_name 'roles', count: 1 %></label>
@@ -20,7 +37,7 @@
       </div>
     </div>
   </div>
-  
+
   <div class="form-actions">
     <div class="pull-right"><%= yield :form_actions %></div>
     <%= f.input :lock_version, as: :hidden %>

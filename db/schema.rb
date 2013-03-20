@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130320140006) do
+ActiveRecord::Schema.define(version: 20130326173043) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "addresses", force: true do |t|
     t.string   "street"
@@ -19,81 +22,68 @@ ActiveRecord::Schema.define(version: 20130320140006) do
     t.integer  "floor"
     t.string   "location"
     t.integer  "postal_code"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.string   "client_id"
+    t.integer  "lock_version", default: 0, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "client_id"
     t.string   "address"
   end
-
-  create_table "advisers", force: true do |t|
-    t.string   "name"
-    t.string   "lastname"
-    t.string   "identification"
-    t.integer  "branch_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-    t.string   "adviser_id"
-    t.string   "description"
-    t.string   "bundle"
-  end
-
-  add_index "advisers", ["branch_id"], name: "index_advisers_on_branch_id"
 
   create_table "branches", force: true do |t|
     t.integer  "zone_id"
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "lock_version", default: 0, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "branches", ["zone_id"], name: "index_branches_on_zone_id"
 
   create_table "calls", force: true do |t|
-    t.string   "client_id"
+    t.integer  "client_id"
     t.text     "call"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "lock_version", default: 0, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "clients", force: true do |t|
     t.string   "name"
     t.string   "identification"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-    t.string   "product_id"
+    t.integer  "lock_version",   default: 0, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "product_id"
   end
 
   create_table "fees", force: true do |t|
-    t.integer  "loan_id"
     t.decimal  "amount",          precision: 23, scale: 8
     t.datetime "expiration_date"
     t.datetime "payment_date"
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
+    t.integer  "lock_version",                             default: 0, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "fee_number"
     t.decimal  "total_amount"
-    t.string   "client_id"
+    t.integer  "loan_id"
+    t.string   "paid_to"
   end
 
-  add_index "fees", ["loan_id"], name: "index_fees_on_loan_id"
-
   create_table "loans", force: true do |t|
-    t.string   "client_id"
-    t.integer  "adviser_id"
+    t.integer  "order_id"
     t.decimal  "amount",            precision: 23, scale: 8
     t.datetime "grant_date"
     t.datetime "expiration_date"
-    t.datetime "created_at",                                 null: false
-    t.datetime "updated_at",                                 null: false
-    t.string   "product_id"
+    t.integer  "lock_version",                               default: 0, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "fund_id"
     t.decimal  "amount_to_finance"
     t.decimal  "capital"
     t.integer  "number_of_fees"
   end
 
-  add_index "loans", ["adviser_id"], name: "index_loans_on_adviser_id"
-  add_index "loans", ["client_id"], name: "index_loans_on_client_id"
+  add_index "loans", ["order_id"], name: "index_loans_on_order_id"
 
   create_table "orders", force: true do |t|
     t.integer  "order_id"
@@ -102,8 +92,10 @@ ActiveRecord::Schema.define(version: 20130320140006) do
     t.integer  "branch_id"
     t.string   "zone_id"
     t.string   "assigned_adviser_id"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.integer  "lock_version",        default: 0, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "user_id"
   end
 
   add_index "orders", ["adviser_id"], name: "index_orders_on_adviser_id"
@@ -113,16 +105,18 @@ ActiveRecord::Schema.define(version: 20130320140006) do
   add_index "orders", ["zone_id"], name: "index_orders_on_zone_id"
 
   create_table "parameters", force: true do |t|
-    t.decimal  "rate",       precision: 23, scale: 8
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.decimal  "rate",         precision: 23, scale: 8
+    t.integer  "lock_version",                          default: 0, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "phones", force: true do |t|
-    t.string   "client_id"
+    t.integer  "client_id"
     t.string   "phone"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "lock_version", default: 0, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "phones", ["client_id"], name: "index_phones_on_client_id"
@@ -135,18 +129,29 @@ ActiveRecord::Schema.define(version: 20130320140006) do
     t.decimal  "total_debt",     precision: 23, scale: 8
     t.integer  "expired_fees"
     t.integer  "fees_to_expire"
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
+    t.integer  "lock_version",                            default: 0, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "products", ["branch_id"], name: "index_products_on_branch_id"
+
+  create_table "relations", force: true do |t|
+    t.string   "relation"
+    t.integer  "user_id"
+    t.integer  "relative_id"
+    t.integer  "lock_version", default: 0, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "segments", force: true do |t|
     t.string   "segment_id"
     t.string   "description"
     t.integer  "status"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "lock_version", default: 0, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|
@@ -164,8 +169,12 @@ ActiveRecord::Schema.define(version: 20130320140006) do
     t.string   "last_sign_in_ip"
     t.integer  "roles_mask",             default: 0,  null: false
     t.integer  "lock_version",           default: 0,  null: false
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "adviser_id"
+    t.string   "branch_id"
+    t.string   "bundle"
+    t.string   "identification"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
@@ -187,8 +196,9 @@ ActiveRecord::Schema.define(version: 20130320140006) do
 
   create_table "zones", force: true do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "lock_version", default: 0, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

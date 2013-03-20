@@ -3,6 +3,7 @@ class CreatePhones < ActiveRecord::Migration
     create_table :phones do |t|
       t.references :client
       t.string :number
+      t.integer :lock_version, null: false, default: 0
 
       t.timestamps
     end

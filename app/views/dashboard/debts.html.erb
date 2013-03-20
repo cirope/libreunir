@@ -1,21 +1,13 @@
 <div class="row">
   <div class="span12">
     <h3>
-      <%= link_to t('view.dashboard.expired'), expired_path(date_range: { start: @date.start, end: @date.end }) %>
+      <%= t("view.dashboard.#{action_name}") %>
     </h3>
-    <%= simple_form_for @date, url: expired_path do |f| %>
-      <div class="row">
-        <div class="span3">
-          <%= f.input :start, as: :date_picker, label: t('view.dashboard.start') %>
-        </div>
-        <div class="span3">
-          <%= f.input :end, as: :date_picker, label: t('view.dashboard.end') %>
-        </div>
-      </div>
-      <%= f.button :submit, t('view.dashboard.apply'), class: 'btn-primary' %>
-    <% end %>
-    <table id="expired" class="table resource-list expired table-condensed" data-endless-container="true">
+    <table id="expired" class="table resource-list expired table-condensed" <%= @printing.present? ? "" : 'data-endless-container="true"' %>>
       <thead>
+        <th>
+          <%= t 'view.dashboard.product_id' %>
+        </th>
         <th>
           <%= t 'view.dashboard.client' %>
         </th>
@@ -36,7 +28,10 @@
         <% @fees.each do |fee| %>
           <tr>
             <td>
-              <%= fee.client.try(:name) %>
+              <%= fee.client.try(:product_id) %>
+            </td>
+            <td>
+              <%= link_to fee.client.try(:name), profile_path(fee.client.try(:product_id)) %>
             </td>
             <td>
               <%= I18n.l(fee.expiration_date, format: :minimal) %>
@@ -55,7 +50,11 @@
       </tbody>
     </table>
   </div>
-  <%= pagination_links(@fees) %>
+  <div class="counter-increment">
+  </div>
+  <div class="not-printable">
+    <%= pagination_links(@fees) if @printing.blank? %>
+  </div>
 </div>
 
 <nav class="form-actions">

@@ -1,18 +1,22 @@
 'es':
   app_name: 'Libreunir'
-  
+
   attributes:
     created_at: 'Creación'
     updated_at: 'Actualización'
-    
+
   activerecord:
     models:
       user:
         one: 'Usuario'
         other: 'Usuarios'
-        
+      relation:
+        one: 'Relacion'
+        other: 'Relaciones'
+
     attributes:
       user:
+        user_id: 'Nombre'
         name: 'Nombre'
         lastname: 'Apellido'
         email: 'Correo'
@@ -22,11 +26,15 @@
           one: 'Perfil'
           other: 'Perfiles'
         remember_me: 'Recordarme'
-        
+      relation:
+        relation: 'Dependencia'
+        relative_id: 'Nombre'
+        user_id: 'Nombre'
+
   errors:
     title: 'Error'
     access_denied: 'No tiene permisos para acceder al contenido'
-        
+
   label:
     'yes': 'Si'
     'no': 'No'
@@ -39,16 +47,17 @@
     search: 'Buscar'
     show: 'Ver'
     more_info: 'Mas Informacion'
-    
+    print: 'Imprimir'
+
   menu:
     actions:
       logout: 'Salir de la aplicación'
     users: 'Usuarios'
     dashboard: 'Tablero'
-    
+
   messages:
     confirmation: '¿Está seguro?'
-    
+
   view:
     generic:
       empty_index:
@@ -56,6 +65,53 @@
       empty_search:
         title:
           html: 'La búsqueda de <span class="label label-inverse">%{search}</span> no obtuvo ningún resultado.'
+    client:
+      name: 'Nombre'
+      phone: 'Telefono'
+      address: 'Direccion'
+    dashboard:
+      index_title: 'Tablero'
+      profile_title: 'Perfil del cliente'
+      expired_title: 'Vencidos'
+      close_to_expire_title: 'Cerca del vencimiento'
+      dashboard: 'Tablero'
+      product_id: 'Producto'
+      apply: 'Aplicar filtros'
+      expired: 'Vencidos'
+      close_to_expire: 'Por vencer'
+      late_average: 'Retraso promedio'
+      amount: 'Monto corriente'
+      fees: 'Cuotas'
+      late:
+        zero: 'No hay registro'
+        one: 'Un dia tarde'
+        other: '%{days} dias tarde'
+      in_time:
+        zero: 'A tiempo'
+        one: 'Un dia antes'
+        other: '%{days} dias antes'
+      address: 'Direccion'
+      phone: 'Telefono'
+      last_calls: 'Notificaciones al cliente'
+      call: 'Conversacion'
+      client: 'Cliente'
+      expiring: 'Expira'
+      start: 'Fecha de inicio'
+      end: 'Fecha de fin'
+    fees:
+      loan_id: 'Producto'
+      total_amount: 'Monto total'
+      fee_number: 'Cuota'
+      expiration_date: 'Fecha de vencimiento'
+      payment_date: 'Fecha de pago'
+      paid_to: 'Pagado a'
+      late_days: 'Demora'
+      late_average: 'Promedio'
+    relation:
+      types:
+        superior: 'Superior'
+        dependent: 'Subordinado'
+        other: 'Otro'
     users:
       index_title: 'Listado de usuarios'
       show_title: 'Detalle de usuario'
@@ -74,24 +130,12 @@
       roles:
         admin: 'Administrador'
         regular: 'Normal'
-    dashboard:
-      dashboard: 'Tablero'
-      apply: 'Aplicar filtros'
-      expired: 'Vencidos'
-      close_to_expire: 'Por vencer'
-      late_average: 'Retraso promedio'
-      amount: 'Monto corriente'
-      late:
-        one: '1 dia tarde'
-        other: '%{days} dias tarde'
-      in_time:
-        one: '1 dia antes'
-        other: '%{days} dias antes'
-      address: 'Direccion'
-      phone: 'Telefono'
-      last_calls: 'Notificaciones al cliente'
-      call: 'Conversacion'
-      client: 'Cliente'
-      expiring: 'Expira'
-      start: 'Fecha de inicio'
-      end: 'Fecha final'
+      new_relation: 'Nueva dependencia'
+      name: 'Nombre'
+      relation:
+        html: 'Su %{relation} es %{relative}'
+      inverse_relation:
+        html: 'Es %{relation} de %{user}'
+      roles:
+        admin: 'Administrador'
+        regular: 'Normal'

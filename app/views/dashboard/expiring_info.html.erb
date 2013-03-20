@@ -16,7 +16,7 @@
   <tbody>
     <tr>
       <td>
-        <%= t("view.dashboard.#{@fee.late_average[:formal]}", days: @fee.late_average[:days].to_i, count: @fee.late_average[:days].to_i) %>
+        <%= @fee.try(:late_average) %>
       </td>
       <td>
         <%= @fee.try(:total_amount) %>
@@ -41,12 +41,14 @@
     </th>
   </thead>
   <tbody>
-    <% @fee.client.calls.each do |call| %>
-      <tr>
-        <td>
-          <%= call.try(:call) %>
-        </td>
-      </tr>
+    <% @fee.client.try(:calls).try(:each) do |call| %>
+      <% if call.try(:call).present? %>
+        <tr>
+          <td>
+            <%= call.try(:call) %>
+          </td>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>

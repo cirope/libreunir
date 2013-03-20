@@ -14,11 +14,11 @@ class FeeTest < ActiveSupport::TestCase
   test 'update' do
     assert_difference 'Version.count' do
       assert_no_difference 'Fee.count' do
-        assert @fee.update_attributes(client_id: 'Updated')
+        assert @fee.update_attributes(loan_id: 1)
       end
     end
 
-    assert_equal 'Updated', @fee.reload.client_id
+    assert_equal 1, @fee.reload.loan_id
   end
 
   test 'destroy' do
@@ -28,11 +28,11 @@ class FeeTest < ActiveSupport::TestCase
   end
 
   test 'validates blank attributes' do
-    @fee.client_id = ''
+    @fee.loan_id = ''
 
     assert @fee.invalid?
     assert_equal 1, @fee.errors.size
-    assert_equal [error_message_from_model(@fee, :client_id, :blank)],
-      @fee.errors[:client_id]
+    assert_equal [error_message_from_model(@fee, :loan_id, :blank)],
+      @fee.errors[:loan_id]
   end
 end

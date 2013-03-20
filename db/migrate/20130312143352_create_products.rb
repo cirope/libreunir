@@ -8,6 +8,7 @@ class CreateProducts < ActiveRecord::Migration
       t.decimal :total_debt, precision: 23, scale: 8
       t.integer :expired_fees
       t.integer :fees_to_expire
+      t.integer :lock_version, null: false, default: 0
 
       t.timestamps
     end

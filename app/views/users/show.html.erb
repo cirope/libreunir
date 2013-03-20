@@ -11,6 +11,43 @@
       <strong><%= t("view.users.roles.#{@user.role}") %></strong>
     </p>
   <% end %>
+
+
+  <% unless @user.relations.empty? %>
+    <%= content_for :relations do %>
+      <% @user.relations.each do |relation| %>
+        <li>
+          <%= t(
+            'view.users.relation.html',
+            relative: link_to_if(can?(:read, relation.relative), relation.relative.to_s, relation.relative),
+            relation: show_human_relation_type(relation.relation).downcase
+          ) %>
+        </li>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <% unless @user.inverse_relations.empty? %>
+    <%= content_for :relations do %>
+      <% @user.inverse_relations.each do |inverse_relation| %>
+        <li>
+          <%= t(
+            'view.users.inverse_relation.html',
+            user: link_to_if(can?(:read, inverse_relation.user), inverse_relation.user.to_s, inverse_relation.user),
+            relation: show_human_relation_type(inverse_relation.relation).downcase
+          ) %>
+        </li>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <% if @user.relations.present? || @user.inverse_relations.present? %>
+    <h3><%= User.human_attribute_name 'relations', count: @user.relations.size + @user.inverse_relations.size %></h3>
+    <ul>
+      <%= yield :relations %>
+    </ul>
+  <% end %>
+
 </div>
 
 <nav class="form-actions">

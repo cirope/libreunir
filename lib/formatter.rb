@@ -1,5 +1,6 @@
 class Formatter
   # TODO: Refactor all in smaller functions by purpouse
+  # TODO: Refactor config to use an options hash instead single parameters
   require 'smarter_csv'
   require 'fileutils'
 
@@ -55,14 +56,23 @@ class Formatter
         end
       end
 
+      index = 0
       csv = SmarterCSV.process(file,
                                 { col_sep: "|",
                                 key_mapping: mappings.symbolize_keys! }
                               ) do |row|
+        index += 1
         row = row.first
         attributes = (row.slice *(klass.attribute_names.map(&:to_sym)))
+        hash_strip_nulls(attributes)
         key = mappings[:key]
-        klass.new(attributes).save! if attributes[key.to_sym].present?
+        mappings[:fake_fields].each { |field| attributes[field.to_sym] = index } if mappings[:fake_fields]
+        mappings[:remove_prefix].each do |k,v|
+          k.each do |field|
+            attributes[field.to_sym].slice!(v) if attributes[field.to_sym] && attributes[field.to_sym].is_a?(String)
+          end
+        end if mappings[:remove_prefix]
+        klass.new(attributes).save(validate: false) if attributes[key.to_sym].present?
 
         if (association = APP_CONFIG["field_maps_#{APP_CONFIG['table_maps'][filename]}"][:many_to_one_association]).present?
           association.each do |k,v|
@@ -70,7 +80,7 @@ class Formatter
             association_key = APP_CONFIG["field_maps_#{APP_CONFIG['table_maps'][filename]}"][:many_to_one_association_key]
             k.each do |field|
               association_attributes = { :"#{association_key[v]}" => strip_nulls(row[key.to_sym]), :"#{v}" => strip_nulls(row[field.to_sym]) }
-              association_klass.new(association_attributes).save! if row[key.to_sym].present? && row[field.to_sym].present?
+              association_klass.new(association_attributes).save(validate: false) if row[key.to_sym].present? && row[field.to_sym].present?
             end
           end
         end
@@ -88,5 +98,11 @@ class Formatter
   def self.strip_nulls(value)
     (value = '') if (value.is_a?(String) && value.match('null'))
     value
+  end
+
+  def self.hash_strip_nulls(hash)
+    hash.each do |k,v|
+      (v = '') if (v.is_a?(String) && v.match('null'))
+    end
   end
 end

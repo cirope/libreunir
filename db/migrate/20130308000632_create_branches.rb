@@ -3,6 +3,7 @@ class CreateBranches < ActiveRecord::Migration
     create_table :branches do |t|
       t.references :zone
       t.string :name
+      t.integer :lock_version, null: false, default: 0
 
       t.timestamps
     end
