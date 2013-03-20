@@ -1,0 +1,17 @@
+<tr>
+  <td>
+    <%= fee.client.try(:name) %>
+  </td>
+  <td>
+    <%= I18n.l(fee.expiration_date, format: :minimal) %>
+  </td>
+  <td>
+    <%= fee.total_amount %>
+  </td>
+  <td>
+    <%= fee.client.try(:phones).try(:first).try(:phone) %>
+  </td>
+  <td>
+    <%= fee.client.try(:addresses).try(:first).try(:address) %>
+  </td>
+</tr>

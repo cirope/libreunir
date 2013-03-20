@@ -1,0 +1,7 @@
+$('table.resource-list.close_to_expire tbody').append('<%= j render(@fees) %>');
+<% if @fees.next_page %>
+  $('.pagination-container').replaceWith('<%= j pagination_links(@fees) %>');
+<% else %>
+  $('.pagination-container').remove();
+<% end %>
+

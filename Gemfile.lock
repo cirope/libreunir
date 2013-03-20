@@ -1,0 +1,271 @@
+GIT
+  remote: git://github.com/airblade/paper_trail.git
+  revision: 009d3bd4a371f6c93c765fb4ee754ed98608437e
+  branch: rails4
+  specs:
+    paper_trail (2.7.1)
+      activerecord (>= 4.0.0.beta, < 5.0)
+      railties (>= 4.0.0.beta, < 5.0)
+
+GIT
+  remote: git://github.com/plataformatec/devise.git
+  revision: d29b744d92a380e61d0c62149cc60e91ec4ba0f2
+  branch: rails4
+  specs:
+    devise (2.2.3)
+      bcrypt-ruby (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (~> 4.0.0.beta)
+      warden (~> 1.2.1)
+
+GIT
+  remote: git://github.com/raphaelmolesim/fabrication.git
+  revision: b16ee28cfe1ac6d9897978514fbf7aba8959b638
+  branch: activerecord4
+  specs:
+    fabrication (2.5.0)
+
+GIT
+  remote: https://github.com/kainlite/double-bag-ftps.git
+  revision: 8c0941e1eb4c1122444413c8189be0d0bd4e0e8a
+  specs:
+    double-bag-ftps (0.1.0)
+
+GIT
+  remote: https://github.com/kainlite/magick_columns.git
+  revision: 9673d5c1ee846a54f1b4313411bdc2a7f34870e9
+  specs:
+    magick_columns (0.0.3)
+      rails (>= 3.2)
+      timeliness (>= 0.3)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    actionmailer (4.0.0.beta1)
+      actionpack (= 4.0.0.beta1)
+      mail (~> 2.5.3)
+    actionpack (4.0.0.beta1)
+      activesupport (= 4.0.0.beta1)
+      builder (~> 3.1.0)
+      erubis (~> 2.7.0)
+      rack (~> 1.5.2)
+      rack-test (~> 0.6.2)
+    activemodel (4.0.0.beta1)
+      activesupport (= 4.0.0.beta1)
+      builder (~> 3.1.0)
+    activerecord (4.0.0.beta1)
+      activemodel (= 4.0.0.beta1)
+      activerecord-deprecated_finders (~> 0.0.3)
+      activesupport (= 4.0.0.beta1)
+      arel (~> 4.0.0.beta1)
+    activerecord-deprecated_finders (0.0.3)
+    activesupport (4.0.0.beta1)
+      i18n (~> 0.6.2)
+      minitest (~> 4.2)
+      multi_json (~> 1.3)
+      thread_safe (~> 0.1)
+      tzinfo (~> 0.3.33)
+    ansi (1.4.3)
+    archive-zip (0.5.0)
+      io-like (>= 0.3.0)
+    arel (4.0.0.beta2)
+    atomic (1.0.1)
+    bcrypt-ruby (3.0.1)
+    builder (3.1.4)
+    cancan (1.6.9)
+    capistrano (2.14.2)
+      highline
+      net-scp (>= 1.0.0)
+      net-sftp (>= 2.0.0)
+      net-ssh (>= 2.0.14)
+      net-ssh-gateway (>= 1.1.0)
+    capybara (2.0.2)
+      mime-types (>= 1.16)
+      nokogiri (>= 1.3.3)
+      rack (>= 1.0.0)
+      rack-test (>= 0.5.4)
+      selenium-webdriver (~> 2.0)
+      xpath (~> 1.0.0)
+    celluloid (0.12.4)
+      facter (>= 1.6.12)
+      timers (>= 1.0.0)
+    childprocess (0.3.9)
+      ffi (~> 1.0, >= 1.0.11)
+    chronic (0.9.1)
+    coderay (1.0.9)
+    coffee-rails (4.0.0.beta1)
+      coffee-script (>= 2.2.0)
+      railties (>= 4.0.0.beta, < 5.0)
+    coffee-script (2.2.0)
+      coffee-script-source
+      execjs
+    coffee-script-source (1.6.1)
+    connection_pool (1.0.0)
+    daemons (1.1.9)
+    database_cleaner (0.9.1)
+    erubis (2.7.0)
+    eventmachine (1.0.3)
+    execjs (1.4.0)
+      multi_json (~> 1.0)
+    facter (1.6.18)
+    faker (1.1.2)
+      i18n (~> 0.5)
+    ffi (1.4.0)
+    highline (1.6.16)
+    hike (1.2.1)
+    i18n (0.6.4)
+    io-like (0.3.0)
+    jquery-rails (2.2.1)
+      railties (>= 3.0, < 5.0)
+      thor (>= 0.14, < 2.0)
+    json (1.7.7)
+    mail (2.5.3)
+      i18n (>= 0.4.0)
+      mime-types (~> 1.16)
+      treetop (~> 1.4.8)
+    method_source (0.8.1)
+    mime-types (1.21)
+    minitest (4.6.2)
+    multi_json (1.7.0)
+    net-scp (1.1.0)
+      net-ssh (>= 2.6.5)
+    net-sftp (2.1.1)
+      net-ssh (>= 2.6.5)
+    net-ssh (2.6.6)
+    net-ssh-gateway (1.2.0)
+      net-ssh (>= 2.6.5)
+    nokogiri (1.5.6)
+    orm_adapter (0.4.0)
+    pg (0.14.1)
+    polyglot (0.3.3)
+    pry (0.9.12)
+      coderay (~> 1.0.5)
+      method_source (~> 0.8)
+      slop (~> 3.4)
+    pry-rails (0.2.2)
+      pry (>= 0.9.10)
+    rack (1.5.2)
+    rack-test (0.6.2)
+      rack (>= 1.0)
+    rails (4.0.0.beta1)
+      actionmailer (= 4.0.0.beta1)
+      actionpack (= 4.0.0.beta1)
+      activerecord (= 4.0.0.beta1)
+      activesupport (= 4.0.0.beta1)
+      bundler (>= 1.3.0, < 2.0)
+      railties (= 4.0.0.beta1)
+      sprockets-rails (~> 2.0.0.rc3)
+    railties (4.0.0.beta1)
+      actionpack (= 4.0.0.beta1)
+      activesupport (= 4.0.0.beta1)
+      rake (>= 0.8.7)
+      rdoc (~> 3.4)
+      thor (>= 0.17.0, < 2.0)
+    rake (10.0.3)
+    rdoc (3.12.2)
+      json (~> 1.4)
+    redis (3.0.3)
+    redis-namespace (1.2.1)
+      redis (~> 3.0.0)
+    role_model (0.8.1)
+    rubyzip (0.9.9)
+    sass (3.2.7)
+    sass-rails (4.0.0.beta1)
+      railties (>= 4.0.0.beta, < 5.0)
+      sass (>= 3.1.10)
+      sprockets-rails (~> 2.0.0.rc0)
+      tilt (~> 1.3)
+    selenium-webdriver (2.31.0)
+      childprocess (>= 0.2.5)
+      multi_json (~> 1.0)
+      rubyzip
+      websocket (~> 1.0.4)
+    sidekiq (2.8.0)
+      celluloid (~> 0.12.0)
+      connection_pool (~> 1.0)
+      multi_json (~> 1)
+      redis (~> 3)
+      redis-namespace
+    simple_form (3.0.0.beta1)
+      actionpack (>= 4.0.0.beta, < 4.1)
+      activemodel (>= 4.0.0.beta, < 4.1)
+    slop (3.4.4)
+    smarter_csv (1.0.4)
+    sprockets (2.9.0)
+      hike (~> 1.2)
+      multi_json (~> 1.0)
+      rack (~> 1.0)
+      tilt (~> 1.1, != 1.3.0)
+    sprockets-rails (2.0.0.rc3)
+      actionpack (>= 3.0)
+      activesupport (>= 3.0)
+      sprockets (~> 2.8)
+    thin (1.5.0)
+      daemons (>= 1.0.9)
+      eventmachine (>= 0.12.6)
+      rack (>= 1.0.0)
+    thor (0.17.0)
+    thread_safe (0.1.0)
+      atomic
+    tilt (1.3.6)
+    timeliness (0.3.7)
+    timers (1.1.0)
+    treetop (1.4.12)
+      polyglot
+      polyglot (>= 0.3.1)
+    turbolinks (1.0.0)
+      coffee-rails
+    turn (0.9.6)
+      ansi
+    tzinfo (0.3.37)
+    uglifier (1.3.0)
+      execjs (>= 0.3.0)
+      multi_json (~> 1.0, >= 1.0.2)
+    validates_timeliness (3.0.14)
+      timeliness (~> 0.3.6)
+    warden (1.2.1)
+      rack (>= 1.0)
+    websocket (1.0.7)
+    whenever (0.8.2)
+      activesupport (>= 2.3.4)
+      chronic (>= 0.6.3)
+    will_paginate (3.0.4)
+    xpath (1.0.0)
+      nokogiri (~> 1.3)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  activerecord (~> 4.0.0.beta1)
+  archive-zip
+  cancan
+  capistrano
+  capybara
+  coffee-rails (~> 4.0.0.beta1)
+  database_cleaner
+  devise!
+  double-bag-ftps!
+  fabrication!
+  faker
+  jquery-rails
+  magick_columns!
+  minitest
+  paper_trail!
+  pg
+  pry
+  pry-rails
+  rails (~> 4.0.0.beta1)
+  role_model
+  sass-rails (~> 4.0.0.beta1)
+  sidekiq
+  simple_form (~> 3.0.0.beta1)
+  smarter_csv
+  thin
+  turbolinks
+  turn
+  uglifier (>= 1.0.30)
+  validates_timeliness
+  whenever
+  will_paginate

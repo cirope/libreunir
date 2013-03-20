@@ -1,0 +1,2 @@
+$('.info-<%= @fee.to_param %>').closest('a').popover({html: 'true', placement: 'bottom', content: "<%= j render(template: 'dashboard/expiring_info', formats: [:html]) %>"}).popover('show');
+$('.info-<%= @fee.to_param %>').closest('a').removeAttr('data-remote')
