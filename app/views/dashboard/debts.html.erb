@@ -27,24 +27,7 @@
       <tbody>
         <% @fees.each do |fee| %>
           <tr>
-            <td>
-              <%= fee.client.try(:product_id) %>
-            </td>
-            <td>
-              <%= link_to fee.client.try(:name), profile_path(fee.client.try(:product_id)) %>
-            </td>
-            <td>
-              <%= I18n.l(fee.expiration_date, format: :minimal) %>
-            </td>
-            <td>
-              <%= fee.total_amount %>
-            </td>
-            <td>
-              <%= fee.client.try(:phones).try(:first).try(:phone) %>
-            </td>
-            <td>
-              <%= fee.client.try(:addresses).try(:first).try(:address) %>
-            </td>
+            <%= render partial: 'fees/fee', locals: { fee: fee } %>
           </tr>
         <% end %>
       </tbody>

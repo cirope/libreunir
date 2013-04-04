@@ -1,6 +1,9 @@
 <tr>
   <td>
-    <%= fee.client.try(:name) %>
+    <%= fee.client.try(:product_id) %>
+  </td>
+  <td>
+    <%= link_to fee.client.try(:name), profile_path(fee.client.try(:product_id)) %>
   </td>
   <td>
     <%= I18n.l(fee.expiration_date, format: :minimal) %>
