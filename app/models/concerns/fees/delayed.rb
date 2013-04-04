@@ -13,19 +13,35 @@ module Fees
       fees = self.class.where("payment_date IS NOT NULL AND loan_id = ?", self.loan_id)
       days = 0
       fees.each do |fee|
-        days += (fee.expiration_date.to_date - fee.payment_date.to_date)
+        if fee.expiration_date && fee.payment_date
+          days += (fee.expiration_date.to_date - fee.payment_date.to_date)
+        else
+          days += Date.today - fee.expiration_date.to_date
+        end
       end
-      number_of_fees = fees.count ? 1 : fees.count
+
+      if days == 0
+        days = Date.today - self.expiration_date.to_date
+      end
+
+      number_of_fees = fees.count
 
       formal_delay(days, number_of_fees)
     end
 
     def late_days
       expiration_date = self.expiration_date.try(:to_date) || 0
-      payment_date = self.payment_date.try(:to_date) || 0
+      payment_date = self.payment_date.try(:to_date)
 
-      days = expiration_date-payment_date
-      days = days.is_a?(Date) ? 0 : days
+      if payment_date
+        days = expiration_date-payment_date
+      else
+        if Date.today < expiration_date
+          days = 0
+        else
+          days = self.expiration_date.to_date-Date.today.to_date
+        end
+      end
 
       formal_delay(days, 1)
     end

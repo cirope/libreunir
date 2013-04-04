@@ -10,7 +10,7 @@ class DashboardTest < ActionDispatch::IntegrationTest
     Fabricate(:call, client_id: 500000, call: "Notificacion")
     Fabricate(:order, order_id: 500000)
     Fabricate(:loan, order_id: 500000)
-    Fabricate(:fee, expiration_date: Date.today+1, payment_date: Date.today+2, total_amount: 12000.0, loan_id: "500000", fee_number: 1)
+    Fabricate(:fee, expiration_date: Date.today+1, payment_date: nil, total_amount: 12000.0, loan_id: "500000", fee_number: 1)
     visit root_path
 
     login
@@ -46,16 +46,16 @@ class DashboardTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get client profile' do
-    @user = Fabricate(:user, adviser_id: 'U123')
+    user = Fabricate(:user, adviser_id: 'U123')
     Fabricate(:client, product_id: 500000, name: "Nombre")
     Fabricate(:address, client_id: 500000, address: "calle 1153")
     Fabricate(:phone, client_id: 500000, phone: "1114123123")
     Fabricate(:call, client_id: 500000, call: "Notificacion")
-    Fabricate(:order, order_id: 500000)
+    Fabricate(:order, order_id: 500000, adviser_id: user.adviser_id, user_id: user.adviser_id)
     Fabricate(:loan, order_id: 500000)
-    Fabricate(:fee, expiration_date: Date.today+1, payment_date: Date.today+2, total_amount: 12000.0, loan_id: "500000", fee_number: 1, paid_to: @user.adviser_id)
-    Fabricate(:fee, expiration_date: Date.today+31.days, payment_date: nil, total_amount: 12000.0, loan_id: "500000", fee_number: 1)
-    Fabricate(:fee, expiration_date: Date.today-31.days, payment_date: nil, total_amount: 12000.0, loan_id: "500000", fee_number: 1)
+    Fabricate(:fee, expiration_date: Date.today+1, payment_date: Date.today+2, total_amount: 12000.0, loan_id: 500000, fee_number: 1, paid_to: user.adviser_id)
+    Fabricate(:fee, expiration_date: Date.today+1.days, payment_date: nil, total_amount: 12000.0, loan_id: 500000, fee_number: 2)
+    Fabricate(:fee, expiration_date: Date.today-31.days, payment_date: nil, total_amount: 12000.0, loan_id: 500000, fee_number: 3)
     visit root_path
 
     login
@@ -108,7 +108,7 @@ class DashboardTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get expired' do
-    101.times { Fabricate(:fee, expiration_date: 3.days.ago) }
+    100.times { Fabricate(:fee, expiration_date: 2.month.ago) }
 
     visit root_path
     login
@@ -126,7 +126,7 @@ class DashboardTest < ActionDispatch::IntegrationTest
     row_count = all('tbody tr').size
     assert row_count < 101
 
-    until row_count == 101
+    until row_count == 100
       page.execute_script 'window.scrollBy(0,10000)'
 
       assert page.has_css?("tbody tr:nth-child(#{row_count + 1})")
@@ -136,7 +136,7 @@ class DashboardTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get close to expire' do
-    101.times { Fabricate(:fee, expiration_date: rand(1.month).ago) }
+    101.times { Fabricate(:fee, expiration_date: 1.day.from_now) }
 
     visit root_path
     login
@@ -153,7 +153,7 @@ class DashboardTest < ActionDispatch::IntegrationTest
     row_count = all('tbody tr').size
     assert row_count < 101
 
-    until row_count == 101
+    until row_count == 100
       page.execute_script 'window.scrollBy(0,10000)'
 
       assert page.has_css?("tbody tr:nth-child(#{row_count + 1})")
