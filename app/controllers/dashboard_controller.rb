@@ -63,9 +63,7 @@ class DashboardController < ApplicationController
   # TODO: Refactor this
   def set_current_user
     if params[:users] && !params[:users][:user_id].blank?
-      user_id = params[:users][:user_id]
-      user_id = user_id.match('Admin') ? nil : user_id
-      @user = User.where('id = ?', user_id).first
+      @user = User.find(params[:users][:user_id])
     else
       @user = current_user
     end
@@ -73,8 +71,8 @@ class DashboardController < ApplicationController
 
   # TODO: Refactor this
   def get_scope
-    if params.fetch(:users, :user_id).blank? || current_user.admin?
-      Fee
+    if (params[:users] && params[:users][:user_id]) || current_user.admin?
+      Fee.all
     else
       @user.fees
     end
