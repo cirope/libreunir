@@ -79,7 +79,11 @@ class Formatter
           end
         end if mappings[:remove_prefix]
         record = klass.new(attributes).save(validate: false) if attributes[key.to_sym].present?
-        Formatter.info("#{klass} - Record not saved : #{attributes}") unless record
+
+        unless record
+          Formatter.info("#{klass} - Row: #{row}")
+          Formatter.info("#{klass} - Record not saved : #{attributes}")
+        end
 
         if (association = APP_CONFIG["field_maps_#{APP_CONFIG['table_maps'][filename]}"][:many_to_one_association]).present?
           association.each do |k,v|
@@ -88,7 +92,10 @@ class Formatter
             k.each do |field|
               association_attributes = { :"#{association_key[v]}" => strip_nulls(row[key.to_sym]), :"#{v}" => strip_nulls(row[field.to_sym]) }
               record = association_klass.new(association_attributes).save(validate: false) if row[key.to_sym].present? && row[field.to_sym].present?
-              Formatter.info("#{association_klass} - Record not saved: #{association_attributes}") unless record
+              unless record
+                Formatter.info("#{klass} - Row: #{row}")
+                Formatter.info("#{association_klass} - Record not saved: #{association_attributes}")
+              end
             end
           end
         end
