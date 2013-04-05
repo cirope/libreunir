@@ -4,6 +4,12 @@ class Formatter
   require 'smarter_csv'
   require 'fileutils'
 
+  @@formatter ||= Logger.new("#{Rails.root}/log/formatter-#{Time.new.strftime('%Y-%m-%d')}.log")
+
+  def self.info(message=nil)
+    @@formatter.info(message) unless message.nil?
+  end
+
   def self.create_directories
     Dir.mkdir(File.expand_path("private/backup")) if !Dir.exist?(File.expand_path("private/backup"))
     Dir.mkdir(File.expand_path("private/data/processed")) if !Dir.exist?(File.expand_path("private/data/processed"))
@@ -72,7 +78,8 @@ class Formatter
             attributes[field.to_sym].slice!(v) if attributes[field.to_sym] && attributes[field.to_sym].is_a?(String)
           end
         end if mappings[:remove_prefix]
-        klass.new(attributes).save(validate: false) if attributes[key.to_sym].present?
+        record = klass.new(attributes).save(validate: false) if attributes[key.to_sym].present?
+        Formatter.info("#{klass} - Record not saved : #{attributes}") unless record
 
         if (association = APP_CONFIG["field_maps_#{APP_CONFIG['table_maps'][filename]}"][:many_to_one_association]).present?
           association.each do |k,v|
@@ -80,7 +87,8 @@ class Formatter
             association_key = APP_CONFIG["field_maps_#{APP_CONFIG['table_maps'][filename]}"][:many_to_one_association_key]
             k.each do |field|
               association_attributes = { :"#{association_key[v]}" => strip_nulls(row[key.to_sym]), :"#{v}" => strip_nulls(row[field.to_sym]) }
-              association_klass.new(association_attributes).save(validate: false) if row[key.to_sym].present? && row[field.to_sym].present?
+              record = association_klass.new(association_attributes).save(validate: false) if row[key.to_sym].present? && row[field.to_sym].present?
+              Formatter.info("#{association_klass} - Record not saved: #{association_attributes}") unless record
             end
           end
         end
