@@ -8,6 +8,20 @@ GIT
       railties (>= 4.0.0.beta, < 5.0)
 
 GIT
+  remote: git://github.com/kainlite/double-bag-ftps.git
+  revision: 8c0941e1eb4c1122444413c8189be0d0bd4e0e8a
+  specs:
+    double-bag-ftps (0.1.0)
+
+GIT
+  remote: git://github.com/kainlite/magick_columns.git
+  revision: 9673d5c1ee846a54f1b4313411bdc2a7f34870e9
+  specs:
+    magick_columns (0.0.3)
+      rails (>= 3.2)
+      timeliness (>= 0.3)
+
+GIT
   remote: git://github.com/plataformatec/devise.git
   revision: ce37c301ff91f0d59ff91715f0c36e0ee285fb11
   branch: rails4
@@ -17,27 +31,6 @@ GIT
       orm_adapter (~> 0.1)
       railties (~> 4.0.0.beta)
       warden (~> 1.2.1)
-
-GIT
-  remote: git://github.com/raphaelmolesim/fabrication.git
-  revision: b16ee28cfe1ac6d9897978514fbf7aba8959b638
-  branch: activerecord4
-  specs:
-    fabrication (2.5.0)
-
-GIT
-  remote: https://github.com/kainlite/double-bag-ftps.git
-  revision: 8c0941e1eb4c1122444413c8189be0d0bd4e0e8a
-  specs:
-    double-bag-ftps (0.1.0)
-
-GIT
-  remote: https://github.com/kainlite/magick_columns.git
-  revision: 9673d5c1ee846a54f1b4313411bdc2a7f34870e9
-  specs:
-    magick_columns (0.0.3)
-      rails (>= 3.2)
-      timeliness (>= 0.3)
 
 GEM
   remote: https://rubygems.org/
@@ -108,6 +101,7 @@ GEM
     eventmachine (1.0.3)
     execjs (1.4.0)
       multi_json (~> 1.0)
+    fabrication (2.6.4)
     facter (1.6.18)
     faker (1.1.2)
       i18n (~> 0.5)
@@ -238,7 +232,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activerecord (~> 4.0.0.beta1)
   archive-zip
   cancan
   capistrano
@@ -247,7 +240,7 @@ DEPENDENCIES
   database_cleaner
   devise!
   double-bag-ftps!
-  fabrication!
+  fabrication
   faker
   jquery-rails
   magick_columns!
