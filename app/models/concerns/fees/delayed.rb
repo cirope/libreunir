@@ -28,6 +28,7 @@ module Fees
       end
 
       number_of_fees = payed_fees.count + unpayed_fees.count
+      number_of_fees = 1 if number_of_fees == 0
 
       formal_delay(days, number_of_fees)
     end
