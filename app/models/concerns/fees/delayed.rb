@@ -2,48 +2,55 @@ module Fees
   module Delayed
     extend ActiveSupport::Concern
 
+    included do
+      scope :with_payment_day, -> { where('payment_date IS NOT NULL') }
+      scope :without_payment_day, -> { where('payment_date IS NULL') }
+    end
+
     module ClassMethods
       def filtered_list(query)
         query.present? ? magick_search(query) : all
+      end
+
+      def expired_before(date)
+        where('expiration_date < ?', date)
       end
     end
 
     # TODO: Refactor days calculations
     def late_average
       days = 0
-      payed_fees = self.class.where("payment_date IS NOT NULL AND loan_id = ?", self.loan_id)
+      payed_fees = self.class.with_payment_day.where(loan_id: self.loan_id)
+
       payed_fees.each do |fee|
         if fee.expiration_date && fee.payment_date
           days += (fee.expiration_date.to_date - fee.payment_date.to_date)
         end
       end
 
-      unpayed_fees = self.class.where("payment_date IS NULL AND expiration_date < ? AND loan_id = ?", Date.today, self.loan_id)
+      unpayed_fees = self.class.without_payment_day.expired_before(Date.today).where(loan_id: self.loan_id)
+
       unpayed_fees.each do |fee|
-        days += (fee.expiration_date.to_date-Date.today)
+        days += (fee.expiration_date.to_date - Date.today)
       end
 
-      if days == 0
-        days = Date.today - self.expiration_date.to_date
-      end
-
+      days = Date.today - self.expiration_date.to_date if days == 0
       number_of_fees = payed_fees.count + unpayed_fees.count
-      number_of_fees = 1 if number_of_fees == 0
 
       formal_delay(days, number_of_fees)
     end
 
     def late_days
-      expiration_date = self.expiration_date.try(:to_date) || 0
+      expiration_date = self.expiration_date.try(:to_date)
       payment_date = self.payment_date.try(:to_date)
 
       if payment_date
-        days = expiration_date-payment_date
+        days = expiration_date - payment_date
       else
-        if Date.today < expiration_date
+        if expiration_date > Date.today
           days = 0
         else
-          days = self.expiration_date.to_date-Date.today.to_date
+          days = expiration_date - Date.today
         end
       end
 
@@ -52,14 +59,15 @@ module Fees
 
     def formal_delay(days, number_of_fees)
       if days < 0
-        formal = 'late'
+        is = 'late'
         days = -days
       else
-        formal = 'in_time'
+        is = 'in_time'
       end
 
-      days = days/number_of_fees
-      I18n.t("view.dashboard.#{formal}", days: days.to_i, count: days.to_i)
+      days = days / number_of_fees if number_of_fees > 0
+
+      I18n.t("view.dashboard.#{is}", days: days.to_i, count: days.to_i)
     end
   end
 end
