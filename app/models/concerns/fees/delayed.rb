@@ -10,21 +10,24 @@ module Fees
 
     # TODO: Refactor days calculations
     def late_average
-      fees = self.class.where("payment_date IS NOT NULL AND loan_id = ?", self.loan_id)
       days = 0
-      fees.each do |fee|
+      payed_fees = self.class.where("payment_date IS NOT NULL AND loan_id = ?", self.loan_id)
+      payed_fees.each do |fee|
         if fee.expiration_date && fee.payment_date
           days += (fee.expiration_date.to_date - fee.payment_date.to_date)
-        else
-          days += Date.today - fee.expiration_date.to_date
         end
+      end
+
+      unpayed_fees = self.class.where("payment_date IS NULL AND expiration_date < ? AND loan_id = ?", Date.today, self.loan_id)
+      unpayed_fees.each do |fee|
+        days += (fee.expiration_date.to_date-Date.today)
       end
 
       if days == 0
         days = Date.today - self.expiration_date.to_date
       end
 
-      number_of_fees = fees.count
+      number_of_fees = payed_fees.count + unpayed_fees.count
 
       formal_delay(days, number_of_fees)
     end
@@ -54,6 +57,7 @@ module Fees
         formal = 'in_time'
       end
 
+      days = days/number_of_fees
       I18n.t("view.dashboard.#{formal}", days: days.to_i, count: days.to_i)
     end
   end
