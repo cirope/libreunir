@@ -6,10 +6,10 @@
     class: field_classes.join(' '),
     data: {
       'autocomplete-url' => relatives_users_path(format: :json),
-      'autocomplete-id-target' => "#user_id"
+      'autocomplete-id-target' => "#id"
     }
   }
   %>
-<%= f.input :user_id, as: :hidden,
-  input_html: { class: 'autocomplete_id', id: "user_id" }
+<%= f.input :id, as: :hidden,
+  input_html: { class: 'autocomplete_id', id: "id" }
 %>

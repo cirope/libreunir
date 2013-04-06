@@ -53,7 +53,7 @@ class DashboardTest < ActionDispatch::IntegrationTest
     Fabricate(:call, client_id: 500000, call: "Notificacion")
     Fabricate(:order, order_id: 500000, adviser_id: user.adviser_id, user_id: user.adviser_id)
     Fabricate(:loan, order_id: 500000)
-    Fabricate(:fee, expiration_date: Date.today+1, payment_date: Date.today+2, total_amount: 12000.0, loan_id: 500000, fee_number: 1, paid_to: user.adviser_id)
+    Fabricate(:fee, expiration_date: Date.today, payment_date: Date.today+2, total_amount: 12000.0, loan_id: 500000, fee_number: 1, paid_to: user.adviser_id)
     Fabricate(:fee, expiration_date: Date.today+1.days, payment_date: nil, total_amount: 12000.0, loan_id: 500000, fee_number: 2)
     Fabricate(:fee, expiration_date: Date.today-31.days, payment_date: nil, total_amount: 12000.0, loan_id: 500000, fee_number: 3)
     visit root_path
@@ -64,6 +64,8 @@ class DashboardTest < ActionDispatch::IntegrationTest
 
     assert_page_has_no_errors!
     assert page.has_css?('.alert')
+
+    click_link 'Por vencer'
 
     click_link 'Nombre'
 

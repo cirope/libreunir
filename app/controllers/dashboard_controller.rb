@@ -1,5 +1,5 @@
 class DashboardController < ApplicationController
-  before_filter :authenticate_user!, :parameters, :set_dates, :set_current_user
+  before_filter :authenticate_user!, :set_dates, :set_current_user
 
   layout ->(controller) { controller.request.xhr? ? false : 'application' }
 
@@ -7,11 +7,12 @@ class DashboardController < ApplicationController
     @title = t 'view.dashboard.index_title'
     @filtrable = true
 
-    @expired = get_scope.where('fees.expiration_date BETWEEN ? AND ? AND fees.payment_date IS NULL AND fees.expiration_date < ?',
-                 @date.start, @date.end, Date.today).last(30)
-    @close_to_expire = get_scope.where('fees.expiration_date BETWEEN ? AND ? AND fees.payment_date IS NULL',
-                         @date.start, @date.end).last(30)
-    @close_to_expire = @close_to_expire-@expired if @close_to_expire && @expired
+    @expired = get_scope.where(daterange_params).without_payment_day.expired_before(Date.today).last(30)
+
+    @close_to_expire = get_scope.where(daterange_params).without_payment_day.
+                         will_expire_after(Date.today).expired_before(Date.today.at_end_of_month).last(30)
+
+    @close_to_expire = @close_to_expire - @expired if @close_to_expire && @expired
   end
 
   def expired
@@ -20,8 +21,8 @@ class DashboardController < ApplicationController
     @filtrable = true
     @printing = params[:print]
 
-    @fees = get_scope.where('fees.expiration_date BETWEEN ? AND ? AND fees.payment_date IS NULL AND fees.expiration_date < ?',
-      @date.start, @date.end, Date.today).filtered_list(params[:q])
+    @fees = get_scope.where(daterange_params).without_payment_day.expired_before(Date.today).
+              filtered_list(params[:q])
 
     @fees = @printing.present? ? @fees : @fees.page(params[:page])
     render 'dashboard/debts'
@@ -37,8 +38,8 @@ class DashboardController < ApplicationController
     @filtrable = true
     @printing = params[:print]
 
-    @fees = get_scope.where('fees.expiration_date BETWEEN ? AND ?',
-      @date.start, @date.end).filtered_list(params[:q])
+    @fees = get_scope.where(daterange_params).without_payment_day.
+              will_expire_after(Date.today).expired_before(Date.today.at_end_of_month).filtered_list(params[:q])
 
     @fees = @printing.present? ? @fees : @fees.page(params[:page])
     render 'dashboard/debts'
@@ -47,34 +48,44 @@ class DashboardController < ApplicationController
   def profile
     @title = t 'view.dashboard.profile_title'
 
-    @client = Client.where('product_id = ?', params[:product_id]).first
+    @client = Client.where(product_params).first
   end
 
   private
 
-  def parameters
-    params.permit!
+  def product_params
+    params.permit(:product_id)
+  end
+
+  def daterange_params
+    params.permit(:date_range).permit(
+      :start, :end
+    )
+  end
+
+  def users_params
+    params.require(:users).permit(
+      :id
+    )
   end
 
   def set_dates
-    @date = DateRange.new(params[:date_range])
+    @date = DateRange.new(daterange_params)
   end
 
-  # TODO: Refactor this
   def set_current_user
-    if params[:users] && !params[:users][:user_id].blank?
-      @user = User.find(params[:users][:user_id])
+    if params[:users] && !params[:users][:id].blank?
+      @user = User.where(users_params).first
     else
       @user = current_user
     end
   end
 
-  # TODO: Refactor this
   def get_scope
-    if (params[:users] && params[:users][:user_id]) || current_user.admin?
-      Fee.all
-    else
+    if @user != current_user
       @user.fees
+    else
+      Fee.all
     end
   end
 end

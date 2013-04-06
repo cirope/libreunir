@@ -3,8 +3,8 @@ module Fees
     extend ActiveSupport::Concern
 
     included do
-      scope :with_payment_day, -> { where('payment_date IS NOT NULL') }
-      scope :without_payment_day, -> { where('payment_date IS NULL') }
+      scope :with_payment_day, -> { where("#{table_name}.payment_date IS NOT NULL") }
+      scope :without_payment_day, -> { where("#{table_name}.payment_date IS NULL") }
     end
 
     module ClassMethods
@@ -13,31 +13,46 @@ module Fees
       end
 
       def expired_before(date)
-        where('expiration_date < ?', date)
+        where("#{table_name}.expiration_date < ?", date)
+      end
+
+      def will_expire_after(date)
+        where("#{table_name}.expiration_date > ?", date)
       end
     end
 
     # TODO: Refactor days calculations
     def late_average
-      days = 0
-      payed_fees = self.class.with_payment_day.where(loan_id: self.loan_id)
+      paid_fees = self.class.with_payment_day.where(loan_id: self.loan_id)
 
-      payed_fees.each do |fee|
-        if fee.expiration_date && fee.payment_date
-          days += (fee.expiration_date.to_date - fee.payment_date.to_date)
-        end
+      unpaid_fees = self.class.without_payment_day.expired_before(Date.today).where(loan_id: self.loan_id)
+
+      days = paid_fees_sum(paid_fees) + unpaid_fees_sum(unpaid_fees)
+
+      days = Date.today - self.expiration_date.to_date if days == 0
+      number_of_fees = paid_fees.count + unpaid_fees.count
+
+      formal_delay(days, number_of_fees)
+    end
+
+    def paid_fees_sum(paid_fees)
+      days = 0
+
+      paid_fees.each do |fee|
+        days += (fee.expiration_date.to_date - fee.payment_date.to_date)
       end
 
-      unpayed_fees = self.class.without_payment_day.expired_before(Date.today).where(loan_id: self.loan_id)
+      days
+    end
 
-      unpayed_fees.each do |fee|
+    def unpaid_fees_sum(unpaid_fees)
+      days = 0
+
+      unpaid_fees.each do |fee|
         days += (fee.expiration_date.to_date - Date.today)
       end
 
-      days = Date.today - self.expiration_date.to_date if days == 0
-      number_of_fees = payed_fees.count + unpayed_fees.count
-
-      formal_delay(days, number_of_fees)
+      days
     end
 
     def late_days
