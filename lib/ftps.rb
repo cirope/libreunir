@@ -1,12 +1,13 @@
 class Ftps
   require 'double_bag_ftps'
+  require 'fileutils'
 
   def initialize
     @ftps = DoubleBagFTPS.new
   end
 
   def make_folder
-    Dir.mkdir(File.expand_path("private")) if !Dir.exist?(File.expand_path("private"))
+    FileUtils.mkdir_p(File.expand_path("private"))
   end
 
   def set_mode
@@ -22,10 +23,10 @@ class Ftps
     @ftps.login(APP_CONFIG['ftps']['user'], APP_CONFIG['ftps']['password'])
   end
 
-  def get_file                                                                                                                                    
+  def get_file
     @ftps.passive = true
     @ftps.chdir(APP_CONFIG['zip']['path'])
     @ftps.get(APP_CONFIG['zip']['filename'], File.expand_path("private") + '/' + APP_CONFIG['zip']['filename'])
     @ftps.close
-  end 
+  end
 end
