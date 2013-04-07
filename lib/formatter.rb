@@ -11,12 +11,9 @@ class Formatter
   end
 
   def self.create_directories
-    Dir.mkdir(File.expand_path("private/backup")) if !Dir.exist?(File.expand_path("private/backup"))
-    Dir.mkdir(File.expand_path("private/data/processed")) if !Dir.exist?(File.expand_path("private/data/processed"))
-
-    if !Dir.exist?(File.expand_path("private/data/processed/") + '/' + "#{Time.new.strftime('%Y-%m-%d')}")
-      Dir.mkdir(File.expand_path("private/data/processed/") + '/' + "#{Time.new.strftime('%Y-%m-%d')}")
-    end
+    FileUtils.mkdir_p(File.expand_path("private/backup"))
+    FileUtils.mkdir_p(File.expand_path("private/data/processed"))
+    FileUtils.mkdir_p(File.expand_path("private/data/processed/") + '/' + "#{Time.new.strftime('%Y-%m-%d')}")
   end
 
   def self.convert_to_utf8
