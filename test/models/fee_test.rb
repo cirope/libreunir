@@ -35,4 +35,30 @@ class FeeTest < ActiveSupport::TestCase
     assert_equal [error_message_from_model(@fee, :loan_id, :blank)],
       @fee.errors[:loan_id]
   end
+
+  test 'should calculate late days for a fee' do
+    @fee = Fabricate(:fee, expiration_date: 2.month.ago)
+
+    assert_equal '59 dias tarde', @fee.late_days
+  end
+
+  test 'should calculate average late days with bad fees' do
+    5.times { @fee = Fabricate(:fee, expiration_date: 1.month.ago) }
+
+    assert_equal '31 dias tarde', @fee.late_average
+  end
+
+  test 'should calculate average late days with good fees' do
+    5.times { @fee = Fabricate(:fee, expiration_date: Date.today, payment_date: 1.month.ago) }
+
+    assert_equal '31 dias antes', @fee.late_average
+  end
+
+  test 'should calculate average late days with average fees' do
+    2.times { Fabricate(:fee, expiration_date: 2.month.ago, payment_date: 1.month.ago) }
+    2.times { Fabricate(:fee, expiration_date: 1.month.ago, payment_date: 1.month.ago) }
+    @fee = Fabricate(:fee, expiration_date: Date.today)
+
+    assert_equal 'A tiempo', @fee.late_average
+  end
 end
