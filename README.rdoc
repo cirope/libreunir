@@ -4,7 +4,7 @@
 
 === Dependency Status {<img src="https://gemnasium.com/kainlite/libreunir.png?travis"/>}[https://gemnasium.com/kainlite/libreunir]
 
-=== Code Status [![Code Climate](https://codeclimate.com/github/kainlite/libreunir.png)](https://codeclimate.com/github/kainlite/libreunir)
+=== Code Status {<img src="https://codeclimate.com/github/kainlite/libreunir.png"/>}[https://codeclimate.com/github/kainlite/libreunir]
 
 == (The MIT License)
 
