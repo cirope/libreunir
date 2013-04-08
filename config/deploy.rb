@@ -6,7 +6,7 @@ server 'libreunir.com', :web, :app, :db, primary: true
 
 set :application, 'libreunir'
 set :user, 'deployer'
-set :deploy_to, '/var/rails/#{application}'
+set :deploy_to, "/var/rails/#{application}"
 set :deploy_via, :remote_cache
 set :use_sudo, false
 
