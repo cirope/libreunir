@@ -14,11 +14,12 @@ gem 'paper_trail', github: 'airblade/paper_trail', branch: 'rails4'
 gem 'magick_columns', github: 'kainlite/magick_columns'
 gem 'validates_timeliness'
 gem 'sidekiq'
-gem 'capistrano'
 gem 'smarter_csv'
 gem 'archive-zip'
 gem 'double-bag-ftps', github: 'kainlite/double-bag-ftps'
 gem 'whenever', require: false
+gem 'capistrano'
+gem 'unicorn'
 
 group :assets do
   gem 'sass-rails', '~> 4.0.0.beta1'
@@ -27,7 +28,6 @@ group :assets do
 end
 
 group :development do
-  gem 'thin'
   gem 'pry'
   gem 'pry-rails'
 end
