@@ -21,18 +21,10 @@ class Formatter
       handler = open(file, "rb:UTF-16LE")
 
       reader = handler.readlines
-      headers = reader[2].encode("UTF-8").split("\s")
-      headers = headers.join('|').to_s
+      headers = fix_header(reader)
 
-      contents = String.new
-      contents << headers << "\r\n"
-      reader[4..-1].each do |line|
-        contents << line.encode("UTF-8")
-      end
-
-      writer = File.new("#{file[0..-5]}_utf8.csv", "w")
-      writer << contents
-      writer.close
+      contents = parse_to_utf8(headers, reader)
+      write_utf8(file, contents)
 
       File.unlink(file)
     end
@@ -42,7 +34,7 @@ class Formatter
     FileUtils.mv(
       File.expand_path("private") + '/' + APP_CONFIG['zip']['filename'],
       File.expand_path("private/backup/") + '/' + "#{APP_CONFIG['zip']['filename'][0..-5]}-#{Time.new.strftime('%Y-%m-%d')}.zip"
-    ) if File.exist?(File.expand_path("private") + '/' + APP_CONFIG['zip']['filename'])
+    )
   end
 
   def self.parse_utf8_files
@@ -51,13 +43,7 @@ class Formatter
       klass = APP_CONFIG['table_maps'][filename].singularize.classify.constantize
       mappings = APP_CONFIG["field_maps_#{APP_CONFIG['table_maps'][filename]}"]
 
-      ActiveRecord::Base.connection.execute("TRUNCATE TABLE #{klass.table_name}")
-      if (association = APP_CONFIG["field_maps_#{APP_CONFIG['table_maps'][filename]}"]['many_to_one_association']).present?
-        association.each do |k,v|
-          association_klass = v.singularize.classify.safe_constantize || v.camelize.constantize
-          ActiveRecord::Base.connection.execute("TRUNCATE TABLE #{association_klass.table_name}")
-        end
-      end
+      truncate_tables(filename, klass)
 
       index = 0
       csv = SmarterCSV.process(file,
@@ -97,15 +83,18 @@ class Formatter
           end
         end
       end
-
-      FileUtils.mv(
-        file,
-        File.expand_path("private/data/processed/") + '/' + "#{Time.new.strftime('%Y-%m-%d')}/#{File.basename(file).downcase}"
-      )
+      move_processed(file)
     end
   end
 
   private
+
+  def self.move_processed(file)
+    FileUtils.mv(
+      file,
+      File.expand_path("private/data/processed/") + '/' + "#{Time.new.strftime('%Y-%m-%d')}/#{File.basename(file).downcase}"
+    )
+  end
 
   def self.strip_nulls(value)
     (value = '') if (value.is_a?(String) && value.match('null'))
@@ -116,5 +105,36 @@ class Formatter
     hash.each do |k,v|
       (v = '') if (v.is_a?(String) && v.match('null'))
     end
+  end
+
+  def self.truncate_tables(filename, klass)
+    ActiveRecord::Base.connection.execute("TRUNCATE TABLE #{klass.table_name}")
+    if (association = APP_CONFIG["field_maps_#{APP_CONFIG['table_maps'][filename]}"]['many_to_one_association']).present?
+      association.each do |k,v|
+        association_klass = v.singularize.classify.safe_constantize || v.camelize.constantize
+        ActiveRecord::Base.connection.execute("TRUNCATE TABLE #{association_klass.table_name}")
+      end
+    end
+  end
+
+  def self.fix_header(reader)
+    headers = reader[2].encode("UTF-8").split("\s")
+    headers = headers.join('|').to_s
+  end
+
+  def self.parse_to_utf8(headers, reader)
+    contents = String.new
+    contents << headers << "\r\n"
+    reader[4..-1].each do |line|
+      contents << line.encode("UTF-8")
+    end
+
+    contents
+  end
+
+  def self.write_utf8(file, contents)
+    writer = File.new("#{file[0..-5]}_utf8.csv", "w")
+    writer << contents
+    writer.close
   end
 end

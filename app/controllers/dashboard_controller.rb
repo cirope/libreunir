@@ -7,10 +7,8 @@ class DashboardController < ApplicationController
     @title = t 'view.dashboard.index_title'
     @filtrable = true
 
-    @expired = get_scope.where(daterange_params).without_payment_day.expired_before(Date.today).last(30)
-
-    @close_to_expire = get_scope.where(daterange_params).without_payment_day.
-                         will_expire_after(Date.today).expired_before(Date.today.at_end_of_month).last(30)
+    @expired = get_expired.last(30)
+    @close_to_expire = get_close_to_expire.last(30)
 
     @close_to_expire = @close_to_expire - @expired if @close_to_expire && @expired
   end
@@ -21,8 +19,7 @@ class DashboardController < ApplicationController
     @filtrable = true
     @printing = params[:print]
 
-    @fees = get_scope.where(daterange_params).without_payment_day.expired_before(Date.today).
-              filtered_list(params[:q])
+    @fees = get_expired
 
     @fees = @printing.present? ? @fees : @fees.page(params[:page])
     render 'dashboard/debts'
@@ -38,9 +35,7 @@ class DashboardController < ApplicationController
     @filtrable = true
     @printing = params[:print]
 
-    @fees = get_scope.where(daterange_params).without_payment_day.
-              will_expire_after(Date.today).expired_before(Date.today.at_end_of_month).filtered_list(params[:q])
-
+    @fees = get_close_to_expire
     @fees = @printing.present? ? @fees : @fees.page(params[:page])
     render 'dashboard/debts'
   end
@@ -74,7 +69,7 @@ class DashboardController < ApplicationController
   end
 
   def set_current_user
-    if params[:users] && !params[:users][:id].blank?
+    if params[:users] && params[:users][:id].present?
       @user = User.where(users_params).first
     else
       @user = current_user
@@ -87,5 +82,15 @@ class DashboardController < ApplicationController
     else
       Fee.all
     end
+  end
+
+  def get_expired
+    get_scope.where(daterange_params).without_payment_day.expired_before(Date.today).
+      filtered_list(params[:q])
+  end
+
+  def get_close_to_expire
+    get_scope.where(daterange_params).without_payment_day.
+      will_expire_after(Date.today).expired_before(Date.today.at_end_of_month).filtered_list(params[:q])
   end
 end
