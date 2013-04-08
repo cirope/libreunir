@@ -39,7 +39,7 @@ class FeeTest < ActiveSupport::TestCase
   test 'should calculate late days for a fee' do
     @fee = Fabricate(:fee, expiration_date: 2.month.ago)
 
-    assert_equal '59 dias tarde', @fee.late_days
+    assert_equal '61 dias tarde', @fee.late_days
   end
 
   test 'should calculate average late days with bad fees' do
