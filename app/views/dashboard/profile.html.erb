@@ -36,11 +36,13 @@
   </thead>
   <tbody>
     <% @client.try(:calls).try(:each) do |call| %>
-      <tr>
-        <td>
-          <%= call.try(:call) %>
-        </td>
-      </tr>
+      <% if call.try(:all).present? %>
+        <tr>
+          <td>
+            <%= call.try(:call) %>
+          </td>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>

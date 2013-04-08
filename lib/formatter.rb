@@ -6,8 +6,11 @@ class Formatter
 
   @@formatter ||= Logger.new("#{Rails.root}/log/formatter-#{Time.new.strftime('%Y-%m-%d')}.log")
 
-  def self.info(message=nil)
-    @@formatter.info(message) unless message.nil?
+  def self.info(klass, row, attributes)
+    message = String.new
+    message << "#{klass} - Row: #{row}"
+    message << "#{klass} - Record not saved : #{attributes}"
+    @@formatter.info(message)
   end
 
   def self.create_directories
@@ -31,10 +34,12 @@ class Formatter
   end
 
   def self.backup_zip_file
+    origin = File.expand_path("private") + '/' + APP_CONFIG['zip']['filename']
+    target = File.expand_path("private/backup/") + '/' + "#{APP_CONFIG['zip']['filename'][0..-5]}-#{Time.new.strftime('%Y-%m-%d')}.zip"
     FileUtils.mv(
-      File.expand_path("private") + '/' + APP_CONFIG['zip']['filename'],
-      File.expand_path("private/backup/") + '/' + "#{APP_CONFIG['zip']['filename'][0..-5]}-#{Time.new.strftime('%Y-%m-%d')}.zip"
-    )
+      origin,
+      target
+    ) if File.exists?(target)
   end
 
   def self.parse_utf8_files
@@ -63,10 +68,7 @@ class Formatter
         end if mappings[:remove_prefix]
         record = klass.new(attributes).save(validate: false) if attributes[key.to_sym].present?
 
-        unless record
-          Formatter.info("#{klass} - Row: #{row}")
-          Formatter.info("#{klass} - Record not saved : #{attributes}")
-        end
+        Formatter.info(klass, row, attributes) unless record
 
         if (association = APP_CONFIG["field_maps_#{APP_CONFIG['table_maps'][filename]}"][:many_to_one_association]).present?
           association.each do |k,v|
@@ -75,10 +77,7 @@ class Formatter
             k.each do |field|
               association_attributes = { :"#{association_key[v]}" => strip_nulls(row[key.to_sym]), :"#{v}" => strip_nulls(row[field.to_sym]) }
               record = association_klass.new(association_attributes).save(validate: false) if row[key.to_sym].present? && row[field.to_sym].present?
-              unless record
-                Formatter.info("#{klass} - Row: #{row}")
-                Formatter.info("#{association_klass} - Record not saved: #{association_attributes}")
-              end
+              Formatter.info(association_klass, row, association_attributes) unless record
             end
           end
         end
