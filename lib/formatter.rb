@@ -39,7 +39,7 @@ class Formatter
     FileUtils.mv(
       origin,
       target
-    ) if File.exists?(target)
+    ) if File.exists?(origin)
   end
 
   def self.parse_utf8_files
@@ -70,23 +70,27 @@ class Formatter
 
         Formatter.info(klass, row, attributes) unless record
 
-        if (association = APP_CONFIG["field_maps_#{APP_CONFIG['table_maps'][filename]}"][:many_to_one_association]).present?
-          association.each do |k,v|
-            association_klass = v.singularize.classify.safe_constantize || v.camelize.constantize
-            association_key = APP_CONFIG["field_maps_#{APP_CONFIG['table_maps'][filename]}"][:many_to_one_association_key]
-            k.each do |field|
-              association_attributes = { :"#{association_key[v]}" => strip_nulls(row[key.to_sym]), :"#{v}" => strip_nulls(row[field.to_sym]) }
-              record = association_klass.new(association_attributes).save(validate: false) if row[key.to_sym].present? && row[field.to_sym].present?
-              Formatter.info(association_klass, row, association_attributes) unless record
-            end
-          end
-        end
+        create_associated_records(filename, key, row)
       end
       move_processed(file)
     end
   end
 
   private
+
+  def self.create_associated_records(filename, key, row)
+    if (association = APP_CONFIG["field_maps_#{APP_CONFIG['table_maps'][filename]}"][:many_to_one_association]).present?
+      association.each do |k,v|
+        association_klass = v.singularize.classify.safe_constantize || v.camelize.constantize
+        association_key = APP_CONFIG["field_maps_#{APP_CONFIG['table_maps'][filename]}"][:many_to_one_association_key]
+        k.each do |field|
+          association_attributes = { :"#{association_key[v]}" => strip_nulls(row[key.to_sym]), :"#{v}" => strip_nulls(row[field.to_sym]) }
+          record = association_klass.new(association_attributes).save(validate: false) if row[key.to_sym].present? && row[field.to_sym].present?
+          Formatter.info(association_klass, row, association_attributes) unless record
+        end
+      end
+    end
+  end
 
   def self.move_processed(file)
     FileUtils.mv(
