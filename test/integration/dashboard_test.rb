@@ -110,7 +110,7 @@ class DashboardTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get expired' do
-    100.times { Fabricate(:fee, expiration_date: 2.month.ago) }
+    100.times { Fabricate(:fee, expiration_date: 3.days.ago) }
 
     visit root_path
     login

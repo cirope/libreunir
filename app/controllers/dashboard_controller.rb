@@ -76,7 +76,7 @@ class DashboardController < ApplicationController
   end
 
   def get_expired
-    get_scope.where(expiration_date: @date.start.at_beginning_of_month..@date.end).without_payment_day.expired_before(Date.today).
+    get_scope.where(expiration_date: @date.start..@date.end).without_payment_day.expired_before(Date.today).
       filtered_list(params[:q])
   end
 

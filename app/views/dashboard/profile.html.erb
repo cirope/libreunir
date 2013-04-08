@@ -36,7 +36,7 @@
   </thead>
   <tbody>
     <% @client.try(:calls).try(:each) do |call| %>
-      <% if call.try(:all).present? %>
+      <% if call.try(:call).present? %>
         <tr>
           <td>
             <%= call.try(:call) %>
