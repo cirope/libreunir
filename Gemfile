@@ -34,6 +34,7 @@ end
 
 group :test do
   gem 'turn'
+  gem 'timecop'
   gem 'minitest'
   gem 'capybara'
   gem 'database_cleaner' # For Capybara

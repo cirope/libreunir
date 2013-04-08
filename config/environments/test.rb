@@ -8,7 +8,7 @@ Libreunir::Application.configure do
   config.cache_classes = true
 
   # eager load
-  config.eager_load = false  
+  config.eager_load = false
 
   # Configure static asset server for tests with Cache-Control for performance
   config.serve_static_assets = true
@@ -34,4 +34,11 @@ Libreunir::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+
+  # Set timecop to January 5, 2013 10:05:00 AM UTC
+  config.after_initialize do
+    t = Time.utc(2013, 1, 5, 10, 5, 0)
+
+    Timecop.travel(t)
+  end
 end
