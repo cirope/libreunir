@@ -15,29 +15,20 @@ class DashboardController < ApplicationController
 
   def expired
     @title = t 'view.dashboard.expired_title'
-    @printable = true
-    @filtrable = true
-    @printing = params[:print]
-
     @fees = get_expired
 
-    @fees = @printing.present? ? @fees : @fees.page(params[:page])
-    render 'dashboard/debts'
-  end
-
-  def expiring_info
-    @fee = Fee.find(params[:id])
+    default_render_expirations
   end
 
   def close_to_expire
     @title = t 'view.dashboard.close_to_expire_title'
-    @printable = true
-    @filtrable = true
-    @printing = params[:print]
-
     @fees = get_close_to_expire
-    @fees = @printing.present? ? @fees : @fees.page(params[:page])
-    render 'dashboard/debts'
+
+    default_render_expirations
+  end
+
+  def expiring_info
+    @fee = Fee.find(params[:id])
   end
 
   def profile
@@ -92,5 +83,14 @@ class DashboardController < ApplicationController
   def get_close_to_expire
     get_scope.where(daterange_params).without_payment_day.
       will_expire_after(Date.today).expired_before(Date.today.at_end_of_month).filtered_list(params[:q])
+  end
+
+  def default_render_expirations
+    @printable = true
+    @filtrable = true
+    @printing = params[:print]
+
+    @fees = @printing.present? ? @fees : @fees.page(params[:page])
+    render 'dashboard/debts'
   end
 end
