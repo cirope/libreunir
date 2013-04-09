@@ -5,7 +5,7 @@
       <div class="row-fuild">
         <div class="span6">
           <h3>
-            <%= link_to t('view.dashboard.expired'), expired_path(date_range: { start: @date.start, end: @date.end, auto_user_name: @user.name }) %>
+            <%= link_to t('view.dashboard.expired'), expired_path(date_range: { start: @date.start, end: @date.end }, users: { id: @user.id }) %>
           </h3>
           <table id="expired" class="table resource-list expired table-condensed">
             <thead>
@@ -44,7 +44,7 @@
         </div>
         <div class="span6">
           <h3>
-            <%= link_to t('view.dashboard.close_to_expire'), close_to_expire_path(date_range: { start: @date.start, end: @date.end, auto_user_name: @user.name }) %>
+            <%= link_to t('view.dashboard.close_to_expire'), close_to_expire_path(date_range: { start: @date.start, end: @date.end }, users: { id: @user.id }) %>
           </h3>
           <table id="close_to_expire" class="table close_to_expire resource-list table-condensed">
             <thead>
