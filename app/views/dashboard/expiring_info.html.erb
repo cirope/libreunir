@@ -1,17 +1,19 @@
 <table class="table table-condensed">
   <thead>
-    <th>
-      <%= t 'view.dashboard.late_average' %>
-    </th>
-    <th>
-      <%= t 'view.dashboard.amount' %>
-    </th>
-    <th>
-      <%= t 'view.dashboard.phone' %>
-    </th>
-    <th>
-      <%= t 'view.dashboard.address' %>
-    </th>
+    <tr>
+      <th>
+        <%= t 'view.dashboard.late_average' %>
+      </th>
+      <th>
+        <%= t 'view.dashboard.amount' %>
+      </th>
+      <th>
+        <%= t 'view.dashboard.phone' %>
+      </th>
+      <th>
+        <%= t 'view.dashboard.address' %>
+      </th>
+    </tr>
   </thead>
   <tbody>
     <tr>
@@ -32,13 +34,15 @@
 </table>
 
 <h5>
-<%= t 'view.dashboard.last_calls' %>
+  <%= t 'view.dashboard.last_calls' %>
 </h5>
 <table class="table table-condensed notifications">
   <thead>
-    <th>
-      <%= t 'view.dashboard.call' %>
-    </th>
+    <tr>
+      <th>
+        <%= t 'view.dashboard.call' %>
+      </th>
+    </tr>
   </thead>
   <tbody>
     <% @fee.client.try(:calls).try(:each) do |call| %>

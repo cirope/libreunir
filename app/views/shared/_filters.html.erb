@@ -1,7 +1,7 @@
 <% if @filtrable %>
-  <div class="not-printable">
+  <div class="not-printable readonly-data">
     <%= simple_form_for @date, url: request.env['PATH_INFO'] do |f| %>
-      <div class="row">
+      <div class="row-fluid">
         <div class="span3">
           <%= f.input :start, as: :date_picker, label: t('view.dashboard.start') %>
         </div>
@@ -9,15 +9,16 @@
           <%= f.input :end, as: :date_picker, label: t('view.dashboard.end') %>
         </div>
         <div class="span3">
+          <%= simple_fields_for :users do |j_f| %>
+            <%= render partial: 'users/autocomplete.html.erb', locals: { f: j_f } %>
+          <% end %>
+        </div>
+        <div class="span3">
+          <br />
           <%= f.button :submit, t('view.dashboard.apply'), class: 'btn-primary' %>
         </div>
-    <% end %>
-    <div class="span8">
-      <%= simple_fields_for :users do |j_f| %>
-        <%= render partial: "users/autocomplete.html.erb", locals: { f: j_f } %>
-      <% end %>
       </div>
-    </div>
+    <% end %>
   </div>
 <% end %>
 <% if @printable %>

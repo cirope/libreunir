@@ -1,42 +1,44 @@
-<div class="row">
-  <div class="span12">
-    <h3>
-      <%= t("view.dashboard.#{action_name}") %>
-    </h3>
-    <table id="expired" class="table resource-list expired table-condensed" <%= @printing.present? ? "" : 'data-endless-container="true"' %>>
-      <thead>
-        <th>
-          <%= t 'view.dashboard.product_id' %>
-        </th>
-        <th>
-          <%= t 'view.dashboard.client' %>
-        </th>
-        <th>
-          <%= t 'view.dashboard.expiring' %>
-        </th>
-        <th>
-          <%= t 'view.dashboard.amount' %>
-        </th>
-        <th>
-          <%= t 'view.dashboard.phone' %>
-        </th>
-        <th>
-          <%= t 'view.dashboard.address' %>
-        </th>
-      </thead>
-      <tbody>
-        <% @fees.each do |fee| %>
+<div class="readonly-data">
+  <div class="row-fluid">
+    <div class="span12">
+      <h3>
+        <%= t("view.dashboard.#{action_name}") %>
+      </h3>
+      <table id="expired" class="table resource-list expired table-condensed" <%= @printing.present? ? '' : 'data-endless-container="true"' %>>
+        <thead>
           <tr>
-            <%= render partial: 'fees/fee', locals: { fee: fee } %>
+            <th>
+              <%= t 'view.dashboard.product_id' %>
+            </th>
+            <th>
+              <%= t 'view.dashboard.client' %>
+            </th>
+            <th>
+              <%= t 'view.dashboard.expiring' %>
+            </th>
+            <th>
+              <%= t 'view.dashboard.amount' %>
+            </th>
+            <th>
+              <%= t 'view.dashboard.phone' %>
+            </th>
+            <th>
+              <%= t 'view.dashboard.address' %>
+            </th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-  <div class="counter-increment">
-  </div>
-  <div class="not-printable">
-    <%= pagination_links(@fees) if @printing.blank? %>
+        </thead>
+        <tbody>
+          <% @fees.each do |fee| %>
+            <%= render partial: 'fees/fee', locals: { fee: fee } %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="counter-increment">
+    </div>
+    <div class="not-printable">
+      <%= pagination_links(@fees) if @printing.blank? %>
+    </div>
   </div>
 </div>
 

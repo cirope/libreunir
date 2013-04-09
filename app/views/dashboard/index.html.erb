@@ -1,82 +1,88 @@
-<div class="row">
-  <div class="span12">
+<div class="readonly-data">
+  <div class="row-fluid">
+    <div class="span12">
       <h3><%= t 'view.dashboard.dashboard' %></h3>
-      <div class="row">
-      <div class="span6">
-        <h3>
-          <%= link_to t('view.dashboard.expired'), expired_path(date_range: { start: @date.start, end: @date.end, auto_user_name: @user.name }) %>
-        </h3>
-        <table id="expired" class="table resource-list expired table-condensed">
-          <thead>
-            <th>
-              <%= t 'view.dashboard.client' %>
-            </th>
-            <th>
-              <%= t 'view.dashboard.expiring' %>
-            </th>
-          </thead>
-          <tbody>
-            <% @expired.each do |fee| %>
+      <div class="row-fuild">
+        <div class="span6">
+          <h3>
+            <%= link_to t('view.dashboard.expired'), expired_path(date_range: { start: @date.start, end: @date.end, auto_user_name: @user.name }) %>
+          </h3>
+          <table id="expired" class="table resource-list expired table-condensed">
+            <thead>
               <tr>
-                <td>
-                  <%= link_to fee.client.try(:name), profile_path(fee.client.try(:product_id)),
-                    data: { original_title: "#{t('view.fees.loan_id')}: #{fee.try(:loan_id)}", show_tooltip: true }
-                  %>
-                </td>
-                <td>
-                  <%= I18n.l(fee.expiration_date, format: :minimal) %>
-                </td>
-                <td>
-                  <div class="actions">
-                    <%= (link_to '<span class="badge badge-info">&#x2139;</span>'.html_safe, expiring_info_path(fee.id),
+                <th>
+                  <%= t 'view.dashboard.client' %>
+                </th>
+                <th>
+                  <%= t 'view.dashboard.expiring' %>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @expired.each do |fee| %>
+                <tr>
+                  <td>
+                    <%= link_to fee.client.try(:name), profile_path(fee.client.try(:product_id)),
+                      data: { original_title: "#{t('view.fees.loan_id')}: #{fee.try(:loan_id)}", show_tooltip: true }
+                    %>
+                  </td>
+                  <td>
+                    <%= I18n.l(fee.expiration_date, format: :minimal) %>
+                  </td>
+                  <td>
+                    <div class="actions">
+                      <%= (link_to '<span class="badge badge-info">&#x2139;</span>'.html_safe, expiring_info_path(fee.id),
+                          remote: true, class: "iconic popoverized info-#{fee.id}",
+                          data: { original_title: t('label.more_info'), show_tooltip: true }
+                      ) if fee.persisted? %>
+                    </div>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+        <div class="span6">
+          <h3>
+            <%= link_to t('view.dashboard.close_to_expire'), close_to_expire_path(date_range: { start: @date.start, end: @date.end, auto_user_name: @user.name }) %>
+          </h3>
+          <table id="close_to_expire" class="table close_to_expire resource-list table-condensed">
+            <thead>
+              <tr>
+                <th>
+                  <%= t 'view.dashboard.client' %>
+                </th>
+                <th>
+                  <%= t 'view.dashboard.expiring' %>
+                </th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @close_to_expire.each do |fee| %>
+                <tr>
+                  <td>
+                    <%= link_to fee.client.try(:name), profile_path(fee.client.try(:product_id)),
+                        data: { original_title: "#{t('view.fees.loan_id')}: #{fee.try(:loan_id)}", show_tooltip: true }
+                    %>
+                  </td>
+                  <td>
+                    <%= I18n.l(fee.expiration_date, format: :minimal) %>
+                  </td>
+                  <td>
+                    <div class="actions">
+                      <%= (link_to '<span class="badge badge-info">&#x2139;</span>'.html_safe, expiring_info_path(fee.id),
                         remote: true, class: "iconic popoverized info-#{fee.id}",
                         data: { original_title: t('label.more_info'), show_tooltip: true }
-                    ) if fee.persisted? %>
-                  </div>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
-      <div class="span6">
-        <h3>
-          <%= link_to t('view.dashboard.close_to_expire'), close_to_expire_path(date_range: { start: @date.start, end: @date.end, auto_user_name: @user.name }) %>
-        </h3>
-        <table id="close_to_expire" class="table close_to_expire resource-list table-condensed">
-          <thead>
-            <th>
-              <%= t 'view.dashboard.client' %>
-            </th>
-            <th>
-              <%= t 'view.dashboard.expiring' %>
-            </th>
-            <th></th>
-          </thead>
-          <tbody>
-            <% @close_to_expire.each do |fee| %>
-              <tr>
-                <td>
-                  <%= link_to fee.client.try(:name), profile_path(fee.client.try(:product_id)),
-                      data: { original_title: "#{t('view.fees.loan_id')}: #{fee.try(:loan_id)}", show_tooltip: true }
-                  %>
-                </td>
-                <td>
-                  <%= I18n.l(fee.expiration_date, format: :minimal) %>
-                </td>
-                <td>
-                  <div class="actions">
-                    <%= (link_to '<span class="badge badge-info">&#x2139;</span>'.html_safe, expiring_info_path(fee.id),
-                     remote: true, class: "iconic popoverized info-#{fee.id}",
-                      data: { original_title: t('label.more_info'), show_tooltip: true }
 
-                    ) if fee.persisted? %>
-                  </div>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
+                      ) if fee.persisted? %>
+                    </div>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
