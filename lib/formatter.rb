@@ -48,12 +48,19 @@ class Formatter
       klass = APP_CONFIG['table_maps'][filename].singularize.classify.constantize
       mappings = APP_CONFIG["field_maps_#{APP_CONFIG['table_maps'][filename]}"]
 
+      mappings.symbolize_keys!
+
+      if mappings[:only_once] && klass.count > 0
+        move_processed(file)
+        next
+      end
+
       truncate_tables(filename, klass)
 
       index = 0
       csv = SmarterCSV.process(file,
                                 { col_sep: "|",
-                                key_mapping: mappings.symbolize_keys! }
+                                key_mapping: mappings }
                               ) do |row|
         index += 1
         row = row.first

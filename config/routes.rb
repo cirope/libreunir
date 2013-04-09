@@ -18,7 +18,7 @@ Libreunir::Application.routes.draw do
     get :relatives, to: 'users#relatives', as: 'relatives', on: :collection
     member do
       get :edit_profile
-      put :update_profile
+      patch :update_profile
     end
   end
 
