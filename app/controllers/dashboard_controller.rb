@@ -68,7 +68,9 @@ class DashboardController < ApplicationController
   end
 
   def get_scope
-    if @user != current_user
+    if current_user.admin? && @user != current_user
+      @user.fees
+    elsif !current_user.admin?
       @user.fees
     else
       Fee.all
