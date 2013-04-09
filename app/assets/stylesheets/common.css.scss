@@ -60,7 +60,11 @@ html, body {
   }
 }
 
-.logged_in[data-action="index"], .logged_in[data-action="show"], .logged_in[data-action="expired"], .logged_in[data-action="close_to_expire"] {
+.logged_in[data-action="index"],
+.logged_in[data-action="show"],
+.logged_in[data-action="expired"],
+.logged_in[data-action="profile"],
+.logged_in[data-action="close_to_expire"] {
   .form-actions {
     padding-left: 20px;
   }
