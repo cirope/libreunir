@@ -2,7 +2,7 @@ require 'bundler/capistrano'
 set :bundle_flags, '--deployment --quiet --binstubs'
 set (:bundle_cmd) { "#{release_path}/bin/bundle" }
 
-set :whenever_command, 'bundle exec whenever'
+set :whenever_command, 'bundle exec whenever --set environment=production'
 require 'whenever/capistrano'
 
 server 'libreunir.com', :web, :app, :db, primary: true

@@ -14,14 +14,6 @@ GIT
     double-bag-ftps (0.1.0)
 
 GIT
-  remote: git://github.com/kainlite/magick_columns.git
-  revision: 9673d5c1ee846a54f1b4313411bdc2a7f34870e9
-  specs:
-    magick_columns (0.0.3)
-      rails (>= 3.2)
-      timeliness (>= 0.3)
-
-GIT
   remote: git://github.com/plataformatec/devise.git
   revision: ce37c301ff91f0d59ff91715f0c36e0ee285fb11
   branch: rails4
@@ -113,6 +105,9 @@ GEM
       thor (>= 0.14, < 2.0)
     json (1.7.7)
     kgio (2.8.0)
+    magick_columns (0.0.4)
+      rails (>= 3.2)
+      timeliness (>= 0.3)
     mail (2.5.3)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
@@ -186,7 +181,7 @@ GEM
       activemodel (>= 4.0.0.beta, < 4.1)
     slop (3.4.4)
     smarter_csv (1.0.4)
-    sprockets (2.9.0)
+    sprockets (2.9.2)
       hike (~> 1.2)
       multi_json (~> 1.0)
       rack (~> 1.0)
@@ -244,7 +239,7 @@ DEPENDENCIES
   fabrication
   faker
   jquery-rails
-  magick_columns!
+  magick_columns
   minitest
   paper_trail!
   pg
