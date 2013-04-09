@@ -1,105 +1,111 @@
-<table class="table table-condensed personal-info">
-  <thead>
-    <tr>
-      <th>
-        <%= t 'view.client.name' %>
-      </th>
-      <th>
-        <%= t 'view.client.phone' %>
-      </th>
-      <th>
-        <%= t 'view.client.address' %>
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <%= @client.try(:name) %>
-      </td>
-      <td>
-        <%= @client.try(:phones).try(:first).try(:phone) %>
-      </td>
-      <td>
-        <%= @client.try(:addresses).try(:first).try(:address) %>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div class="readonly-data">
+  <table class="table table-condensed personal-info">
+    <thead>
+      <tr>
+        <th>
+          <%= t 'view.client.name' %>
+        </th>
+        <th>
+          <%= t 'view.client.phone' %>
+        </th>
+        <th>
+          <%= t 'view.client.address' %>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <%= @client.try(:name) %>
+        </td>
+        <td>
+          <%= @client.try(:phones).try(:first).try(:phone) %>
+        </td>
+        <td>
+          <%= @client.try(:addresses).try(:first).try(:address) %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
-<h4>
-  <%= t 'view.dashboard.last_calls' %>
-</h4>
-<table class="table table-condensed notifications">
-  <thead>
-    <th>
-      <%= t 'view.dashboard.call' %>
-    </th>
-  </thead>
-  <tbody>
-    <% @client.try(:calls).try(:each) do |call| %>
-      <% if call.try(:call).present? %>
-        <tr>
+  <h4>
+    <%= t 'view.dashboard.last_calls' %>
+  </h4>
+  <table class="table table-condensed notifications">
+    <thead>
+      <tr>
+        <th>
+          <%= t 'view.dashboard.call' %>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @client.try(:calls).try(:each) do |call| %>
+        <% if call.try(:call).present? %>
+          <tr>
+            <td>
+              <%= call.try(:call) %>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+
+  <h4>
+    <%= t 'view.dashboard.fees' %>
+  </h4>
+  <h5>
+    <% late_average = @client.try(:fees).try(:first).try(:late_average) %>
+    <%= t 'view.fees.late_average' %>: <%= late_average %> |
+    <%= t 'view.fees.loan_id' %>:  <%= @client.try(:product_id)  %>
+  </h5>
+  <table class="table table-condensed fees">
+    <thead>
+      <tr>
+        <th>
+          <%= t 'view.fees.total_amount' %>
+        </th>
+        <th>
+          <%= t 'view.fees.fee_number' %>
+        </th>
+        <th>
+          <%= t 'view.fees.expiration_date' %>
+        </th>
+        <th>
+          <%= t 'view.fees.payment_date' %>
+        </th>
+        <th>
+          <%= t 'view.fees.paid_to' %>
+        </th>
+        <th>
+          <%= t 'view.fees.late_days' %>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @client.try(:fees).try(:each) do |fee| %>
+        <tr class="<%= date_fees(fee) %>">
           <td>
-            <%= call.try(:call) %>
+            <%= fee.try(:total_amount) %>
+          </td>
+          <td>
+            <%= fee.try(:fee_number) %>
+          </td>
+          <td>
+            <%= I18n.l(fee.try(:expiration_date), format: :minimal) %>
+          </td>
+          <td>
+            <%= I18n.l(fee.try(:payment_date), format: :minimal) if fee.try(:payment_date) %>
+          </td>
+          <td>
+            <%= fee.try(:paid_to) %>
+          </td>
+          <td>
+            <%= fee.late_days %>
           </td>
         </tr>
       <% end %>
-    <% end %>
-  </tbody>
-</table>
-
-<h4>
-  <%= t 'view.dashboard.fees' %>
-</h4>
-<h5>
-  <% late_average = @client.try(:fees).try(:first).try(:late_average) %>
-  <%= t 'view.fees.late_average' %>: <%= late_average %> |
-  <%= t 'view.fees.loan_id' %>:  <%= @client.try(:product_id)  %>
-</h5>
-<table class="table table-condensed fees">
-  <thead>
-    <th>
-      <%= t 'view.fees.total_amount' %>
-    </th>
-    <th>
-      <%= t 'view.fees.fee_number' %>
-    </th>
-    <th>
-      <%= t 'view.fees.expiration_date' %>
-    </th>
-    <th>
-      <%= t 'view.fees.payment_date' %>
-    </th>
-    <th>
-      <%= t 'view.fees.paid_to' %>
-    </th>
-    <th>
-      <%= t 'view.fees.late_days' %>
-    </th>
- </thead>
-  <tbody>
-    <% @client.try(:fees).try(:each) do |fee| %>
-      <tr class="<%= date_fees(fee) %>">
-        <td>
-          <%= fee.try(:total_amount) %>
-        </td>
-        <td>
-          <%= fee.try(:fee_number) %>
-        </td>
-        <td>
-          <%= I18n.l(fee.try(:expiration_date), format: :minimal) %>
-        </td>
-        <td>
-          <%= I18n.l(fee.try(:payment_date), format: :minimal) if fee.try(:payment_date) %>
-        </td>
-        <td>
-          <%= fee.try(:paid_to) %>
-        </td>
-        <td>
-          <%= fee.late_days %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+    </tbody>
+  </table>
+</div>
