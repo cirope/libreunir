@@ -83,7 +83,7 @@
       amount: 'Monto corriente'
       fees: 'Cuotas'
       late:
-        zero: 'No hay registro'
+        zero: 'A tiempo'
         one: 'Un dia tarde'
         other: '%{days} dias tarde'
       in_time:
