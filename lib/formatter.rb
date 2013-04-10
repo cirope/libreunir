@@ -55,7 +55,8 @@ class Formatter
         next
       end
 
-      truncate_tables(filename, klass)
+      # truncate all tables, remove if new aproach works fine
+      # truncate_tables(filename, klass)
 
       index = 0
       csv = SmarterCSV.process(file,
@@ -73,7 +74,14 @@ class Formatter
             attributes[field.to_sym].slice!(v) if attributes[field.to_sym] && attributes[field.to_sym].is_a?(String)
           end
         end if mappings[:remove_prefix]
-        record = klass.new(attributes).save(validate: false) if attributes[key.to_sym].present?
+
+        conditions = mappings[:locate_with].map { |r| "#{r} = #{attributes[r.to_sym]}" }.join(' AND  ')
+        located_row = klass.where(conditions).first
+        if located_row
+          record = located_row.update_attributes(attributes)
+        else
+          record = klass.new(attributes).save(validate: false) if attributes[key.to_sym].present?
+        end
 
         Formatter.info(klass, row, attributes) unless record
 

@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130326173043) do
+ActiveRecord::Schema.define(version: 20130410191234) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "addresses", force: true do |t|
     t.string   "street"
@@ -55,8 +58,8 @@ ActiveRecord::Schema.define(version: 20130326173043) do
 
   create_table "fees", force: true do |t|
     t.decimal  "amount",          precision: 23, scale: 8
-    t.datetime "expiration_date"
-    t.datetime "payment_date"
+    t.date     "expiration_date"
+    t.date     "payment_date"
     t.integer  "lock_version",                             default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
