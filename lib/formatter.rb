@@ -75,10 +75,21 @@ class Formatter
           end
         end if mappings[:remove_prefix]
 
-        conditions = mappings[:locate_with].map { |r| "#{r} = #{attributes[r.to_sym]}" }.join(' AND  ')
-        located_row = klass.where(conditions).first
+        conditions = mappings[:locate_with].map { |r| "#{r} = '#{attributes[r.to_sym]}'" }.join(' AND  ')
+
+        # TODO: REFACTOR THIS, if the row has a bad format it will explode like a Nymphicus hollandicus
+        begin
+          located_row = klass.where(conditions).first
+        rescue
+          located_row = nil
+        end
+
         if located_row
-          record = located_row.update_attributes(attributes)
+          begin
+            record = located_row.update_attributes(attributes)
+          rescue
+            record = false
+          end
         else
           record = klass.new(attributes).save(validate: false) if attributes[key.to_sym].present?
         end
