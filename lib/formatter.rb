@@ -55,8 +55,11 @@ class Formatter
         next
       end
 
-      # truncate all tables, remove if new aproach works fine
-      # truncate_tables(filename, klass)
+      # truncate the main table for the current file, remove if new aproach works fine
+      # truncate_table(filename, klass)
+
+      # truncate associated tabled to the file, it's not worth to update those records
+      truncate_associated_tables(filename, klass)
 
       index = 0
       csv = SmarterCSV.process(file,
@@ -136,8 +139,11 @@ class Formatter
     end
   end
 
-  def self.truncate_tables(filename, klass)
+  def self.truncate_table(filename, klass)
     ActiveRecord::Base.connection.execute("TRUNCATE TABLE #{klass.table_name}")
+  end
+
+  def self.truncate_associated_tables(filename, klass)
     if (association = APP_CONFIG["field_maps_#{APP_CONFIG['table_maps'][filename]}"]['many_to_one_association']).present?
       association.each do |k,v|
         association_klass = v.singularize.classify.safe_constantize || v.camelize.constantize

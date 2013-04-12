@@ -37,6 +37,7 @@ group :test do
   gem 'timecop'
   gem 'minitest'
   gem 'capybara'
+  gem 'selenium-webdriver'
   gem 'database_cleaner' # For Capybara
   gem 'fabrication'
   gem 'faker'
