@@ -110,7 +110,7 @@ class DashboardTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get expired' do
-    100.times { Fabricate(:fee, expiration_date: 3.days.ago) }
+    101.times { Fabricate(:fee, expiration_date: 3.days.ago) }
 
     visit root_path
     login
@@ -125,10 +125,11 @@ class DashboardTest < ActionDispatch::IntegrationTest
     find('input.btn.btn-primary').click
 
     click_link 'Vencidos'
+    assert page.has_css?('tbody tr')
     row_count = all('tbody tr').size
     assert row_count < 101
 
-    until row_count == 100
+    until row_count == 101
       page.execute_script 'window.scrollBy(0,10000)'
 
       assert page.has_css?("tbody tr:nth-child(#{row_count + 1})")
@@ -152,10 +153,11 @@ class DashboardTest < ActionDispatch::IntegrationTest
     find('input.btn.btn-primary').click
 
     click_link 'Por vencer'
+    assert page.has_css?('tbody tr')
     row_count = all('tbody tr').size
     assert row_count < 101
 
-    until row_count == 100
+    until row_count == 101
       page.execute_script 'window.scrollBy(0,10000)'
 
       assert page.has_css?("tbody tr:nth-child(#{row_count + 1})")

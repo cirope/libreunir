@@ -33,7 +33,7 @@ group :development do
 end
 
 group :test do
-  gem 'turn', require: false
+  gem 'turn'
   gem 'minitest', require: false
   gem 'capybara', require: false
   gem 'selenium-webdriver'
