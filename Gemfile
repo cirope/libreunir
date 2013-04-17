@@ -16,7 +16,7 @@ gem 'validates_timeliness'
 gem 'sidekiq'
 gem 'smarter_csv'
 gem 'archive-zip'
-gem 'double-bag-ftps', github: 'kainlite/double-bag-ftps'
+gem 'double-bag-ftps', github: 'cirope/double-bag-ftps'
 gem 'whenever', require: false
 gem 'capistrano'
 gem 'unicorn'
