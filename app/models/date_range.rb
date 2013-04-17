@@ -16,6 +16,14 @@ class DateRange
     @end = Timeliness.parse(attributes['end']).try(:to_date) || Timeliness.parse(1.week.from_now).try(:to_date)
   end
 
+  def range
+    @start..@end
+  end
+  
+  def to_s
+    "#{@start} -> #{@end}"
+  end
+
   def persisted?
     false
   end

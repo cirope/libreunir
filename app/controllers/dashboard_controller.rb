@@ -34,34 +34,18 @@ class DashboardController < ApplicationController
   def profile
     @title = t 'view.dashboard.profile_title'
 
-    @client = Client.where(product_params).first
+    @client = Client.where(product_id: params[:product_id]).first
   end
 
   private
 
-  def product_params
-    params.permit(:product_id)
-  end
-
-  def daterange_params
-    params.permit(:date_range).permit(
-      :start, :end
-    )
-  end
-
-  def users_params
-    params.require(:users).permit(
-      :id
-    )
-  end
-
   def set_dates
-    @date = DateRange.new(daterange_params)
+    @date = DateRange.new(params[:date_range])
   end
 
   def set_current_user
     if params[:users] && params[:users][:id].present?
-      @user = User.where(users_params).first
+      @user = User.find(params[:users][:id])
     else
       @user = current_user
     end
@@ -78,21 +62,21 @@ class DashboardController < ApplicationController
   end
 
   def get_expired
-    get_scope.where(expiration_date: @date.start..@date.end).without_payment_day.expired_before(Date.today).
+    get_scope.where(expiration_date: @date.range).without_payment_day.expired_before(Date.today).
       filtered_list(params[:q])
   end
 
   def get_close_to_expire
-    get_scope.where(expiration_date: @date.start..@date.end).without_payment_day.
+    get_scope.where(expiration_date: @date.range).without_payment_day.
       will_expire_after(Date.today).expired_before(Date.today.at_end_of_month).filtered_list(params[:q])
   end
 
   def default_render_expirations
     @printable = true
     @filtrable = true
-    @printing = params[:print]
+    @print = params[:print].present?
 
-    @fees = @printing.present? ? @fees : @fees.page(params[:page])
+    @fees = @print ? @fees : @fees.page(params[:page])
     render 'dashboard/debts'
   end
 end
