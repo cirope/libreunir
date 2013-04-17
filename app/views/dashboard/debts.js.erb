@@ -1,11 +1,11 @@
-<% if @printing.present? %>
-  $('table.resource-list.expired tbody').html('<%= j render(@fees) %>')
-  print();
+<% if @print %>
+  $('table.resource-list.expired tbody').html('<%= j render(@fees) %>');
+  window.print();
 <% else %>
   $('table.resource-list.expired tbody').append('<%= j render(@fees) %>');
 <% end %>
 
-<% if !@printing && @fees.next_page %>
+<% if !@print && @fees.next_page %>
   $('.pagination-container').replaceWith('<%= j pagination_links(@fees) %>');
 <% else %>
   $('.pagination-container').remove();

@@ -35,11 +35,11 @@ end
 
 group :test do
   gem 'turn'
-  gem 'timecop'
-  gem 'minitest'
-  gem 'capybara'
+  gem 'minitest', require: false
+  gem 'capybara', require: false
   gem 'selenium-webdriver'
-  gem 'database_cleaner' # For Capybara
+  gem 'database_cleaner'
   gem 'fabrication'
   gem 'faker'
+  gem 'timecop'
 end

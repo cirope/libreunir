@@ -1,6 +1,6 @@
 <% if @filtrable %>
   <div class="not-printable readonly-data">
-    <%= simple_form_for @date, url: request.env['PATH_INFO'] do |f| %>
+    <%= simple_form_for @date, url: request.env['PATH_INFO'], method: :get do |f| %>
       <div class="row-fluid">
         <div class="span3">
           <%= f.input :start, as: :date_picker, label: t('view.dashboard.start') %>
