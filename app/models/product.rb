@@ -8,6 +8,8 @@ class Product < ActiveRecord::Base
   # Scopes
 
   # Validations
+  validates :product_id, presence: true
+  validates :product_id, uniqueness: true, allow_nil: true, allow_blank: true
 
   # Relations
   belongs_to :branch

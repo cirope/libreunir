@@ -8,8 +8,9 @@ class Call < ActiveRecord::Base
   # Scopes
 
   # Validations
-  validates :call, presence: true
-  validates :call, uniqueness: true, allow_nil: true, allow_blank: true
+  validates :call, :client_id, presence: true
+  validates :call, uniqueness: { scope: :client_id, case_sensitive: false }, 
+    allow_nil: true, allow_blank: true
 
   # Relations
   belongs_to :client, primary_key: 'product_id'

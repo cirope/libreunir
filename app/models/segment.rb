@@ -8,8 +8,9 @@ class Segment < ActiveRecord::Base
   # Scopes
 
   # Validations
-  validates :segment_id, presence: true
-  validates :description, uniqueness: true, allow_nil: true, allow_blank: true
+  validates :segment_id, uniqueness: true, presence: true
+  validates :description, uniqueness: { scope: :segment_id, case_sensitive: false}, 
+    allow_nil: true, allow_blank: true
 
   # Relations
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130410191234) do
+ActiveRecord::Schema.define(version: 20130419042750) do
 
   create_table "addresses", force: true do |t|
     t.string   "street"
@@ -25,6 +25,8 @@ ActiveRecord::Schema.define(version: 20130410191234) do
     t.integer  "client_id"
     t.string   "address"
   end
+
+  add_index "addresses", ["client_id"], name: "index_addresses_on_client_id"
 
   create_table "branches", force: true do |t|
     t.integer  "zone_id"
@@ -44,6 +46,8 @@ ActiveRecord::Schema.define(version: 20130410191234) do
     t.datetime "updated_at"
   end
 
+  add_index "calls", ["client_id"], name: "index_calls_on_client_id"
+
   create_table "clients", force: true do |t|
     t.string   "name"
     t.string   "identification"
@@ -52,6 +56,8 @@ ActiveRecord::Schema.define(version: 20130410191234) do
     t.datetime "updated_at"
     t.integer  "product_id"
   end
+
+  add_index "clients", ["product_id"], name: "index_clients_on_product_id", unique: true
 
   create_table "fees", force: true do |t|
     t.decimal  "amount",          precision: 23, scale: 8
@@ -65,6 +71,9 @@ ActiveRecord::Schema.define(version: 20130410191234) do
     t.integer  "loan_id"
     t.string   "paid_to"
   end
+
+  add_index "fees", ["fee_number"], name: "index_fees_on_fee_number"
+  add_index "fees", ["loan_id"], name: "index_fees_on_loan_id"
 
   create_table "loans", force: true do |t|
     t.integer  "order_id"
@@ -132,6 +141,7 @@ ActiveRecord::Schema.define(version: 20130410191234) do
   end
 
   add_index "products", ["branch_id"], name: "index_products_on_branch_id"
+  add_index "products", ["product_id"], name: "index_products_on_product_id", unique: true
 
   create_table "relations", force: true do |t|
     t.string   "relation"
@@ -150,6 +160,8 @@ ActiveRecord::Schema.define(version: 20130410191234) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "segments", ["segment_id"], name: "index_segments_on_segment_id", unique: true
 
   create_table "users", force: true do |t|
     t.string   "name",                                null: false

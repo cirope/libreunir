@@ -9,7 +9,8 @@ class Phone < ActiveRecord::Base
 
   # Validations
   validates :client_id, presence: true
-  validates :phone, uniqueness: true, allow_nil: true, allow_blank: true
+  validates :phone, uniqueness: { scope: :client_id, case_sensitive: false }, 
+    allow_nil: true, allow_blank: true
 
   # Relations
   belongs_to :client, primary_key: 'product_id'
