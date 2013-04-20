@@ -1,15 +1,14 @@
-<% field_classes = ['autocomplete_field'] %>
-<%= f.input :auto_user_name, label: t('view.users.name'),
-  placeholder: User.human_attribute_name('user_id'),
+<% field_classes = ['autocomplete_field', 'span12'] %>
+<%= f.input(
+  :auto_user_name,
+  as: :fake,
+  placeholder: User.human_attribute_name('auto_user_name'),
   input_html: {
-    id: "auto_user_id",
     class: field_classes.join(' '),
     data: {
       'autocomplete-url' => relatives_users_path(format: :json),
-      'autocomplete-id-target' => "#id"
+      'autocomplete-id-target' => '#user_id'
     }
   }
-  %>
-<%= f.input :id, as: :hidden,
-  input_html: { class: 'autocomplete_id', id: "id" }
-%>
+) %>
+<%= hidden_field_tag :user_id, nil, id: 'user_id' %>

@@ -27,7 +27,7 @@ class Ability
   end
 
   def default_rules
-    can :manage, DateRange
+    can :manage, Filter
     can :read, User
   end
 end

@@ -1,92 +1,22 @@
-<%= render 'shared/filters' %>
-
 <div class="readonly-data">
-  <div class="row-fluid">
-    <div class="span12">
-      <div class="row-fuild">
-        <div class="span6">
-          <h3>
-            <%= link_to t('view.dashboard.expired'), expired_path(date_range: { start: @date.start, end: @date.end }, users: { id: @user.id }) %>
-          </h3>
-          <table id="expired" class="table resource-list expired table-condensed">
-            <thead>
-              <tr>
-                <th>
-                  <%= t 'view.dashboard.client' %>
-                </th>
-                <th>
-                  <%= t 'view.dashboard.expiring' %>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @expired.each do |fee| %>
-                <tr>
-                  <td>
-                    <%= link_to fee.client.try(:name), profile_path(fee.client.try(:product_id)),
-                      data: { original_title: "#{t('view.fees.loan_id')}: #{fee.try(:loan_id)}", show_tooltip: true }
-                    %>
-                  </td>
-                  <td>
-                    <%= I18n.l(fee.expiration_date, format: :minimal) %>
-                  </td>
-                  <td>
-                    <div class="actions">
-                      <%= (link_to '<span class="badge badge-info">&#x2139;</span>'.html_safe, expiring_info_path(fee.id),
-                          remote: true, class: "iconic popoverized info-#{fee.id}",
-                          data: { original_title: t('label.more_info'), show_tooltip: true }
-                      ) if fee.persisted? %>
-                    </div>
-                  </td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
-        </div>
-        <div class="span6">
-          <h3>
-            <%= link_to t('view.dashboard.close_to_expire'), close_to_expire_path(date_range: { start: @date.start, end: @date.end }, users: { id: @user.id }) %>
-          </h3>
-          <table id="close_to_expire" class="table close_to_expire resource-list table-condensed">
-            <thead>
-              <tr>
-                <th>
-                  <%= t 'view.dashboard.client' %>
-                </th>
-                <th>
-                  <%= t 'view.dashboard.expiring' %>
-                </th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @close_to_expire.each do |fee| %>
-                <tr>
-                  <td>
-                    <%= link_to fee.client.try(:name), profile_path(fee.client.try(:product_id)),
-                        data: { original_title: "#{t('view.fees.loan_id')}: #{fee.try(:loan_id)}", show_tooltip: true }
-                    %>
-                  </td>
-                  <td>
-                    <%= I18n.l(fee.expiration_date, format: :minimal) %>
-                  </td>
-                  <td>
-                    <div class="actions">
-                      <%= (link_to '<span class="badge badge-info">&#x2139;</span>'.html_safe, expiring_info_path(fee.id),
-                        remote: true, class: "iconic popoverized info-#{fee.id}",
-                        data: { original_title: t('label.more_info'), show_tooltip: true }
+  <ul class="nav nav-tabs" data-remote="true" data-default-tab="close_to_expire">
+    <li>
+      <a href="#close_to_expire" data-toggle="tab" data-remote-url="<%= close_to_expire_fees_path_with_params %>">
+        <%= t('view.fees.close_to_expire') %>
+      </a>
+    </li>
+    <li>
+      <a href="#expired" data-toggle="tab" data-remote-url="<%= expired_fees_path_with_params %>">
+        <%= t('view.fees.expired') %>
+      </a>
+    </li>
+  </ul>
 
-                      ) if fee.persisted? %>
-                    </div>
-                  </td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+  <div class="tab-content">
+    <div class="tab-pane" id="close_to_expire"></div>
+    <div class="tab-pane" id="expired"></div>
   </div>
 </div>
+
 <nav class="form-actions">
 </nav>

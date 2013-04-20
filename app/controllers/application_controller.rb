@@ -1,5 +1,8 @@
 class ApplicationController < ActionController::Base
+  include Application::Filters
+
   protect_from_forgery
+
   after_filter -> { expires_now if user_signed_in? }
 
   def user_for_paper_trail

@@ -10,11 +10,6 @@ class User < ActiveRecord::Base
 
   attr_accessor :welcome
 
-  # Setup accessible (or protected) attributes for your model
-  # Deprecated in rails 4
-  # attr_accessible :name, :lastname, :email, :password, :password_confirmation,
-  #  :role, :remember_me, :lock_version
-
   # Scopes
   default_scope -> { order("#{table_name}.lastname ASC") }
   scope :only_dependents, -> { where("relations.relation = ?", 'dependent') }
@@ -27,6 +22,4 @@ class User < ActiveRecord::Base
   # Relations
   has_many :orders, primary_key: 'adviser_id'
   has_many :fees, through: :orders
-
-  # Callbacks
 end

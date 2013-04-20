@@ -23,5 +23,10 @@ jQuery ($) ->
     $(this).find('input[type="submit"], input[name="utf8"]').attr 'disabled', true
     $(this).find('a.submit').removeClass('submit').addClass('disabled')
     $(this).find('.dropdown-toggle').addClass('disabled')
+    
+    if location.hash
+      hiddenHash = $('<input type="hidden" name="_hash" />').val(location.hash.substr(1))
+
+      $(this).append hiddenHash
 
   Inspector.instance().load()

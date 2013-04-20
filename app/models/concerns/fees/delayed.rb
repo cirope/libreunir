@@ -1,88 +1,87 @@
-module Fees
-  module Delayed
-    extend ActiveSupport::Concern
+module Fees::Delayed
+  extend ActiveSupport::Concern
 
-    included do
-      scope :with_payment_day, -> { where("#{table_name}.payment_date IS NOT NULL") }
-      scope :without_payment_day, -> { where("#{table_name}.payment_date IS NULL") }
+  included do
+    scope :with_payment_day, -> { where("#{table_name}.payment_date IS NOT NULL") }
+    scope :without_payment_day, -> { where("#{table_name}.payment_date IS NULL") }
+  end
+
+  module ClassMethods
+    def filtered_list(query)
+      query.present? ? magick_search(query) : all
     end
 
-    module ClassMethods
-      def filtered_list(query)
-        query.present? ? magick_search(query) : all
-      end
-
-      def expired_before(date)
-        where("#{table_name}.expiration_date < ?", date)
-      end
-
-      def will_expire_after(date)
-        where("#{table_name}.expiration_date > ?", date)
-      end
+    def expire_before(date)
+      where("#{table_name}.expiration_date < ?", date)
     end
 
-    # TODO: Refactor days calculations
-    def late_average
-      paid_fees = self.class.with_payment_day.where(loan_id: self.loan_id)
+    def expire_after(date)
+      where("#{table_name}.expiration_date > ?", date)
+    end
+  end
 
-      unpaid_fees = self.class.without_payment_day.expired_before(Date.today).where(loan_id: self.loan_id)
+  def expired?
+    self.expiration_date < Date.today
+  end
 
-      days = paid_fees_sum(paid_fees) + unpaid_fees_sum(unpaid_fees)
+  # TODO: Refactor days calculations
+  def late_average
+    paid_fees = Fee.with_payment_day.where(loan_id: self.loan_id)
+    unpaid_fees = Fee.without_payment_day.expire_before(Date.today).where(loan_id: self.loan_id)
+    days = paid_fees_sum(paid_fees) + unpaid_fees_sum(unpaid_fees)
+    days = Date.today - self.expiration_date.to_date if days == 0
+    number_of_fees = paid_fees.count + unpaid_fees.count
 
-      days = Date.today - self.expiration_date.to_date if days == 0
-      number_of_fees = paid_fees.count + unpaid_fees.count
+    formal_delay(days, number_of_fees)
+  end
 
-      formal_delay(days, number_of_fees)
+  def paid_fees_sum(paid_fees)
+    days = 0
+
+    paid_fees.each do |fee|
+      days += (fee.expiration_date.to_date - fee.payment_date.to_date)
     end
 
-    def paid_fees_sum(paid_fees)
-      days = 0
+    days
+  end
 
-      paid_fees.each do |fee|
-        days += (fee.expiration_date.to_date - fee.payment_date.to_date)
-      end
+  def unpaid_fees_sum(unpaid_fees)
+    days = 0
 
-      days
+    unpaid_fees.each do |fee|
+      days += (fee.expiration_date.to_date - Date.today)
     end
 
-    def unpaid_fees_sum(unpaid_fees)
-      days = 0
+    days
+  end
 
-      unpaid_fees.each do |fee|
-        days += (fee.expiration_date.to_date - Date.today)
-      end
+  def late_days
+    expiration_date = self.expiration_date.try(:to_date)
+    payment_date = self.payment_date.try(:to_date)
 
-      days
-    end
-
-    def late_days
-      expiration_date = self.expiration_date.try(:to_date)
-      payment_date = self.payment_date.try(:to_date)
-
-      if payment_date
-        days = expiration_date - payment_date
+    if payment_date
+      days = expiration_date - payment_date
+    else
+      if expiration_date > Date.today
+        days = 0
       else
-        if expiration_date > Date.today
-          days = 0
-        else
-          days = expiration_date - Date.today
-        end
+        days = expiration_date - Date.today
       end
-
-      formal_delay(days, 1)
     end
 
-    def formal_delay(days, number_of_fees)
-      if days < 0
-        is = 'late'
-        days = -days
-      else
-        is = 'in_time'
-      end
+    formal_delay(days, 1)
+  end
 
-      days = days / number_of_fees if number_of_fees > 0
-
-      I18n.t("view.dashboard.#{is}", days: days.to_i, count: days.to_i)
+  def formal_delay(days, number_of_fees)
+    if days < 0
+      is = 'late'
+      days = -days
+    else
+      is = 'in_time'
     end
+
+    days = days / number_of_fees if number_of_fees > 0
+
+    I18n.t("view.dashboard.#{is}", days: days.to_i, count: days.to_i)
   end
 end

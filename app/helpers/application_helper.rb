@@ -43,26 +43,7 @@ module ApplicationHelper
       )
     )
 
-    unless result
-      previous_tag = content_tag(
-        :li,
-        content_tag(:a, t('will_paginate.previous_label').html_safe),
-        class: 'previous_page disabled'
-      )
-      next_tag = content_tag(
-        :li,
-        content_tag(:a, t('will_paginate.next_label').html_safe),
-        class: 'next disabled'
-      )
-
-      result = content_tag(
-        :div,
-        content_tag(:ul, previous_tag + next_tag),
-        class: 'pagination pagination-right'
-      )
-    end
-
-    content_tag :div, result + page_entries, class: 'pagination-container'
+    content_tag :div, result + page_entries, class: 'pagination-container' if result
   end
 
   def link_to_show(*args)
