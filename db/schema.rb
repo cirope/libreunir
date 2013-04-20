@@ -72,6 +72,7 @@ ActiveRecord::Schema.define(version: 20130419042750) do
     t.string   "paid_to"
   end
 
+  add_index "fees", ["expiration_date"], name: "index_fees_on_expiration_date"
   add_index "fees", ["fee_number"], name: "index_fees_on_fee_number"
   add_index "fees", ["loan_id"], name: "index_fees_on_loan_id"
 

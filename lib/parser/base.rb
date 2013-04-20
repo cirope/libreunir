@@ -14,13 +14,14 @@ module Parser
     def parse
       File.foreach(@path, encoding: @encoding) do |line|
         begin
-          CSV.parse(line, col_sep: '|', quote_char: "\n", headers: @headers) do |row| 
+          CSV.parse(line, col_sep: '|', skip_blanks: true, quote_char: "\n", headers: @headers) do |row| 
             row.map! { |r| r.to_s.strip }
 
             line_save(row)
           end
         rescue CSV::MalformedCSVError => e
           puts e.message
+
           @logger.error line
         end
       end

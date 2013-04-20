@@ -4,24 +4,19 @@ module Parser
     def line_save(row)
       if row_valid?(row)
         loan_id = row[0].gsub('PR0', '').to_i
-        fee = ::Fee.where(loan_id: loan_id, fee_number: row[1].to_i).first
 
         attributes = {
           amount: row[17].to_f, expiration_date: row[2], payment_date: row[16],
           fee_number: row[1].to_i, total_amount: row[41].to_i,
-          loan_id: loan_id.to_i, paid_to: row[21].gsub('(null)', '')
+          loan_id: loan_id.to_i, paid_to: row[21].to_s.gsub('(null)', '')
         }
 
-        if fee && fee.persisted?
-          fee.update_attributes(attributes)
-        else
-          ::Fee.create(attributes)
-        end
+        ::Fee.create(attributes)
       end
     end
 
     def row_valid?(row)
-      if row[0].nil? || !row[0].start_with?('PR0')
+      if !row[0].start_with?('PR0')
         return raise CSV::MalformedCSVError, 'Invalid row'
       end
       
