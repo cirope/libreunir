@@ -4,13 +4,13 @@ require 'test_helper'
 
 class DashboardTest < ActionDispatch::IntegrationTest
   test 'should get dashboard' do
-    Fabricate(:client, product_id: 500000, name: "Nombre")
-    Fabricate(:address, client_id: 500000, address: "calle 1153")
-    Fabricate(:phone, client_id: 500000, phone: "1114123123")
-    Fabricate(:call, client_id: 500000, call: "Notificacion")
+    Fabricate(:client, product_id: 500000, name: 'Nombre')
+    Fabricate(:address, client_id: 500000, address: 'calle 1153')
+    Fabricate(:phone, client_id: 500000, phone: '1114123123')
+    Fabricate(:call, client_id: 500000, call: 'Notificacion')
     Fabricate(:order, order_id: 500000)
     Fabricate(:loan, order_id: 500000)
-    Fabricate(:fee, expiration_date: Date.today+1, payment_date: nil, total_amount: 12000.0, loan_id: "500000", fee_number: 1)
+    Fabricate(:fee, expiration_date: Date.today + 1, payment_date: nil, total_amount: 12000.0, loan_id: '500000', fee_number: 1)
     visit root_path
 
     login

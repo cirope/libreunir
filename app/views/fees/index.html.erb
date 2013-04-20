@@ -1,0 +1,28 @@
+<%= render 'shared/filters' %>
+<br />
+
+<div class="readonly-data">
+  <table class="table table-condensed" data-endless-container="true">
+    <thead>
+      <tr>
+        <th></th>
+        <th><%= t('view.fees.columns.product_id') %></th>
+        <th><%= t('view.fees.columns.client') %></th>
+        <th><%= t('view.fees.columns.expiring') %></th>
+        <th><%= t('view.fees.columns.amount') %></th>
+        <th><%= t('view.fees.columns.phone') %></th>
+        <th><%= t('view.fees.columns.address') %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render @fees %>
+    </tbody>
+  </table>
+</div>
+
+<div class="pagination-container">
+  <%= pagination_links(@fees) %>
+</div>
+
+<nav class="form-actions">
+</nav>

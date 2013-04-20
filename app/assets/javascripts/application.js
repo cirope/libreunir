@@ -19,11 +19,15 @@
 //= require turboevents
 //= require turbolinks
 //= require common
+//= require url_helper
 //= require date_pickers
 //= require endless_pagination
+//= require lazy_tabs
+//= require default_tabs
 //= require mobile
-//= require users
 //= require autocomplete
 //= require dynamic_form
 //= require effect_helper
 //= require dashboard
+//= require fees
+//= require users

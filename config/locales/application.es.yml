@@ -8,15 +8,17 @@
   activerecord:
     models:
       user:
-        one: 'Usuario'
-        other: 'Usuarios'
+        one: 'Asesor'
+        other: 'Asesores'
       relation:
-        one: 'Relacion'
+        one: 'Relación'
         other: 'Relaciones'
 
     attributes:
+      filter:
+        start: 'Inicio'
       user:
-        user_id: 'Nombre'
+        user_id: 'Asesor'
         name: 'Nombre'
         lastname: 'Apellido'
         email: 'Correo'
@@ -46,13 +48,13 @@
     new: 'Nuevo'
     search: 'Buscar'
     show: 'Ver'
-    more_info: 'Mas Informacion'
+    more_info: 'Mas Información'
     print: 'Imprimir'
 
   menu:
     actions:
       logout: 'Salir de la aplicación'
-    users: 'Usuarios'
+    users: 'Asesores'
     dashboard: 'Tablero'
 
   messages:
@@ -67,20 +69,12 @@
           html: 'La búsqueda de <span class="label label-inverse">%{search}</span> no obtuvo ningún resultado.'
     client:
       name: 'Nombre'
-      phone: 'Telefono'
-      address: 'Direccion'
+      phone: 'Teléfono'
+      address: 'Dirección'
     dashboard:
       index_title: 'Tablero'
       profile_title: 'Perfil del cliente'
-      expired_title: 'Vencidos'
-      close_to_expire_title: 'Cerca del vencimiento'
       dashboard: 'Tablero'
-      product_id: 'Producto'
-      apply: 'Aplicar filtros'
-      expired: 'Vencidos'
-      close_to_expire: 'Por vencer'
-      late_average: 'Retraso promedio'
-      amount: 'Monto corriente'
       fees: 'Cuotas'
       late:
         zero: 'A tiempo'
@@ -90,15 +84,13 @@
         zero: 'A tiempo'
         one: 'Un dia antes'
         other: '%{days} dias antes'
-      address: 'Direccion'
-      phone: 'Telefono'
       last_calls: 'Notificaciones al cliente'
-      call: 'Conversacion'
-      client: 'Cliente'
-      expiring: 'Expira'
-      start: 'Fecha de inicio'
-      end: 'Fecha de fin'
+      call: 'Conversación'
     fees:
+      expired: 'Vencidos'
+      close_to_expire: 'Por vencer'
+      expired_title: 'Vencidos'
+      close_to_expire_title: 'Cerca del vencimiento'
       loan_id: 'Producto'
       total_amount: 'Monto total'
       fee_number: 'Cuota'
@@ -106,7 +98,17 @@
       payment_date: 'Fecha de pago'
       paid_to: 'Pagado a'
       late_days: 'Demora'
-      late_average: 'Promedio'
+      columns:
+        address: 'Dirección'
+        amount: 'Monto corriente'
+        client: 'Cliente'
+        expiring: 'Expira'
+        phone: 'Teléfono'
+        product_id: 'Producto'
+        late_average: 'Retraso promedio'
+    filters:
+      today: 'Hoy'
+      tomorrow: 'Mañana'
     relation:
       types:
         superior: 'Superior'
@@ -131,7 +133,6 @@
         admin: 'Administrador'
         regular: 'Normal'
       new_relation: 'Nueva dependencia'
-      name: 'Nombre'
       relation:
         html: 'Su %{relation} es %{relative}'
       inverse_relation:

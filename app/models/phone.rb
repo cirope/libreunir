@@ -15,8 +15,7 @@ class Phone < ActiveRecord::Base
   # Relations
   belongs_to :client, primary_key: 'product_id'
 
-  # Callbacks
-
-  # Instance or Class methods
-
+  def to_s
+    self.phone
+  end
 end
