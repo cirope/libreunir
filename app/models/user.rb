@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
   default_scope -> { order("#{table_name}.username ASC") }
 
   # Validations
-  validates :name, :username, :branch_id, presence: true
+  validates :name, :username, presence: true
   validates :name, :email, length: { maximum: 255 }, 
     allow_nil: true, allow_blank: true
   validates :identification, :file_number, numericality: { only_integer: true },
@@ -24,6 +24,7 @@ class User < ActiveRecord::Base
 
   # Relations
   belongs_to :branch
-  has_many :orders, primary_key: 'adviser_id'
-  has_many :fees, through: :orders
+  has_many :comments
+  has_many :payments
+  has_many :products, through: :payments
 end
