@@ -11,186 +11,107 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130419042750) do
-
-  create_table "addresses", force: true do |t|
-    t.string   "street"
-    t.integer  "number"
-    t.integer  "floor"
-    t.string   "location"
-    t.integer  "postal_code"
-    t.integer  "lock_version", default: 0, null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "client_id"
-    t.string   "address"
-  end
-
-  add_index "addresses", ["client_id"], name: "index_addresses_on_client_id"
+ActiveRecord::Schema.define(version: 20130420222515) do
 
   create_table "branches", force: true do |t|
-    t.integer  "zone_id"
-    t.string   "name"
-    t.integer  "lock_version", default: 0, null: false
+    t.integer  "branch_id",  null: false
+    t.string   "name",       null: false
+    t.string   "address"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "branches", ["zone_id"], name: "index_branches_on_zone_id"
-
-  create_table "calls", force: true do |t|
-    t.integer  "client_id"
-    t.text     "call"
-    t.integer  "lock_version", default: 0, null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "calls", ["client_id"], name: "index_calls_on_client_id"
+  add_index "branches", ["branch_id"], name: "index_branches_on_branch_id", unique: true
 
   create_table "clients", force: true do |t|
-    t.string   "name"
-    t.string   "identification"
-    t.integer  "lock_version",   default: 0, null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "product_id"
-  end
-
-  add_index "clients", ["product_id"], name: "index_clients_on_product_id", unique: true
-
-  create_table "fees", force: true do |t|
-    t.decimal  "amount",          precision: 23, scale: 8
-    t.date     "expiration_date"
-    t.date     "payment_date"
-    t.integer  "lock_version",                             default: 0, null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "fee_number"
-    t.decimal  "total_amount"
-    t.integer  "loan_id"
-    t.string   "paid_to"
-  end
-
-  add_index "fees", ["expiration_date"], name: "index_fees_on_expiration_date"
-  add_index "fees", ["fee_number"], name: "index_fees_on_fee_number"
-  add_index "fees", ["loan_id"], name: "index_fees_on_loan_id"
-
-  create_table "loans", force: true do |t|
-    t.integer  "order_id"
-    t.decimal  "amount",            precision: 23, scale: 8
-    t.datetime "grant_date"
-    t.datetime "expiration_date"
-    t.integer  "lock_version",                               default: 0, null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "fund_id"
-    t.decimal  "amount_to_finance"
-    t.decimal  "capital"
-    t.integer  "number_of_fees"
-  end
-
-  add_index "loans", ["order_id"], name: "index_loans_on_order_id"
-
-  create_table "orders", force: true do |t|
-    t.integer  "order_id"
-    t.string   "adviser_id"
-    t.string   "segment_id"
-    t.integer  "branch_id"
-    t.string   "zone_id"
-    t.string   "assigned_adviser_id"
-    t.integer  "lock_version",        default: 0, null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "user_id"
-  end
-
-  add_index "orders", ["adviser_id"], name: "index_orders_on_adviser_id"
-  add_index "orders", ["branch_id"], name: "index_orders_on_branch_id"
-  add_index "orders", ["order_id"], name: "index_orders_on_order_id"
-  add_index "orders", ["segment_id"], name: "index_orders_on_segment_id"
-  add_index "orders", ["zone_id"], name: "index_orders_on_zone_id"
-
-  create_table "parameters", force: true do |t|
-    t.decimal  "rate",         precision: 23, scale: 8
-    t.integer  "lock_version",                          default: 0, null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "phones", force: true do |t|
-    t.integer  "client_id"
+    t.string   "name",                                 null: false
+    t.string   "lastname",                             null: false
+    t.integer  "identification", limit: 8,             null: false
+    t.string   "address"
     t.string   "phone"
-    t.integer  "lock_version", default: 0, null: false
+    t.integer  "lock_version",             default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "phones", ["client_id"], name: "index_phones_on_client_id"
+  add_index "clients", ["identification"], name: "index_clients_on_identification", unique: true
+  add_index "clients", ["lastname"], name: "index_clients_on_lastname"
+  add_index "clients", ["name"], name: "index_clients_on_name"
+
+  create_table "comments", force: true do |t|
+    t.text     "comment",    null: false
+    t.integer  "client_id",  null: false
+    t.integer  "user_id",    null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "comments", ["client_id"], name: "index_comments_on_client_id"
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id"
+
+  create_table "payments", force: true do |t|
+    t.integer  "number",                                             null: false
+    t.datetime "expiration",                                         null: false
+    t.datetime "payment_date"
+    t.decimal  "amount_paid",  precision: 15, scale: 10
+    t.decimal  "total",        precision: 15, scale: 10
+    t.integer  "product_id",                                         null: false
+    t.integer  "user_id",                                            null: false
+    t.integer  "lock_version",                           default: 0, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "payments", ["expiration"], name: "index_payments_on_expiration"
+  add_index "payments", ["number"], name: "index_payments_on_number"
+  add_index "payments", ["product_id"], name: "index_payments_on_product_id"
+  add_index "payments", ["user_id"], name: "index_payments_on_user_id"
 
   create_table "products", force: true do |t|
-    t.string   "product_id"
-    t.integer  "branch_id"
+    t.integer  "product_id",                                           null: false
     t.datetime "delay_date"
-    t.decimal  "expired_debt",   precision: 23, scale: 8
-    t.decimal  "total_debt",     precision: 23, scale: 8
-    t.integer  "expired_fees"
-    t.integer  "fees_to_expire"
-    t.integer  "lock_version",                            default: 0, null: false
+    t.decimal  "expired_debt",   precision: 15, scale: 10
+    t.decimal  "total_debt",     precision: 15, scale: 10
+    t.decimal  "debt_to_expire", precision: 15, scale: 10
+    t.integer  "delay_maximum"
+    t.integer  "client_id"
+    t.integer  "branch_id"
+    t.integer  "lock_version",                             default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "products", ["branch_id"], name: "index_products_on_branch_id"
+  add_index "products", ["client_id"], name: "index_products_on_client_id"
   add_index "products", ["product_id"], name: "index_products_on_product_id", unique: true
 
-  create_table "relations", force: true do |t|
-    t.string   "relation"
-    t.integer  "user_id"
-    t.integer  "relative_id"
-    t.integer  "lock_version", default: 0, null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "segments", force: true do |t|
-    t.string   "segment_id"
-    t.string   "description"
-    t.integer  "status"
-    t.integer  "lock_version", default: 0, null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "segments", ["segment_id"], name: "index_segments_on_segment_id", unique: true
-
   create_table "users", force: true do |t|
-    t.string   "name",                                null: false
-    t.string   "lastname"
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.string   "name",                                          null: false
+    t.string   "username",                                      null: false
+    t.integer  "file_number"
+    t.integer  "identification",         limit: 8
+    t.datetime "date_entry"
+    t.integer  "branch_id",                                     null: false
+    t.string   "email",                            default: "", null: false
+    t.string   "encrypted_password",               default: "", null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0
+    t.integer  "sign_in_count",                    default: 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.integer  "roles_mask",             default: 0,  null: false
-    t.integer  "lock_version",           default: 0,  null: false
+    t.integer  "roles_mask",                       default: 0,  null: false
+    t.integer  "lock_version",                     default: 0,  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "adviser_id"
-    t.string   "branch_id"
-    t.string   "bundle"
-    t.string   "identification"
   end
 
+  add_index "users", ["branch_id"], name: "index_users_on_branch_id"
   add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["lastname"], name: "index_users_on_lastname"
-  add_index "users", ["name"], name: "index_users_on_name"
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["username"], name: "index_users_on_username", unique: true
 
   create_table "versions", force: true do |t|
     t.string   "item_type",  null: false
@@ -203,12 +124,5 @@ ActiveRecord::Schema.define(version: 20130419042750) do
 
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   add_index "versions", ["whodunnit"], name: "index_versions_on_whodunnit"
-
-  create_table "zones", force: true do |t|
-    t.string   "name"
-    t.integer  "lock_version", default: 0, null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
 end

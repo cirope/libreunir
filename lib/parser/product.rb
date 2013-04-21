@@ -3,15 +3,21 @@ module Parser
 
     def line_save(row)
       if row_valid?(row)
-        product_id = row[0].gsub('PR0', '').to_i.to_s
+        product_id = row[0].gsub('PR0', '')
+
+        product = ::Product.find_by_product_id(product_id)
+        branch = ::Branch.find_by_branch_id(row[2])
 
         attributes = {
-          product_id: product_id, branch_id: row[2], delay_date: row[3],
-          expired_debt: row[7].to_f, total_debt: row[8].to_f, expired_fees: row[95].to_i,
-          fees_to_expire: row[96].to_i
+          delay_date: row[3], expired_debt: row[7], total_debt: row[8], 
+          debt_to_expire: row[96], delay_maximum: row[98], branch_id: branch.id
         }
 
-        ::Product.create(attributes)
+        if product.try(:persisted?)
+          product.update_attributes(attributes)
+        else
+          return raise CSV::MalformedCSVError, 'New Product'
+        end
       end
     end
 
@@ -23,6 +29,16 @@ module Parser
       end
       
       true
+    end
+
+    def self.create_product(product_id, client)
+      product = ::Product.where(product_id: product_id).first
+      
+      if product.try(:persisted?)
+        product.update_attributes(client_id: client.id)
+      else
+        ::Product.create(product_id: product_id, client_id: client.id)
+      end
     end
   end
 end

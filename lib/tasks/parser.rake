@@ -3,14 +3,11 @@ require_relative '../parser/base'
 task parser: :environment do
 
   files = {
-    Client: 'clientes.txt',
-    Fee: 'cuota.txt',
-    Loan: 'prestamo.txt',
-    Product: 'producto.txt',
-    Segment: 'segmento.txt',
-    Order: 'solicitud.txt',
     Branch: 'sucursal.txt',
-    User: 'usuario.txt'
+    User: 'usuario.txt',
+    Client: 'clientes.txt',
+    Payment: 'cuota.txt',
+    Product: 'producto.txt'
   }
 
   Dir.glob(File.expand_path("private/data") + '/' + "*.txt").each do |path|

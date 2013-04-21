@@ -1,5 +1,5 @@
 module Parser
-  class Fee < Base
+  class Payment < Base
 
     def line_save(row)
       if row_valid?(row)
@@ -11,7 +11,7 @@ module Parser
           loan_id: loan_id.to_i, paid_to: row[21].to_s.gsub('(null)', '')
         }
 
-        ::Fee.create(attributes)
+        ::Payment.create(attributes)
       end
     end
 

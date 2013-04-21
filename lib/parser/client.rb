@@ -4,17 +4,18 @@ module Parser
     def line_save(row)
       if row_valid?(row)
         product_id = row[0].gsub('PR0', '').to_i
+        client = row[1].split(',')
 
         attributes = {
-          name: row[1], identification: row[2], product_id: product_id
+          name: client[1].strip, lastname: client[0].strip, identification: row[2],
+          address: row[3], phone: row[4]
         }
 
         client = ::Client.create(attributes)
 
         if client.persisted?
-          Parser::Address.new(row, client).parse
-          Parser::Phone.new(row, client).parse
-          Parser::Call.new(row, client).parse
+          Parser::Product.create_product(product_id, client)
+          Parser::Comment.parse(row, client)
         end
       end
     end

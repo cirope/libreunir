@@ -14,7 +14,6 @@ gem 'paper_trail', github: 'airblade/paper_trail', branch: 'rails4'
 gem 'magick_columns'
 gem 'validates_timeliness'
 gem 'sidekiq'
-gem 'smarter_csv'
 gem 'archive-zip'
 gem 'double-bag-ftps', github: 'cirope/double-bag-ftps'
 gem 'whenever', require: false

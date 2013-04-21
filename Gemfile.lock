@@ -170,7 +170,6 @@ GEM
     simple_form (3.0.0.beta1)
       actionpack (>= 4.0.0.beta, < 4.1)
       activemodel (>= 4.0.0.beta, < 4.1)
-    smarter_csv (1.0.4)
     sprockets (2.9.2)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -242,7 +241,6 @@ DEPENDENCIES
   selenium-webdriver
   sidekiq
   simple_form (~> 3.0.0.beta1)
-  smarter_csv
   timecop
   turbolinks
   turn

@@ -3,27 +3,34 @@ module Parser
 
     def line_save(row)
       if row_valid?(row)
-        options = []
+        branch = ::Branch.where(branch_id: row[1]).first
 
-        row[2].to_s.downcase.split.each do |str|
-          options << str.to_s.gsub(/[^a-z]/, '')
-        end
+        if branch
+          options = []
 
-        email = "#{options.compact.join('_')}@cordialnegocios.com.ar"
-        password = rand(1000000..9000000)
+          row[2].downcase.split.each do |str|
+            options << str.to_s.gsub(/[^a-z]/, '')
+          end
 
-        attributes = {
-          adviser_id: row[0], branch_id: row[1].to_i, name: row[2],
-          identification: row[7].to_s.gsub('(null)', ''), 
-          bundle: row[6].to_s.gsub('(null)', ''), email: email,
-          password: password, password_confirmation: password
-        }
+          email = "#{options.compact.join('_')}@cordialnegocios.com.ar"
+          password = rand(1000000..9000000)
 
-        user = ::User.create(attributes)
 
-        if user.errors.any?
-          email = "#{options.compact.join('_')}_duplicado@cordialnegocios.com.ar"
-          ::User.create(attributes.merge(email: email))
+          attributes = {
+            name: row[2], username: row[0], file_number: row[6].gsub(/[^0-9]/, ''),
+            identification: row[7].gsub(/[^0-9]/, ''), date_entry: row[8], 
+            branch_id: branch.id, email: email, password: password, 
+            password_confirmation: password
+          }
+
+          user = ::User.create(attributes)
+
+          if user.errors.any?
+            email = "#{options.compact.join('_')}_duplicado@cordialnegocios.com.ar"
+            ::User.create(attributes.merge(email: email))
+          end
+        else
+          return raise CSV::MalformedCSVError, 'Invalid row'
         end
       end
     end
