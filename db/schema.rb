@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 20130420222515) do
     t.decimal  "amount_paid",  precision: 15, scale: 10
     t.decimal  "total",        precision: 15, scale: 10
     t.integer  "product_id",                                         null: false
-    t.integer  "user_id",                                            null: false
+    t.integer  "user_id"
     t.integer  "lock_version",                           default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -68,15 +68,15 @@ ActiveRecord::Schema.define(version: 20130420222515) do
   add_index "payments", ["user_id"], name: "index_payments_on_user_id"
 
   create_table "products", force: true do |t|
-    t.integer  "product_id",                                           null: false
+    t.integer  "product_id",                                          null: false
     t.datetime "delay_date"
-    t.decimal  "expired_debt",   precision: 15, scale: 10
-    t.decimal  "total_debt",     precision: 15, scale: 10
-    t.decimal  "debt_to_expire", precision: 15, scale: 10
+    t.decimal  "expired_debt",   precision: 20, scale: 5
+    t.decimal  "total_debt",     precision: 20, scale: 5
+    t.decimal  "debt_to_expire", precision: 20, scale: 5
     t.integer  "delay_maximum"
     t.integer  "client_id"
     t.integer  "branch_id"
-    t.integer  "lock_version",                             default: 0, null: false
+    t.integer  "lock_version",                            default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

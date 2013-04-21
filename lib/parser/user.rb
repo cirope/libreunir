@@ -3,9 +3,9 @@ module Parser
 
     def line_save(row)
       if row_valid?(row)
-        branch = ::Branch.where(branch_id: row[1]).first
+        branch = ::Branch.find_by_branch_id(row[1])
 
-        if branch
+        if branch.try(:persisted?)
           options = []
 
           row[2].downcase.split.each do |str|

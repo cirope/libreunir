@@ -7,7 +7,7 @@ class CreatePayments < ActiveRecord::Migration
       t.decimal :amount_paid, precision: 15, scale: 10
       t.decimal :total, precision: 15, scale: 10
       t.references :product, null: false, index: true
-      t.references :user, null: false, index: true
+      t.references :user, index: true
       t.integer :lock_version, null: false, default: 0
 
       t.timestamps

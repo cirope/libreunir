@@ -3,15 +3,24 @@ module Parser
 
     def line_save(row)
       if row_valid?(row)
-        loan_id = row[0].gsub('PR0', '').to_i
+        product_id = row[0].gsub('PR0', '').to_i
 
-        attributes = {
-          amount: row[17].to_f, expiration_date: row[2], payment_date: row[16],
-          fee_number: row[1].to_i, total_amount: row[41].to_i,
-          loan_id: loan_id.to_i, paid_to: row[21].to_s.gsub('(null)', '')
-        }
+        user = ::User.find_by_username(row[21])
+        product = ::Product.find_by_product_id(product_id)
 
-        ::Payment.create(attributes)
+        if product.try(:persisted?)
+
+          attributes = {
+            number: row[1], expiration: row[2], payment_date: row[16],
+            amount_paid: row[17], total: row[41], product_id: product.id
+          }
+
+          attributes.merge!(user_id: user.id) if user.try(:persisted?)
+
+          ::Payment.create(attributes)
+        else
+          return raise CSV::MalformedCSVError, 'Product not persisted'
+        end
       end
     end
 

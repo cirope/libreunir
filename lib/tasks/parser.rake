@@ -3,20 +3,22 @@ require_relative '../parser/base'
 task parser: :environment do
 
   files = {
-    Branch: 'sucursal.txt',
-    User: 'usuario.txt',
-    Client: 'clientes.txt',
-    Payment: 'cuota.txt',
-    Product: 'producto.txt'
+    branch: 'sucursal.txt',
+    user: 'usuario.txt',
+    client: 'clientes.txt',
+    product: 'producto.txt',
+    payment: 'cuota.txt'
   }
 
-  Dir.glob(File.expand_path("private/data") + '/' + "*.txt").each do |path|
-    filename = File.basename(path)
+  files.each do |klass,file|
+    
+    path = Dir.glob(
+      File.expand_path("private/data") + '/' + files[klass], File::FNM_CASEFOLD
+    ).first
 
-    puts "[ Parsing #{filename} .... ========================================= ]"
-    klass = files.invert[filename.downcase].to_s
+    puts "[ Parsing #{file} .... ========================================= ]"
 
-    parser = "#{Parser}::#{klass}".constantize.new(path)
+    parser = "Parser::#{klass.to_s.capitalize}".constantize.new(path)
     parser.parse
   end
 end

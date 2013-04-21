@@ -6,7 +6,7 @@ class Payment < ActiveRecord::Base
 
   # Scopes                                                                                                                                                    
   # Validations
-  validates :number, :expiration, :product_id, :user_id, presence: true
+  validates :number, :expiration, :product_id, presence: true
   
   # Relations
   belongs_to :product
