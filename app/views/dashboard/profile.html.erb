@@ -53,56 +53,50 @@
   </table>
 
   <h4>
-    <%= t 'view.dashboard.fees' %>
+    <%= t 'view.dashboard.payments' %>
   </h4>
   <h5>
-    <% late_average = @client.try(:fees).try(:first).try(:late_average) %>
-    <%= t 'view.fees.late_average' %>: <%= late_average %> |
-    <%= t 'view.fees.loan_id' %>:  <%= @client.try(:product_id)  %>
+    <% late_average = @client.try(:payments).try(:first).try(:late_average) %>
+    <%= t 'view.payments.late_average' %>: <%= late_average %> |
+    <%= t 'view.payments.loan_id' %>:  <%= @client.try(:product_id)  %>
   </h5>
-  <table class="table table-condensed fees">
+  <table class="table table-condensed payments">
     <thead>
       <tr>
         <th>
-          <%= t 'view.fees.total_amount' %>
+          <%= t 'view.payments.total_amount' %>
         </th>
         <th>
-          <%= t 'view.fees.fee_number' %>
+          <%= t 'view.payments.payment_number' %>
         </th>
         <th>
-          <%= t 'view.fees.expiration_date' %>
+          <%= t 'view.payments.expiration_date' %>
         </th>
         <th>
-          <%= t 'view.fees.payment_date' %>
+          <%= t 'view.payments.payment_date' %>
         </th>
         <th>
-          <%= t 'view.fees.paid_to' %>
-        </th>
-        <th>
-          <%= t 'view.fees.late_days' %>
+          <%= t 'view.payments.late_days' %>
         </th>
       </tr>
     </thead>
     <tbody>
-      <% @client.try(:fees).try(:each) do |fee| %>
-        <tr class="<%= date_fees(fee) %>">
+      <% @client.try(:payments).try(:each) do |payment| %>
+        <tr class="<%= date_payments(payment) %>">
           <td>
-            <%= fee.try(:total_amount) %>
+            <%= payment.total %>
           </td>
           <td>
-            <%= fee.try(:fee_number) %>
+            <%= payment.number %>
           </td>
           <td>
-            <%= I18n.l(fee.try(:expiration_date), format: :minimal) %>
+            <%= I18n.l(payment.expiration, format: :minimal) %>
           </td>
           <td>
-            <%= I18n.l(fee.try(:payment_date), format: :minimal) if fee.try(:payment_date) %>
+            <%= I18n.l(payment.payment_date, format: :minimal) if payment.payment_date %>
           </td>
           <td>
-            <%= fee.try(:paid_to) %>
-          </td>
-          <td>
-            <%= fee.late_days %>
+            <%= payment.late_days %>
           </td>
         </tr>
       <% end %>

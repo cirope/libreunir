@@ -1,0 +1,25 @@
+<div class="alert alert-info">
+  <button type="button" class="close" data-remove-target="#payment-info-<%= @payment.to_param %>">&times;</button>
+
+  <dl class="dl-horizontal">
+    <dt><%= t('view.payments.columns.late_average') %></dt>
+    <dd><%= @payment.late_average %></dd>
+    <dt><%= t('view.payments.columns.amount') %></dt>
+    <dd><%= @payment.total %></dd>
+    <dt><%= t('view.payments.columns.phone') %></dt>
+    <dd><%= @payment.client_phones.try(:first) || '-' %></dd>
+    <dt><%= t('view.payments.columns.address') %></dt>
+    <dd><%= @payment.client_addresses.try(:first) || '-' %></dd>
+  </dl>
+
+  <% if @payment.client_calls.present? %>
+    <h5><%= t('view.dashboard.last_calls') %></h5>
+    <ul>
+      <% @payment.client_calls.each do |call| %>
+        <% if call.call.present? %>
+          <li><%= call.call %></li>
+        <% end %>
+      <% end %>
+    </ul>
+  <% end %>
+</div>

@@ -9,7 +9,7 @@ module Users
     end
 
     def to_s
-      [self.name, self.lastname].compact.join(' ')
+      self.name
     end
 
     alias_method :label, :to_s

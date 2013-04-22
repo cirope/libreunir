@@ -1,19 +1,19 @@
 module DashboardHelper
-  def date_fees(fee)
-    if fee.payment_date
+  def date_payments(payment)
+    if payment.payment_date
       'muted'
-    elsif fee.expired?
+    elsif payment.expired?
       'error'
     else
       'success'
     end
   end
 
-  def expired_fees_path_with_params
-    expired_fees_path(users_id: @filter.user_id)
+  def expired_payments_path_with_params
+    expired_payments_path(users_id: @filter.user_id)
   end
 
-  def close_to_expire_fees_path_with_params
-    close_to_expire_fees_path(user_id: @filter.user_id)
+  def close_to_expire_payments_path_with_params
+    close_to_expire_payments_path(user_id: @filter.user_id)
   end
 end

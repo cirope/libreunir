@@ -1,14 +1,17 @@
 class Payment < ActiveRecord::Base
+  include Payments::Client
+  include Payments::Scopes
+
   has_paper_trail
 
-  # Setup accessible (or protected) attributes for your model
-  #attr_accessible :number, :expiration, :payment_date, :amount_paid, :total, :product, :user
-
-  # Scopes                                                                                                                                                    
   # Validations
   validates :number, :expiration, :product_id, presence: true
   
   # Relations
   belongs_to :product
   belongs_to :user
+
+  def expired?
+    self.expiration_date < Date.today
+  end
 end

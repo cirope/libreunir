@@ -75,7 +75,7 @@
       index_title: 'Tablero'
       profile_title: 'Perfil del cliente'
       dashboard: 'Tablero'
-      fees: 'Cuotas'
+      payments: 'Cuotas'
       late:
         zero: 'A tiempo'
         one: 'Un dia tarde'
@@ -86,14 +86,14 @@
         other: '%{days} dias antes'
       last_calls: 'Notificaciones al cliente'
       call: 'Conversación'
-    fees:
+    payments:
       expired: 'Vencidos'
       close_to_expire: 'Por vencer'
       expired_title: 'Vencidos'
       close_to_expire_title: 'Cerca del vencimiento'
       loan_id: 'Producto'
       total_amount: 'Monto total'
-      fee_number: 'Cuota'
+      payment_number: 'Cuota'
       expiration_date: 'Fecha de vencimiento'
       payment_date: 'Fecha de pago'
       paid_to: 'Pagado a'

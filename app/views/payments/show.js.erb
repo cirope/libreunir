@@ -1,0 +1,9 @@
+$('[data-payment-info]').remove();
+
+$('#payment-info-link-<%= @payment.to_param %>').closest('tr').after(
+  $('<tr id="payment-info-<%= @payment.to_param %>" data-payment-info></tr>').html(
+    $('<td colspan="7"></td>').html(
+      '<%= j render(template: 'payments/show', formats: [:html]) %>'
+    )
+  )
+);
