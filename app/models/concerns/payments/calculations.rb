@@ -2,6 +2,6 @@ module Payments::Calculations
   extend ActiveSupport::Concern
 
   def expired?
-    self.expiration_date < Date.today
+    self.expired_at < Date.today
   end
 end

@@ -5,9 +5,6 @@ class User < ActiveRecord::Base
   include Users::Overrides
   include Users::Roles
 
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
-
   has_paper_trail
 
   # Scopes
@@ -24,5 +21,5 @@ class User < ActiveRecord::Base
   belongs_to :branch
   has_many :comments
   has_many :payments
-  has_many :products, through: :payments
+  has_many :loans, through: :payments
 end
