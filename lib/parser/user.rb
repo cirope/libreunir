@@ -8,7 +8,7 @@ module Parser
 
         attributes = {
           name: row[2], username: row[0], file_number: row[6].gsub(/[^0-9]/, ''),
-          identification: row[7].gsub(/[^0-9]/, ''), date_entry: row[8], 
+          identification: row[7].gsub(/[^0-9]/, ''), started_at: row[8], 
           branch_id: branch.try(:id) 
         }
 

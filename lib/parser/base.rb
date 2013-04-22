@@ -30,7 +30,7 @@ module Parser
     def extract_headers
       line_headers = File.foreach(@path) { |line| break line if $. == 3 }
 
-      line_headers.split().delete_if { |h| h.size <= 4 }
+      line_headers.split.delete_if { |h| h.size <= 4 }
     end
   end
 end

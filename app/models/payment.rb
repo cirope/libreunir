@@ -6,7 +6,7 @@ class Payment < ActiveRecord::Base
   has_paper_trail
 
   # Validations
-  validates :number, :expiration, :product_id, presence: true
+  validates :number, :expired_at, :loan_id, presence: true
   
   # Relations
   belongs_to :product

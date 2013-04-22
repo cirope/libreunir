@@ -21,5 +21,5 @@ class User < ActiveRecord::Base
   belongs_to :branch
   has_many :comments
   has_many :payments
-  has_many :products, through: :payments
+  has_many :loans, through: :payments
 end

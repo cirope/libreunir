@@ -6,7 +6,7 @@ Fabricator(:user) do
   password_confirmation { |attrs| attrs[:password] }
   file_number { sequence(:user_file_number) }
   identification { sequence(:user_identification) }
-  date_entry { 1.year.ago.to_date }
+  started_at { 1.year.ago.to_date }
   branch_id { Fabricate(:branch).id }
   role :admin
 end

@@ -4,7 +4,7 @@ require 'test_helper'
 
 class DashboardTest < ActionDispatch::IntegrationTest
   test 'should get dashboard' do
-    Fabricate(:client, product_id: 500000, name: 'Nombre')
+    Fabricate(:client, loan_id: 500000, name: 'Nombre')
     Fabricate(:address, client_id: 500000, address: 'calle 1153')
     Fabricate(:phone, client_id: 500000, phone: '1114123123')
     Fabricate(:call, client_id: 500000, call: 'Notificacion')
@@ -47,7 +47,7 @@ class DashboardTest < ActionDispatch::IntegrationTest
 
   test 'should get client profile' do
     user = Fabricate(:user, adviser_id: 'U123')
-    Fabricate(:client, product_id: 500000, name: "Nombre")
+    Fabricate(:client, loan_id: 500000, name: "Nombre")
     Fabricate(:address, client_id: 500000, address: "calle 1153")
     Fabricate(:phone, client_id: 500000, phone: "1114123123")
     Fabricate(:call, client_id: 500000, call: "Notificacion")
@@ -182,7 +182,7 @@ class DashboardTest < ActionDispatch::IntegrationTest
     user_2 = Fabricate(:user, password: '123456', role: :regular, adviser_id: 'ADV2')
     Fabricate(:relation, relation: 'dependent', user_id: user.id, relative_id: user_2.id)
 
-    Fabricate(:client, product_id: 500000, name: "Nombre")
+    Fabricate(:client, loan_id: 500000, name: "Nombre")
     Fabricate(:address, client_id: 500000, address: "calle 1153")
     Fabricate(:phone, client_id: 500000, phone: "1114123123")
     Fabricate(:call, client_id: 500000, call: "Notificacion")

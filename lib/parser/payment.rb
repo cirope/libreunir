@@ -3,21 +3,21 @@ module Parser
 
     def line_save(row)
       if row_valid?(row)
-        product_id = row[0].gsub('PR0', '').to_i
+        loan_id = row[0].gsub('PR0', '')
 
         user = ::User.find_by_username(row[21])
-        product = ::Product.find_by_product_id(product_id)
-        payment = ::Payment.find_by_product_id_and_number(product.try(:id), row[1])
+        loan = ::Loan.find_by_loan_id(loan_id)
+        payment = ::Payment.find_by_loan_id_and_number(loan.try(:id), row[1])
 
         attributes = {
-          number: row[1], expiration: row[2], payment_date: row[16],
-          amount_paid: row[17], total: row[41], user_id: user.try(:id)
+          number: row[1], expired_at: row[2], paid_at: row[16],
+          amount_paid: row[17], total_paid: row[41], user_id: user.try(:id)
         }
 
         if payment.try(:persisted?)
           payment.update_attributes(attributes)
         else
-          attributes.merge!(product_id: product.id)
+          attributes.merge!(loan_id: loan.id)
 
           ::Payment.create(attributes)
         end
@@ -25,9 +25,7 @@ module Parser
     end
 
     def row_valid?(row)
-      if !row[0].start_with?('PR0')
-        return raise CSV::MalformedCSVError, 'Invalid row'
-      end
+      return raise CSV::MalformedCSVError, 'Invalid row' unless row[0].start_with?('PR0')
       
       true
     end
