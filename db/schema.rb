@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130420222515) do
+ActiveRecord::Schema.define(version: 20130422162333) do
 
   create_table "branches", force: true do |t|
     t.integer  "branch_id",  null: false
@@ -49,48 +49,48 @@ ActiveRecord::Schema.define(version: 20130420222515) do
   add_index "comments", ["client_id"], name: "index_comments_on_client_id"
   add_index "comments", ["user_id"], name: "index_comments_on_user_id"
 
+  create_table "loans", force: true do |t|
+    t.integer  "loan_id",                                           null: false
+    t.datetime "approved_at"
+    t.decimal  "capital",      precision: 15, scale: 5
+    t.decimal  "payment",      precision: 15, scale: 5
+    t.integer  "client_id"
+    t.integer  "user_id"
+    t.integer  "branch_id"
+    t.integer  "lock_version",                          default: 0, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "loans", ["branch_id"], name: "index_loans_on_branch_id"
+  add_index "loans", ["client_id"], name: "index_loans_on_client_id"
+  add_index "loans", ["loan_id"], name: "index_loans_on_loan_id", unique: true
+  add_index "loans", ["user_id"], name: "index_loans_on_user_id"
+
   create_table "payments", force: true do |t|
     t.integer  "number",                                            null: false
-    t.datetime "expiration",                                        null: false
-    t.datetime "payment_date"
+    t.datetime "expired_at",                                        null: false
+    t.datetime "paid_at"
     t.decimal  "amount_paid",  precision: 15, scale: 5
-    t.decimal  "total",        precision: 15, scale: 5
-    t.integer  "product_id",                                        null: false
+    t.decimal  "total_paid",   precision: 15, scale: 5
+    t.integer  "loan_id",                                           null: false
     t.integer  "user_id"
     t.integer  "lock_version",                          default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "payments", ["expiration"], name: "index_payments_on_expiration"
+  add_index "payments", ["expired_at"], name: "index_payments_on_expired_at"
+  add_index "payments", ["loan_id"], name: "index_payments_on_loan_id"
   add_index "payments", ["number"], name: "index_payments_on_number"
-  add_index "payments", ["product_id"], name: "index_payments_on_product_id"
   add_index "payments", ["user_id"], name: "index_payments_on_user_id"
-
-  create_table "products", force: true do |t|
-    t.integer  "product_id",                                          null: false
-    t.datetime "delay_date"
-    t.decimal  "expired_debt",   precision: 15, scale: 5
-    t.decimal  "total_debt",     precision: 15, scale: 5
-    t.decimal  "debt_to_expire", precision: 15, scale: 5
-    t.integer  "delay_maximum"
-    t.integer  "client_id"
-    t.integer  "branch_id"
-    t.integer  "lock_version",                            default: 0, null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "products", ["branch_id"], name: "index_products_on_branch_id"
-  add_index "products", ["client_id"], name: "index_products_on_client_id"
-  add_index "products", ["product_id"], name: "index_products_on_product_id", unique: true
 
   create_table "users", force: true do |t|
     t.string   "name",                                          null: false
     t.string   "username",                                      null: false
     t.integer  "file_number"
     t.integer  "identification",         limit: 8
-    t.datetime "date_entry"
+    t.datetime "started_at"
     t.integer  "branch_id"
     t.string   "email",                            default: "", null: false
     t.string   "encrypted_password",               default: "", null: false

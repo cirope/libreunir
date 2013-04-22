@@ -5,7 +5,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :username, null: false
       t.integer :file_number
       t.integer :identification, limit: 8
-      t.datetime :date_entry
+      t.datetime :started_at
       t.references :branch
       
       ## Database authenticatable

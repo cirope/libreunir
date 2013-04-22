@@ -3,15 +3,14 @@ module Parser
 
     def line_save(row)
       if row_valid?(row)
-        branch_id = row[0].to_i
 
-        branch = ::Branch.find_by_branch_id(branch_id)
+        branch = ::Branch.find_by_branch_id(row[0])
         attributes = { name: row[3], address: row[17] }
 
         if branch.try(:persisted?)
           branch.update_attributes(attributes)
         else
-          attributes.merge!(branch_id: branch_id)
+          attributes.merge!(branch_id: row[0])
 
           ::Branch.create(attributes)
         end
@@ -19,12 +18,8 @@ module Parser
     end
 
     def row_valid?(row)
-      ['Job', 'SucursalID', '---'].each do |str|
-        if row[0].start_with?(str)
-          return raise CSV::MalformedCSVError, 'Invalid row'
-        end
-      end
-
+      return raise CSV::MalformedCSVError, 'Invalid row' unless row[0] =~ /\A\d+\z/
+      
       true
     end
   end
