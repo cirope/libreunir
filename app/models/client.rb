@@ -9,4 +9,8 @@ class Client < ActiveRecord::Base
   # Relations
   has_many :comments
   has_many :products
+
+  def last_comments
+    self.comments.inverse_order.limit(10)
+  end
 end

@@ -2,23 +2,22 @@
   <button type="button" class="close" data-remove-target="#payment-info-<%= @payment.to_param %>">&times;</button>
 
   <dl class="dl-horizontal">
-    <dt><%= t('view.payments.columns.late_average') %></dt>
-    <dd><%= @payment.late_average %></dd>
     <dt><%= t('view.payments.columns.amount') %></dt>
     <dd><%= @payment.total %></dd>
     <dt><%= t('view.payments.columns.phone') %></dt>
-    <dd><%= @payment.client_phones.try(:first) || '-' %></dd>
+    <dd><%= @payment.client_phone || '-' %></dd>
     <dt><%= t('view.payments.columns.address') %></dt>
-    <dd><%= @payment.client_addresses.try(:first) || '-' %></dd>
+    <dd><%= @payment.client_address || '-' %></dd>
   </dl>
 
-  <% if @payment.client_calls.present? %>
-    <h5><%= t('view.dashboard.last_calls') %></h5>
+  <% if @payment.client_last_comments.present? %>
+    <h5><%= t('view.dashboard.last_comments') %></h5>
     <ul>
-      <% @payment.client_calls.each do |call| %>
-        <% if call.call.present? %>
-          <li><%= call.call %></li>
-        <% end %>
+      <% @payment.client_last_comments.each do |comment| %>
+        <li>
+          [<%= l(comment.created_at.to_date) %>]
+          <%= comment.user %>: <%= comment.comment %>
+        </li>
       <% end %>
     </ul>
   <% end %>

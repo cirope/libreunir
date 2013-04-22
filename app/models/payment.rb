@@ -1,4 +1,5 @@
 class Payment < ActiveRecord::Base
+  include Payments::Calculations
   include Payments::Client
   include Payments::Scopes
 
@@ -10,8 +11,4 @@ class Payment < ActiveRecord::Base
   # Relations
   belongs_to :product
   belongs_to :user
-
-  def expired?
-    self.expiration_date < Date.today
-  end
 end

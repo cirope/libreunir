@@ -56,8 +56,8 @@
     <%= t 'view.dashboard.payments' %>
   </h4>
   <h5>
-    <% late_average = @client.try(:payments).try(:first).try(:late_average) %>
-    <%= t 'view.payments.late_average' %>: <%= late_average %> |
+    <% average_delay = @client.try(:payments).try(:first).try(:average_delay) %>
+    <%= t 'view.payments.average_delay' %>: <%= average_delay %> |
     <%= t 'view.payments.loan_id' %>:  <%= @client.try(:product_id)  %>
   </h5>
   <table class="table table-condensed payments">

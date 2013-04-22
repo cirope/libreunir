@@ -84,7 +84,7 @@
         zero: 'A tiempo'
         one: 'Un dia antes'
         other: '%{days} dias antes'
-      last_calls: 'Notificaciones al cliente'
+      last_comments: 'Últimos comentarios del cliente'
       call: 'Conversación'
     payments:
       expired: 'Vencidos'
@@ -105,7 +105,7 @@
         expiring: 'Expira'
         phone: 'Teléfono'
         product_id: 'Producto'
-        late_average: 'Retraso promedio'
+        average_delay: 'Retraso promedio'
     filters:
       today: 'Hoy'
       tomorrow: 'Mañana'
