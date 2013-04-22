@@ -1,9 +1,0 @@
-$('[data-fee-info]').remove();
-
-$('#fee-info-link-<%= @fee.to_param %>').closest('tr').after(
-  $('<tr id="fee-info-<%= @fee.to_param %>" data-fee-info></tr>').html(
-    $('<td colspan="7"></td>').html(
-      '<%= j render(template: 'fees/show', formats: [:html]) %>'
-    )
-  )
-);

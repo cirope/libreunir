@@ -1,9 +1,0 @@
-<tr>
-  <td><%= link_to_fee_info(fee) %></td>
-  <td><%= fee.client.try(:product_id) %></td>
-  <td><%= fee.client.try(:name) %></td>
-  <td><%= l(fee.expiration_date, format: :minimal) %></td>
-  <td><%= fee.total_amount %></td>
-  <td><%= fee.client_phones.try(:first) %></td>
-  <td><%= truncate fee.client_addresses.try(:first).to_s %></td>
-</tr>
