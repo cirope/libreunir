@@ -1,8 +1,6 @@
 class Branch < ActiveRecord::Base
   has_paper_trail
 
-  # Scopes
-
   # Validations
   validates :name, :branch_id, presence: true
   validates :branch_id, uniqueness: true, allow_nil: true, allow_blank: true
