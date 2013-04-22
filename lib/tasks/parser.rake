@@ -5,6 +5,7 @@ task parser: :environment do
   files = {
     branch: 'sucursal.txt',
     user: 'usuario.txt',
+    loan: 'solicitud.txt',
     client: 'clientes.txt',
     product: 'producto.txt',
     payment: 'cuota.txt'
