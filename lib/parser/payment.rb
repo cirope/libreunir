@@ -6,7 +6,7 @@ module Parser
         loan_id = row[0].gsub('PR0', '')
 
         user = ::User.find_by_username(row[21])
-        loan = ::Loan.find_by_product_id(loan_id)
+        loan = ::Loan.find_by_loan_id(loan_id)
         payment = ::Payment.find_by_loan_id_and_number(loan.try(:id), row[1])
 
         attributes = {
