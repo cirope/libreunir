@@ -29,11 +29,14 @@ class BranchTest < ActiveSupport::TestCase
 
   test 'validates blank attributes' do
     @branch.name = ''
+    @branch.branch_id = nil
 
     assert @branch.invalid?
-    assert_equal 1, @branch.errors.size
+    assert_equal 2, @branch.errors.size
     assert_equal [error_message_from_model(@branch, :name, :blank)],
       @branch.errors[:name]
+    assert_equal [error_message_from_model(@branch, :branch_id, :blank)],
+      @branch.errors[:branch_id]
   end
 
   test 'validates unique attributes' do

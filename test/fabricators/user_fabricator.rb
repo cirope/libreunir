@@ -1,11 +1,12 @@
 Fabricator(:user) do
   name { Faker::Name.first_name }
-  lastname { Faker::Name.last_name }
-  email { |attrs|
-    Faker::Internet.email([attrs[:name], sequence(:user_id)].join(' '))
-  }
+  username { |attrs| [attrs[:name], sequence(:user_id)].join('_').downcase }
+  email { |attrs| Faker::Internet.email(attrs[:username]) }
   password { Faker::Lorem.sentence }
   password_confirmation { |attrs| attrs[:password] }
-  adviser_id { Faker::Name.first_name }
+  file_number { sequence(:user_file_number) }
+  identification { sequence(:user_identification) }
+  date_entry { 1.year.ago.to_date }
+  branch_id { Fabricate(:branch).id }
   role :admin
 end

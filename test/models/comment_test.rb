@@ -6,7 +6,7 @@ class CommentTest < ActiveSupport::TestCase
   end
 
   test 'create' do
-    assert_difference ['Comment.count', 'Version.count'] do
+    assert_difference 'Comment.count' do
       @comment = Comment.create(Fabricate.attributes_for(:comment))
     end 
   end
@@ -14,11 +14,11 @@ class CommentTest < ActiveSupport::TestCase
   test 'update' do
     assert_difference 'Version.count' do
       assert_no_difference 'Comment.count' do
-        assert @comment.update_attributes(attr: 'Updated')
+        assert @comment.update_attributes(comment: 'Updated')
       end
     end
 
-    assert_equal 'Updated', @comment.reload.attr
+    assert_equal 'Updated', @comment.reload.comment
   end
     
   test 'destroy' do 
@@ -28,21 +28,17 @@ class CommentTest < ActiveSupport::TestCase
   end
     
   test 'validates blank attributes' do
-    @comment.attr = ''
+    @comment.comment = ''
+    @comment.user_id = nil
+    @comment.client_id = nil
     
     assert @comment.invalid?
-    assert_equal 1, @comment.errors.size
-    assert_equal [error_message_from_model(@comment, :attr, :blank)],
-      @comment.errors[:attr]
-  end
-    
-  test 'validates unique attributes' do
-    new_comment = Fabricate(:comment)
-    @comment.attr = new_comment.attr
-
-    assert @comment.invalid?
-    assert_equal 1, @comment.errors.size
-    assert_equal [error_message_from_model(@comment, :attr, :taken)],
-      @comment.errors[:attr]
+    assert_equal 3, @comment.errors.size
+    assert_equal [error_message_from_model(@comment, :comment, :blank)],
+      @comment.errors[:comment]
+    assert_equal [error_message_from_model(@comment, :user_id, :blank)],
+      @comment.errors[:user_id]
+    assert_equal [error_message_from_model(@comment, :client_id, :blank)],
+      @comment.errors[:client_id]
   end
 end

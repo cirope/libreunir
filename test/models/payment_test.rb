@@ -14,11 +14,11 @@ class PaymentTest < ActiveSupport::TestCase
   test 'update' do
     assert_difference 'Version.count' do
       assert_no_difference 'Payment.count' do
-        assert @payment.update_attributes(loan_id: 1)
+        assert @payment.update_attributes(expiration: Date.today)
       end
     end
 
-    assert_equal 1, @payment.reload.loan_id
+    assert_equal Date.today, @payment.reload.expiration
   end
 
   test 'destroy' do
@@ -28,37 +28,45 @@ class PaymentTest < ActiveSupport::TestCase
   end
 
   test 'validates blank attributes' do
-    @payment.loan_id = ''
+    @payment.number = ''
+    @payment.expiration = ''
+    @payment.product_id = nil
 
     assert @payment.invalid?
-    assert_equal 1, @payment.errors.size
-    assert_equal [error_message_from_model(@payment, :loan_id, :blank)],
-      @payment.errors[:loan_id]
+    assert_equal 3, @payment.errors.size
+    assert_equal [error_message_from_model(@payment, :number, :blank)],
+      @payment.errors[:number]
+    assert_equal [error_message_from_model(@payment, :expiration, :blank)],
+      @payment.errors[:expiration]
+    assert_equal [error_message_from_model(@payment, :product_id, :blank)],
+      @payment.errors[:product_id]
   end
 
-  test 'should calculate late days for a payment' do
-    @payment = Fabricate(:payment, expiration_date: 2.month.ago)
+  test 'expired' do
+    @payment.expiration = Date.yesterday
 
-    assert_equal '61 dias tarde', @payment.late_days
+    assert @payment.expired?
+
+    @payment.expiration = Date.tomorrow
+
+    assert !@payment.expired?
   end
 
-  test 'should calculate average late days with bad payments' do
-    5.times { @payment = Fabricate(:payment, expiration_date: 1.month.ago) }
-
-    assert_equal '31 dias tarde', @payment.late_average
+  test 'pending' do
+    assert_difference 'Payment.pending.count' do
+      Fabricate(:payment, payment_date: nil)
+    end
   end
 
-  test 'should calculate average late days with good payments' do
-    5.times { @payment = Fabricate(:payment, expiration_date: Date.today, payment_date: 1.month.ago) }
-
-    assert_equal '31 dias antes', @payment.late_average
+  test 'expire before' do
+    assert_difference 'Payment.expire_before(Date.today).count' do
+      Fabricate(:payment, expiration: Date.yesterday)
+    end
   end
 
-  test 'should calculate average late days with average payments' do
-    2.times { Fabricate(:payment, expiration_date: 2.month.ago, payment_date: 1.month.ago) }
-    2.times { Fabricate(:payment, expiration_date: 1.month.ago, payment_date: 1.month.ago) }
-    @payment = Fabricate(:payment, expiration_date: Date.today)
-
-    assert_equal 'A tiempo', @payment.late_average
+  test 'expire after' do
+    assert_difference 'Payment.expire_after(Date.today).count' do
+      Fabricate(:payment, expiration: Date.tomorrow)
+    end
   end
 end

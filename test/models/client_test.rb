@@ -6,7 +6,7 @@ class ClientTest < ActiveSupport::TestCase
   end
 
   test 'create' do
-    assert_difference ['Client.count'] do
+    assert_difference 'Client.count' do
       @client = Client.create(Fabricate.attributes_for(:client))
     end
   end
@@ -29,20 +29,32 @@ class ClientTest < ActiveSupport::TestCase
 
   test 'validates blank attributes' do
     @client.name = ''
+    @client.lastname = ''
+    @client.identification = ''
 
     assert @client.invalid?
-    assert_equal 1, @client.errors.size
+    assert_equal 3, @client.errors.size
     assert_equal [error_message_from_model(@client, :name, :blank)],
       @client.errors[:name]
+    assert_equal [error_message_from_model(@client, :lastname, :blank)],
+      @client.errors[:lastname]
+    assert_equal [error_message_from_model(@client, :identification, :blank)],
+      @client.errors[:identification]
   end
 
   test 'validates unique attributes' do
     new_client = Fabricate(:client)
-    @client.name = new_client.name
+    @client.identification = new_client.identification
 
     assert @client.invalid?
     assert_equal 1, @client.errors.size
-    assert_equal [error_message_from_model(@client, :name, :taken)],
-      @client.errors[:name]
+    assert_equal [error_message_from_model(@client, :identification, :taken)],
+      @client.errors[:identification]
+  end
+
+  test 'should get last comments' do
+    15.times { Fabricate(:comment, client_id: @client.id) }
+
+    assert_equal 10, @client.last_comments.size
   end
 end

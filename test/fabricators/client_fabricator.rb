@@ -1,5 +1,7 @@
 Fabricator(:client) do
-  name { Faker::Name.name }
-  product_id {  100*rand }
-  identification { 100*rand }
+  name { Faker::Name.first_name }
+  lastname { Faker::Name.last_name }
+  identification { sequence(:client_identification) }
+  address { Faker::Address.street_address }
+  phone { Faker::PhoneNumber.phone_number }
 end

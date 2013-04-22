@@ -5,9 +5,6 @@ class User < ActiveRecord::Base
   include Users::Overrides
   include Users::Roles
 
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
-
   has_paper_trail
 
   # Scopes

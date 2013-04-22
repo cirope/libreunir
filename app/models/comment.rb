@@ -7,8 +7,6 @@ class Comment < ActiveRecord::Base
     
   # Validations
   validates :comment, :client_id, :user_id, presence: true
-  validates :comment, uniqueness: { scope: [:client_id, :user_id], case_sensitive: false },
-    allow_nil: true, allow_blank: true
   
   # Relations
   belongs_to :client
