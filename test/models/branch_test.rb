@@ -6,7 +6,7 @@ class BranchTest < ActiveSupport::TestCase
   end
 
   test 'create' do
-    assert_difference ['Branch.count'] do
+    assert_difference 'Branch.count' do
       @branch = Branch.create(Fabricate.attributes_for(:branch))
     end
   end
