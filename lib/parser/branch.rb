@@ -5,11 +5,16 @@ module Parser
       if row_valid?(row)
         branch_id = row[0].to_i
 
-        attributes = {
-          branch_id: branch_id, name: row[3], address: row[17]
-        }
+        branch = ::Branch.find_by_branch_id(branch_id)
+        attributes = { name: row[3], address: row[17] }
 
-        ::Branch.create(attributes)
+        if branch.try(:persisted?)
+          branch.update_attributes(attributes)
+        else
+          attributes.merge!(branch_id: branch_id)
+
+          ::Branch.create(attributes)
+        end
       end
     end
 

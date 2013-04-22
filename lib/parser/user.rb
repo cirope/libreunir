@@ -3,35 +3,35 @@ module Parser
 
     def line_save(row)
       if row_valid?(row)
+        user = ::User.find_by_username(row[0])
         branch = ::Branch.find_by_branch_id(row[1])
 
-        if branch.try(:persisted?)
-          options = []
+        attributes = {
+          name: row[2], username: row[0], file_number: row[6].gsub(/[^0-9]/, ''),
+          identification: row[7].gsub(/[^0-9]/, ''), date_entry: row[8], 
+          branch_id: branch.try(:id) 
+        }
 
-          row[2].downcase.split.each do |str|
-            options << str.to_s.gsub(/[^a-z]/, '')
-          end
-
-          email = "#{options.compact.join('_')}@cordialnegocios.com.ar"
-          password = rand(1000000..9000000)
-
-
-          attributes = {
-            name: row[2], username: row[0], file_number: row[6].gsub(/[^0-9]/, ''),
-            identification: row[7].gsub(/[^0-9]/, ''), date_entry: row[8], 
-            branch_id: branch.id, email: email, password: password, 
-            password_confirmation: password
-          }
-
-          user = ::User.create(attributes)
-
-          if user.errors.any?
-            email = "#{options.compact.join('_')}_duplicado@cordialnegocios.com.ar"
-            ::User.create(attributes.merge(email: email))
-          end
+        if user.try(:persisted?)
+          user.update_attributes(attributes)
         else
-          return raise CSV::MalformedCSVError, 'Invalid row'
+          create_user(row, attributes)
         end
+      end
+    end
+
+    def create_user(row, attributes)
+      options = []
+      row[2].downcase.split.each { |str| options << str.to_s.gsub(/[^a-z]/, '') }
+      email = "#{options.compact.join('_')}@cordialnegocios.com.ar"
+      password = rand(1000000..9000000)
+
+      attributes.merge!(email: email, password: password, password_confirmation: password)
+      user = ::User.create(attributes)
+
+      if user.errors.any?
+        email = "#{options.compact.join('_')}_duplicado@cordialnegocios.com.ar"
+        ::User.create(attributes.merge(email: email))
       end
     end
 

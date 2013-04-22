@@ -7,19 +7,19 @@ module Parser
 
         user = ::User.find_by_username(row[21])
         product = ::Product.find_by_product_id(product_id)
+        payment = ::Payment.find_by_product_id_and_number(product.try(:id), row[1])
 
-        if product.try(:persisted?)
+        attributes = {
+          number: row[1], expiration: row[2], payment_date: row[16],
+          amount_paid: row[17], total: row[41], user_id: user.try(:id)
+        }
 
-          attributes = {
-            number: row[1], expiration: row[2], payment_date: row[16],
-            amount_paid: row[17], total: row[41], product_id: product.id
-          }
-
-          attributes.merge!(user_id: user.id) if user.try(:persisted?)
+        if payment.try(:persisted?)
+          payment.update_attributes(attributes)
+        else
+          attributes.merge!(product_id: product.id)
 
           ::Payment.create(attributes)
-        else
-          return raise CSV::MalformedCSVError, 'Product not persisted'
         end
       end
     end

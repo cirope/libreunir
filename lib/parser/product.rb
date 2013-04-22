@@ -16,7 +16,7 @@ module Parser
         if product.try(:persisted?)
           product.update_attributes(attributes)
         else
-          return raise CSV::MalformedCSVError, 'New Product'
+          ::Product.create(attributes)
         end
       end
     end
@@ -31,8 +31,8 @@ module Parser
       true
     end
 
-    def self.create_product(product_id, client)
-      product = ::Product.where(product_id: product_id).first
+    def self.parse_product(product_id, client)
+      product = ::Product.find_by_product_id(product_id)
       
       if product.try(:persisted?)
         product.update_attributes(client_id: client.id)

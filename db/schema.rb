@@ -50,14 +50,14 @@ ActiveRecord::Schema.define(version: 20130420222515) do
   add_index "comments", ["user_id"], name: "index_comments_on_user_id"
 
   create_table "payments", force: true do |t|
-    t.integer  "number",                                             null: false
-    t.datetime "expiration",                                         null: false
+    t.integer  "number",                                            null: false
+    t.datetime "expiration",                                        null: false
     t.datetime "payment_date"
-    t.decimal  "amount_paid",  precision: 15, scale: 10
-    t.decimal  "total",        precision: 15, scale: 10
-    t.integer  "product_id",                                         null: false
+    t.decimal  "amount_paid",  precision: 15, scale: 5
+    t.decimal  "total",        precision: 15, scale: 5
+    t.integer  "product_id",                                        null: false
     t.integer  "user_id"
-    t.integer  "lock_version",                           default: 0, null: false
+    t.integer  "lock_version",                          default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -70,9 +70,9 @@ ActiveRecord::Schema.define(version: 20130420222515) do
   create_table "products", force: true do |t|
     t.integer  "product_id",                                          null: false
     t.datetime "delay_date"
-    t.decimal  "expired_debt",   precision: 20, scale: 5
-    t.decimal  "total_debt",     precision: 20, scale: 5
-    t.decimal  "debt_to_expire", precision: 20, scale: 5
+    t.decimal  "expired_debt",   precision: 15, scale: 5
+    t.decimal  "total_debt",     precision: 15, scale: 5
+    t.decimal  "debt_to_expire", precision: 15, scale: 5
     t.integer  "delay_maximum"
     t.integer  "client_id"
     t.integer  "branch_id"
@@ -91,7 +91,7 @@ ActiveRecord::Schema.define(version: 20130420222515) do
     t.integer  "file_number"
     t.integer  "identification",         limit: 8
     t.datetime "date_entry"
-    t.integer  "branch_id",                                     null: false
+    t.integer  "branch_id"
     t.string   "email",                            default: "", null: false
     t.string   "encrypted_password",               default: "", null: false
     t.string   "reset_password_token"
