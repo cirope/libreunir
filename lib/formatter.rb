@@ -36,4 +36,8 @@ class Formatter
       File.expand_path(@processed) + '/' + "#{@current_date}/#{File.basename(path).downcase}"
     )
   end
+
+  def table_cleanup(klass)
+    klass.constantize.where('updated_at < :today', today: Time.now).destroy_all
+  end
 end

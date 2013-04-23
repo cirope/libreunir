@@ -7,7 +7,10 @@ module Parser
         loan_id = row[0].gsub('PR0', '')
         loan = ::Loan.find_by_loan_id(loan_id)
 
-        attributes = { delayed_at: row[3] }
+        attributes = { 
+          delayed_at: row[3], expired_payments_count: row[95], 
+          payments_to_expire_count: row[96], next_payment_expire_at: row[97]
+        }
 
         if loan.try(:persisted?)
           loan.update_attributes(attributes)

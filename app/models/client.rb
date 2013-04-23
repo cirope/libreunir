@@ -6,8 +6,8 @@ class Client < ActiveRecord::Base
   validates :identification, uniqueness: true, allow_nil: true, allow_blank: true
 
   # Relations
-  has_many :comments
-  has_many :loans
+  has_many :comments, dependent: :destroy
+  has_many :loans, dependent: :destroy
 
   def to_s
     [self.lastname, self.name].compact.join(', ')
