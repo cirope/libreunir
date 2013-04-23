@@ -21,10 +21,12 @@ task parser: 'importer:work' do
 
     puts "[ Parsing #{file} .... ========================================= ]"
 
-    klass = model.to_s.capitalize
-    "Parser::#{klass}".constantize.new(path).parse
+    klass_name = model.to_s.capitalize
+    "Parser::#{klass_name}".constantize.new(path).parse
 
     @formatter.move_processed(path)
+
+    klass = klass_name.constantize rescue 'Loan'.constantize
     @formatter.table_cleanup(klass)
   end
 end
