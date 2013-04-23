@@ -57,16 +57,4 @@ class PaymentTest < ActiveSupport::TestCase
       Fabricate(:payment, paid_at: nil)
     end
   end
-
-  test 'expire before' do
-    assert_difference 'Payment.expire_before(Date.today).count' do
-      Fabricate(:payment, expired_at: Date.yesterday)
-    end
-  end
-
-  test 'expire after' do
-    assert_difference 'Payment.expire_after(Date.today).count' do
-      Fabricate(:payment, expired_at: Date.tomorrow)
-    end
-  end
 end

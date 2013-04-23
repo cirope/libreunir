@@ -45,4 +45,22 @@ class LoanTest < ActiveSupport::TestCase
     assert_equal [error_message_from_model(@loan, :loan_id, :taken)],
       @loan.errors[:loan_id]
   end
+
+  test 'pending' do
+    assert_difference 'Loan.pending.count' do
+      Fabricate(:loan, delayed_at: nil)
+    end
+  end
+
+  test 'expire before' do
+    assert_difference 'Loan.expire_before(Date.today).count' do
+      Fabricate(:loan, delayed_at: Date.yesterday)
+    end
+  end
+
+  test 'expire after' do
+    assert_difference 'Loan.expire_after(Date.today).count' do
+      Fabricate(:loan, delayed_at: Date.tomorrow)
+    end
+  end
 end
