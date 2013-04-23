@@ -1,6 +1,8 @@
 <div class="alert alert-info">
   <button type="button" class="close" data-remove-target="#loan-info-<%= @loan.to_param %>">&times;</button>
 
+  <h4><%= @loan %></h4>
+
   <dl class="dl-horizontal">
     <dt><%= Client.human_attribute_name('phone') %></dt>
     <dd><%= @loan.client_phone.present? ? @loan.client_phone : '-' %></dd>
