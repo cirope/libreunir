@@ -18,7 +18,7 @@ module Parser
           payment.update_attributes(attributes)
           payment.touch
         else
-          attributes.merge!(loan_id: loan.id)
+          attributes.merge!(loan_id: loan_id)
 
           ::Payment.create(attributes)
         end
