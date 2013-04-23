@@ -14,13 +14,11 @@ class User < ActiveRecord::Base
   validates :name, :username, presence: true
   validates :name, :email, length: { maximum: 255 }, 
     allow_nil: true, allow_blank: true
-  validates :identification, :file_number, numericality: { only_integer: true },
-    allow_nil: true, allow_blank: true
 
   # Relations
   belongs_to :branch
-  has_many :loans
-  has_many :comments
+  has_many :loans, dependent: :destroy
+  has_many :comments, dependent: :destroy
   has_many :made_payments, class_name: 'Payment'
   has_many :payments, through: :loans
 end

@@ -4,6 +4,5 @@
   <td><%= l(loan.oldest_pending_payment_expiration, format: :minimal) %></td>
   <td><%= loan.payment %></td>
   <td><%= loan.client_phone %></td>
-  <td><%= truncate loan.client_address.to_s %></td>
   <td><%= link_to_loan_info(loan) %></td>
 </tr>
