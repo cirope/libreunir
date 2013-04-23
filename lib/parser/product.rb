@@ -1,5 +1,5 @@
 module Parser
-  class Loan < Base
+  class Product < Base
 
     def line_save(row)
       if row_valid?(row)
@@ -7,7 +7,7 @@ module Parser
         loan_id = row[0].gsub('PR0', '')
         loan = ::Loan.find_by_loan_id(loan_id)
 
-        attributes = { capital: row[2], payment: row[4] }
+        attributes = { delayed_at: row[3] }
 
         if loan.try(:persisted?)
           loan.update_attributes(attributes)

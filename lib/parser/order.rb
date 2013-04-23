@@ -15,6 +15,7 @@ module Parser
 
         if loan.try(:persisted?)
           loan.update_attributes(attributes)
+          loan.touch
         else
           attributes.merge!(loan_id: row[0])
 

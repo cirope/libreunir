@@ -1,6 +1,6 @@
 namespace :importer do
   desc 'Download the zip file, unzip it, and Formats and parse the csv files downloaded with the ftps class'
-  task work: [:get_file, :unzip, :parse]
+  task work: [:get_file, :unzip, :backup]
   
   task get_file: :environment do
     @ftps = Ftps.new
@@ -15,8 +15,10 @@ namespace :importer do
     Unzipper.extract 
   end
 
-  task parse: :environment do
-    Formatter.create_directories
-    Formatter.backup_zip_file
+  task backup: :environment do
+    @formatter = Formatter.new
+
+    @formatter.create_directories
+    @formatter.backup_zip_file
   end
 end

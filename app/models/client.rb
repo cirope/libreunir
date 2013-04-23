@@ -3,7 +3,6 @@ class Client < ActiveRecord::Base
 
   # Validations
   validates :name, :lastname, :identification, presence: true
-  # TODO: improve the validation of identification
   validates :identification, uniqueness: true, allow_nil: true, allow_blank: true
 
   # Relations

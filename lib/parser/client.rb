@@ -15,6 +15,7 @@ module Parser
 
         if client.try(:persisted?)
           client.update_attributes(attributes)
+          client.touch
 
           Parser::Loan.parse_loan(loan_id, client)
         else

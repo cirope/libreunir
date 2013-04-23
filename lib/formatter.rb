@@ -1,41 +1,39 @@
 class Formatter
   require 'fileutils'
 
-  @@formatter ||= Logger.new("#{Rails.root}/log/formatter-#{Time.new.strftime('%Y-%m-%d')}.log")
+  def initialize
+    @current_date = Time.new.strftime('%Y-%m-%d')
+    @formatter = Logger.new("#{Rails.root}/log/formatter-#{@current_date}.log")
+    @processed = "private/data/processed"
+  end
 
-  def self.info(klass, row, attributes)
+  def info(klass, row, attributes)
     message = String.new
     message << "#{klass} - Row: #{row}"
     message << "#{klass} - Record not saved : #{attributes}"
-    @@formatter.info(message)
+
+    @formatter.info(message)
   end
 
-  def self.create_directories
+  def create_directories
     FileUtils.mkdir_p(File.expand_path("private/backup"))
-    FileUtils.mkdir_p(File.expand_path("private/data/processed"))
-    FileUtils.mkdir_p(File.expand_path("private/data/processed/") + '/' + "#{Time.new.strftime('%Y-%m-%d')}")
+    FileUtils.mkdir_p(File.expand_path(@processed))
+    FileUtils.mkdir_p(File.expand_path(@processed) + '/' + @current_date)
   end
 
-  def self.backup_zip_file
-    origin = File.expand_path("private") + '/' + APP_CONFIG['zip']['filename']
-    target = File.expand_path("private/backup/") + '/' + "#{APP_CONFIG['zip']['filename'][0..-5]}-#{Time.new.strftime('%Y-%m-%d')}.zip"
+  def backup_zip_file
+    filename = APP_CONFIG['zip']['filename']
+
+    origin = File.expand_path("private") + '/' + filename
+    target = File.expand_path("private/backup/") + '/' + "#{filename.gsub('.zip', '')}-#{@current_date}.zip"
+
+    FileUtils.mv(origin, target) if File.exists?(origin)
+  end
+
+  def move_processed(path)
     FileUtils.mv(
-      origin,
-      target
-    ) if File.exists?(origin)
-  end
-
-  def self.parse_files
-    
-    move_processed(file)
-  end
-
-  private
-
-  def self.move_processed(file)
-    FileUtils.mv(
-      file,
-      File.expand_path("private/data/processed/") + '/' + "#{Time.new.strftime('%Y-%m-%d')}/#{File.basename(file).downcase}"
+      path,
+      File.expand_path(@processed) + '/' + "#{@current_date}/#{File.basename(path).downcase}"
     )
   end
 end
