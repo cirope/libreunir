@@ -24,12 +24,12 @@ ActiveRecord::Schema.define(version: 20130422162333) do
   add_index "branches", ["branch_id"], name: "index_branches_on_branch_id", unique: true
 
   create_table "clients", force: true do |t|
-    t.string   "name",                                 null: false
-    t.string   "lastname",                             null: false
-    t.integer  "identification", limit: 8,             null: false
+    t.string   "name",                       null: false
+    t.string   "lastname",                   null: false
+    t.string   "identification",             null: false
     t.string   "address"
     t.string   "phone"
-    t.integer  "lock_version",             default: 0, null: false
+    t.integer  "lock_version",   default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 20130422162333) do
   create_table "loans", force: true do |t|
     t.integer  "loan_id",                                           null: false
     t.datetime "approved_at"
+    t.datetime "delayed_at"
     t.decimal  "capital",      precision: 15, scale: 5
     t.decimal  "payment",      precision: 15, scale: 5
     t.integer  "client_id"
@@ -64,6 +65,7 @@ ActiveRecord::Schema.define(version: 20130422162333) do
 
   add_index "loans", ["branch_id"], name: "index_loans_on_branch_id"
   add_index "loans", ["client_id"], name: "index_loans_on_client_id"
+  add_index "loans", ["delayed_at"], name: "index_loans_on_delayed_at"
   add_index "loans", ["loan_id"], name: "index_loans_on_loan_id", unique: true
   add_index "loans", ["user_id"], name: "index_loans_on_user_id"
 
@@ -86,24 +88,24 @@ ActiveRecord::Schema.define(version: 20130422162333) do
   add_index "payments", ["user_id"], name: "index_payments_on_user_id"
 
   create_table "users", force: true do |t|
-    t.string   "name",                                          null: false
-    t.string   "username",                                      null: false
+    t.string   "name",                                null: false
+    t.string   "username",                            null: false
     t.integer  "file_number"
-    t.integer  "identification",         limit: 8
+    t.string   "identification"
     t.datetime "started_at"
     t.integer  "branch_id"
-    t.string   "email",                            default: "", null: false
-    t.string   "encrypted_password",               default: "", null: false
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                    default: 0
+    t.integer  "sign_in_count",          default: 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.integer  "roles_mask",                       default: 0,  null: false
-    t.integer  "lock_version",                     default: 0,  null: false
+    t.integer  "roles_mask",             default: 0,  null: false
+    t.integer  "lock_version",           default: 0,  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
