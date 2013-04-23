@@ -16,6 +16,7 @@ module Parser
 
         if payment.try(:persisted?)
           payment.update_attributes(attributes)
+          payment.touch
         else
           attributes.merge!(loan_id: loan.id)
 

@@ -9,6 +9,7 @@ module Parser
 
         if branch.try(:persisted?)
           branch.update_attributes(attributes)
+          branch.touch
         else
           attributes.merge!(branch_id: row[0])
 

@@ -3,7 +3,7 @@ class CreateClients < ActiveRecord::Migration
     create_table :clients do |t|
       t.string :name, null: false
       t.string :lastname, null: false
-      t.integer :identification, limit: 8, null: false
+      t.string :identification, null: false
       t.string :address
       t.string :phone
       t.integer :lock_version, null: false, default: 0

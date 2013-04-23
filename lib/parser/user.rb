@@ -14,6 +14,7 @@ module Parser
 
         if user.try(:persisted?)
           user.update_attributes(attributes)
+          user.touch
         else
           create_user(row, attributes)
         end

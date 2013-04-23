@@ -4,7 +4,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :name, null: false
       t.string :username, null: false
       t.integer :file_number
-      t.integer :identification, limit: 8
+      t.string :identification
       t.datetime :started_at
       t.references :branch
       

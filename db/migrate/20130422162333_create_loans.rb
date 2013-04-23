@@ -3,6 +3,7 @@ class CreateLoans < ActiveRecord::Migration
     create_table :loans do |t|
       t.integer :loan_id, null: false
       t.datetime :approved_at
+      t.datetime :delayed_at
       t.decimal :capital, precision: 15, scale: 5
       t.decimal :payment, precision: 15, scale: 5
       t.references :client, index: true
@@ -13,5 +14,6 @@ class CreateLoans < ActiveRecord::Migration
       t.timestamps
     end
     add_index :loans, :loan_id, unique: true
+    add_index :loans, :delayed_at
   end
 end
