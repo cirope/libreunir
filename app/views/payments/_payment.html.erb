@@ -1,8 +1,8 @@
 <tr>
-  <td><%= payment.client.try(:product_id) %></td>
+  <td><%= payment.client.try(:loan_id) %></td>
   <td><%= payment.client.try(:name) %></td>
-  <td><%= l(payment.expiration, format: :minimal) %></td>
-  <td><%= payment.total %></td>
+  <td><%= l(payment.expired_at, format: :minimal) %></td>
+  <td><%= payment.total_paid %></td>
   <td><%= payment.client_phone %></td>
   <td><%= truncate payment.client_address.to_s %></td>
   <td><%= link_to_payment_info(payment) %></td>

@@ -3,7 +3,7 @@
 
   <dl class="dl-horizontal">
     <dt><%= t('view.payments.columns.amount') %></dt>
-    <dd><%= @payment.total %></dd>
+    <dd><%= @payment.total_paid || '-' %></dd>
     <dt><%= t('view.payments.columns.phone') %></dt>
     <dd><%= @payment.client_phone || '-' %></dd>
     <dt><%= t('view.payments.columns.address') %></dt>

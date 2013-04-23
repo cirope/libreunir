@@ -9,6 +9,6 @@ class Payment < ActiveRecord::Base
   validates :number, :expired_at, :loan_id, presence: true
   
   # Relations
-  belongs_to :product
+  belongs_to :loan
   belongs_to :user
 end

@@ -3,7 +3,7 @@ Libreunir::Application.routes.draw do
   devise_for :users
   get :dashboard, to: 'dashboard#index'
 
-  get '/profile/:product_id', to: 'dashboard#profile', as: 'profile'
+  get '/profile/:loan_id', to: 'dashboard#profile', as: 'profile'
 
   resources :payments, only: [:show] do
     collection do

@@ -11,6 +11,6 @@ class DashboardController < ApplicationController
   def profile
     @title = t 'view.dashboard.profile_title'
 
-    @client = Client.where(product_id: params[:product_id]).first
+    @client = Client.where(loan_id: params[:loan_id]).first
   end
 end

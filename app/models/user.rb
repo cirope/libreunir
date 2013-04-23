@@ -19,7 +19,8 @@ class User < ActiveRecord::Base
 
   # Relations
   belongs_to :branch
+  has_many :loans
   has_many :comments
-  has_many :payments
-  has_many :loans, through: :payments
+  has_many :made_payments, class_name: 'Payment'
+  has_many :payments, through: :loans
 end

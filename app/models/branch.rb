@@ -5,6 +5,6 @@ class Branch < ActiveRecord::Base
   validates :name, :branch_id, presence: true, uniqueness: true
 
   # Relations
-  has_many :products
+  has_many :loans
   has_many :users
 end

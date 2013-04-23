@@ -58,7 +58,7 @@
   <h5>
     <% average_delay = @client.try(:payments).try(:first).try(:average_delay) %>
     <%= t 'view.payments.average_delay' %>: <%= average_delay %> |
-    <%= t 'view.payments.loan_id' %>:  <%= @client.try(:product_id)  %>
+    <%= t 'view.payments.loan_id' %>:  <%= @client.try(:loan_id)  %>
   </h5>
   <table class="table table-condensed payments">
     <thead>
@@ -70,7 +70,7 @@
           <%= t 'view.payments.payment_number' %>
         </th>
         <th>
-          <%= t 'view.payments.expiration_date' %>
+          <%= t 'view.payments.expired_at' %>
         </th>
         <th>
           <%= t 'view.payments.payment_date' %>
@@ -84,13 +84,13 @@
       <% @client.try(:payments).try(:each) do |payment| %>
         <tr class="<%= date_payments(payment) %>">
           <td>
-            <%= payment.total %>
+            <%= payment.total_paid %>
           </td>
           <td>
             <%= payment.number %>
           </td>
           <td>
-            <%= I18n.l(payment.expiration, format: :minimal) %>
+            <%= I18n.l(payment.expired_at, format: :minimal) %>
           </td>
           <td>
             <%= I18n.l(payment.payment_date, format: :minimal) if payment.payment_date %>

@@ -9,4 +9,5 @@ class Loan < ActiveRecord::Base
   belongs_to :branch
   belongs_to :user
   belongs_to :client
+  has_many :payments
 end
