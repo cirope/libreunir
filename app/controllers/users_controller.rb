@@ -60,11 +60,11 @@ class UsersController < ApplicationController
   # PUT /users/1
   # PUT /users/1.json
   def update
-    authorize! :assign_roles, @user if params[:user] && params[:user][:roles]
+    authorize! :assign_roles, @user if user_params[:roles]
     @title = t 'view.users.edit_title'
 
     respond_to do |format|
-      if @user.update_attributes(params[:user])
+      if @user.update_attributes(user_params)
         format.html { redirect_to @user, notice: t('view.users.correctly_updated') }
         format.json { head :no_content }
       else
@@ -89,7 +89,7 @@ class UsersController < ApplicationController
     @title = t('view.users.edit_profile')
 
     respond_to do |format|
-      if @user.update_attributes(params[:user])
+      if @user.update_attributes(user_params)
         format.html { redirect_to(edit_profile_user_url(@user), notice: t('view.users.profile_correctly_updated')) }
         format.xml  { head :ok }
       else
@@ -118,5 +118,11 @@ class UsersController < ApplicationController
 
   def load_current_user
     @user = current_user
+  end
+
+  def user_params
+    params.require(:user).permit(
+      :name, :email, :username, :password, :password_confirmation, :role, :remember_me, :lock_version
+    )
   end
 end

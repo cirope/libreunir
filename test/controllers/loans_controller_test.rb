@@ -8,10 +8,12 @@ class LoansControllerTest < ActionController::TestCase
   end
 
   test 'should get expired' do
-    3.times { Fabricate(:loan_for_user, user_id: @user.id, expiration_date: 2.days.ago.to_date) }
-    Fabricate(:loan_for_user, user_id: @user.id, expiration_date: Date.today)
+    3.times { Fabricate(:loan, user_id: @user.id, delayed_at: 2.days.ago.to_date) }
+    Fabricate(:loan, user_id: @user.id, delayed_at: Date.today)
 
     get :expired
+
+    puts @response.body
 
     assert_response :success
     assert_equal 3, assigns(:loans).size
@@ -19,8 +21,8 @@ class LoansControllerTest < ActionController::TestCase
   end
 
   test 'should get close_to_expire' do
-    3.times { Fabricate(:loan_for_user, user_id: @user.id, expiration_date: Date.tomorrow) }
-    Fabricate(:loan_for_user, user_id: @user.id, expiration_date: Date.today)
+    3.times { Fabricate(:loan, user_id: @user.id, delayed_at: Date.tomorrow) }
+    Fabricate(:loan, user_id: @user.id, delayed_at: Date.today)
 
     get :close_to_expire
 
@@ -30,8 +32,8 @@ class LoansControllerTest < ActionController::TestCase
   end
 
   test 'should get expired in js' do
-    3.times { Fabricate(:loan_for_user, user_id: @user.id, expiration_date: 2.days.ago.to_date) }
-    Fabricate(:loan_for_user, user_id: @user.id, expiration_date: Date.today)
+    3.times { Fabricate(:loan, user_id: @user.id, delayed_at: 2.days.ago.to_date) }
+    Fabricate(:loan, user_id: @user.id, delayed_at: Date.today)
 
     xhr :get, :expired, start: Date.today, format: :js
 
@@ -41,8 +43,8 @@ class LoansControllerTest < ActionController::TestCase
   end
 
   test 'should get close to expire in js' do
-    3.times { Fabricate(:loan_for_user, user_id: @user.id, expiration_date: Date.tomorrow) }
-    Fabricate(:loan_for_user, user_id: @user.id, expiration_date: Date.today)
+    3.times { Fabricate(:loan, user_id: @user.id, delayed_at: Date.tomorrow) }
+    Fabricate(:loan, user_id: @user.id, delayed_at: Date.today)
 
     xhr :get, :close_to_expire, start: Date.today, format: :js
 
@@ -52,7 +54,7 @@ class LoansControllerTest < ActionController::TestCase
   end
 
   test 'should get show' do
-    loan = Fabricate(:loan_for_user, user_id: @user.id)
+    loan = Fabricate(:loan, user_id: @user.id)
 
     get :show, id: loan.to_param, format: :js
 

@@ -18,7 +18,7 @@ class UsersControllerTest < ActionController::TestCase
   test 'should get filtered index' do
     sign_in @user
     
-    3.times { Fabricate(:user, lastname: 'in_filtered_index') }
+    3.times { Fabricate(:user, name: 'in_filtered_index') }
     
     get :index, q: 'filtered_index'
     assert_response :success
@@ -44,7 +44,9 @@ class UsersControllerTest < ActionController::TestCase
     sign_in @user
     
     assert_difference('User.count') do
-      post :create, user: Fabricate.attributes_for(:user)
+      post :create, user: Fabricate.attributes_for(:user).slice(
+        :name, :email, :username, :password, :password_confirmation, :role, :remember_me, :lock_version
+      )
     end
 
     assert_redirected_to user_url(assigns(:user))

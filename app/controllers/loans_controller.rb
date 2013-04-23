@@ -4,7 +4,7 @@ class LoansController < ApplicationController
   layout ->(controller) { controller.request.xhr? ? false : 'application' }
 
   def show
-    @loan = Loan.find(params[:id])
+    @loan = @user.loans.find(params[:id])
   end
 
 
