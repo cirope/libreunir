@@ -17,8 +17,6 @@ namespace :importer do
 
   task parse: :environment do
     Formatter.create_directories
-    Formatter.convert_to_utf8
     Formatter.backup_zip_file
-    Formatter.parse_utf8_files
   end
 end

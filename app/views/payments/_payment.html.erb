@@ -1,5 +1,5 @@
 <tr>
-  <td><%= payment.client.try(:loan_id) %></td>
+  <td><%= payment.loan.loan_id %></td>
   <td><%= payment.client.try(:name) %></td>
   <td><%= l(payment.expired_at, format: :minimal) %></td>
   <td><%= payment.total_paid %></td>

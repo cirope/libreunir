@@ -1,6 +1,6 @@
 module DashboardHelper
   def date_payments(payment)
-    if payment.payment_date
+    if payment.paid_at
       'muted'
     elsif payment.expired?
       'error'

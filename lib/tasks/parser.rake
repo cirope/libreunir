@@ -1,6 +1,6 @@
 require_relative '../parser/base'
 
-task parser: :environment do
+task parser: :importer:work do
 
   files = {
     branch: 'sucursal.txt',
