@@ -1,0 +1,14 @@
+<% if params[:page].blank? %>
+  $('table[data-endless-container] tbody').html('<%= j render(@loans) %>');
+  $('#date-filter-<%= action_name %>').replaceWith('<%= j render('shared/filters') %>');
+  $(document).scroll();
+<% else %>
+  $('table[data-endless-container] tbody').append('<%= j render(@loans) %>');
+<% end %>
+
+<% if @loans.next_page %>
+  $('.pagination-container').replaceWith('<%= j pagination_links(@loans) %>');
+  $(document).scroll();
+<% else %>
+  $('.pagination-container').hide();
+<% end %>

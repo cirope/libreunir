@@ -1,0 +1,22 @@
+<div class="alert alert-info">
+  <button type="button" class="close" data-remove-target="#loan-info-<%= @loan.to_param %>">&times;</button>
+
+  <dl class="dl-horizontal">
+    <dt><%= Client.human_attribute_name('phone') %></dt>
+    <dd><%= @loan.client_phone.present? ? @loan.client_phone : '-' %></dd>
+    <dt><%= Client.human_attribute_name('address') %></dt>
+    <dd><%= @loan.client_address.present? ? @loan.client_address : '-' %></dd>
+  </dl>
+
+  <% if @loan.client_last_comments.present? %>
+    <h5><%= Client.human_attribute_name('last_comments') %></h5>
+    <ul>
+      <% @loan.client_last_comments.each do |comment| %>
+        <li>
+          [<%= l(comment.created_at.to_date) %>]
+          <%= comment.user %>: <%= comment.comment %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>

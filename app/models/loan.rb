@@ -1,4 +1,8 @@
 class Loan < ActiveRecord::Base
+  include Loans::Client
+  include Loans::Payments
+  include Loans::Scopes
+
   has_paper_trail
 
   # Validations
@@ -8,6 +12,8 @@ class Loan < ActiveRecord::Base
   # Relations
   belongs_to :branch
   belongs_to :user
-  belongs_to :client
-  has_many :payments
+
+  def to_s
+    self.loan_id.to_s
+  end
 end

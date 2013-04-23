@@ -1,0 +1,62 @@
+'es':
+  attributes:
+    created_at: 'Creación'
+    updated_at: 'Actualización'
+
+  activerecord:
+    models:
+      branch:
+        one: 'Sucursal'
+        other: 'Sucursales'
+      client:
+        one: 'Cliente'
+        other: 'Clientes'
+      comment:
+        one: 'Comentario'
+        other: 'Comentarios'
+      loan:
+        one: 'Préstamo'
+        other: 'Préstamos'
+      payment:
+        one: 'Cuota'
+        other: 'Cuotas'
+      user:
+        one: 'Asesor'
+        other: 'Asesores'
+
+    attributes:
+      client:
+        name: 'Nombre'
+        lastname: 'Apellido'
+        identification: 'CUIL'
+        phone: 'Teléfono'
+        address: 'Dirección'
+        last_comments: 'Últimos comentarios'
+      filter:
+        start: 'Inicio'
+      loan:
+        approved_at: 'Fecha de aprovación'
+        capital: 'Capital'
+        payment: 'Valor de cuota'
+        client_id: 'Cliente'
+        branch_id: 'Sucursal'
+        user_id: 'Asesor'
+      payment:
+        number: 'Número'
+        expired_at: 'Vencimiento'
+        paid_at: 'Fecha de pago'
+      user:
+        user_id: 'Asesor'
+        name: 'Nombre'
+        lastname: 'Apellido'
+        email: 'Correo'
+        username: 'Nombre de usuario'
+        file_number: 'Legajo'
+        identification: 'CUIL'
+        started_at: 'Fecha de ingreso'
+        password: 'Contraseña'
+        password_confirmation: 'Confirmación'
+        roles:
+          one: 'Perfil'
+          other: 'Perfiles'
+        remember_me: 'Recordarme'

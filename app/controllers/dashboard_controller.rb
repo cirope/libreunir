@@ -7,10 +7,4 @@ class DashboardController < ApplicationController
     @title = t 'view.dashboard.index_title'
     @filtrable = true
   end
-
-  def profile
-    @title = t 'view.dashboard.profile_title'
-
-    @client = Client.where(loan_id: params[:loan_id]).first
-  end
 end
