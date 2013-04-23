@@ -1,38 +1,6 @@
 'es':
   app_name: 'Libreunir'
 
-  attributes:
-    created_at: 'Creación'
-    updated_at: 'Actualización'
-
-  activerecord:
-    models:
-      user:
-        one: 'Asesor'
-        other: 'Asesores'
-      relation:
-        one: 'Relación'
-        other: 'Relaciones'
-
-    attributes:
-      filter:
-        start: 'Inicio'
-      user:
-        user_id: 'Asesor'
-        name: 'Nombre'
-        lastname: 'Apellido'
-        email: 'Correo'
-        password: 'Contraseña'
-        password_confirmation: 'Confirmación'
-        roles:
-          one: 'Perfil'
-          other: 'Perfiles'
-        remember_me: 'Recordarme'
-      relation:
-        relation: 'Dependencia'
-        relative_id: 'Nombre'
-        user_id: 'Nombre'
-
   errors:
     title: 'Error'
     access_denied: 'No tiene permisos para acceder al contenido'
@@ -49,7 +17,6 @@
     search: 'Buscar'
     show: 'Ver'
     more_info: 'Mas Información'
-    print: 'Imprimir'
 
   menu:
     actions:
@@ -67,53 +34,14 @@
       empty_search:
         title:
           html: 'La búsqueda de <span class="label label-inverse">%{search}</span> no obtuvo ningún resultado.'
-    client:
-      name: 'Nombre'
-      phone: 'Teléfono'
-      address: 'Dirección'
     dashboard:
       index_title: 'Tablero'
-      profile_title: 'Perfil del cliente'
-      dashboard: 'Tablero'
-      payments: 'Cuotas'
-      late:
-        zero: 'A tiempo'
-        one: 'Un dia tarde'
-        other: '%{days} dias tarde'
-      in_time:
-        zero: 'A tiempo'
-        one: 'Un dia antes'
-        other: '%{days} dias antes'
-      last_comments: 'Últimos comentarios del cliente'
-      call: 'Conversación'
-    payments:
-      expired: 'Vencidos'
-      close_to_expire: 'Por vencer'
-      expired_title: 'Vencidos'
-      close_to_expire_title: 'Cerca del vencimiento'
-      loan_id: 'Préstamo'
-      total_amount: 'Monto total'
-      payment_number: 'Cuota'
-      expired_at: 'Fecha de vencimiento'
-      payment_date: 'Fecha de pago'
-      paid_to: 'Pagado a'
-      late_days: 'Demora'
-      columns:
-        address: 'Dirección'
-        amount: 'Monto corriente'
-        client: 'Cliente'
-        expiring: 'Expira'
-        phone: 'Teléfono'
-        loan_id: 'Préstamo'
-        average_delay: 'Retraso promedio'
     filters:
       today: 'Hoy'
       tomorrow: 'Mañana'
-    relation:
-      types:
-        superior: 'Superior'
-        dependent: 'Subordinado'
-        other: 'Otro'
+    loans:
+      expired: 'Vencidos'
+      close_to_expire: 'Por vencer'
     users:
       index_title: 'Listado de usuarios'
       show_title: 'Detalle de usuario'
@@ -129,14 +57,6 @@
       update_password: 'Actualizar contraseña'
       profile_correctly_updated: 'Actualizaste tus datos correctamente.'
       edit_profile: 'Editar perfil'
-      roles:
-        admin: 'Administrador'
-        regular: 'Normal'
-      new_relation: 'Nueva dependencia'
-      relation:
-        html: 'Su %{relation} es %{relative}'
-      inverse_relation:
-        html: 'Es %{relation} de %{user}'
       roles:
         admin: 'Administrador'
         regular: 'Normal'

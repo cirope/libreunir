@@ -1,9 +1,10 @@
 class Payment < ActiveRecord::Base
   include Payments::Calculations
-  include Payments::Client
-  include Payments::Scopes
 
   has_paper_trail
+
+  # Scopes
+  scope :pending, -> { where("#{table_name}.paid_at" => nil) }
 
   # Validations
   validates :number, :expired_at, :loan_id, presence: true

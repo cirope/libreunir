@@ -3,7 +3,6 @@ class Ability
 
   def initialize(user)
     user ? user_rules(user) : default_rules
-    alias_action :relatives, to: :read
   end
 
   def user_rules(user)

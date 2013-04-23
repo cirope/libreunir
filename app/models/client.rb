@@ -9,6 +9,10 @@ class Client < ActiveRecord::Base
   has_many :comments
   has_many :loans
 
+  def to_s
+    [self.lastname, self.name].compact.join(', ')
+  end
+
   def last_comments
     self.comments.inverse_order.limit(10)
   end

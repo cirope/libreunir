@@ -29,5 +29,5 @@
 //= require dynamic_form
 //= require effect_helper
 //= require dashboard
-//= require payments
+//= require loans
 //= require users

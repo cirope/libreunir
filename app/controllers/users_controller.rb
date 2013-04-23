@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_filter :authenticate_user!, :parameters
-  before_filter :load_current_user, only: [:edit_profile, :update_profile, :relatives]
+  before_filter :authenticate_user!
+  before_filter :load_current_user, only: [:edit_profile, :update_profile]
 
   check_authorization
   load_and_authorize_resource
@@ -16,15 +16,6 @@ class UsersController < ApplicationController
       format.html
       format.json { render json: @users }
       format.js
-    end
-  end
-
-  def relatives
-    @users = current_user.admin? ? User.filtered_list(params[:q]).page(params[:page]) :
-      @user.relatives.only_dependents.filtered_list(params[:q]).page(params[:page])
-
-    respond_to do |format|
-      format.json { render json: @users }
     end
   end
 
@@ -127,9 +118,5 @@ class UsersController < ApplicationController
 
   def load_current_user
     @user = current_user
-  end
-
-  def parameters
-    params.permit!
   end
 end
