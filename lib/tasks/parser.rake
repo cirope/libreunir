@@ -14,16 +14,17 @@ task parser: 'importer:work' do
     payment: 'cuota.txt'
   }
 
-  files.each do |klass,file|
+  files.each do |model,file|
     path = Dir.glob(
-      File.expand_path("private/data") + '/' + files[klass], File::FNM_CASEFOLD
+      File.expand_path("private/data") + '/' + files[model], File::FNM_CASEFOLD
     ).first
 
     puts "[ Parsing #{file} .... ========================================= ]"
 
-    parser = "Parser::#{klass.to_s.capitalize}".constantize.new(path)
-    parser.parse
+    klass = model.to_s.capitalize
+    "Parser::#{klass}".constantize.new(path).parse
 
     @formatter.move_processed(path)
+    @formatter.table_cleanup(klass)
   end
 end

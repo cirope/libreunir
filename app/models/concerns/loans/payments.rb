@@ -2,7 +2,7 @@ module Loans::Payments
   extend ActiveSupport::Concern
 
   included do
-    has_many :payments
+    has_many :payments, dependent: :destroy
   end
 
   def oldest_pending_payment_expiration

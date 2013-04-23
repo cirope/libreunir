@@ -19,14 +19,3 @@ zip:
   path: '/folder'
   filename: 'data.zip'
   password: 'data'
-
-table_maps:
-  origin_tablename: 'dest_tablename'
-
-field_maps_tablename:
-  key: 'field_id'
-  many_to_one_association: 
-    ['column1', 'column2']: 'dest_column'
-  many_to_one_association_key:
-    dest_column: 'field_id'       
-  fake_fields: ['email']
