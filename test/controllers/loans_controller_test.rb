@@ -8,12 +8,7 @@ class LoansControllerTest < ActionController::TestCase
   end
 
   test 'should get expired' do
-    3.times do
-      Fabricate(:loan, user_id: @user.id, expired_payments_count: 1, next_payment_expire_at: 2.days.ago.to_date)
-    end
-
-    Fabricate(:loan, user_id: @user.id, expired_payments_count: 0)
-    Fabricate(:loan, expired_payments_count: 1, next_payment_expire_at: 2.days.ago.to_date)
+    fabricate_expired
 
     get :expired, start: Date.today
 
@@ -23,11 +18,7 @@ class LoansControllerTest < ActionController::TestCase
   end
 
   test 'should get close to expire' do
-    3.times { Fabricate(:loan, user_id: @user.id, next_payment_expire_at: Date.tomorrow) }
-
-    Fabricate(:loan, user_id: @user.id, next_payment_expire_at: Date.yesterday)
-    Fabricate(:loan, user_id: @user.id, expired_payments_count: 1, next_payment_expire_at: Date.tomorrow)
-    Fabricate(:loan, next_payment_expire_at: Date.tomorrow)
+    fabricate_close_to_expire
 
     get :close_to_expire, start: Date.today
 
@@ -37,12 +28,7 @@ class LoansControllerTest < ActionController::TestCase
   end
 
   test 'should get expired in js' do
-    3.times do
-      Fabricate(:loan, user_id: @user.id, expired_payments_count: 1, next_payment_expire_at: 2.days.ago.to_date)
-    end
-
-    Fabricate(:loan, user_id: @user.id, expired_payments_count: 0)
-    Fabricate(:loan, expired_payments_count: 1, next_payment_expire_at: 2.days.ago.to_date)
+    fabricate_expired
 
     xhr :get, :expired, start: Date.today, format: :js
 
@@ -52,10 +38,7 @@ class LoansControllerTest < ActionController::TestCase
   end
 
   test 'should get close to expire in js' do
-    3.times { Fabricate(:loan, user_id: @user.id, next_payment_expire_at: Date.tomorrow) }
-    Fabricate(:loan, user_id: @user.id, next_payment_expire_at: Date.yesterday)
-    Fabricate(:loan, user_id: @user.id, expired_payments_count: 1, next_payment_expire_at: Date.tomorrow)
-    Fabricate(:loan, next_payment_expire_at: Date.tomorrow)
+    fabricate_close_to_expire
 
     xhr :get, :close_to_expire, start: Date.today, format: :js
 
@@ -72,5 +55,24 @@ class LoansControllerTest < ActionController::TestCase
     assert_response :success
     assert_not_nil assigns(:loan)
     assert_template 'loans/show'
+  end
+
+  private
+
+  def fabricate_expired
+    3.times do
+      Fabricate(:loan, user_id: @user.id, expired_payments_count: 1, next_payment_expire_at: 2.days.ago.to_date)
+    end
+
+    Fabricate(:loan, user_id: @user.id, expired_payments_count: 0)
+    Fabricate(:loan, expired_payments_count: 1, next_payment_expire_at: 2.days.ago.to_date)
+  end
+
+  def fabricate_close_to_expire
+    3.times { Fabricate(:loan, user_id: @user.id, next_payment_expire_at: Date.tomorrow) }
+
+    Fabricate(:loan, user_id: @user.id, next_payment_expire_at: Date.yesterday)
+    Fabricate(:loan, user_id: @user.id, expired_payments_count: 1, next_payment_expire_at: Date.tomorrow)
+    Fabricate(:loan, next_payment_expire_at: Date.tomorrow)
   end
 end
