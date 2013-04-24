@@ -1,8 +1,9 @@
 require_relative '../parser/base'
 
-task parser: 'importer:work' do
+namespace :parser do
 
-  @formatter = Formatter.new
+  desc 'Parse csv files from SFTP'
+  task run: ['importer:work', :process, :cleanup]
 
   files = {
     branch: 'sucursal.txt',
@@ -14,19 +15,27 @@ task parser: 'importer:work' do
     payment: 'cuota.txt'
   }
 
-  files.each do |model,file|
-    path = Dir.glob(
-      File.expand_path("private/data") + '/' + files[model], File::FNM_CASEFOLD
-    ).first
+  task process: :environment do
+    @formatter = Formatter.new
 
-    puts "[ Parsing #{file} .... ========================================= ]"
+    files.each do |model,file|
+      path = Dir.glob(
+        File.expand_path("private/data") + '/' + files[model], File::FNM_CASEFOLD
+      ).first
 
-    klass_name = model.to_s.capitalize
-    "Parser::#{klass_name}".constantize.new(path).parse
+      puts "[ Parsing #{file} .... ========================================= ]"
 
-    @formatter.move_processed(path)
+      "Parser::#{model.to_s.capitalize}".constantize.new(path).parse
 
-    klass = klass_name.constantize rescue 'Loan'.constantize
-    @formatter.table_cleanup(klass)
+      @formatter.move_processed(path)
+    end
+  end
+
+  task cleanup: :environment do
+    files.each do |model,file|
+      klass = model.to_s.capitalize.constantize rescue 'Loan'.constantize
+
+      @formatter.table_cleanup(klass)
+    end
   end
 end

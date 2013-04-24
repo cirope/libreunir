@@ -7,7 +7,7 @@ class Client < ActiveRecord::Base
 
   # Relations
   has_many :comments, dependent: :destroy
-  has_many :loans, dependent: :destroy
+  has_many :loans
 
   def to_s
     [self.lastname, self.name].compact.join(', ')
