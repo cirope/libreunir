@@ -60,16 +60,16 @@ class LoanTest < ActiveSupport::TestCase
 
   test 'expire before' do
     assert_difference 'Loan.expire_before(Date.today).count' do
-      Fabricate(:loan, delayed_at: Date.yesterday)
-      Fabricate(:loan, delayed_at: Date.today)
+      Fabricate(:loan, next_payment_expire_at: Date.yesterday)
+      Fabricate(:loan, next_payment_expire_at: Date.today)
     end
   end
 
   test 'expire on or after' do
     assert_difference 'Loan.expire_on_or_after(Date.today).count', 2 do
-      Fabricate(:loan, delayed_at: Date.yesterday)
-      Fabricate(:loan, delayed_at: Date.tomorrow)
-      Fabricate(:loan, delayed_at: Date.today)
+      Fabricate(:loan, next_payment_expire_at: Date.yesterday)
+      Fabricate(:loan, next_payment_expire_at: Date.tomorrow)
+      Fabricate(:loan, next_payment_expire_at: Date.today)
     end
   end
 end
