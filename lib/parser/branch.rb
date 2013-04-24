@@ -4,7 +4,7 @@ module Parser
     def line_save(row)
       if row_valid?(row)
 
-        branch = ::Branch.find_by_branch_id(row[0])
+        branch = ::Branch.find_by(branch_id: row[0])
         attributes = { name: row[3], address: row[17] }
 
         if branch.try(:persisted?)

@@ -6,11 +6,14 @@ module Parser
         loan_id = row[0].gsub('PR0', '')
         client_name = row[1].split(',')
 
-        client = ::Client.find_by_identification(row[2])
+        client = ::Client.find_by(identification: row[2])
 
         attributes = {
-          name: client_name[1].strip, lastname: client_name[0].strip, 
-          identification: row[2], address: row[3], phone: row[4]
+          name: client_name[1].strip, 
+          lastname: client_name[0].strip, 
+          identification: row[2], 
+          address: row[3], 
+          phone: row[4]
         }
 
         if client.try(:persisted?)

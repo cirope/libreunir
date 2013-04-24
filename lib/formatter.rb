@@ -37,7 +37,7 @@ class Formatter
     )
   end
 
-  def table_cleanup(klass)
-    klass.where('updated_at < :today', today: Time.now.midnight).destroy_all
+  def cleanup(klass)
+    klass.where('updated_at < :today', today: Time.now.midnight).find_each(&:destroy)
   end
 end

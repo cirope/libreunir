@@ -4,13 +4,15 @@ module Parser
     def line_save(row)
       if row_valid?(row)
 
-        loan = ::Loan.find_by_loan_id(row[0])
-        user = ::User.find_by_username(row[2])
-        branch = ::Branch.find_by_branch_id(row[7])
+        loan = ::Loan.find_by(loan_id: row[0])
+        user = ::User.find_by(username: row[2])
+        branch = ::Branch.find_by(branch_id: row[7])
 
         attributes = {
-          approved_at: row[10], user_id: user.try(:id), 
-          branch_id: branch.try(:id), created_at: row[8]
+          approved_at: row[10], 
+          user_id: user.try(:id), 
+          branch_id: branch.try(:id), 
+          created_at: row[8]
         }
 
         if loan.try(:persisted?)

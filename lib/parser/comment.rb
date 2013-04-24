@@ -5,7 +5,7 @@ module Parser
         if row[x].to_s.gsub(/[^a-z]/, '').present?
           xrow = row[x].split('-').map { |field| field.strip }
 
-          user = ::User.find_by_username(xrow[1])
+          user = ::User.find_by(username: xrow[1])
 
           ::Comment.create(
             comment: xrow[2], client_id: client.id, 

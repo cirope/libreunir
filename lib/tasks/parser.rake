@@ -1,3 +1,4 @@
+require_relative '../formatter'
 require_relative '../parser/base'
 
 namespace :parser do
@@ -15,9 +16,9 @@ namespace :parser do
     payment: 'cuota.txt'
   }
 
-  task process: :environment do
-    @formatter = Formatter.new
+  @formatter = Formatter.new
 
+  task process: :environment do
     files.each do |model,file|
       path = Dir.glob(
         File.expand_path("private/data") + '/' + files[model], File::FNM_CASEFOLD
@@ -35,7 +36,8 @@ namespace :parser do
     files.each do |model,file|
       klass = model.to_s.capitalize.constantize rescue 'Loan'.constantize
 
-      @formatter.table_cleanup(klass)
+      puts "Clearing #{klass}..."
+      @formatter.cleanup(klass)
     end
   end
 end
