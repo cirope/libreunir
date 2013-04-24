@@ -46,36 +46,40 @@ module ApplicationHelper
     content_tag :div, result + page_entries, class: 'pagination-container' if result
   end
 
-  def link_to_show(*args)
+  def iconic_link(icon, *args)
     options = args.extract_options!
 
     options['class'] ||= 'iconic'
-    options['title'] ||= t('label.show')
+    options['title'] ||= 'iconic'
     options['data-show-tooltip'] ||= true
 
-    link_to '&#xe074;'.html_safe, *args, options
+    link_to icon, *args, options
+  end
+
+  def link_to_show(*args)
+    options = args.extract_options!
+
+    options['title'] ||= t('label.show')
+
+    iconic_link '&#xe074;'.html_safe, *args, options
   end
 
   def link_to_edit(*args)
     options = args.extract_options!
 
-    options['class'] ||= 'iconic'
     options['title'] ||= t('label.edit')
-    options['data-show-tooltip'] ||= true
 
-    link_to '&#x270e;'.html_safe, *args, options
+    iconic_link '&#x270e;'.html_safe, *args, options
   end
 
   def link_to_destroy(*args)
     options = args.extract_options!
 
-    options['class'] ||= 'iconic'
     options['title'] ||= t('label.delete')
     options['method'] ||= :delete
     options['data-confirm'] ||= t('messages.confirmation')
-    options['data-show-tooltip'] ||= true
 
-    link_to '&#xe05a;'.html_safe, *args, options
+    iconic_link '&#xe05a;'.html_safe, *args, options
   end
 
   def copy_attribute_errors(from, to, form_builder)
