@@ -3,12 +3,15 @@ module Parser
 
     def line_save(row)
       if row_valid?(row)
-        user = ::User.find_by_username(row[0])
-        branch = ::Branch.find_by_branch_id(row[1])
+        user = ::User.find_by(username: row[0])
+        branch = ::Branch.find_by(branch_id: row[1])
 
         attributes = {
-          name: row[2], username: row[0], file_number: row[6].gsub(/[^0-9]/, ''),
-          identification: row[7].gsub(/[^0-9]/, ''), started_at: row[8], 
+          name: row[2], 
+          username: row[0], 
+          file_number: row[6].gsub(/[^0-9]/, ''),
+          identification: row[7].gsub(/[^0-9]/, ''), 
+          started_at: row[8], 
           branch_id: branch.try(:id) 
         }
 
