@@ -1,29 +1,18 @@
 module Parser
   class Order < Base
+    def process_row(row)
+      loan = ::Loan.find_by(loan_id: row[0].to_i)
+      user = ::User.find_by(username: row[2])
+      branch = ::Branch.find_by(branch_id: row[7].to_i)
 
-    def line_save(row)
-      if row_valid?(row)
+      attributes = {
+        approved_at: row[10], 
+        user_id: user.try(:id), 
+        branch_id: branch.try(:id), 
+        created_at: row[8]
+      }
 
-        loan = ::Loan.find_by(loan_id: row[0])
-        user = ::User.find_by(username: row[2])
-        branch = ::Branch.find_by(branch_id: row[7])
-
-        attributes = {
-          approved_at: row[10], 
-          user_id: user.try(:id), 
-          branch_id: branch.try(:id), 
-          created_at: row[8]
-        }
-
-        if loan.try(:persisted?)
-          loan.update_attributes(attributes)
-          loan.touch
-        else
-          attributes.merge!(loan_id: row[0])
-
-          ::Loan.create(attributes)
-        end
-      end
+      save_instance(loan, { loan_id: row[0].to_i }, ::Loan, attributes)
     end
 
     def row_valid?(row)

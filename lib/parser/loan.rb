@@ -1,30 +1,16 @@
 module Parser
   class Loan < Base
+    def process_row(row)
+      loan_id = row[0].gsub('PR0', '').to_i
+      attributes = { capital: row[2], payment: row[4] }
 
-    def line_save(row)
-      if row_valid?(row)
-        loan_id = row[0].gsub('PR0', '')
-        attributes = { capital: row[2], payment: row[4] }
-
-        Parser::Loan.save_loan(loan_id, attributes)
-      end
+      save_loan(loan_id, attributes)
     end
 
-    def self.parse_loan(loan_id, client)
-      save_loan(loan_id, client_id: client.id)
-    end 
-
-    def self.save_loan(loan_id, attributes)
+    def save_loan(loan_id, attributes)
       loan = ::Loan.find_by(loan_id: loan_id)
       
-      if loan.try(:persisted?)
-        loan.update_attributes(attributes)
-        loan.touch
-      else
-        attributes.merge!(loan_id: loan_id)
-
-        ::Loan.create(attributes)
-      end
+      save_instance(loan, { loan_id: loan_id }, ::Loan, attributes)
     end
 
     def row_valid?(row)
