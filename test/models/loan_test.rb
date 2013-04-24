@@ -46,21 +46,30 @@ class LoanTest < ActiveSupport::TestCase
       @loan.errors[:loan_id]
   end
 
-  test 'pending' do
-    assert_difference 'Loan.pending.count' do
-      Fabricate(:loan, delayed_at: nil)
+  test 'not expired' do
+    assert_difference 'Loan.not_expired.count' do
+      Fabricate(:loan, expired_payments_count: 0)
+    end
+  end
+
+  test 'expired' do
+    assert_difference 'Loan.expired.count' do
+      Fabricate(:loan, expired_payments_count: 1)
     end
   end
 
   test 'expire before' do
     assert_difference 'Loan.expire_before(Date.today).count' do
       Fabricate(:loan, delayed_at: Date.yesterday)
+      Fabricate(:loan, delayed_at: Date.today)
     end
   end
 
-  test 'expire after' do
-    assert_difference 'Loan.expire_after(Date.today).count' do
+  test 'expire on or after' do
+    assert_difference 'Loan.expire_on_or_after(Date.today).count', 2 do
+      Fabricate(:loan, delayed_at: Date.yesterday)
       Fabricate(:loan, delayed_at: Date.tomorrow)
+      Fabricate(:loan, delayed_at: Date.today)
     end
   end
 end

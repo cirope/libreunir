@@ -1,6 +1,5 @@
 class Loan < ActiveRecord::Base
   include Loans::Client
-  include Loans::Payments
   include Loans::Scopes
 
   has_paper_trail
@@ -12,6 +11,7 @@ class Loan < ActiveRecord::Base
   # Relations
   belongs_to :branch
   belongs_to :user
+  has_many :payments, dependent: :destroy
 
   def to_s
     self.loan_id.to_s

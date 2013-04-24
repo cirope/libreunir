@@ -2,18 +2,18 @@ module Loans::Scopes
   extend ActiveSupport::Concern
 
   included do
-    scope :pending, -> {
-      includes(:payments).where("#{table_name}.delayed_at" => nil)
-    }
+    default_scope -> { order("#{table_name}.next_payment_expire_at DESC") }
+    scope :expired, -> { where("#{table_name}.expired_payments_count > ?", 0) }
+    scope :not_expired, -> { where("#{table_name}.expired_payments_count" => 0) }
   end
 
   module ClassMethods
     def expire_before(date)
-      includes(:payments).where("#{table_name}.delayed_at < ?", date)
+      where("#{table_name}.next_payment_expire_at < ?", date)
     end
 
-    def expire_after(date)
-      includes(:payments).where("#{table_name}.delayed_at > ?", date)
+    def expire_on_or_after(date)
+      where("#{table_name}.next_payment_expire_at >= ?", date)
     end
   end
 end

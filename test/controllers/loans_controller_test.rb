@@ -8,23 +8,22 @@ class LoansControllerTest < ActionController::TestCase
   end
 
   test 'should get expired' do
-    3.times { Fabricate(:loan, user_id: @user.id, delayed_at: 2.days.ago.to_date) }
-    Fabricate(:loan, user_id: @user.id, delayed_at: Date.today)
+    3.times { Fabricate(:loan, user_id: @user.id, expired_payments_count: 1, next_payment_expire_at: 2.days.ago.to_date) }
+    Fabricate(:loan, user_id: @user.id, expired_payments_count: 0)
 
-    get :expired
-
-    puts @response.body
+    get :expired, start: Date.today
 
     assert_response :success
     assert_equal 3, assigns(:loans).size
     assert_template 'loans/index'
   end
 
-  test 'should get close_to_expire' do
-    3.times { Fabricate(:loan, user_id: @user.id, delayed_at: Date.tomorrow) }
-    Fabricate(:loan, user_id: @user.id, delayed_at: Date.today)
+  test 'should get close to expire' do
+    3.times { Fabricate(:loan, user_id: @user.id, next_payment_expire_at: Date.tomorrow) }
+    Fabricate(:loan, user_id: @user.id, next_payment_expire_at: Date.today)
+    Fabricate(:loan, user_id: @user.id, expired_payments_count: 1)
 
-    get :close_to_expire
+    get :close_to_expire, start: Date.today
 
     assert_response :success
     assert_equal 3, assigns(:loans).size
@@ -32,8 +31,8 @@ class LoansControllerTest < ActionController::TestCase
   end
 
   test 'should get expired in js' do
-    3.times { Fabricate(:loan, user_id: @user.id, delayed_at: 2.days.ago.to_date) }
-    Fabricate(:loan, user_id: @user.id, delayed_at: Date.today)
+    3.times { Fabricate(:loan, user_id: @user.id, expired_payments_count: 1, next_payment_expire_at: 2.days.ago.to_date) }
+    Fabricate(:loan, user_id: @user.id, expired_payments_count: 0)
 
     xhr :get, :expired, start: Date.today, format: :js
 
@@ -43,8 +42,9 @@ class LoansControllerTest < ActionController::TestCase
   end
 
   test 'should get close to expire in js' do
-    3.times { Fabricate(:loan, user_id: @user.id, delayed_at: Date.tomorrow) }
-    Fabricate(:loan, user_id: @user.id, delayed_at: Date.today)
+    3.times { Fabricate(:loan, user_id: @user.id, next_payment_expire_at: Date.tomorrow) }
+    Fabricate(:loan, user_id: @user.id, next_payment_expire_at: Date.today)
+    Fabricate(:loan, user_id: @user.id, expired_payments_count: 1)
 
     xhr :get, :close_to_expire, start: Date.today, format: :js
 

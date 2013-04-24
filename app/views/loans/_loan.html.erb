@@ -1,7 +1,7 @@
 <tr>
   <td><%= loan %></td>
   <td><%= loan.client %></td>
-  <td><%= l(loan.oldest_pending_payment_expiration, format: :minimal) %></td>
+  <td><%= l(loan.next_payment_expire_at, format: :minimal) %></td>
   <td><%= loan.payment %></td>
   <td><%= loan.client_phone %></td>
   <td><%= link_to_loan_info(loan) %></td>
