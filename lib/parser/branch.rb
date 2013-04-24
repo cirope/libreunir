@@ -1,21 +1,10 @@
 module Parser
   class Branch < Base
+    def process_row(row)
+      branch = ::Branch.find_by(branch_id: row[0].to_i)
+      attributes = { name: row[3], address: row[17] }
 
-    def line_save(row)
-      if row_valid?(row)
-
-        branch = ::Branch.find_by(branch_id: row[0])
-        attributes = { name: row[3], address: row[17] }
-
-        if branch.try(:persisted?)
-          branch.update_attributes(attributes)
-          branch.touch
-        else
-          attributes.merge!(branch_id: row[0])
-
-          ::Branch.create(attributes)
-        end
-      end
+      save_instance(branch, { branch_id: row[0] }, ::Branch, attributes) 
     end
 
     def row_valid?(row)
