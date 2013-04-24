@@ -14,7 +14,7 @@ set :deploy_via, :remote_cache
 set :use_sudo, false
 
 set :scm, :git
-set :repository,  'git://github.com/cirope/libreunir.git'
+set :repository, 'git://github.com/cirope/libreunir.git'
 set :branch, 'master'
 
 after 'deploy:restart', 'deploy:cleanup'
@@ -24,6 +24,16 @@ namespace :deploy do
     desc "#{command} unicorn server"
     task command, roles: :app, except: { no_release: true } do
       run "/etc/init.d/unicorn_#{application} #{command}"
+    end
+  end
+
+  # Rails 4 Fix
+  namespace :assets do
+    task :precompile, :roles => assets_role, :except => { :no_release => true } do
+      run <<-CMD.compact
+        cd -- #{latest_release.shellescape} &&
+        #{rake} RAILS_ENV=#{rails_env.to_s.shellescape} #{asset_env} assets:precompile
+      CMD
     end
   end
 
