@@ -6,9 +6,9 @@ class Schedule < ActiveRecord::Base
 
   # Validations
   validates :description, :scheduled_at, presence: true
-  validates :scheduled_at, timeliness: { type: :date, on_or_after: :today },
-    allow_nil: true, allow_blank: true
+  validates :scheduled_at, allow_nil: true, allow_blank: true,
+    timeliness: { type: :datetime, on_or_after: :now }
   
   # Relations
-  belongs_to :schedulable, polymorphic: true#, counter_cache: true
+  belongs_to :schedulable, polymorphic: true #, counter_cache: true
 end
