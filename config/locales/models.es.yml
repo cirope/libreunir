@@ -36,6 +36,8 @@
         approved_at: 'Fecha de aprovación'
         capital: 'Capital'
         payment: 'Valor de cuota'
+        expired_payments_count: 'Pagos atrasados'
+        payments_to_expire_count: 'Cuotas restantes'
         client_id: 'Cliente'
         branch_id: 'Sucursal'
         user_id: 'Asesor'
