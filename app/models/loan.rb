@@ -17,4 +17,8 @@ class Loan < ActiveRecord::Base
   def to_s
     self.loan_id.to_s
   end
+
+  def expired?
+    self.expired_payments_count > 0
+  end
 end

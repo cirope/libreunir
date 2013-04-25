@@ -1,0 +1,9 @@
+<tr data-object-id="<%= loan.to_param %>">
+  <td><%= loan %></td>
+  <td><%= loan.client %></td>
+  <td><%= l(loan.delayed_at, format: :minimal) if loan.delayed_at %></td>
+  <td><%= number_to_currency loan.payment %></td>
+  <td><%= loan.client_phone %></td>
+  <td><%= link_to_loan_info(loan) %></td>
+  <td><%= link_to_new_schedule(loan) %></td>
+</tr>

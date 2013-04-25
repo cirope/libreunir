@@ -6,7 +6,7 @@ class ScheduleTest < ActiveSupport::TestCase
   end
 
   test 'create' do
-    assert_difference ['Schedule.count', 'Version.count'] do
+    assert_difference 'Schedule.count' do
       @schedule = Schedule.create(Fabricate.attributes_for(:schedule))
     end 
   end
@@ -37,5 +37,18 @@ class ScheduleTest < ActiveSupport::TestCase
       @schedule.errors[:description]
     assert_equal [error_message_from_model(@schedule, :scheduled_at, :blank)],
       @schedule.errors[:scheduled_at]
+  end
+
+  test 'validates date attributes' do
+    @schedule.scheduled_at = 1.hour.ago
+
+    assert @schedule.invalid?
+    assert_equal 1, @schedule.errors.size
+    assert_equal [
+      error_message_from_model(
+        @schedule, :scheduled_at, :on_or_after,
+        restriction: I18n.l(Time.now, format: :minimal)
+      )
+    ], @schedule.errors[:scheduled_at]
   end
 end

@@ -14,17 +14,7 @@ class LoansControllerTest < ActionController::TestCase
 
     assert_response :success
     assert_equal 3, assigns(:loans).size
-    assert_template 'loans/index'
-  end
-
-  test 'should get close to expire' do
-    fabricate_close_to_expire
-
-    get :close_to_expire
-
-    assert_response :success
-    assert_equal 3, assigns(:loans).size
-    assert_template 'loans/index'
+    assert_template 'loans/expired'
   end
 
   test 'should get expired in js' do
@@ -34,7 +24,17 @@ class LoansControllerTest < ActionController::TestCase
 
     assert_response :success
     assert_equal 3, assigns(:loans).size
-    assert_template 'loans/index'
+    assert_template 'loans/_expired'
+  end
+
+  test 'should get close to expire' do
+    fabricate_close_to_expire
+
+    get :close_to_expire
+
+    assert_response :success
+    assert_equal 3, assigns(:loans).size
+    assert_template 'loans/close_to_expire'
   end
 
   test 'should get close to expire in js' do
@@ -44,7 +44,7 @@ class LoansControllerTest < ActionController::TestCase
 
     assert_response :success
     assert_equal 3, assigns(:loans).size
-    assert_template 'loans/index'
+    assert_template 'loans/_close_to_expire'
   end
 
   test 'should get show' do

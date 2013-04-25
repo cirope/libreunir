@@ -12,14 +12,20 @@ class LoansController < ApplicationController
     @title = t 'view.loans.expired_title'
     @loans = get_scope.expired.order('delayed_at DESC')
 
-    render 'index'
+    respond_to do |format|
+      format.html # expired.html.erb
+      format.js { render 'index' }
+    end
   end
 
   def close_to_expire
     @title = t 'view.loans.close_to_expire_title'
     @loans = get_scope.not_expired.with_expiration.reverse_order
 
-    render 'index'
+    respond_to do |format|
+      format.html # close_to_expired.html.erb
+      format.js { render 'index' }
+    end
   end
 
   private
