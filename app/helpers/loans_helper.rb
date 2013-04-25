@@ -4,7 +4,6 @@ module LoansHelper
 
     link_to(
       label, loan,
-      id: "loan-info-link-#{loan.to_param}",
       title: t('label.more_info'),
       data: {
         remote: true, show_tooltip: true, remove_target: "#loan-info-#{loan.to_param}"

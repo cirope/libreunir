@@ -17,6 +17,7 @@
     search: 'Buscar'
     show: 'Ver'
     more_info: 'Mas Información'
+    scheduler: 'Agendar'
 
   menu:
     actions:
@@ -42,6 +43,16 @@
     loans:
       expired: 'Vencidos'
       close_to_expire: 'Por vencer'
+    schedules:
+      index_title: 'Listado de eventos'
+      show_title: 'Detalle de evento'
+      new_title: 'Nuevo evento'
+      edit_title: 'Modificar evento'
+      correctly_created: 'Evento agregado correctamente.'
+      correctly_updated: 'Evento actualizado correctamente.'
+      stale_object_error: 'El evento no pudo ser actualizado, intente nuevamente.'
+      empty_index:
+        html: 'No se ha creado ningún evento hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nuevo evento</span>'
     users:
       index_title: 'Listado de usuarios'
       show_title: 'Detalle de usuario'

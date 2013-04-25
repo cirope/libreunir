@@ -1,0 +1,38 @@
+<% if @schedules.empty? %>
+  <%= render 'shared/empty_index' %>
+<% else %>
+  <div class="row-fluid">
+    <div class="span12">
+      <table class="table resource-list">
+        <thead>
+          <tr>
+            <th><%= Schedule.human_attribute_name 'description' %></th>
+            <th><%= Schedule.human_attribute_name 'schedule_at' %></th>
+            <th colspan="3"></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @schedules.each do |schedule| %>
+            <tr>
+              <td><%= schedule.description %></td>
+              <td><%= schedule.schedule_at %></td>
+              <td><%= link_to_show schedule %></td>
+              <td><%= link_to_edit edit_schedule_path(schedule) if can? :update, schedule %></td>
+              <td><%= link_to_destroy schedule if can? :destroy, schedule %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <%= pagination_links(@schedules) %>
+<% end %>
+
+<div class="form-actions">
+  <%= link_to(
+    t('view.schedules.new', default: :'label.new'),
+    new_schedule_path, class: 'btn btn-primary'
+  ) if can? :create, Schedule %>
+</div>

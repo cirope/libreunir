@@ -20,6 +20,9 @@
       payment:
         one: 'Cuota'
         other: 'Cuotas'
+      schedule:
+        one: 'Evento'
+        other: 'Eventos'
       user:
         one: 'Asesor'
         other: 'Asesores'
@@ -45,6 +48,9 @@
         number: 'Número'
         expired_at: 'Vencimiento'
         paid_at: 'Fecha de pago'
+      schedule:
+        description: 'Evento'
+        scheduled_at: 'Fecha'
       user:
         user_id: 'Asesor'
         name: 'Nombre'

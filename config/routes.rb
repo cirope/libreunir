@@ -1,5 +1,7 @@
 Libreunir::Application.routes.draw do
 
+  resources :schedules
+
   devise_for :users
 
   get :dashboard, to: 'dashboard#index'
@@ -11,6 +13,8 @@ Libreunir::Application.routes.draw do
         get 'close_to_expire/(:start)', to: 'loans#close_to_expire', as: 'close_to_expire'
       end
     end
+
+    resources :schedules
   end
 
   resources :users do

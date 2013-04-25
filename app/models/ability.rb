@@ -28,5 +28,7 @@ class Ability
   def default_rules
     can :manage, Filter
     can :read, User
+    can :read, Loan
+    can :manage, Schedule
   end
 end

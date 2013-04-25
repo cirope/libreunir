@@ -12,6 +12,7 @@ class Loan < ActiveRecord::Base
   belongs_to :branch
   belongs_to :user
   has_many :payments, dependent: :destroy
+  has_many :schedules, as: :schedulable, dependent: :destroy
 
   def to_s
     self.loan_id.to_s

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130422162333) do
+ActiveRecord::Schema.define(version: 20130424183745) do
 
   create_table "branches", force: true do |t|
     t.integer  "branch_id",  null: false
@@ -89,6 +89,18 @@ ActiveRecord::Schema.define(version: 20130422162333) do
   add_index "payments", ["loan_id"], name: "index_payments_on_loan_id"
   add_index "payments", ["number"], name: "index_payments_on_number"
   add_index "payments", ["user_id"], name: "index_payments_on_user_id"
+
+  create_table "schedules", force: true do |t|
+    t.text     "description",                  null: false
+    t.datetime "scheduled_at",                 null: false
+    t.integer  "schedulable_id"
+    t.string   "schedulable_type"
+    t.integer  "lock_version",     default: 0, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "schedules", ["schedulable_id", "schedulable_type"], name: "index_schedules_on_schedulable_id_and_schedulable_type"
 
   create_table "users", force: true do |t|
     t.string   "name",                                null: false

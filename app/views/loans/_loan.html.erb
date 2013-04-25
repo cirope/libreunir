@@ -1,8 +1,9 @@
-<tr>
+<tr data-object-id="<%= loan.to_param %>">
   <td><%= loan %></td>
   <td><%= loan.client %></td>
   <td><%= l(loan.next_payment_expire_at, format: :minimal) %></td>
   <td><%= loan.payment %></td>
   <td><%= loan.client_phone %></td>
   <td><%= link_to_loan_info(loan) %></td>
+  <td><%= link_to_new_schedule(loan) %></td>
 </tr>
