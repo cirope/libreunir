@@ -26,7 +26,6 @@ class Ability
   end
 
   def default_rules
-    can :manage, Filter
     can :read, User
   end
 end

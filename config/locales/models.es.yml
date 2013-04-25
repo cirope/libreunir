@@ -32,8 +32,6 @@
         phone: 'Teléfono'
         address: 'Dirección'
         last_comments: 'Últimos comentarios'
-      filter:
-        start: 'Inicio'
       loan:
         approved_at: 'Fecha de aprovación'
         capital: 'Capital'

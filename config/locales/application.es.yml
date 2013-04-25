@@ -36,9 +36,6 @@
           html: 'La búsqueda de <span class="label label-inverse">%{search}</span> no obtuvo ningún resultado.'
     dashboard:
       index_title: 'Tablero'
-    filters:
-      today: 'Hoy'
-      tomorrow: 'Mañana'
     loans:
       expired: 'Vencidos'
       close_to_expire: 'Por vencer'
