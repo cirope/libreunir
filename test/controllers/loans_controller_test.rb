@@ -10,7 +10,7 @@ class LoansControllerTest < ActionController::TestCase
   test 'should get expired' do
     fabricate_expired
 
-    get :expired, start: Date.today
+    get :expired
 
     assert_response :success
     assert_equal 3, assigns(:loans).size
@@ -20,7 +20,7 @@ class LoansControllerTest < ActionController::TestCase
   test 'should get close to expire' do
     fabricate_close_to_expire
 
-    get :close_to_expire, start: Date.today
+    get :close_to_expire
 
     assert_response :success
     assert_equal 3, assigns(:loans).size
@@ -30,7 +30,7 @@ class LoansControllerTest < ActionController::TestCase
   test 'should get expired in js' do
     fabricate_expired
 
-    xhr :get, :expired, start: Date.today, format: :js
+    xhr :get, :expired, format: :js
 
     assert_response :success
     assert_equal 3, assigns(:loans).size
@@ -40,7 +40,7 @@ class LoansControllerTest < ActionController::TestCase
   test 'should get close to expire in js' do
     fabricate_close_to_expire
 
-    xhr :get, :close_to_expire, start: Date.today, format: :js
+    xhr :get, :close_to_expire, format: :js
 
     assert_response :success
     assert_equal 3, assigns(:loans).size
@@ -61,18 +61,15 @@ class LoansControllerTest < ActionController::TestCase
 
   def fabricate_expired
     3.times do
-      Fabricate(:loan, user_id: @user.id, expired_payments_count: 1, next_payment_expire_at: 2.days.ago.to_date)
+      Fabricate(:loan, user_id: @user.id, expired_payments_count: 1)
     end
 
     Fabricate(:loan, user_id: @user.id, expired_payments_count: 0)
-    Fabricate(:loan, expired_payments_count: 1, next_payment_expire_at: 2.days.ago.to_date)
   end
 
   def fabricate_close_to_expire
-    3.times { Fabricate(:loan, user_id: @user.id, next_payment_expire_at: Date.tomorrow) }
+    3.times { Fabricate(:loan, user_id: @user.id) }
 
-    Fabricate(:loan, user_id: @user.id, next_payment_expire_at: Date.yesterday)
-    Fabricate(:loan, user_id: @user.id, expired_payments_count: 1, next_payment_expire_at: Date.tomorrow)
-    Fabricate(:loan, next_payment_expire_at: Date.tomorrow)
+    Fabricate(:loan, user_id: @user.id, expired_payments_count: 1)
   end
 end
