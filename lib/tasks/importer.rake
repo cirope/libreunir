@@ -3,7 +3,7 @@ namespace :importer do
   task work: [:get_file, :unzip, :backup]
   
   task get_file: :environment do
-    @ftps = Ftps.new
+    @ftps = Parser::Ftps.new
     @ftps.make_folder
     @ftps.set_mode
     @ftps.set_context
@@ -12,13 +12,13 @@ namespace :importer do
   end
 
   task unzip: :environment do
-    Unzipper.extract 
+    Parser::Unzipper.extract 
   end
 
   task backup: :environment do
-    @formatter = Formatter.new
+    @processor = Parser::Processor.new
 
-    @formatter.create_directories
-    @formatter.backup_zip_file
+    @processor.create_directories
+    @processor.backup_zip_file
   end
 end
