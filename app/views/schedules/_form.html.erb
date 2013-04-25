@@ -1,4 +1,6 @@
-<%= simple_form_for([@schedulable, @schedule], defaults: { label: false, input_html: { class: 'span12' } }) do |f| %>
+<%= simple_form_for([@schedulable, @schedule], remote: true, 
+  html: { id: "new_schedule_#{@schedulable.to_param}" }, 
+  defaults: { label: false, input_html: { class: 'span12' } }) do |f| %>
   <%= f.error_notification %>
 
   <div class="row-fluid">

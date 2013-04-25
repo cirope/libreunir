@@ -1,0 +1,10 @@
+<% if @schedule.persisted? %>
+<% else %>
+  $('#new_schedule_<%= @schedulable.to_param %>').replaceWith(
+    '<%= j render(template: 'schedules/new', formats: [:html]) %>'
+  );
+
+  $('[data-date-picker-id="<%= @schedulable.to_param %>"]').datepicker(
+      { altField: "#date-picker-id-<%= @schedulable.to_param %>", defaultDate: <%= l @schedule.scheduled_at, format: :minimal %> }
+  );
+<% end %>
