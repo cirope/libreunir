@@ -1,0 +1,23 @@
+<%= simple_form_for([@schedulable, @schedule], defaults: { label: false, input_html: { class: 'span12' } }) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="row-fluid">
+    <div class="span12">
+      <div class="span3">
+        <div data-date-picker-id="<%= @schedulable.to_param %>">
+          <%= f.input :scheduled_at, as: :hidden, input_html: { 
+            id: "date-picker-id-#{@schedulable.to_param}", 
+            placeholder: Schedule.human_attribute_name('scheduled_at') 
+          } %>
+        </div>
+      </div>
+      <div class="span9">
+        <%= f.input :description, id: false, input_html: { 
+          rows: 4, 
+          placeholder: Schedule.human_attribute_name('description') 
+        } %>
+        <%= f.button :submit, class: 'btn-primary' %>
+      </div>
+    </div>
+  </div>
+<% end %>

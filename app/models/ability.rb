@@ -27,5 +27,7 @@ class Ability
 
   def default_rules
     can :read, User
+    can :read, Loan
+    can :manage, Schedule
   end
 end
