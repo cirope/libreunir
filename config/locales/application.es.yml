@@ -50,6 +50,7 @@
       stale_object_error: 'El evento no pudo ser actualizado, intente nuevamente.'
       empty_index:
         html: 'No se ha creado ningún evento hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nuevo evento</span>'
+      new: 'Nuevo evento'
     users:
       index_title: 'Listado de usuarios'
       show_title: 'Detalle de usuario'

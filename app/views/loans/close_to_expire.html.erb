@@ -12,7 +12,7 @@
       </tr>
     </thead>
     <tbody>
-      <%= render @loans %>
+      <%= render partial: 'close_to_expire', collection: @loans, as: :loan %>
     </tbody>
   </table>
 </div>
