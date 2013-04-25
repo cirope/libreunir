@@ -1,7 +1,7 @@
-<div class="readonly-data">
-  <% if @users.empty? %>
-    <%= render 'shared/empty_index' %>
-  <% else %>
+<% if @users.empty? %>
+  <%= render 'shared/empty_index' %>
+<% else %>
+  <div class="readonly-data">
     <div class="row-fluid">
       <div class="span12">
         <table class="table resource-list" data-endless-container="true">
@@ -31,8 +31,8 @@
     </div>
 
     <%= pagination_links(@users) %>
-  <% end %>
-</div>
+  </div>
+<% end %>
 
 <nav class="form-actions">
   <%= link_to(
