@@ -44,7 +44,10 @@ class Formatter
   def create_logger
     log_path = "#{Rails.root}/log/parser.log"
 
-    FileUtils.touch log_path unless File.exists?(log_path)
+    unless File.exists?(log_path)
+      FileUtils.mkdir_p File.dirname(log_path)
+      FileUtils.touch log_path
+    end
 
     Logger.new(log_path)
   end
