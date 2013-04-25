@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
   include Application::CancanStrongParameters
-  include Application::Filters
 
   protect_from_forgery
 

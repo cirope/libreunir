@@ -1,6 +1,5 @@
 <% if params[:page].blank? %>
   $('table[data-endless-container] tbody').html('<%= j render(@loans) %>');
-  $('#date-filter-<%= action_name %>').replaceWith('<%= j render('shared/filters') %>');
   $(document).scroll();
 <% else %>
   $('table[data-endless-container] tbody').append('<%= j render(@loans) %>');

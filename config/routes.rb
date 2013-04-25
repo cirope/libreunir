@@ -6,10 +6,8 @@ Libreunir::Application.routes.draw do
 
   resources :loans, only: [:show] do
     collection do
-      constraints start: /\d{4}-\d{2}-\d{2}/ do
-        get 'expired/(:start)', to: 'loans#expired', as: 'expired'
-        get 'close_to_expire/(:start)', to: 'loans#close_to_expire', as: 'close_to_expire'
-      end
+      get 'expired', to: 'loans#expired', as: 'expired'
+      get 'close_to_expire', to: 'loans#close_to_expire', as: 'close_to_expire'
     end
   end
 
