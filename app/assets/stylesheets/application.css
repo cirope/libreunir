@@ -17,7 +17,7 @@
  *= require common
  *= require common-responsive
  *= require devise
- *= require users
  *= require dashboard
- *= require print
+ *= require schedules
+ *= require users
 */
