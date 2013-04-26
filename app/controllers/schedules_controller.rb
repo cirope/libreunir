@@ -13,7 +13,6 @@ class SchedulesController < ApplicationController
   layout ->(c) { c.request.xhr? ? false : 'application' }
   
   # GET /schedules
-  # GET /schedules.json
   def index
     @title = t('view.schedules.index_title')
     @schedules = @schedules.page(params[:page])
@@ -21,14 +20,12 @@ class SchedulesController < ApplicationController
   end
 
   # GET /schedules/1
-  # GET /schedules/1.json
   def show
     @title = t('view.schedules.show_title')
     respond_with @schedule
   end
 
   # GET /schedules/new
-  # GET /schedules/new.json
   def new
     @title = t('view.schedules.new_title')
     respond_with @schedule
@@ -40,7 +37,6 @@ class SchedulesController < ApplicationController
   end
 
   # POST /schedules
-  # POST /schedules.json
   def create
     @title = t('view.schedules.new_title')
 
@@ -50,8 +46,7 @@ class SchedulesController < ApplicationController
     respond_with @schedule
   end
 
-  # PUT /schedules/1
-  # PUT /schedules/1.json
+  # PATCH /schedules/1
   def update
     @title = t('view.schedules.edit_title')
 
@@ -61,6 +56,14 @@ class SchedulesController < ApplicationController
     respond_with @schedule
   rescue ActiveRecord::StaleObjectError
     redirect_to edit_schedule_url(@schedule), alert: t('view.schedules.stale_object_error')
+  end
+
+  # PATCH /schedules/1/toggle_done
+  def toggle_done
+    @schedule.toggle_done
+    @schedule.save!
+
+    respond_with @schedule
   end
 
   private

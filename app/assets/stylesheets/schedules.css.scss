@@ -4,3 +4,11 @@ form[data-scheduled-form] {
 
   .alert { margin: 0 0 10px; }
 }
+
+.strike {
+  text-decoration: line-through;
+}
+
+input[type="checkbox"].margin-less {
+  margin: 0px;
+}

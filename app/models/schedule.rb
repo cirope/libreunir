@@ -1,4 +1,6 @@
 class Schedule < ActiveRecord::Base
+  include Schedules::Done
+
   has_paper_trail
 
   # Scopes

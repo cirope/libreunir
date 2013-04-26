@@ -1,5 +1,7 @@
 Libreunir::Application.routes.draw do
-  resources :schedules, except: :destroy
+  resources :schedules, except: :destroy do
+    patch 'toggle_done', on: :member, as: 'toggle_done'
+  end
 
   devise_for :users
 
@@ -11,7 +13,7 @@ Libreunir::Application.routes.draw do
       get 'close_to_expire', to: 'loans#close_to_expire', as: 'close_to_expire'
     end
 
-    resources :schedules, except: :destroy
+    resources :schedules, only: [:new, :create]
   end
 
   resources :users do

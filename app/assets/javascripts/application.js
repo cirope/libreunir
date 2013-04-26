@@ -32,4 +32,5 @@
 //= require effect_helper
 //= require dashboard
 //= require loans
+//= require schedules
 //= require users

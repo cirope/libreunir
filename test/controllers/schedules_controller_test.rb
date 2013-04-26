@@ -69,8 +69,25 @@ class SchedulesControllerTest < ActionController::TestCase
   end
 
   test 'should update schedule' do
-    put :update, id: @schedule, 
-      schedule: Fabricate.attributes_for(:schedule, attr: 'value')
+    patch :update, id: @schedule,
+      schedule: Fabricate.attributes_for(:schedule, description: 'Updated').slice(
+        :description, :scheduled_at, :lock_version
+      )
+
     assert_redirected_to schedule_url(assigns(:schedule))
+    assert_equal 'Updated', @schedule.reload.description
+  end
+
+  test 'should toggle schedule done' do
+    assert !@schedule.done
+
+    patch :toggle_done, id: @schedule, format: :js
+
+    assert_response :success
+    assert_not_nil assigns(:schedule)
+    assert @schedule.reload.done
+    assert_select '#unexpected_error', false
+    assert_template 'schedules/toggle_done'
+    assert_equal :js, @request.format.symbol
   end
 end

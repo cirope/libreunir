@@ -48,4 +48,28 @@ class DashboardTest < ActionDispatch::IntegrationTest
     assert page.has_css?('#schedules ul')
     assert_equal 3, all('#schedules ul li').size
   end
+
+  test 'should get dashboard with schedules and mark as done one' do
+    user = Fabricate(:user, password: '123456', role: :normal)
+
+    3.times { Fabricate(:schedule, user_id: user.id) }
+
+    login(user: user)
+
+    assert_equal dashboard_path, current_path
+
+    click_link Schedule.model_name.human(count: 0)
+
+    assert page.has_css?('#schedules ul')
+    
+    within '#schedules ul' do
+      assert_difference 'Schedule.done.count' do
+        assert page.has_no_css?('.strike')
+
+        find('li:first-child input[data-toggle-schedule-done]').click
+
+        assert page.has_css?('.strike')
+      end
+    end
+  end
 end

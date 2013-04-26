@@ -1,12 +1,12 @@
-<li data-schedule-id="<%= schedule.to_param %>">
+<li data-schedule-id="<%= schedule.to_param %>" <%== 'class="muted strike"' if schedule.done? %>>
+  <%= show_mark_schedule_as_done_check_box(schedule) %>
   <%= schedule.description %> 
   <% if schedule.schedulable %>
-    [<%= link_to "#{schedule.schedulable.class.model_name.human(count: 1)} #{schedule.schedulable}", schedule,  data: { remote: true } %>]
+    [<%= link_to_schedulable(schedule)%>]
   <% end %>
   <time datetime="<%= schedule.scheduled_at.to_s(:db) %>" class="muted">
     <%= l schedule.scheduled_at, format: :short %>
   </time>
   <%= link_to_edit edit_schedule_path(schedule), data: { remote: true } if can? :update, schedule %>
-  <%= link_to_destroy schedule, data: { remote: true } if can? :destroy, schedule %>
   <div data-template></div>
 </li>

@@ -54,4 +54,12 @@ class ScheduleTest < ActiveSupport::TestCase
       )
     ], @schedule.errors[:scheduled_at]
   end
+
+  test 'toggle done' do
+    assert !@schedule.done
+
+    @schedule.toggle_done
+
+    assert @schedule.done
+  end
 end
