@@ -8,6 +8,12 @@ $('[data-object-id="<%= @schedulable.to_param %>"]').after(
   )
 );
 
-$('[data-date-picker-id="<%= @schedulable.to_param %>"]').datepicker(
-  { altField: '#date-picker-id-<%= @schedulable.to_param %>' }
+$('[data-datetime-picker-id="<%= @schedulable.to_param %>"]').datetimepicker({
+  altField: '#datetime-picker-id-<%= @schedulable.to_param %>',
+  showButtonPanel: false,
+  altFieldTimeOnly: false,
+  showTime: false,
+  minDate: '<%= l Time.now, format: :minimal %>'
+}).datetimepicker(
+  "setDate", '<%= l @schedule.scheduled_at, format: :minimal %>'
 );

@@ -12,4 +12,11 @@ class Schedule < ActiveRecord::Base
   # Relations
   belongs_to :user
   belongs_to :schedulable, polymorphic: true
+
+  # Callbacks
+  after_initialize :set_current_datetime
+
+  def set_current_datetime 
+    self.scheduled_at ||= Time.now
+  end
 end
