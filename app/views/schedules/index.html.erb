@@ -1,5 +1,5 @@
 <% if @schedules.empty? %>
-  <%= render 'shared/empty_index' %>
+  <%= render 'empty_index' %>
 <% else %>
   <div class="row-fluid">
     <div class="span12">
@@ -28,11 +28,11 @@
   </div>
 
   <%= pagination_links(@schedules) %>
-<% end %>
 
-<div class="form-actions">
-  <%= link_to(
-    t('view.schedules.new', default: :'label.new'),
-    new_schedule_path, class: 'btn btn-primary'
-  ) if can? :create, Schedule %>
-</div>
+  <div class="form-actions">
+    <%= link_to(
+      t('view.schedules.new', default: :'label.new'),
+      new_schedule_path, class: 'btn btn-primary'
+    ) if can? :create, Schedule %>
+  </div>
+<% end %>
