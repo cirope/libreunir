@@ -1,8 +1,7 @@
 <% if @schedulable %>
   <% if @schedule.persisted? %>
-    $('[data-object-id="<%= @schedulable.to_param %>"]').remove();
-    $('#schedulable-id-<%= @schedulable.to_param %>').remove();
-    <%= render 'shared/notice' %>
+    $('[data-object-id="<%= @schedulable.to_param %>"]').addClass('warning');
+    $('[data-schedule-id="<%= @schedulable.to_param %>"]').remove();
   <% else %>
     $('#new_schedule_<%= @schedulable.to_param %>').replaceWith(
       '<%= j render(template: 'schedules/new', formats: [:html]) %>'

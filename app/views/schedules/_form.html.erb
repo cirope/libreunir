@@ -21,7 +21,9 @@
         <%= f.button :submit, class: 'btn-primary' %>
         <span class=muted>|
           <%= link_to t('label.cancel'), '#', class: 'btn btn-mini', 
-              data: { 'remove-target' => "#schedulable-id-#{@schedulable.to_param}" } %>
+          data: { 
+            remove_target: "[data-schedule-id=\"#{(@schedulable.to_param || @schedule.object_id)}\"]" } 
+          %>
         </span>
       </div>
     </div>

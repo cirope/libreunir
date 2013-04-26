@@ -21,4 +21,8 @@ class Loan < ActiveRecord::Base
   def expired?
     self.expired_payments_count > 0
   end
+
+  def is_scheduled?
+    self.schedules.present?
+  end
 end
