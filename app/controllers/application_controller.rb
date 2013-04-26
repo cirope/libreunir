@@ -3,6 +3,8 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery
 
+  helper_method :flash_hash
+
   after_action -> { expires_now if user_signed_in? }
 
   def user_for_paper_trail
@@ -18,5 +20,9 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(resource)
     dashboard_path
+  end
+
+  def flash_hash
+    request.xhr? ? flash.now : flash
   end
 end

@@ -1,22 +1,22 @@
 <% if @schedules.empty? %>
   <%= render 'empty_index' %>
 <% else %>
-  <div class="row-fluid">
-    <div class="span12">
-      <ul>
-        <%= render @schedules %>
-      </ul>
+  <div data-schedules-container>
+    <div class="row-fluid">
+      <div class="span12">
+        <ul>
+          <%= render @schedules %>
+        </ul>
+      </div>
     </div>
-  </div>
 
-  <%= pagination_links(@schedules) %>
-
-  <div data-new-schedule-place-holder>
-    <p>
-      <%= link_to(
-        t('view.schedules.new', default: :'label.new'),
-        new_schedule_path, class: 'btn btn-primary', data: { remote: true }
-      ) if can? :create, Schedule %>
-    </p>
+    <div data-new-schedule-place-holder>
+      <p>
+        <%= link_to(
+          t('view.schedules.new', default: :'label.new'),
+          new_schedule_path, class: 'btn btn-primary', data: { remote: true }
+        ) if can? :create, Schedule %>
+      </p>
+    </div>
   </div>
 <% end %>

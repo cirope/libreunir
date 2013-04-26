@@ -13,7 +13,7 @@ Libreunir::Application.routes.draw do
       get 'close_to_expire', to: 'loans#close_to_expire', as: 'close_to_expire'
     end
 
-    resources :schedules, only: [:new, :create]
+    resources :schedules, only: [:new, :create, :edit, :update]
   end
 
   resources :users do

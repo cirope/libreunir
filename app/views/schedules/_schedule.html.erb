@@ -7,6 +7,6 @@
   <time datetime="<%= schedule.scheduled_at.to_s(:db) %>" class="muted">
     <%= l schedule.scheduled_at, format: :short %>
   </time>
-  <%= link_to_edit edit_schedule_path(schedule), data: { remote: true } if can? :update, schedule %>
+  <%= link_to_edit edit_polymorphic_path([schedule.schedulable, schedule]), data: { remote: true } if can? :update, schedule %>
   <div data-template></div>
 </li>

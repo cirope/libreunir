@@ -15,7 +15,6 @@ class SchedulesController < ApplicationController
   # GET /schedules
   def index
     @title = t('view.schedules.index_title')
-    @schedules = @schedules.page(params[:page])
     respond_with @schedules
   end
 
@@ -41,7 +40,7 @@ class SchedulesController < ApplicationController
     @title = t('view.schedules.new_title')
 
     if @schedule.save
-      flash[:notice] = t('view.schedules.correctly_created')
+      flash_hash[:notice] = t('view.schedules.correctly_created')
     end
     respond_with @schedule
   end
@@ -51,7 +50,7 @@ class SchedulesController < ApplicationController
     @title = t('view.schedules.edit_title')
 
     if @schedule.update(params[:schedule])
-      flash[:notice] = t('view.schedules.correctly_updated')
+      flash_hash[:notice] = t('view.schedules.correctly_updated')
     end
     respond_with @schedule
   rescue ActiveRecord::StaleObjectError

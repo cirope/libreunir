@@ -13,11 +13,4 @@ $('[data-schedulable]').remove();
   );
 <% end %>
 
-$('[data-datetime-picker-id="<%= @schedulable.to_param %>"]').datetimepicker({
-  altField: '#datetime-picker-id-<%= @schedulable.to_param %>',
-  showButtonPanel: false,
-  altFieldTimeOnly: false,
-  minDateTime: new Date("<%= l 10.minutes.from_now, format: :datetime %>")
-}).datetimepicker(
-  "setDate", '<%= l @schedule.scheduled_at, format: :minimal %>'
-);
+<%= render 'datepicker_setup' %>

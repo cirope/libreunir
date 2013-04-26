@@ -1,17 +1,18 @@
-<% if @schedule.persisted? %>
-  $('[data-object-id="<%= @schedulable.to_param %>"]').remove();
-  $('#schedulable-id-<%= @schedulable.to_param %>').remove();
+<% if @schedulable %>
+  <% if @schedule.persisted? %>
+    $('[data-object-id="<%= @schedulable.to_param %>"]').remove();
+    $('#schedulable-id-<%= @schedulable.to_param %>').remove();
+    <%= render 'shared/notice' %>
+  <% else %>
+    $('#new_schedule_<%= @schedulable.to_param %>').replaceWith(
+      '<%= j render(template: 'schedules/new', formats: [:html]) %>'
+    );
+    <%= render 'datepicker_setup' %>
+  <% end %>
 <% else %>
-  $('#new_schedule_<%= @schedulable.to_param %>').replaceWith(
-    '<%= j render(template: 'schedules/new', formats: [:html]) %>'
-  );
-
-  $('[data-datetime-picker-id=<%= @schedulable.to_param %>]').datetimepicker({
-    altField: '#datetime-picker-id-<%= @schedulable.to_param %>',
-    showButtonPanel: false,
-    altFieldTimeOnly: false,
-    minDateTime: new Date("<%= l 10.minutes.from_now, format: :datetime %>")
-  }).datetimepicker(
-    "setDate", '<%= l @schedule.scheduled_at, format: :minimal %>'
-  );
+  <% if @schedule.persisted? %>
+    $('[data-new-schedule-place-holder]').html('');
+    <%= render 'shared/notice' %>
+  <% else %>
+  <% end %>
 <% end %>

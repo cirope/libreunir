@@ -1,0 +1,8 @@
+<% if @schedule.errors.blank? %>
+  $('[data-new-schedule-place-holder]').html(
+    '<%= j render(template: 'schedules/edit', formats: [:html]) %>'
+  ); 
+
+  <%= render 'shared/flash_hash' %>
+<% else %>
+<% end %>
