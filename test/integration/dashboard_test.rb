@@ -45,7 +45,7 @@ class DashboardTest < ActionDispatch::IntegrationTest
 
     click_link Schedule.model_name.human(count: 0)
 
-    assert page.has_css?('#schedules table')
-    assert_equal 3, all('#schedules table tbody tr').size
+    assert page.has_css?('#schedules ul')
+    assert_equal 3, all('#schedules ul li').size
   end
 end
