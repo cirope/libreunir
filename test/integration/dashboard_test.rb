@@ -32,4 +32,20 @@ class DashboardTest < ActionDispatch::IntegrationTest
     assert page.has_css?('table[data-endless-container]')
     assert_equal 3, all('table[data-endless-container] tbody tr').size
   end
+
+  test 'should get dashboard with schedules' do
+    user = Fabricate(:user, password: '123456', role: :normal)
+
+    3.times { Fabricate(:schedule, user_id: user.id) }
+    Fabricate(:schedule)
+
+    login(user: user)
+
+    assert_equal dashboard_path, current_path
+
+    click_link Schedule.model_name.human(count: 0)
+
+    assert page.has_css?('#schedules table')
+    assert_equal 3, all('#schedules table tbody tr').size
+  end
 end

@@ -30,13 +30,16 @@ class ScheduleTest < ActiveSupport::TestCase
   test 'validates blank attributes' do
     @schedule.description = ''
     @schedule.scheduled_at = nil
+    @schedule.user_id = nil
     
     assert @schedule.invalid?
-    assert_equal 2, @schedule.errors.size
+    assert_equal 3, @schedule.errors.size
     assert_equal [error_message_from_model(@schedule, :description, :blank)],
       @schedule.errors[:description]
     assert_equal [error_message_from_model(@schedule, :scheduled_at, :blank)],
       @schedule.errors[:scheduled_at]
+    assert_equal [error_message_from_model(@schedule, :user_id, :blank)],
+      @schedule.errors[:user_id]
   end
 
   test 'validates date attributes' do

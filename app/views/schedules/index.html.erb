@@ -15,8 +15,8 @@
         <tbody>
           <% @schedules.each do |schedule| %>
             <tr>
-              <td><%= schedule.description %></td>
-              <td><%= schedule.scheduled_at %></td>
+              <td><%= truncate schedule.description %></td>
+              <td><%= l schedule.scheduled_at, format: :short %></td>
               <td><%= link_to_show schedule %></td>
               <td><%= link_to_edit edit_schedule_path(schedule) if can? :update, schedule %></td>
               <td><%= link_to_destroy schedule if can? :destroy, schedule %></td>

@@ -19,6 +19,7 @@ class User < ActiveRecord::Base
   belongs_to :branch
   has_many :loans, dependent: :destroy
   has_many :comments, dependent: :destroy
+  has_many :schedules, dependent: :destroy
   has_many :made_payments, class_name: 'Payment'
   has_many :payments, through: :loans
 end

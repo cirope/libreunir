@@ -7,27 +7,24 @@ class Ability
 
   def user_rules(user)
     user.roles.each do |role|
-      send("#{role}_rules") if respond_to?("#{role}_rules")
+      send("#{role}_rules", user) if respond_to?("#{role}_rules")
     end
 
-    default_rules
+    default_rules(user)
   end
 
-  def admin_rules
+  def admin_rules(user)
     can :manage, :all
-    can :assign_roles, User
+  end
+
+  def regular_rules(user)
     can :edit_profile, User
     can :update_profile, User
   end
 
-  def regular_rules
-    can :edit_profile, User
-    can :update_profile, User
-  end
-
-  def default_rules
+  def default_rules(user)
     can :read, User
     can :read, Loan
-    can :manage, Schedule
+    can :manage, Schedule, { user_id: user.id }
   end
 end

@@ -4,6 +4,8 @@ new Rule
     @map.remote_tab_function ||= (event) ->
       tab = $(event.target)
 
+      $($(event.relatedTarget).attr('href')).html('')
+
       if tab.data('remote-url')
         tabID = tab.attr('href')
         url = $(event.target).data('remote-url')

@@ -25,7 +25,7 @@ class SchedulesControllerTest < ActionController::TestCase
   end
 
   test 'should create schedule' do
-    assert_difference('Schedule.count') do
+    assert_difference ['Schedule.count', '@user.schedules.count'] do
       post :create, schedule: Fabricate.attributes_for(:schedule).slice(
         :description, :scheduled_at, :lock_version
       )
