@@ -13,6 +13,7 @@
  *= require body_padding
  *= require twitter/bootstrap-responsive
  *= require jquery/ui-custom
+ *= require jquery/jquery-ui-timepicker-addon
  *= require fonts
  *= require common
  *= require common-responsive
