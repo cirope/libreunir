@@ -91,16 +91,20 @@ ActiveRecord::Schema.define(version: 20130424183745) do
   add_index "payments", ["user_id"], name: "index_payments_on_user_id"
 
   create_table "schedules", force: true do |t|
-    t.text     "description",                  null: false
-    t.datetime "scheduled_at",                 null: false
+    t.text     "description",                      null: false
+    t.datetime "scheduled_at",                     null: false
+    t.boolean  "done",             default: false, null: false
+    t.integer  "user_id",                          null: false
     t.integer  "schedulable_id"
     t.string   "schedulable_type"
-    t.integer  "lock_version",     default: 0, null: false
+    t.integer  "lock_version",     default: 0,     null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "schedules", ["schedulable_id", "schedulable_type"], name: "index_schedules_on_schedulable_id_and_schedulable_type"
+  add_index "schedules", ["scheduled_at"], name: "index_schedules_on_scheduled_at"
+  add_index "schedules", ["user_id"], name: "index_schedules_on_user_id"
 
   create_table "users", force: true do |t|
     t.string   "name",                                null: false

@@ -3,6 +3,8 @@ class CreateSchedules < ActiveRecord::Migration
     create_table :schedules do |t|
       t.text :description, null: false
       t.datetime :scheduled_at, null: false
+      t.boolean :done, null: false, default: false
+      t.references :user, null: false, index: true
       t.references :schedulable, polymorphic: true
       t.integer :lock_version, null: false, default: 0
 
@@ -10,5 +12,6 @@ class CreateSchedules < ActiveRecord::Migration
     end
 
     add_index :schedules, [:schedulable_id, :schedulable_type]
+    add_index :schedules, :scheduled_at
   end
 end

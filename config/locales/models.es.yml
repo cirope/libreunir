@@ -51,6 +51,7 @@
       schedule:
         description: 'Evento'
         scheduled_at: 'Fecha'
+        done: 'Terminado'
       user:
         user_id: 'Asesor'
         name: 'Nombre'
