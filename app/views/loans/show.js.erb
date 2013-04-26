@@ -1,9 +1,5 @@
 $('[data-loan-info]').remove();
 
 $('[data-object-id="<%= @loan.to_param %>"]').after(
-  $('<tr id="loan-info-<%= @loan.to_param %>" data-loan-info></tr>').html(
-    $('<td colspan="7"></td>').html(
-      '<%= j render(template: 'loans/show', formats: [:html]) %>'
-    )
-  )
+  '<%= j render('place_holder', content: render(template: 'loans/show', formats: [:html])) %>'
 );

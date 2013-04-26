@@ -10,7 +10,7 @@ class LoansController < ApplicationController
 
   def expired
     @title = t 'view.loans.expired_title'
-    @loans = get_scope.expired.order('delayed_at DESC')
+    @loans = get_scope.expired.order('delayed_at DESC').uniq
 
     respond_to do |format|
       format.html # expired.html.erb
@@ -20,7 +20,7 @@ class LoansController < ApplicationController
 
   def close_to_expire
     @title = t 'view.loans.close_to_expire_title'
-    @loans = get_scope.not_expired.with_expiration.reverse_order
+    @loans = get_scope.not_expired.with_expiration.reverse_order.uniq
 
     respond_to do |format|
       format.html # close_to_expired.html.erb

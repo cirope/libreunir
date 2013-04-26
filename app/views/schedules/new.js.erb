@@ -1,12 +1,17 @@
 $('[data-schedulable]').remove();
 
-$('[data-object-id="<%= @schedulable.to_param %>"]').after(
-  $('<tr data-schedulable id="schedulable-id-<%= @schedulable.to_param %>"></tr>').html(
-    $('<td colspan="7"></td>').html(
-      '<%= j render(template: 'schedules/new', formats: [:html]) %>'
-    )
-  )
-);
+<% if @schedulable %>
+  $('[data-object-id="<%= @schedulable.to_param %>"]').after(
+    '<%= j render(
+      "#{@schedulable.class.name.underscore}_template",
+      content: render(template: 'schedules/new', formats: [:html])
+    ) %>'
+  );
+<% else %>
+  $('[data-new-schedule-place-holder]').html(
+    '<%= j render(template: 'schedules/new', formats: [:html]) %>'
+  );
+<% end %>
 
 $('[data-datetime-picker-id="<%= @schedulable.to_param %>"]').datetimepicker({
   altField: '#datetime-picker-id-<%= @schedulable.to_param %>',

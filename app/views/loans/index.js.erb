@@ -1,9 +1,9 @@
 <% render_options = { partial: action_name, collection: @loans, as: :loan } %>
 <% if params[:page].blank? %>
-  $('table[data-endless-container] tbody').html('<%= j render(render_options) %>');
+  $('table[data-endless-container] > tbody').html('<%= j render(render_options) %>');
   $(document).scroll();
 <% else %>
-  $('table[data-endless-container] tbody').append('<%= j render(render_options) %>');
+  $('table[data-endless-container] > tbody').append('<%= j render(render_options) %>');
 <% end %>
 
 <% if @loans.next_page %>
