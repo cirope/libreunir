@@ -1,4 +1,4 @@
-<div class="readonly-data">
+<div id="schedule-<%= @schedule.to_param %>">
   <% unless request.xhr? %>
     <p class="lead">
       <%= @schedule.description %>
@@ -16,9 +16,17 @@
       <%= render @schedule.schedulable %>
     </div>
   <% end %>
-  
+
+  <% if request.xhr? %>
+    <div class="pull-right">
+      <%= link_to t('label.close'), '#', class: 'btn btn-mini', data: { remove_target: "#schedule-#{@schedule.to_param}" } %>
+    </div>
+  <% end %>
 </div>
-<div class="form-actions">
-  <%= link_to t('label.edit'), edit_schedule_path(@schedule) if can? :update, @schedule %> |
-  <%= link_to t('label.list'), schedules_path %>
-</div>
+
+<% unless request.xhr? %>
+  <div class="form-actions">
+    <%= link_to t('label.edit'), edit_schedule_path(@schedule) if can? :update, @schedule %> |
+    <%= link_to t('label.list'), schedules_path %>
+  </div>
+<% end %>
