@@ -1,5 +1,6 @@
 <%= simple_form_for([@schedulable, @schedule], remote: true, 
   html: { id: "new_schedule_#{@schedulable.to_param}" }, 
+  data: { 'scheduled-form' => true },
   defaults: { label: false, input_html: { class: 'span12' } }) do |f| %>
   <%= f.error_notification %>
 
@@ -8,8 +9,7 @@
       <div class="span3">
         <div data-date-picker-id="<%= @schedulable.to_param %>">
           <%= f.input :scheduled_at, as: :hidden, input_html: { 
-            id: "date-picker-id-#{@schedulable.to_param}", 
-            placeholder: Schedule.human_attribute_name('scheduled_at') 
+            id: "date-picker-id-#{@schedulable.to_param}" 
           } %>
         </div>
       </div>

@@ -1,10 +1,14 @@
 <% if @schedule.persisted? %>
+  $('[data-object-id="<%= @schedulable.to_param %>"]').remove();
+  $('#schedulable-id-<%= @schedulable.to_param %>').remove();
 <% else %>
   $('#new_schedule_<%= @schedulable.to_param %>').replaceWith(
     '<%= j render(template: 'schedules/new', formats: [:html]) %>'
   );
 
-  $('[data-date-picker-id="<%= @schedulable.to_param %>"]').datepicker(
-      { altField: "#date-picker-id-<%= @schedulable.to_param %>", defaultDate: <%= l @schedule.scheduled_at, format: :minimal %> }
+  $('[data-date-picker-id=<%= @schedulable.to_param %>]').datepicker(
+      { altField: "#date-picker-id-<%= @schedulable.to_param %>" }
+  ).datepicker(
+    "setDate", '<%= l @schedule.scheduled_at.to_date, fotmat: :minimal %>'
   );
 <% end %>

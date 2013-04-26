@@ -1,7 +1,7 @@
 $('[data-schedulable]').remove();
 
 $('[data-object-id="<%= @schedulable.to_param %>"]').after(
-  $('<tr data-schedulable></tr>').html(
+  $('<tr data-schedulable id="schedulable-id-<%= @schedulable.to_param %>"></tr>').html(
     $('<td colspan="7"></td>').html(
       '<%= j render(template: 'schedules/new', formats: [:html]) %>'
     )
@@ -9,5 +9,5 @@ $('[data-object-id="<%= @schedulable.to_param %>"]').after(
 );
 
 $('[data-date-picker-id="<%= @schedulable.to_param %>"]').datepicker(
-  { altField: "#date-picker-id-<%= @schedulable.to_param %>" }
+  { altField: '#date-picker-id-<%= @schedulable.to_param %>' }
 );
