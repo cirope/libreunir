@@ -19,7 +19,10 @@
           placeholder: Schedule.human_attribute_name('description') 
         } %>
         <%= f.button :submit, class: 'btn-primary' %>
-        <span class=muted>|</span> <%= link_to t('label.cancel'), '#', class: 'btn btn-mini' %>
+        <span class=muted>|
+          <%= link_to t('label.cancel'), '#', class: 'btn btn-mini', 
+              data: { 'remove-target' => "#schedulable-id-#{@schedulable.to_param}" } %>
+        </span>
       </div>
     </div>
   </div>
