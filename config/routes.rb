@@ -1,6 +1,5 @@
 Libreunir::Application.routes.draw do
-
-  resources :schedules
+  resources :schedules, except: :destroy
 
   devise_for :users
 
@@ -12,7 +11,7 @@ Libreunir::Application.routes.draw do
       get 'close_to_expire', to: 'loans#close_to_expire', as: 'close_to_expire'
     end
 
-    resources :schedules
+    resources :schedules, except: :destroy
   end
 
   resources :users do

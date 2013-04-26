@@ -3,9 +3,10 @@ class SchedulesController < ApplicationController
 
   check_authorization
   load_and_authorize_resource :loan, shallow: true
-  load_and_authorize_resource through: :loan, shallow: true
 
   before_action :set_schedulable
+
+  load_and_authorize_resource through: :schedulable, shallow: true
 
   respond_to :html, :js
 
@@ -60,13 +61,6 @@ class SchedulesController < ApplicationController
     respond_with @schedule
   rescue ActiveRecord::StaleObjectError
     redirect_to edit_schedule_url(@schedule), alert: t('view.schedules.stale_object_error')
-  end
-
-  # DELETE /schedules/1
-  # DELETE /schedules/1.json
-  def destroy
-    @schedule.destroy
-    respond_with @schedule
   end
 
   private
