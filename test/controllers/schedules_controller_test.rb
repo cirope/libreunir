@@ -26,12 +26,13 @@ class SchedulesControllerTest < ActionController::TestCase
 
   test 'should create schedule' do
     assert_difference ['Schedule.count', '@user.schedules.count'] do
-      post :create, schedule: Fabricate.attributes_for(:schedule).slice(
+      post :create, format: :js,
+        schedule: Fabricate.attributes_for(:schedule).slice(
         :description, :scheduled_at, :lock_version
       )
     end
 
-    assert_redirected_to schedule_url(assigns(:schedule))
+    assert_redirected_to schedules_url
   end
 
   test 'should show schedule' do
@@ -69,12 +70,12 @@ class SchedulesControllerTest < ActionController::TestCase
   end
 
   test 'should update schedule' do
-    patch :update, id: @schedule,
+    patch :update, id: @schedule, format: :js,
       schedule: Fabricate.attributes_for(:schedule, description: 'Updated').slice(
         :description, :scheduled_at, :lock_version
       )
 
-    assert_redirected_to schedule_url(assigns(:schedule))
+    assert_redirected_to schedules_url
     assert_equal 'Updated', @schedule.reload.description
   end
 
