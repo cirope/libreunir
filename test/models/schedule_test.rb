@@ -57,9 +57,31 @@ class ScheduleTest < ActiveSupport::TestCase
 
   test 'toggle done' do
     assert !@schedule.done
-
-    @schedule.toggle_done
-
+    assert @schedule.toggle_done
     assert @schedule.done
+  end
+
+  test 'can not set to undone if in the past' do
+    assert @schedule.toggle_done
+    assert @schedule.done
+    assert @schedule.update_column(:scheduled_at, 1.minute.ago)
+    assert !@schedule.toggle_done
+    assert @schedule.reload.done
+  end
+
+  test 'doable' do
+    assert @schedule.doable?
+    assert @schedule.toggle_done
+    assert @schedule.doable?
+    assert @schedule.update_column(:scheduled_at, 1.minute.ago)
+    assert !@schedule.doable?
+  end
+
+  test 'past' do
+    @schedule.scheduled_at = 1.minute.from_now
+    assert !@schedule.past?
+
+    @schedule.scheduled_at = 1.minute.ago
+    assert @schedule.past?
   end
 end

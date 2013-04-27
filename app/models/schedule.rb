@@ -1,4 +1,5 @@
 class Schedule < ActiveRecord::Base
+  include Schedules::DefaultDate
   include Schedules::Done
 
   has_paper_trail
@@ -15,10 +16,7 @@ class Schedule < ActiveRecord::Base
   belongs_to :user
   belongs_to :schedulable, polymorphic: true
 
-  # Callbacks
-  after_initialize :set_current_datetime
-
-  def set_current_datetime 
-    self.scheduled_at ||= Time.now
+  def past?
+    self.scheduled_at < Time.now
   end
 end

@@ -18,7 +18,8 @@ module SchedulesHelper
 
     output + check_box_tag(
       'schedule', "mark_#{schedule.to_param}_as_done", schedule.done,
-      class: 'margin-less', data: { toggle_schedule_done: schedule.to_param }
+      class: 'margin-less', disabled: !schedule.doable?,
+      data: { toggle_schedule_done: schedule.to_param }
     )
   end
 
