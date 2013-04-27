@@ -1,5 +1,5 @@
-$('[data-datetime-picker-id=<%= @schedulable.to_param %>]').datetimepicker({
-  altField: '#datetime-picker-id-<%= @schedulable.to_param %>',
+$('[data-datetime-picker-id=<%= (@schedulable || @schedule).to_param %>]').datetimepicker({
+  altField: '#datetime-picker-id-<%= (@schedulable || @schedule).to_param %>',
   showButtonPanel: false,
   altFieldTimeOnly: false,
   minDateTime: new Date("<%= l 10.minutes.from_now, format: :datetime %>")
