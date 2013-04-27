@@ -60,7 +60,6 @@ class SchedulesController < ApplicationController
   # PATCH /schedules/1/toggle_done
   def toggle_done
     @schedule.toggle_done
-    @schedule.save!
 
     respond_with @schedule
   end

@@ -1,23 +1,22 @@
-<div class="row-fluid">
-  <div class="span10 offset1">
-    <h2>No hay ningún evento programado</h2>
+<div class="span10 offset1">
+  <h2>No hay ningún evento programado</h2>
 
-    <p class="lead">
-      Para crear uno podés hacer clic sobre el enlace
-      <a class="iconic">&#xe079;</a> en los préstamos
-      vencidos o por vencer
+  <p class="lead">
+    Para crear uno podés hacer clic sobre el enlace
+    <a class="iconic">&#xe079;</a> en los préstamos
+    vencidos o por vencer
+  </p>
+
+  <%  if can? :create, Schedule %>
+    <hr />
+
+    <p>
+      También podés crear un evento sin asociarlo a un préstamo desde
+      <%= link_to(
+        t('view.schedules.new', default: :'label.new'),
+        new_schedule_path, class: 'btn btn-primary', data: { remote: true }
+      ) %>
     </p>
-
-    <%  if can? :create, Schedule %>
-      <hr />
-
-      <p>
-        También podés crear un evento sin asociarlo a un préstamo desde
-        <%= link_to(
-          t('view.schedules.new', default: :'label.new'),
-          new_schedule_path, class: 'btn btn-primary'
-        ) %>
-      </p>
-    <% end %>
-  </div>
+    <div data-new-schedule-place-holder></div>
+  <% end %>
 </div>

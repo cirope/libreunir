@@ -6,6 +6,6 @@ module Schedules::Done
   end
 
   def toggle_done
-    self.done = !self.done
+    self.update_attribute(:done, !self.done)
   end
 end

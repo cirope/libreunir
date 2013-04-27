@@ -1,6 +1,5 @@
-<%= simple_form_for([@schedulable, @schedule], remote: true, 
-  html: { id: "new_schedule_#{@schedulable.to_param}" }, 
-  data: { 'scheduled-form' => true },
+<%= simple_form_for([@schedulable, @schedule], remote: true, html: { id: nil },
+  data: { scheduled_form: true },
   defaults: { label: false, input_html: { class: 'span12' } }) do |f| %>
   <%= f.error_notification %>
 
@@ -21,8 +20,7 @@
         <%= f.button :submit, class: 'btn-primary' %>
         <span class=muted>|
           <%= link_to t('label.cancel'), '#', class: 'btn btn-mini', 
-          data: { 
-            remove_target: "[data-schedule-id=\"#{(@schedulable.to_param || @schedule.object_id)}\"]" } 
+            data: { remove_target: '[data-new-schedule-place-holder]' }
           %>
         </span>
       </div>
