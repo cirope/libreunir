@@ -1,8 +1,10 @@
 <% if @schedule.errors.blank? %>
-  $('[data-new-schedule-place-holder]').html(
-    '<%= j render(template: 'schedules/edit', formats: [:html]) %>'
-  ); 
-
-  <%= render 'shared/flash_hash' %>
+  $('#schedules').html(
+    '<%= j render(template: 'schedules/index', locals: { :@schedules => Schedule.all }, formats: [:html]) %>'
+  );
 <% else %>
+  $('[data-schedule-id="<%= @schedule.to_param %>"]').find('form').replaceWith(
+    '<%= j render(template: 'schedules/edit', formats: [:html]) %>'
+  );
+  <%= render 'datepicker_setup' %>
 <% end %>

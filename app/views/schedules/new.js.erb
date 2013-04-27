@@ -8,7 +8,7 @@ $('[data-schedulable]').remove();
     ) %>'
   );
 <% else %>
-  $('[data-new-schedule-place-holder]').html(
+  $('[data-schedule-place-holder]').html(
     '<%= j render(template: 'schedules/new', formats: [:html]) %>'
   );
 <% end %>

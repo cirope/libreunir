@@ -28,4 +28,14 @@ module SchedulesHelper
 
     schedule.done ? label : link_to(label, schedule,  data: { remote: true })
   end
+
+  def link_to_cancel_schedule(schedulable)
+    if schedulable
+      data = { remove_target: "[data-schedulable-id=\"#{schedulable.to_param}\"]" }
+    else
+      data = { empty_target: '[data-schedule-place-holder]' }
+    end
+
+    link_to(t('label.cancel'), '#', class: 'btn btn-mini', data: data)
+  end
 end

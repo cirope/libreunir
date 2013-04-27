@@ -1,17 +1,23 @@
 <% if @schedulable %>
   <% if @schedule.persisted? %>
     $('[data-object-id="<%= @schedulable.to_param %>"]').addClass('warning');
-    $('[data-schedule-id="<%= @schedulable.to_param %>"]').remove();
+    $('[data-schedulable-id="<%= @schedulable.to_param %>"]').remove();
   <% else %>
-    $('#new_schedule_<%= @schedulable.to_param %>').replaceWith(
+    $('[data-schedulable-id="<%= @schedulable.to_param %>"]').find('form').replaceWith(
       '<%= j render(template: 'schedules/new', formats: [:html]) %>'
     );
     <%= render 'datepicker_setup' %>
   <% end %>
 <% else %>
   <% if @schedule.persisted? %>
-    $('[data-new-schedule-place-holder]').html('');
-    <%= render 'shared/notice' %>
+    $('#schedules').html(
+      '<%= j render(template: 'schedules/index', 
+        locals: { :@schedules => Schedule.all }, formats: [:html]) %>'
+    );
   <% else %>
+    $('[data-schedule-place-holder]').find('form').replaceWith(
+      '<%= j render(template: 'schedules/new', formats: [:html]) %>'
+    );
+    <%= render 'datepicker_setup' %>
   <% end %>
 <% end %>
