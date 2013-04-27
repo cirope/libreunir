@@ -1,10 +1,4 @@
-<% if @schedule.errors.blank? %>
-  $('#schedules').html(
-    '<%= j render(template: 'schedules/index', locals: { :@schedules => Schedule.all }, formats: [:html]) %>'
-  );
-<% else %>
-  $('[data-schedule-id="<%= @schedule.to_param %>"]').find('form').replaceWith(
-    '<%= j render(template: 'schedules/edit', formats: [:html]) %>'
-  );
-  <%= render 'datepicker_setup' %>
-<% end %>
+$('[data-schedule-id="<%= @schedule.to_param %>"]').find('form').replaceWith(
+  '<%= j render(template: 'schedules/edit', formats: [:html]) %>'
+);
+<%= render 'datepicker_setup' %>

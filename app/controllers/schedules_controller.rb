@@ -39,20 +39,26 @@ class SchedulesController < ApplicationController
   def create
     @title = t('view.schedules.new_title')
 
-    if @schedule.save
-      flash_hash[:notice] = t('view.schedules.correctly_created')
+    respond_to do |format|
+      if @schedule.save && @schedulable.nil?
+        format.js { redirect_to schedules_url, notice: t('view.schedules.correctly_created'), format: :js }
+      else
+        format.js
+      end
     end
-    respond_with @schedule
   end
 
   # PATCH /schedules/1
   def update
     @title = t('view.schedules.edit_title')
 
-    if @schedule.update(params[:schedule])
-      flash_hash[:notice] = t('view.schedules.correctly_updated')
+    respond_to do |format|
+      if @schedule.update(params[:schedule])
+        format.js { redirect_to schedules_url, notice: t('view.schedules.correctly_updated'), format: :js }
+      else
+        format.js
+      end
     end
-    respond_with @schedule
   rescue ActiveRecord::StaleObjectError
     redirect_to edit_schedule_url(@schedule), alert: t('view.schedules.stale_object_error')
   end

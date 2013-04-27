@@ -9,15 +9,8 @@
     <%= render 'datepicker_setup' %>
   <% end %>
 <% else %>
-  <% if @schedule.persisted? %>
-    $('#schedules').html(
-      '<%= j render(template: 'schedules/index', 
-        locals: { :@schedules => Schedule.all }, formats: [:html]) %>'
-    );
-  <% else %>
-    $('[data-schedule-place-holder]').find('form').replaceWith(
-      '<%= j render(template: 'schedules/new', formats: [:html]) %>'
-    );
-    <%= render 'datepicker_setup' %>
-  <% end %>
+  $('[data-schedule-place-holder]').find('form').replaceWith(
+    '<%= j render(template: 'schedules/new', formats: [:html]) %>'
+  );
+  <%= render 'datepicker_setup' %>
 <% end %>
