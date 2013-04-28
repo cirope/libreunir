@@ -18,7 +18,7 @@ module SchedulesHelper
 
     output + check_box_tag(
       'schedule', "mark_#{schedule.to_param}_as_done", schedule.done,
-      class: 'margin-less', disabled: !schedule.doable?,
+      class: 'margin-less', disabled: !schedule.doable?, id: nil,
       data: { toggle_schedule_done: schedule.to_param }
     )
   end
@@ -42,5 +42,16 @@ module SchedulesHelper
     end
 
     link_to(t('label.cancel'), href, class: 'btn btn-mini', data: data)
+  end
+
+  def link_to_filter_schedules_by_date(date, count)
+    path = schedules_path(date: date.to_date.to_s(:db))
+    classes = ['btn']
+    classes << 'disabled' if date.to_date == @date.to_date
+    label = l(date.to_date, format: :short)
+    label << ' '
+    label << content_tag(:span, count, class: 'badge')
+
+    link_to label.html_safe, path, class: classes.join(' '), data: { remote: true }
   end
 end

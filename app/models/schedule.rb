@@ -1,11 +1,12 @@
 class Schedule < ActiveRecord::Base
+  include Schedules::DateCalculations
   include Schedules::DefaultDate
   include Schedules::Done
 
   has_paper_trail
 
   # Scopes
-  default_scope -> { order("#{table_name}.scheduled_at ASC") }
+  scope :sorted, -> { order("#{table_name}.scheduled_at ASC") }
 
   # Validations
   validates :user_id, :description, :scheduled_at, presence: true
@@ -15,8 +16,4 @@ class Schedule < ActiveRecord::Base
   # Relations
   belongs_to :user
   belongs_to :schedulable, polymorphic: true
-
-  def past?
-    self.scheduled_at < Time.now
-  end
 end

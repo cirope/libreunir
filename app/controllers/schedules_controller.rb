@@ -1,5 +1,6 @@
 class SchedulesController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_filter_date, only: :index
 
   check_authorization
   load_and_authorize_resource :loan, shallow: true
@@ -15,6 +16,9 @@ class SchedulesController < ApplicationController
   # GET /schedules
   def index
     @title = t('view.schedules.index_title')
+    @schedules = @schedules.upcoming_or_undone
+    @filter_schedules = @schedules.upcoming_or_undone.for_date(@date).sorted
+
     respond_with @schedules
   end
 
@@ -78,5 +82,9 @@ class SchedulesController < ApplicationController
 
   def set_schedulable
     @schedulable = @loan
+  end
+
+  def set_filter_date
+    @date = Timeliness.parse(params[:date], zone: :local) || Time.now
   end
 end

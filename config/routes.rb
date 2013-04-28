@@ -1,7 +1,8 @@
 Libreunir::Application.routes.draw do
-  resources :schedules, except: :destroy do
+  resources :schedules, except: [:destroy, :index] do
     patch 'toggle_done', on: :member, as: 'toggle_done'
   end
+  get '/schedules(/:date)', to: 'schedules#index', as: 'schedules', constraints: { date: /\d{4}-\d{2}-\d{2}/ }
 
   devise_for :users
 

@@ -6,7 +6,7 @@ module Schedules::Done
   end
 
   def toggle_done
-    self.update_attribute(:done, !self.done) unless self.past?
+    self.update_attribute(:done, !self.done) if self.doable?
   end
 
   def doable?

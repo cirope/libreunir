@@ -36,7 +36,7 @@ class DashboardTest < ActionDispatch::IntegrationTest
   test 'should get dashboard with schedules' do
     user = Fabricate(:user, password: '123456', role: :normal)
 
-    3.times { Fabricate(:schedule, user_id: user.id) }
+    3.times { Fabricate(:schedule, user_id: user.id, scheduled_at: 1.hour.from_now) }
     Fabricate(:schedule)
 
     login(user: user)
@@ -52,7 +52,7 @@ class DashboardTest < ActionDispatch::IntegrationTest
   test 'should get dashboard with schedules and mark as done one' do
     user = Fabricate(:user, password: '123456', role: :normal)
 
-    3.times { Fabricate(:schedule, user_id: user.id) }
+    3.times { Fabricate(:schedule, user_id: user.id, scheduled_at: 1.hour.from_now) }
 
     login(user: user)
 
