@@ -14,7 +14,7 @@
           value: l(@schedule.scheduled_at, format: :minimal) 
         } %>
         <%= f.input :description, id: false, input_html: { 
-          rows: 4, 
+          rows: 12, 
           placeholder: Schedule.human_attribute_name('description') 
         } %>
         <%= f.button :submit, class: 'btn-primary' %>
