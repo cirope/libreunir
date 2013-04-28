@@ -50,7 +50,7 @@ class ScheduleTest < ActiveSupport::TestCase
     assert_equal [
       error_message_from_model(
         @schedule, :scheduled_at, :on_or_after,
-        restriction: I18n.l(Time.now, format: :minimal)
+        restriction: I18n.l(Time.zone.now, format: :minimal)
       )
     ], @schedule.errors[:scheduled_at]
   end
