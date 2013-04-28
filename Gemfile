@@ -19,6 +19,7 @@ gem 'double-bag-ftps', github: 'cirope/double-bag-ftps'
 gem 'whenever', require: false
 gem 'capistrano'
 gem 'unicorn', require: false
+gem 'newrelic_rpm'
 
 group :assets do
   gem 'sass-rails', '~> 4.0.0.beta1'
