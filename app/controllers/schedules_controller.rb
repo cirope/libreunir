@@ -45,7 +45,7 @@ class SchedulesController < ApplicationController
 
     respond_to do |format|
       if @schedule.save && @schedulable.nil?
-        format.js { redirect_to schedules_url, notice: t('view.schedules.correctly_created'), format: :js }
+        format.js { redirect_to schedules_url, format: :js }
       else
         format.js
       end
@@ -58,7 +58,7 @@ class SchedulesController < ApplicationController
 
     respond_to do |format|
       if @schedule.update(params[:schedule])
-        format.js { redirect_to schedules_url, notice: t('view.schedules.correctly_updated'), format: :js }
+        format.js { redirect_to schedules_url, format: :js }
       else
         format.js
       end

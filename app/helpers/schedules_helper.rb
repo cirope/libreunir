@@ -34,11 +34,11 @@ module SchedulesHelper
     href = '#'
     data = { empty_target: '[data-schedule-place-holder]' }
 
-    if @schedulable
-      data = { remove_target: "[data-schedulable-id=\"#{@schedulable.to_param}\"]" }
-    elsif @schedule.persisted?
+    if @schedule.persisted?
       href = schedules_path
       data = { remote: true } 
+    elsif @schedulable
+      data = { remove_target: "[data-schedulable-id=\"#{@schedulable.to_param}\"]" }
     end
 
     link_to(t('label.cancel'), href, class: 'btn btn-mini', data: data)

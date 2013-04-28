@@ -1,4 +1,4 @@
-<tr data-object-id="<%= loan.to_param %>" class="<%= 'warning' if loan.is_scheduled? %>">
+<tr data-object-id="<%= loan.to_param %>" <%== 'class="warning"' if loan.is_scheduled? %>>
   <td><%= loan %></td>
   <td><%= loan.client %></td>
   <td><%= l(loan.delayed_at, format: :minimal) if loan.delayed_at %></td>
