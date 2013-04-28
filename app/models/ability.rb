@@ -23,7 +23,6 @@ class Ability
   end
 
   def default_rules(user)
-    can :read, User
     can :read, Loan
     can :manage, Schedule, { user_id: user.id }
   end
