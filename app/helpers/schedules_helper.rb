@@ -54,4 +54,12 @@ module SchedulesHelper
 
     link_to label.html_safe, path, class: classes.join(' '), data: { remote: true }
   end
+
+  def empty_schedules_text
+    if @schedules.empty?
+      t('view.schedules.empty_schedules')
+    elsif @filter_schedules.empty?
+      t('view.schedules.empty_schedules_for', date: l(@date.to_date, format: :mini_long))
+    end
+  end
 end

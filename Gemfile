@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.0.0.beta1'
+gem 'rails', '4.0.0.rc1'
 
 gem 'pg'
 gem 'jquery-rails'
@@ -19,10 +19,11 @@ gem 'double-bag-ftps', github: 'cirope/double-bag-ftps'
 gem 'whenever', require: false
 gem 'capistrano'
 gem 'unicorn', require: false
+gem 'newrelic_rpm'
 
 group :assets do
-  gem 'sass-rails', '~> 4.0.0.beta1'
-  gem 'coffee-rails', '~> 4.0.0.beta1'
+  gem 'sass-rails', '~> 4.0.0.rc1'
+  gem 'coffee-rails', '~> 4.0.0.rc1'
   gem 'uglifier', '>= 1.0.30'
 end
 

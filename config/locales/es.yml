@@ -3,6 +3,7 @@
     formats:
       default: "%d/%m/%Y"
       short: "%d de %b"
+      mini_long: "%d de %B"
       long: "%d de %B de %Y"
       minimal: "%d/%m/%Y"
 
