@@ -19,7 +19,7 @@ class LoansController < ApplicationController
 
   def close_to_expire
     @title = t 'view.loans.close_to_expire_title'
-    @loans = get_scope.not_expired.with_expiration.reverse_order.uniq
+    @loans = get_scope.not_expired.with_expiration.sorted_by_expiration.reverse_order.uniq
 
     respond_to do |format|
       format.html # close_to_expired.html.erb
