@@ -2,10 +2,7 @@ $('[data-schedulable]').remove();
 
 <% if @schedulable %>
   $('[data-object-id="<%= @schedulable.to_param %>"]').after(
-    '<%= j render(
-      "#{@schedulable.class.name.underscore}_template",
-      content: render(template: 'schedules/new', formats: [:html])
-    ) %>'
+    '<%= j render 'schedulable' %>'
   );
 <% else %>
   $('[data-schedule-place-holder]').html(

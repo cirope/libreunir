@@ -1,0 +1,9 @@
+<tr data-object-id="<%= client.to_param %>" <%== 'class="warning"' if client.is_scheduled? %>>
+  <td><%= client.name %></td>
+  <td><%= client.lastname %></td>
+  <td><%= client.identification %></td>
+  <td><%= client.address %></td>
+  <td><%= client.phone %></td>
+  <td><%= link_to_client_info(client) %></td>
+  <td><%= link_to_new_schedule(client) %></td>
+</tr>

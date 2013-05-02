@@ -57,4 +57,51 @@ class ClientTest < ActiveSupport::TestCase
 
     assert_equal 10, @client.last_comments.size
   end
+
+  test 'magick search' do
+    5.times { Fabricate(:client, name: 'magick_name') }
+    3.times { Fabricate(:client, lastname: 'magick_lastname') }
+
+    Fabricate(:client, name: 'magick_name', lastname: 'magick_lastname') do
+      identification { "magick-identification-#{sequence(:client_identification)}" }
+    end
+    
+    clients = Client.magick_search('magick')
+    
+    assert_equal 9, clients.count
+    assert clients.all? { |c| c.to_s =~ /magick/ }
+    
+    clients = Client.magick_search('magick_name')
+    
+    assert_equal 6, clients.count
+    assert clients.all? { |c| c.to_s =~ /magick_name/ }
+    
+    clients = Client.magick_search('magick_name magick_lastname')
+    
+    assert_equal 1, clients.count
+    assert clients.all? { |c| c.to_s =~ /magick_lastname, magick_name/ }
+    
+    clients = Client.magick_search('magick_name magick-identification')
+        
+    assert_equal 1, clients.count
+    assert clients.all? { |c| c.inspect =~ /magick_name/ && c.inspect =~ /magick-identification/ }
+        
+    clients = Client.magick_search(
+      "magick_name #{I18n.t('magick_columns.or').first} magick-identification"
+    )   
+        
+    assert_equal 6, clients.count
+    assert clients.all? { |c| c.inspect =~ /magick_name|magick-identification/ }
+
+    clients = Client.magick_search(
+      "magick_name #{I18n.t('magick_columns.or').first} magick_lastname"
+    )
+    
+    assert_equal 9, clients.count
+    assert clients.all? { |c| c.to_s =~ /magick_name|magick_lastname/ }
+    
+    clients = Client.magick_search('nobody')
+    
+    assert clients.empty?
+  end
 end

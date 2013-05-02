@@ -6,6 +6,6 @@ module Schedules::DefaultDate
   end
 
   def set_current_datetime 
-    self.scheduled_at ||= Time.now
+    self.scheduled_at ||= Time.zone.now
   end
 end

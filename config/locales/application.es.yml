@@ -21,10 +21,14 @@
     scheduler: 'Agendar'
 
   menu:
+    account: 'Mi cuenta'
     actions:
-      logout: 'Salir de la aplicación'
-    users: 'Asesores'
+      logout: 'Salir'
+    clients: 'Clientes'
     dashboard: 'Tablero'
+    loans: 'Préstamos'
+    schedules: 'Eventos'
+    users: 'Asesores'
 
   messages:
     confirmation: '¿Está seguro?'
@@ -36,11 +40,21 @@
       empty_search:
         title:
           html: 'La búsqueda de <span class="label label-inverse">%{search}</span> no obtuvo ningún resultado.'
+    clients:
+      index_title: 'Listado de clientes'
+      show_title: 'Detalle de cliente'
+      new_title: 'Nuevo cliente'
+      edit_title: 'Modificar cliente'
+      correctly_created: 'Cliente agregado correctamente.'
+      correctly_updated: 'Cliente actualizado correctamente.'
+      stale_object_error: 'El cliente no pudo ser actualizado, intente nuevamente.'
     dashboard:
       index_title: 'Tablero'
     loans:
       expired: 'Vencidos'
+      expired_title: 'Listado de préstamos vencidos'
       close_to_expire: 'Por vencer'
+      close_to_expire_title: 'Listado de préstamos por vencer'
     schedules:
       index_title: 'Listado de eventos'
       show_title: 'Detalle de evento'

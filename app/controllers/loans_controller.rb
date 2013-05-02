@@ -7,7 +7,6 @@ class LoansController < ApplicationController
     @loan = current_user.loans.find(params[:id])
   end
 
-
   def expired
     @title = t 'view.loans.expired_title'
     @loans = get_scope.expired.order('delayed_at DESC').uniq

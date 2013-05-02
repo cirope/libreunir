@@ -1,4 +1,9 @@
 Libreunir::Application.routes.draw do
+
+  resources :clients, only: [:index, :show] do
+    resources :schedules, only: [:new, :create, :edit, :update]
+  end
+
   get '/schedules(/:date)', to: 'schedules#index', as: 'schedules', constraints: { date: /\d{4}-\d{2}-\d{2}/ }
   resources :schedules, except: [:destroy, :index] do
     patch 'toggle_done', on: :member, as: 'toggle_done'
@@ -8,7 +13,7 @@ Libreunir::Application.routes.draw do
 
   get :dashboard, to: 'dashboard#index'
 
-  resources :loans, only: [:show] do
+  resources :loans, only: [:index, :show] do
     collection do
       get 'expired', to: 'loans#expired', as: 'expired'
       get 'close_to_expire', to: 'loans#close_to_expire', as: 'close_to_expire'

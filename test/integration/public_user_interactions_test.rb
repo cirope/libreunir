@@ -42,7 +42,8 @@ class PublicUserInteractionsTest < ActionDispatch::IntegrationTest
   test 'should be able to login and logout' do
     login
     
-    click_link 'logout'
+    click_link I18n.t('menu.account')
+    click_link I18n.t('menu.actions.logout')
     
     assert_equal new_user_session_path, current_path
     

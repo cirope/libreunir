@@ -13,30 +13,16 @@
             <%= show_menu_link(
               name: 'users', controllers: 'users', path: users_path
             ) if can?(:read, User) %>
-          </ul>
-          <ul class="nav">
             <%= show_menu_link(
-              name: 'dashboard', controllers: 'dashboard', path: dashboard_path
-            ) %>
+              name: 'schedules', controllers: 'schedules', path: schedules_path
+            ) if can?(:read, Schedule) %>
+            <%= render 'shared/menu_dropdowns/loans' if can?(:read, Loan) %>
+            <%= show_menu_link(
+              name: 'clients', controllers: 'clients', path: clients_path
+            ) if can?(:read, Client) %>
           </ul>
-          <%= render partial: 'shared/nav_search' %>
-          <ul class="nav pull-right">
-            <li>
-              <%= link_to(
-                current_user.email, edit_profile_user_path(current_user),
-                'title' => t('view.users.edit_profile'),
-                'data-show-tooltip' => true, 'data-placement' => 'bottom'
-              ) %>
-            </li>
-            <li>
-              <%= link_to(
-                '&#x2192;'.html_safe, destroy_user_session_path,
-                'title' => t('menu.actions.logout'), 'class' => 'iconic',
-                'id' => 'logout', 'data-show-tooltip' => true,
-                'data-placement' => 'bottom', 'method' => :delete
-              ) %>
-            </li>
-          </ul>
+          <%= render 'shared/nav_search' %>
+          <%= render 'shared/menu_dropdowns/nav_account' %>
         </div>
       <% end %>
     </div>

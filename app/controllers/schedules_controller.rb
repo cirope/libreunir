@@ -4,6 +4,7 @@ class SchedulesController < ApplicationController
 
   check_authorization
   load_and_authorize_resource :loan, shallow: true
+  load_and_authorize_resource :client, shallow: true
 
   before_action :set_schedulable
 
@@ -81,7 +82,7 @@ class SchedulesController < ApplicationController
   end
 
   def set_schedulable
-    @schedulable = @loan
+    @schedulable = @loan || @client
   end
 
   def set_filter_date
