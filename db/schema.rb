@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20130424183745) do
     t.datetime "updated_at"
   end
 
-  add_index "branches", ["branch_id"], name: "index_branches_on_branch_id", unique: true
+  add_index "branches", ["branch_id"], name: "index_branches_on_branch_id", unique: true, using: :btree
 
   create_table "clients", force: true do |t|
     t.string   "name",                       null: false
@@ -37,9 +37,9 @@ ActiveRecord::Schema.define(version: 20130424183745) do
     t.datetime "updated_at"
   end
 
-  add_index "clients", ["identification"], name: "index_clients_on_identification", unique: true
-  add_index "clients", ["lastname"], name: "index_clients_on_lastname"
-  add_index "clients", ["name"], name: "index_clients_on_name"
+  add_index "clients", ["identification"], name: "index_clients_on_identification", unique: true, using: :btree
+  add_index "clients", ["lastname"], name: "index_clients_on_lastname", using: :btree
+  add_index "clients", ["name"], name: "index_clients_on_name", using: :btree
 
   create_table "comments", force: true do |t|
     t.text     "comment",    null: false
@@ -49,8 +49,8 @@ ActiveRecord::Schema.define(version: 20130424183745) do
     t.datetime "updated_at"
   end
 
-  add_index "comments", ["client_id"], name: "index_comments_on_client_id"
-  add_index "comments", ["user_id"], name: "index_comments_on_user_id"
+  add_index "comments", ["client_id"], name: "index_comments_on_client_id", using: :btree
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
   create_table "loans", force: true do |t|
     t.integer  "loan_id",                                                       null: false
@@ -69,11 +69,11 @@ ActiveRecord::Schema.define(version: 20130424183745) do
     t.datetime "updated_at"
   end
 
-  add_index "loans", ["branch_id"], name: "index_loans_on_branch_id"
-  add_index "loans", ["client_id"], name: "index_loans_on_client_id"
-  add_index "loans", ["delayed_at"], name: "index_loans_on_delayed_at"
-  add_index "loans", ["loan_id"], name: "index_loans_on_loan_id", unique: true
-  add_index "loans", ["user_id"], name: "index_loans_on_user_id"
+  add_index "loans", ["branch_id"], name: "index_loans_on_branch_id", using: :btree
+  add_index "loans", ["client_id"], name: "index_loans_on_client_id", using: :btree
+  add_index "loans", ["delayed_at"], name: "index_loans_on_delayed_at", using: :btree
+  add_index "loans", ["loan_id"], name: "index_loans_on_loan_id", unique: true, using: :btree
+  add_index "loans", ["user_id"], name: "index_loans_on_user_id", using: :btree
 
   create_table "payments", force: true do |t|
     t.integer  "number",                                            null: false
@@ -88,10 +88,10 @@ ActiveRecord::Schema.define(version: 20130424183745) do
     t.datetime "updated_at"
   end
 
-  add_index "payments", ["expired_at"], name: "index_payments_on_expired_at"
-  add_index "payments", ["loan_id"], name: "index_payments_on_loan_id"
-  add_index "payments", ["number"], name: "index_payments_on_number"
-  add_index "payments", ["user_id"], name: "index_payments_on_user_id"
+  add_index "payments", ["expired_at"], name: "index_payments_on_expired_at", using: :btree
+  add_index "payments", ["loan_id"], name: "index_payments_on_loan_id", using: :btree
+  add_index "payments", ["number"], name: "index_payments_on_number", using: :btree
+  add_index "payments", ["user_id"], name: "index_payments_on_user_id", using: :btree
 
   create_table "schedules", force: true do |t|
     t.text     "description",                      null: false
@@ -105,9 +105,9 @@ ActiveRecord::Schema.define(version: 20130424183745) do
     t.datetime "updated_at"
   end
 
-  add_index "schedules", ["schedulable_id", "schedulable_type"], name: "index_schedules_on_schedulable_id_and_schedulable_type"
-  add_index "schedules", ["scheduled_at"], name: "index_schedules_on_scheduled_at"
-  add_index "schedules", ["user_id"], name: "index_schedules_on_user_id"
+  add_index "schedules", ["schedulable_id", "schedulable_type"], name: "index_schedules_on_schedulable_id_and_schedulable_type", using: :btree
+  add_index "schedules", ["scheduled_at"], name: "index_schedules_on_scheduled_at", using: :btree
+  add_index "schedules", ["user_id"], name: "index_schedules_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "name",                                null: false
@@ -132,10 +132,10 @@ ActiveRecord::Schema.define(version: 20130424183745) do
     t.datetime "updated_at"
   end
 
-  add_index "users", ["branch_id"], name: "index_users_on_branch_id"
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-  add_index "users", ["username"], name: "index_users_on_username", unique: true
+  add_index "users", ["branch_id"], name: "index_users_on_branch_id", using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
   create_table "versions", force: true do |t|
     t.string   "item_type",  null: false
@@ -146,7 +146,7 @@ ActiveRecord::Schema.define(version: 20130424183745) do
     t.datetime "created_at"
   end
 
-  add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
-  add_index "versions", ["whodunnit"], name: "index_versions_on_whodunnit"
+  add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
+  add_index "versions", ["whodunnit"], name: "index_versions_on_whodunnit", using: :btree
 
 end

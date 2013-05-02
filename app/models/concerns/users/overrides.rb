@@ -2,12 +2,6 @@ module Users
   module Overrides
     extend ActiveSupport::Concern
 
-    def initialize(attributes = {}, options = {})
-      super(attributes)
-
-      self.role ||= :regular
-    end
-
     def to_s
       self.name
     end

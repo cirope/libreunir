@@ -27,6 +27,7 @@ gem 'coffee-rails', '~> 4.0.0.rc1'
 gem 'uglifier', '>= 1.0.30'
 
 group :development do
+  gem 'unicorn'
   gem 'unicorn-rails'
 end
 
