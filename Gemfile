@@ -21,13 +21,13 @@ gem 'capistrano'
 gem 'unicorn', require: false
 gem 'newrelic_rpm'
 
-group :assets do
-  gem 'sass-rails', '~> 4.0.0.rc1'
-  gem 'coffee-rails', '~> 4.0.0.rc1'
-  gem 'uglifier', '>= 1.0.30'
-end
+# Old assets group
+gem 'sass-rails', '~> 4.0.0.rc1'
+gem 'coffee-rails', '~> 4.0.0.rc1'
+gem 'uglifier', '>= 1.0.30'
 
 group :development do
+  gem 'unicorn'
   gem 'unicorn-rails'
 end
 
