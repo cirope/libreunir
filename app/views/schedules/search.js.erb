@@ -1,0 +1,11 @@
+<% if @schedules.present? %>
+  $('[data-calendar-day]').html(
+    '<ul><%= j render(@schedules, as: :schedule, formats: [:html]) %></ul>'
+  ).effect('highlight', 'slow');
+<% else %>
+  $('[data-calendar-day]').html(
+    '<%= j render('empty_index') %>'
+  ).effect('highlight', 'slow');
+<% end %>
+
+Inspector.instance().reload();

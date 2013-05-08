@@ -7,3 +7,8 @@ new Rule
     $(document).on 'change', 'input[data-toggle-schedule-done]', @map.mark_as_done_function
   unload: ->
     $(document).off 'change', 'input[data-toggle-schedule-done]', @map.mark_as_done_function
+
+new Rule
+  condition: -> $('[data-calendar-container] [data-loading]').length
+  load: ->
+    $.getScript('/schedules')

@@ -17,9 +17,6 @@
               name: 'schedules', controllers: 'schedules', path: schedules_path
             ) if can?(:read, Schedule) %>
             <%= render 'shared/menu_dropdowns/loans' if can?(:read, Loan) %>
-            <%= show_menu_link(
-              name: 'clients', controllers: 'clients', path: clients_path
-            ) if can?(:read, Client) %>
           </ul>
           <%= render 'shared/nav_search' %>
           <%= render 'shared/menu_dropdowns/nav_account' %>

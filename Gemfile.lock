@@ -15,7 +15,7 @@ GIT
 
 GIT
   remote: git://github.com/plataformatec/devise.git
-  revision: e26314ee8dcd1f82cd2d0dc499ded5289c3469ab
+  revision: 69f79ad446101b45bf7ec29d290dc2be96142686
   branch: rails4
   specs:
     devise (2.2.3)
@@ -55,7 +55,7 @@ GEM
     archive-zip (0.6.0)
       io-like (>= 0.3.0)
     arel (4.0.0)
-    atomic (1.1.8)
+    atomic (1.1.9)
     bcrypt-ruby (3.0.1)
     builder (3.1.4)
     cancan (1.6.9)
@@ -109,7 +109,7 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.23)
     minitest (4.7.4)
-    multi_json (1.7.2)
+    multi_json (1.7.3)
     net-scp (1.1.0)
       net-ssh (>= 2.6.5)
     net-sftp (2.1.1)

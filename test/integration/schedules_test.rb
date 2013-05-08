@@ -11,8 +11,8 @@ class SchedulesTest < ActionDispatch::IntegrationTest
 
     login(user: user)
 
-    assert page.has_css?('#schedules ul')
-    assert_equal 3, all('#schedules ul li').size
+    assert page.has_css?('[data-calendar-day] ul')
+    assert_equal 3, all('[data-calendar-day] ul li').size
   end
 
   test 'should get schedules and mark as done one' do
@@ -24,9 +24,9 @@ class SchedulesTest < ActionDispatch::IntegrationTest
 
     click_link Schedule.model_name.human(count: 0)
 
-    assert page.has_css?('#schedules ul')
+    assert page.has_css?('[data-calendar-day] ul')
     
-    within '#schedules ul' do
+    within '[data-calendar-day] ul' do
       assert_difference 'Schedule.done.count' do
         assert page.has_no_css?('.strike')
 

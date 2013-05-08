@@ -1,2 +1,27 @@
-$('#schedules').html('<%= j render(template: 'schedules/index', formats: [:html]) %>');
+var days = <%== @days %>;
+
+$('[data-calendar-month]').datepicker({
+    beforeShowDay: function(date){
+      return [
+        true, 
+        $.inArray($.datepicker.formatDate('yy-mm-dd', date), days) != -1 ? 'has_event' : ''
+      ]
+    },
+    onSelect: function(date, obj){
+      $.getScript('/schedules/search?date='+date);
+    },
+    onChangeMonthYear: function(year, month, obj){
+      var date = new Date(year, month-1, 1);
+      $.getScript('/schedules?date='+date.toISOString().substring(0, 10));
+    }
+}).datepicker('refresh');
+
+<% if @schedules.present? %>
+  $('[data-calendar-day]').html('<ul><%= j render(@schedules, as: :schedule, formats: [:html]) %></ul>');
+<% else %>
+  $('[data-calendar-day]').html('<%= j render('empty_index') %>');
+<% end %>
+
+$('[data-loading]').remove();
+
 Inspector.instance().reload();

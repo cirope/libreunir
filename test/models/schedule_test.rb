@@ -84,19 +84,4 @@ class ScheduleTest < ActiveSupport::TestCase
     @schedule.scheduled_at = 1.minute.ago
     assert @schedule.past?
   end
-
-  test 'count by days' do
-    3.times { Fabricate(:schedule, scheduled_at: 3.days.from_now) }
-
-    counts = Schedule.count_by_days
-
-    assert_equal 1, counts[1.day.from_now.utc.at_beginning_of_day]
-    assert_equal 3, counts[3.day.from_now.utc.at_beginning_of_day]
-  end
-
-  test 'for date' do
-    3.times { Fabricate(:schedule, scheduled_at: 3.days.from_now) }
-
-    assert_equal 3, Schedule.for_date(3.days.from_now.to_date).count
-  end
 end

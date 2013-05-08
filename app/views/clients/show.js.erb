@@ -1,5 +1,0 @@
-$('[data-client-info]').remove();
-
-$('[data-object-id="<%= @client.to_param %>"]').after(
-  '<%= j render('place_holder', content: render(template: 'clients/show', formats: [:html])) %>'
-);
