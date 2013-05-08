@@ -5,9 +5,11 @@ $('[data-schedulable]').remove();
     '<%= j render 'schedulable' %>'
   );
 <% else %>
-  $('[data-schedule-place-holder]').html(
-    '<%= j render(template: 'schedules/new', formats: [:html]) %>'
+  $('[data-schedule-modal]').html(
+    '<%= j render(template: 'schedules/schedule_modal', formats: [:html]) %>'
   );
+
+  $('#schedule_modal').modal();
 <% end %>
 
 <%= render 'datepicker_setup' %>

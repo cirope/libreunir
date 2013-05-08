@@ -22,5 +22,5 @@ class User < ActiveRecord::Base
   has_many :schedules, dependent: :destroy
   has_many :made_payments, class_name: 'Payment'
   has_many :payments, through: :loans
-  has_many :clients, through: :loans, uniq: true
+  has_many :clients, -> { uniq }, through: :loans
 end

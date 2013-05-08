@@ -1,5 +1,6 @@
-var days = <%== @days %>;
+$('#schedule_modal').modal('hide');
 
+var days = <%== @days %>;
 $('[data-calendar-month]').datepicker({
     beforeShowDay: function(date){
       return [
@@ -16,12 +17,7 @@ $('[data-calendar-month]').datepicker({
     }
 }).datepicker('refresh');
 
-<% if @schedules.present? %>
-  $('[data-calendar-day]').html('<ul><%= j render(@schedules, as: :schedule, formats: [:html]) %></ul>');
-<% else %>
-  $('[data-calendar-day]').html('<%= j render('empty_index') %>');
-<% end %>
-
+$('[data-calendar-day]').html('<%= j render('schedules_day') %>');
 $('[data-loading]').remove();
 
 Inspector.instance().reload();

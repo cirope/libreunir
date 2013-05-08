@@ -15,10 +15,10 @@ GIT
 
 GIT
   remote: git://github.com/plataformatec/devise.git
-  revision: 69f79ad446101b45bf7ec29d290dc2be96142686
+  revision: 6b5988d756d780903bf8c9ccb3e2b3b724ccebe8
   branch: rails4
   specs:
-    devise (2.2.3)
+    devise (2.2.4)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 3.2.6, < 5)
@@ -58,7 +58,7 @@ GEM
     atomic (1.1.9)
     bcrypt-ruby (3.0.1)
     builder (3.1.4)
-    cancan (1.6.9)
+    cancan (1.6.10)
     capistrano (2.15.4)
       highline
       net-scp (>= 1.0.0)
@@ -71,7 +71,7 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
-    celluloid (0.13.0)
+    celluloid (0.14.0)
       timers (>= 1.0.0)
     childprocess (0.3.9)
       ffi (~> 1.0, >= 1.0.11)
@@ -88,7 +88,7 @@ GEM
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
-    fabrication (2.6.5)
+    fabrication (2.7.0)
     faker (1.1.2)
       i18n (~> 0.5)
     ffi (1.8.1)
@@ -112,7 +112,7 @@ GEM
     multi_json (1.7.3)
     net-scp (1.1.0)
       net-ssh (>= 2.6.5)
-    net-sftp (2.1.1)
+    net-sftp (2.1.2)
       net-ssh (>= 2.6.5)
     net-ssh (2.6.7)
     net-ssh-gateway (1.2.0)

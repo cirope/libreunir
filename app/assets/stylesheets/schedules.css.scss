@@ -13,8 +13,16 @@ input[type="checkbox"].margin-less {
   margin: 0px;
 }
 
-.ui-datepicker .has_event > a {
-  color: #c09853;
-  background-color: #fcf8E3;
-  border: 1px solid #fbeed5;
+.ui-datepicker {
+  width: auto;
+
+  td .ui-state-default {
+    padding: 0.2em 0.1em;
+  }
+
+  & .has_event > a {
+    color: #c09853;
+    background-color: #fcf8E3;
+    border: 1px solid #fbeed5;
+  }
 }

@@ -1,5 +1,6 @@
-$('[data-schedule-id="<%= @schedule.to_param %>"]').html(
-    '<%= j render(template: 'schedules/edit', formats: [:html]) %>'
+$('[data-schedule-modal]').html(
+  '<%= j render(template: 'schedules/schedule_modal', formats: [:html]) %>'
 );
+$('#schedule_modal').modal();
 
 <%= render 'datepicker_setup' %>

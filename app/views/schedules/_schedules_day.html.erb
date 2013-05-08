@@ -1,0 +1,13 @@
+<fieldset>
+  <legend>
+    <h4><%= l @date.to_date, format: :mini_long %></h4>
+  </legend>
+
+  <% if @schedules.present? %>
+    <ul>
+      <%= render(@schedules, as: :schedule, formats: [:html]) %>
+    </ul>
+  <% else %>
+    <%= render('empty_index') %>
+  <% end %>
+</fieldset>

@@ -1,4 +1,4 @@
-$('[data-schedule-id="<%= @schedule.to_param %>"]').find('form').replaceWith(
+$('[data-schedule-modal]').find('form').replaceWith(
   '<%= j render(template: 'schedules/edit', formats: [:html]) %>'
 );
 <%= render 'datepicker_setup' %>

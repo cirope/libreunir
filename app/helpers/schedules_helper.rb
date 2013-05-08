@@ -32,12 +32,9 @@ module SchedulesHelper
 
   def link_to_cancel_schedule
     href = '#'
-    data = { empty_target: '[data-schedule-place-holder]' }
+    data = { dismiss: 'modal' }
 
-    if @schedule.persisted?
-      href = schedules_path
-      data = { remote: true } 
-    elsif @schedulable
+    if @schedulable && @schedule.new_record?
       data = { remove_target: "[data-schedulable-id=\"#{@schedulable.to_param}\"]" }
     end
 

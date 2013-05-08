@@ -3,7 +3,7 @@ class SchedulesController < ApplicationController
   before_action :set_filter_date, only: [:index, :search]
 
   check_authorization
-  load_and_authorize_resource :loan, shallow: true
+  load_and_authorize_resource :loan, if: :schedulable_present? 
 
   before_action :set_schedulable
 
@@ -75,7 +75,7 @@ class SchedulesController < ApplicationController
   end
 
   def search
-    @schedules = @schedules.for_date_of_day(@date)
+    @schedules = @schedules.for_date_of_day(@date).sorted
 
     respond_with @schedules    
   end
@@ -92,5 +92,9 @@ class SchedulesController < ApplicationController
 
   def set_filter_date
     @date = Timeliness.parse(params[:date], zone: :local) || Time.zone.now
+  end
+
+  def schedulable_present?
+    params[:loan_id].present?
   end
 end

@@ -9,7 +9,7 @@
     <%= render 'datepicker_setup' %>
   <% end %>
 <% else %>
-  $('[data-schedule-place-holder]').find('form').replaceWith(
+  $('[data-schedule-modal]').find('form').replaceWith(
     '<%= j render(template: 'schedules/new', formats: [:html]) %>'
   );
   <%= render 'datepicker_setup' %>
