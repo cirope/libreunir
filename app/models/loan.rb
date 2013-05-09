@@ -18,6 +18,10 @@ class Loan < ActiveRecord::Base
     self.loan_id.to_s
   end
 
+  def label
+    self.client
+  end
+
   def expired?
     self.expired_payments_count > 0
   end

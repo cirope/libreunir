@@ -1,8 +1,11 @@
-<div id="schedule_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="scheduledLabel" aria-hidden="true">
+<div id="schedule_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="scheduled_label" aria-hidden="true">
+  <% if @schedule.schedulable %>
   <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="scheduledLabel">Agenda</h3>
+    <div id="scheduled_label" class="well well-small">
+      <%= @schedule.label %>
+    </div>
   </div>
+  <% end %>
   <div class="modal-body">
     <%= render 'form' %>
   </div>

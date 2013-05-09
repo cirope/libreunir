@@ -2,6 +2,7 @@ class Schedule < ActiveRecord::Base
   include Schedules::DateCalculations
   include Schedules::DefaultDate
   include Schedules::Done
+  include Schedules::Schedulable
 
   has_paper_trail
 
@@ -15,5 +16,4 @@ class Schedule < ActiveRecord::Base
   
   # Relations
   belongs_to :user
-  belongs_to :schedulable, polymorphic: true
 end

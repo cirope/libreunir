@@ -1,9 +1,9 @@
 <li data-schedule-id="<%= schedule.to_param %>" <%== 'class="muted strike"' if schedule.done? %>>
   <%= show_mark_schedule_as_done_check_box(schedule) %>
-  <%= schedule.description %> 
   <% if schedule.schedulable %>
     [<%= link_to_schedulable(schedule)%>]
   <% end %>
+  <%= schedule.description %> 
   <time datetime="<%= schedule.scheduled_at.to_s(:db) %>" class="muted">
     <%= l schedule.scheduled_at, format: :short %>
   </time>

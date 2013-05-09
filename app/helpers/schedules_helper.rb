@@ -24,8 +24,8 @@ module SchedulesHelper
   end
 
   def link_to_schedulable(schedule)
-    label = schedule.schedulable.class.model_name.human(count: 1)
-    label << " #{schedule.schedulable}"
+    label = schedule.label.class.model_name.human(count: 1)
+    label << " #{schedule.label}"
 
     schedule.done ? label : link_to(label, schedule,  data: { remote: true })
   end
