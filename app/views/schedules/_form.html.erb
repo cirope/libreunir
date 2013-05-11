@@ -10,10 +10,10 @@
     <div class="span<%= 12 - span_size %>">
       <%= f.input :scheduled_at, as: :hidden, input_html: { 
         id: "datetime-picker-id-#{(@schedulable || @schedule).to_param}",
-        value: l(@schedule.scheduled_at, format: :minimal) 
+        value: l((@date || @schedule.scheduled_at), format: :minimal) 
       } %>
       <%= f.input :description, id: false, input_html: { 
-        rows: 11, class: 'span12', 
+        rows: 12, class: 'span12',
         placeholder: Schedule.human_attribute_name('description') 
       } %>
 

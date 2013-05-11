@@ -24,8 +24,7 @@ module SchedulesHelper
   end
 
   def link_to_schedulable(schedule)
-    label = schedule.label.class.model_name.human(count: 1)
-    label << " #{schedule.label}"
+    label = schedule.label
 
     schedule.done ? label : link_to(label, schedule,  data: { remote: true })
   end
@@ -39,24 +38,5 @@ module SchedulesHelper
     end
 
     link_to(t('label.cancel'), href, class: 'btn btn-mini', data: data)
-  end
-
-  def link_to_filter_schedules_by_date(date, count)
-    path = schedules_path(date: date.to_date.to_s(:db))
-    classes = ['btn']
-    classes << 'disabled' if date.to_date == @date.to_date
-    label = l(date.to_date, format: :short)
-    label << ' '
-    label << content_tag(:span, count, class: 'badge')
-
-    link_to label.html_safe, path, class: classes.join(' '), data: { remote: true }
-  end
-
-  def empty_schedules_text
-    if @schedules.empty?
-      t('view.schedules.empty_schedules')
-    elsif @filter_schedules.empty?
-      t('view.schedules.empty_schedules_for', date: l(@date.to_date, format: :mini_long))
-    end
   end
 end

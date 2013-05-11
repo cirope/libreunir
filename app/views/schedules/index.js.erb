@@ -1,21 +1,24 @@
 $('#schedule_modal').modal('hide');
 
 var days = <%== @days %>;
+var today = new Date('<%= Date.today %>');
+
 $('[data-calendar-month]').datepicker({
     beforeShowDay: function(date){
-      return [
-        true, 
-        $.inArray($.datepicker.formatDate('yy-mm-dd', date), days) != -1 ? 'has_event' : ''
-      ]
+      var included = $.inArray($.datepicker.formatDate('yy-mm-dd', date), days) != -1;
+      var can_read = (date >= today || included) ? true : false;
+
+      return [ can_read, included ? 'has_event' : '' ]
     },
     onSelect: function(date, obj){
-      $.getScript('/schedules/search?date='+date);
+      var date = new Date(obj.currentYear, obj.currentMonth, obj.currentDay);
+      $.getScript('/schedules/search/' + date.toISOString().substring(0, 10));
     },
     onChangeMonthYear: function(year, month, obj){
-      var date = new Date(year, month-1, 1);
-      $.getScript('/schedules?date='+date.toISOString().substring(0, 10));
+      var date = new Date(year, month-1, obj.currentDay);
+      $.getScript('/schedules/' + date.toISOString().substring(0, 10));
     }
-}).datepicker('refresh');
+}).datepicker('setDate', '<%= l @date.to_date, format: :minimal %>').datepicker('refresh');
 
 $('[data-calendar-day]').html('<%= j render('schedules_day') %>');
 $('[data-loading]').remove();

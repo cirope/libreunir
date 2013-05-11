@@ -12,4 +12,8 @@ module Schedules::Done
   def doable?
     !(self.done && self.past?)
   end
+
+  def editable?
+    !self.past? && !self.done
+  end
 end

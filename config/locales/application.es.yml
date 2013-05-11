@@ -65,7 +65,7 @@
       stale_object_error: 'El evento no pudo ser actualizado, intente nuevamente.'
       new: 'Nuevo evento'
       empty_schedules: 'No hay ningún evento programado'
-      empty_schedules_for: 'No hay ningún evento programado para el %{date}'
+      empty_past_schedules: 'No se programaron eventos'
     users:
       index_title: 'Listado de usuarios'
       show_title: 'Detalle de usuario'

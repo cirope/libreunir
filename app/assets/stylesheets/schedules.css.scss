@@ -9,6 +9,12 @@ form[data-scheduled-form] {
   text-decoration: line-through;
 }
 
+div[data-calendar-container] .page-header {
+  margin: 0 0 15px;
+
+  & h4 { margin: 0; }
+}
+
 input[type="checkbox"].margin-less {
   margin: 0px;
 }
@@ -21,7 +27,7 @@ input[type="checkbox"].margin-less {
   width: auto;
 
   td .ui-state-default {
-    padding: 0.2em 0.1em;
+    padding: 0.4em 0.1em;
   }
 
   & .has_event > a {

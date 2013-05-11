@@ -1,4 +1,4 @@
-<h2><%= empty_schedules_text %></h2>
+<h2><%= t('view.schedules.empty_schedules') %></h2>
 
 <p class="lead">
   Para crear uno podés hacer clic sobre el enlace
@@ -6,14 +6,15 @@
   vencidos o por vencer
 </p>
 
-<%  if can? :create, Schedule %>
+<% if can? :create, Schedule %>
   <hr />
 
   <p>
     También podés crear un evento sin asociarlo a un préstamo desde
     <%= link_to(
       t('view.schedules.new', default: :'label.new'),
-      new_schedule_path, class: 'btn btn-primary', data: { remote: true }
+      new_schedule_path(date: @date.to_date), 
+      class: 'btn btn-primary', data: { remote: true }
     ) %>
   </p>
 <% end %>

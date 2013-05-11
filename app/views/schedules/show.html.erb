@@ -18,7 +18,7 @@
   <% end %>
 
   <% if request.xhr? %>
-    <div class="pull-right">
+    <div>
       <%= link_to t('label.close'), '#', class: 'btn btn-mini', data: { remove_target: "#schedule-#{@schedule.to_param}" } %>
     </div>
   <% end %>

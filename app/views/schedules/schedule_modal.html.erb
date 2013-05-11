@@ -1,9 +1,7 @@
 <div id="schedule_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="scheduled_label" aria-hidden="true">
   <% if @schedule.schedulable %>
   <div class="modal-header">
-    <div id="scheduled_label" class="well well-small">
-      <%= @schedule.label %>
-    </div>
+    <h4 id="scheduled_label"><%= @schedule.label %></h4> 
   </div>
   <% end %>
   <div class="modal-body">

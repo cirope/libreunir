@@ -84,4 +84,14 @@ class ScheduleTest < ActiveSupport::TestCase
     @schedule.scheduled_at = 1.minute.ago
     assert @schedule.past?
   end
+
+  test 'editable?' do
+    assert @schedule.editable?
+
+    @schedule.toggle_done
+    assert !@schedule.editable?
+
+    @schedule.scheduled_at = 1.minute.ago
+    assert !@schedule.editable?
+  end
 end

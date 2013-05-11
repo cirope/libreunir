@@ -1,13 +1,34 @@
-<fieldset>
-  <legend>
-    <h4><%= l @date.to_date, format: :mini_long %></h4>
-  </legend>
-
+<div class="page-header">
+  <span class="badge badge-info"><%= l @date.to_date, format: :mini_long %></span>
+</div>
+  
+<% if @date.at_beginning_of_day >= Time.zone.now.at_beginning_of_day %>
+  <% if @schedules.present? %>
+    <ul>
+      <%= render(@schedules, as: :schedule, formats: [:html]) %>
+    </ul>
+    
+    <% if can? :create, Schedule %> 
+      <hr />
+      <p> 
+        <%= link_to(
+          t('view.schedules.new', default: :'label.new'),
+          new_schedule_path(date: @date.to_date), 
+          class: 'btn btn-primary', data: { remote: true }
+        ) %>
+      </p>
+    <% end %>
+  <% else %>
+    <%= render('empty_index') %>
+  <% end %>
+<% else %>
   <% if @schedules.present? %>
     <ul>
       <%= render(@schedules, as: :schedule, formats: [:html]) %>
     </ul>
   <% else %>
-    <%= render('empty_index') %>
+    <div class="alert alert-warning">
+      <h4><%= t('view.schedules.empty_past_schedules') %></h4>
+    </div>
   <% end %>
-</fieldset>
+<% end %>

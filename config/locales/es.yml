@@ -64,6 +64,7 @@
       long: "%d de %B de %Y %H:%M"
       minimal: "%d/%m/%Y %H:%M"
       datetime: "%Y/%m/%d %H:%M"
+      mini: "%H:%M"
     am: "am"
     pm: "pm"
 

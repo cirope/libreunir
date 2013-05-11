@@ -1,13 +1,13 @@
 class SchedulesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_filter_date, only: [:index, :search]
+  before_action :set_filter_date, only: [:index, :search, :new]
 
   check_authorization
-  load_and_authorize_resource :loan, if: :schedulable_present? 
+  load_resource :loan, shallow: true
 
   before_action :set_schedulable
 
-  load_and_authorize_resource through: :schedulable, shallow: true
+  load_and_authorize_resource through: :schedulable, shallow: true 
 
   respond_to :html, :js
 
@@ -45,7 +45,9 @@ class SchedulesController < ApplicationController
 
     respond_to do |format|
       if @schedule.save && @schedulable.nil?
-        format.js { redirect_to schedules_url, format: :js }
+        format.js { 
+          redirect_to schedules_url(date: @schedule.scheduled_at.to_date), format: :js 
+        }
       else
         format.js
       end
@@ -58,7 +60,9 @@ class SchedulesController < ApplicationController
 
     respond_to do |format|
       if @schedule.update(params[:schedule])
-        format.js { redirect_to schedules_url, format: :js }
+        format.js { 
+          redirect_to schedules_url(date: @schedule.scheduled_at.to_date), format: :js 
+        }
       else
         format.js
       end
@@ -92,9 +96,5 @@ class SchedulesController < ApplicationController
 
   def set_filter_date
     @date = Timeliness.parse(params[:date], zone: :local) || Time.zone.now
-  end
-
-  def schedulable_present?
-    params[:loan_id].present?
   end
 end

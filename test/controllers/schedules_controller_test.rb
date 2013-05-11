@@ -12,6 +12,8 @@ class SchedulesControllerTest < ActionController::TestCase
     get :index
     assert_response :success
     assert_not_nil assigns(:schedules)
+    assert_not_nil assigns(:date)
+    assert_not_nil assigns(:days)
     assert_select '#unexpected_error', false
     assert_template 'schedules/index'
   end
@@ -32,7 +34,7 @@ class SchedulesControllerTest < ActionController::TestCase
       )
     end
 
-    assert_redirected_to schedules_url
+    assert_redirected_to schedules_url(date: assigns(:schedule).scheduled_at.to_date)
   end
 
   test 'should show schedule' do
@@ -75,7 +77,7 @@ class SchedulesControllerTest < ActionController::TestCase
         :description, :scheduled_at, :lock_version
       )
 
-    assert_redirected_to schedules_url
+    assert_redirected_to schedules_url(date: @schedule.scheduled_at.to_date)
     assert_equal 'Updated', @schedule.reload.description
   end
 
@@ -89,6 +91,18 @@ class SchedulesControllerTest < ActionController::TestCase
     assert @schedule.reload.done
     assert_select '#unexpected_error', false
     assert_template 'schedules/toggle_done'
+    assert_equal :js, @request.format.symbol
+  end
+
+  test 'should search schedule' do
+    get :search, date: @schedule.scheduled_at.to_date, format: :js
+
+    assert_response :success
+    assert_not_nil assigns(:schedules)
+    assert_not_nil assigns(:date)
+    assert_equal 1, assigns(:schedules).size
+    assert_select '#unexpected_error', false
+    assert_template 'schedules/search'
     assert_equal :js, @request.format.symbol
   end
 end
