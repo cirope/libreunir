@@ -78,7 +78,7 @@ class SchedulesTest < ActionDispatch::IntegrationTest
 
         fill_in 'schedule_description', with: schedule.description
 
-        find('.btn.btn-primary').click
+        find('.btn-primary').click
       end
 
       assert page.has_css?('.has_event')
@@ -104,7 +104,7 @@ class SchedulesTest < ActionDispatch::IntegrationTest
         find('.ui-datepicker-next').click
         fill_in 'schedule_description', with: 'Upd'
 
-        find('.btn.btn-primary').click
+        find('.btn-primary').click
       end
     end
 
