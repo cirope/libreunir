@@ -101,6 +101,7 @@ class SchedulesTest < ActionDispatch::IntegrationTest
 
     assert_no_difference 'Schedule.count' do
       within '[data-schedule-modal]' do
+        find('.ui-datepicker-next').click
         fill_in 'schedule_description', with: 'Upd'
 
         find('.btn.btn-primary').click
