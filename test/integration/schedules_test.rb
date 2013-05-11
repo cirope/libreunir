@@ -68,7 +68,7 @@ class SchedulesTest < ActionDispatch::IntegrationTest
 
     assert page.has_no_css?('.modal')
 
-    find('.btn.btn-primary').click
+    find('.btn-primary').click
 
     assert page.has_css?('.modal')
 
