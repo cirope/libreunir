@@ -51,4 +51,15 @@ class ReminderTest < ActiveSupport::TestCase
       error_message_from_model(@reminder, :kind, :inclusion)
     ].sort, @reminder.errors[:kind].sort
   end
+
+  test 'delivery' do
+    Fabricate(:reminder, remind_at: 1.hour.from_now) # Too far away
+    Fabricate(:reminder, remind_at: 1.minute.from_now, notified: true) # Already notified
+    Fabricate(:reminder, remind_at: 1.minute.from_now) # This must be sended
+    Fabricate(:reminder, remind_at: 1.minute.ago) # This also must be sended
+
+    assert_difference 'ActionMailer::Base.deliveries.size', 2 do
+      Reminder.send_reminders
+    end
+  end
 end

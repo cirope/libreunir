@@ -1,4 +1,6 @@
 class Reminder < ActiveRecord::Base
+  include Reminders::Delivery
+
   has_paper_trail
 
   KINDS = ['email']
