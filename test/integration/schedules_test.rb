@@ -68,6 +68,8 @@ class SchedulesTest < ActionDispatch::IntegrationTest
 
     assert page.has_no_css?('.modal')
 
+    sleep 0.5
+
     find('.btn-primary').click
 
     assert page.has_css?('.modal')
@@ -77,6 +79,8 @@ class SchedulesTest < ActionDispatch::IntegrationTest
         click_link schedule.scheduled_at.day
 
         fill_in 'schedule_description', with: schedule.description
+
+        sleep 0.5
 
         find('.btn-primary').click
       end
@@ -103,6 +107,8 @@ class SchedulesTest < ActionDispatch::IntegrationTest
       within '[data-schedule-modal]' do
         find('.ui-datepicker-next').click
         fill_in 'schedule_description', with: 'Upd'
+
+        sleep 0.5
 
         find('.btn-primary').click
       end
