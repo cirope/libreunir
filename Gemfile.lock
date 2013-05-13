@@ -97,7 +97,7 @@ GEM
     faker (1.1.2)
       i18n (~> 0.5)
     ffi (1.8.1)
-    highline (1.6.18)
+    highline (1.6.19)
     hike (1.2.2)
     i18n (0.6.4)
     io-like (0.3.0)
