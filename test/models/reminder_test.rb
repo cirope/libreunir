@@ -15,12 +15,12 @@ class ReminderTest < ActiveSupport::TestCase
     assert_difference 'Version.count' do
       assert_no_difference 'Reminder.count' do
         assert @reminder.update_attributes(
-          remind_at: @reminder.schedule.scheduled_at + 5.hours
+          remind_at: @reminder.scheduled_at + 5.hours
         )
       end
     end
 
-    assert_equal @reminder.schedule.scheduled_at + 5.hours, @reminder.remind_at
+    assert_equal @reminder.scheduled_at + 5.hours, @reminder.remind_at
   end
     
   test 'destroy' do 

@@ -16,5 +16,5 @@ class Schedule < ActiveRecord::Base
   
   # Relations
   belongs_to :user
-  has_many :reminders
+  has_many :reminders, dependent: :destroy
 end

@@ -3,6 +3,10 @@ class Reminder < ActiveRecord::Base
 
   KINDS = ['email']
 
+  # Delagations
+  delegate :email, to: :user, prefix: true
+  delegate :scheduled_at, :description, to: :schedule
+
   # Scopes
   default_scope -> { order("#{table_name}.remind_at ASC") }
 
@@ -13,4 +17,5 @@ class Reminder < ActiveRecord::Base
 
   # Relations
   belongs_to :schedule
+  has_one :user, through: :schedule
 end
