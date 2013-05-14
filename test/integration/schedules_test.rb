@@ -66,21 +66,19 @@ class SchedulesTest < ActionDispatch::IntegrationTest
 
     schedule = schedule = Fabricate.build(:schedule)
 
-    assert page.has_no_css?('.modal')
+    assert page.has_no_css?('#schedule_modal')
 
-    sleep 1
+    within '[data-calendar-day]' do
+      find('.btn-primary').click
+    end
 
-    find('.btn-primary').click
-
-    assert page.has_css?('.modal')
+    assert page.has_css?('#schedule_modal')
 
     assert_difference 'Schedule.count' do
       within '[data-schedule-modal]' do
         click_link schedule.scheduled_at.day
 
         fill_in 'schedule_description', with: schedule.description
-
-        sleep 1
 
         find('.btn-primary').click
       end
@@ -107,8 +105,6 @@ class SchedulesTest < ActionDispatch::IntegrationTest
       within '[data-schedule-modal]' do
         find('.ui-datepicker-next').click
         fill_in 'schedule_description', with: 'Upd'
-
-        sleep 1
 
         find('.btn-primary').click
       end

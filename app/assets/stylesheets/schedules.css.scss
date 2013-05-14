@@ -1,3 +1,8 @@
+div[data-schedule-info] {
+  margin: 10px 0;
+  & .alert { margin-bottom: 10px; }
+}
+
 form[data-scheduled-form] {
   margin: 0;
   padding: 10px;

@@ -51,9 +51,9 @@
     dashboard:
       index_title: 'Tablero'
     loans:
-      expired: 'Vencidos'
+      expired: 'Con cuotas vencidas'
       expired_title: 'Listado de préstamos vencidos'
-      close_to_expire: 'Por vencer'
+      close_to_expire: 'Con cuotas por vencer'
       close_to_expire_title: 'Listado de préstamos por vencer'
     notes:
       created_at:

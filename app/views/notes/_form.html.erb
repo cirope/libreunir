@@ -13,7 +13,7 @@
   <small>
     <%= link_to(
       t('label.cancel'), '#', 
-      data: { empty_target: "[data-noteable-id=\"#{@noteable.to_param}\"]" }
+      data: { remove_target: "[data-noteable-id=\"#{@noteable.to_param}\"] *" }
     ) %>
   </small>
 <% end %>

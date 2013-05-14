@@ -1,4 +1,4 @@
-<div id="schedule-<%= @schedule.to_param %>">
+<div data-schedule-info> 
   <% unless request.xhr? %>
     <p class="lead">
       <%= @schedule.description %>
@@ -11,7 +11,6 @@
   <% end %>
 
   <% if @schedule.schedulable %>
-    <br />
     <div>
       <%= render @schedule.schedulable %>
     </div>
@@ -19,7 +18,7 @@
 
   <% if request.xhr? %>
     <div>
-      <%= link_to t('label.close'), '#', class: 'btn btn-mini', data: { remove_target: "#schedule-#{@schedule.to_param}" } %>
+      <%= link_to t('label.close'), '#', class: 'btn btn-mini', data: { remove_target: "[data-info-id=\"#{@schedule.to_param}\"] *" } %>
     </div>
   <% end %>
 </div>

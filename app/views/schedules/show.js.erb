@@ -1,3 +1,3 @@
-$('[data-schedule-id="<%= @schedule.to_param %>"]').find('[data-template]').html(
+$('[data-info-id="<%= @schedule.to_param %>"]').html(
     '<%= j render(template: 'schedules/show', formats: [:html]) %>'
 );
