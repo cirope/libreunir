@@ -37,6 +37,6 @@ module SchedulesHelper
       data = { remove_target: "[data-schedulable-id=\"#{@schedulable.to_param}\"]" }
     end
 
-    link_to(t('label.cancel'), href, class: 'btn btn-mini', data: data)
+    link_to(t('label.cancel'), href, data: data)
   end
 end

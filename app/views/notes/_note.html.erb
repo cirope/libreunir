@@ -1,0 +1,9 @@
+<blockquote>
+  <p><%= note.note %></p>
+  <small>
+    <%= t(
+      'view.notes.created_at.html', 
+      distance_time: distance_of_time_in_words_to_now(note.created_at)
+    ) %>
+  </small>
+</blockquote>

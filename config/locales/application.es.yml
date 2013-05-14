@@ -55,6 +55,9 @@
       expired_title: 'Listado de préstamos vencidos'
       close_to_expire: 'Por vencer'
       close_to_expire_title: 'Listado de préstamos por vencer'
+    notes:
+      created_at:
+        html: '<span class="muted">Creada hace %{distance_time}</span>' 
     schedules:
       index_title: 'Listado de eventos'
       show_title: 'Detalle de evento'

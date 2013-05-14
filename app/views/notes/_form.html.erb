@@ -1,0 +1,19 @@
+<% @note = @noteable.notes.select(&:new_record?).try(:first) || @noteable.notes.build %>
+<%= simple_form_for([@noteable, @note], html: { id: nil }, data: { remote: true } ) do |f| %>
+
+  <%= f.input :note, label: false, 
+    input_html: {
+      id: nil, rows: 2, class: 'span12',
+      placeholder: Note.human_attribute_name('note')
+    } 
+  %>
+
+  <%= f.button :submit, class: 'btn-mini' %>
+  <span class="muted">|</span>
+  <small>
+    <%= link_to(
+      t('label.cancel'), '#', 
+      data: { empty_target: "[data-noteable-id=\"#{@noteable.to_param}\"]" }
+    ) %>
+  </small>
+<% end %>

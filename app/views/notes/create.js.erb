@@ -1,0 +1,13 @@
+var form = $('[data-noteable-id="<%= @noteable.to_param %>"]').find('form');
+
+<% if @note.persisted? %>
+  form.before(
+    '<%= j render(template: 'notes/show', formats: [:html]) %>'
+  );
+  
+  form.siblings(':last').effect('highlight', 'slow');
+<% end %>
+
+form.replaceWith(
+  '<%= j render(template: 'notes/new', formats: [:html]) %>'
+);

@@ -81,7 +81,7 @@ class LoansTest < ActionDispatch::IntegrationTest
 
         find('.btn.btn-primary').click
 
-        assert page.has_css?('.alert.alert-error')
+        assert page.has_css?('div.error')
       end
     end
 

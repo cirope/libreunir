@@ -18,6 +18,7 @@
  *= require common
  *= require common-responsive
  *= require devise
+ *= require notes
  *= require schedules
  *= require users
  *= require dashboard

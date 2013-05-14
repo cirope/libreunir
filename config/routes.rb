@@ -5,6 +5,8 @@ Libreunir::Application.routes.draw do
   resources :schedules, except: [:destroy, :index, :new] do
     patch 'toggle_done', on: :member, as: 'toggle_done'
     get 'search(/:date)', on: :collection, to: 'schedules#search', as: 'search', constraints: { date: /\d{4}-\d{2}-\d{2}/ }
+
+    resources :notes, only: [:index, :create]
   end
 
   devise_for :users

@@ -8,9 +8,25 @@
     <span class="muted">|</span>
   <% end %>
   <%= schedule.description %> 
-  <%= link_to_edit(
-    edit_polymorphic_path([schedule.schedulable, schedule]),
-    data: { remote: true }
-  ) if can?(:update, schedule) && schedule.editable? %>
+
+  <% if schedule.editable? %>
+    <% if can?(:update, schedule) %>
+      <span class="muted">|</span>
+      <%= link_to_edit(
+        edit_polymorphic_path([schedule.schedulable, schedule]),
+        data: { remote: true }
+      ) %> 
+    <% end %>
+
+    <% if can?(:read, Note) %>
+      <span class="muted">|</span>
+      <%= link_to_notes(
+        schedule,
+        polymorphic_path([schedule, Note]), data: { remote: true }
+      ) %>
+    <% end %>
+  <% end %>
+
   <div data-template></div>
+  <div data-noteable-id="<%= schedule.to_param %>"></div>
 </li>

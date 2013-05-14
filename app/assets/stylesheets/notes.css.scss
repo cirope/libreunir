@@ -1,0 +1,15 @@
+div[data-noteable] {
+  margin: 15px 0 20px 0;
+
+  & blockquote {
+    margin: 0;
+
+    & p { font-size: 14px; }
+  }
+
+  form { 
+    margin: 10px 0; 
+
+    & input.btn-mini { padding: 4px 12px; }
+  }
+}

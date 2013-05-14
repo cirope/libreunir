@@ -17,6 +17,9 @@
       loan:
         one: 'Préstamo'
         other: 'Préstamos'
+      note:
+        one: 'Nota'
+        other: 'Notas'
       payment:
         one: 'Cuota'
         other: 'Cuotas'
@@ -44,6 +47,8 @@
         client_id: 'Cliente'
         branch_id: 'Sucursal'
         user_id: 'Asesor'
+      note:
+        note: 'Nota'
       payment:
         number: 'Número'
         expired_at: 'Vencimiento'

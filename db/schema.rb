@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130424183745) do
+ActiveRecord::Schema.define(version: 20130513141625) do
 
   create_table "branches", force: true do |t|
     t.integer  "branch_id",  null: false
@@ -71,6 +71,17 @@ ActiveRecord::Schema.define(version: 20130424183745) do
   add_index "loans", ["delayed_at"], name: "index_loans_on_delayed_at", using: :btree
   add_index "loans", ["loan_id"], name: "index_loans_on_loan_id", unique: true, using: :btree
   add_index "loans", ["user_id"], name: "index_loans_on_user_id", using: :btree
+
+  create_table "notes", force: true do |t|
+    t.text     "note",                      null: false
+    t.integer  "noteable_id",               null: false
+    t.string   "noteable_type",             null: false
+    t.integer  "lock_version",  default: 0, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "notes", ["noteable_id", "noteable_type"], name: "index_notes_on_noteable_id_and_noteable_type", using: :btree
 
   create_table "payments", force: true do |t|
     t.integer  "number",                                            null: false

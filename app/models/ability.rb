@@ -26,5 +26,6 @@ class Ability
     can :read, Loan, { user_id: user.id }
     can :manage, Schedule, { user_id: user.id }
     can :read, Client
+    can [:read, :create], Note
   end
 end

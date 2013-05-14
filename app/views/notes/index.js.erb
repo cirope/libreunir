@@ -1,0 +1,3 @@
+$('[data-noteable-id="<%= @noteable.to_param %>"]').html(
+  '<%= j render(template: 'notes/index', formats: [:html]) %>'
+);
