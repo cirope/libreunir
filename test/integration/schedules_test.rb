@@ -48,9 +48,11 @@ class SchedulesTest < ActionDispatch::IntegrationTest
   end
 
   test 'should create schedule' do
-    schedule = Fabricate.build(:schedule)
+    schedule = Fabricate.build(:schedule, scheduled_at: 1.month.from_now)
 
     login(user: @user)
+
+    find('.ui-datepicker-next').click
 
     assert page.has_no_css?('#schedule_modal')
     assert page.has_css?('.btn-primary')
