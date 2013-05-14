@@ -16,6 +16,8 @@ class Reminder < ActiveRecord::Base
   validates :remind_at, :kind, presence: true
   validates :kind, length: { maximum: 255 }, inclusion: { in: KINDS },
     allow_nil: true, allow_blank: true
+  validates :remind_at, timeliness: { on_or_after: :scheduled_at, type: :datetime },
+    allow_nil: true, allow_blank: true
 
   # Relations
   belongs_to :schedule

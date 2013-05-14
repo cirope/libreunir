@@ -52,11 +52,38 @@ class ReminderTest < ActiveSupport::TestCase
     ].sort, @reminder.errors[:kind].sort
   end
 
+  test 'validates date and time attributes' do
+    @reminder.remind_at = '13/13/13'
+
+    assert @reminder.invalid?
+    assert_equal 2, @reminder.errors.size
+    assert_equal [
+      error_message_from_model(@reminder, :remind_at, :blank),
+      error_message_from_model(@reminder, :remind_at, :invalid_datetime),
+    ].sort, @reminder.errors[:remind_at].sort
+
+    @reminder.remind_at = @reminder.scheduled_at - 1.minute
+
+    assert @reminder.invalid?
+    assert_equal 1, @reminder.errors.size
+    assert_equal [
+      error_message_from_model(
+        @reminder, :remind_at, :on_or_after,
+        restriction: I18n.l(@reminder.scheduled_at, format: :minimal)
+      ),
+    ], @reminder.errors[:remind_at]
+  end
+
   test 'delivery' do
-    Fabricate(:reminder, remind_at: 1.hour.from_now) # Too far away
-    Fabricate(:reminder, remind_at: 1.minute.from_now, notified: true) # Already notified
-    Fabricate(:reminder, remind_at: 1.minute.from_now) # This must be sended
-    Fabricate(:reminder, remind_at: 1.minute.ago) # This also must be sended
+    schedule = Fabricate(:schedule)
+    reminder_options = { schedule_id: schedule.id }
+
+    schedule.update_column :scheduled_at, 1.day.ago
+
+    Fabricate(:reminder, reminder_options.merge(remind_at: 1.hour.from_now)) # Too far away
+    Fabricate(:reminder, reminder_options.merge(remind_at: 1.minute.from_now, notified: true)) # Already notified
+    Fabricate(:reminder, reminder_options.merge(remind_at: 1.minute.from_now)) # This must be sended
+    Fabricate(:reminder, reminder_options.merge(remind_at: 1.minute.ago)) # This also must be sended
 
     assert_difference 'ActionMailer::Base.deliveries.size', 2 do
       Reminder.send_reminders
