@@ -30,6 +30,7 @@ class ActionDispatch::IntegrationTest
 
   setup do
     Capybara.default_driver = :selenium
+    Capybara.default_wait_time = ENV['TRAVIS'] ? 4 : 2
   end
 
   teardown do

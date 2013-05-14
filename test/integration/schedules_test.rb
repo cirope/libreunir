@@ -55,9 +55,7 @@ class SchedulesTest < ActionDispatch::IntegrationTest
     assert page.has_no_css?('#schedule_modal')
     assert page.has_css?('.btn-primary')
 
-    within '[data-calendar-day]' do
-      find('.btn-primary').click
-    end
+    find('.btn-primary').click
 
     assert page.has_css?('#schedule_modal')
 
