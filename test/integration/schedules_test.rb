@@ -5,20 +5,6 @@ class SchedulesTest < ActionDispatch::IntegrationTest
     @user = Fabricate(:user, password: '123456', role: :normal)
   end
 
-  test 'should get schedules' do
-    3.times { Fabricate(:schedule, user_id: @user.id, scheduled_at: 1.hour.from_now) }
-    login(user: @user)
-
-    Fabricate(:schedule)
-
-    assert page.has_css?('[data-calendar-day] ul')
-    assert_equal 3, all('[data-calendar-day] ul li').size
-
-    within '.ui-datepicker-calendar' do
-      assert_equal 1, all('.has_event').size
-    end
-  end
-
   test 'should get schedules and mark as done one' do
     3.times { Fabricate(:schedule, user_id: @user.id, scheduled_at: 1.hour.from_now) }
     login(user: @user)
@@ -62,9 +48,9 @@ class SchedulesTest < ActionDispatch::IntegrationTest
   end
 
   test 'should create schedule' do
-    login(user: @user)
+    schedule = Fabricate.build(:schedule)
 
-    schedule = schedule = Fabricate.build(:schedule)
+    login(user: @user)
 
     assert page.has_no_css?('#schedule_modal')
 
@@ -90,21 +76,22 @@ class SchedulesTest < ActionDispatch::IntegrationTest
 
   test 'should edit schedule' do
     schedule = Fabricate(:schedule, user_id: @user.id, scheduled_at: 1.hour.from_now)
+    schedule_attrs = Fabricate.attributes_for(:schedule)
 
     login(user: @user)
 
-    assert page.has_no_css?('.modal')
+    assert page.has_no_css?('#schedule_modal')
 
     within "li[data-schedule-id=\"#{schedule.to_param}\"]" do
       click_link '✎'
     end
 
-    assert page.has_css?('.modal')
+    assert page.has_css?('#schedule_modal')
 
     assert_no_difference 'Schedule.count' do
       within '[data-schedule-modal]' do
         find('.ui-datepicker-next').click
-        fill_in 'schedule_description', with: 'Upd'
+        fill_in 'schedule_description', with: schedule_attrs[:description]
 
         find('.btn-primary').click
       end
@@ -112,6 +99,6 @@ class SchedulesTest < ActionDispatch::IntegrationTest
 
     assert page.has_css?('.has_event')
     assert_equal 1, all('.has_event').size
-    assert_equal 'Upd', schedule.reload.description
+    assert_equal schedule_attrs[:description], schedule.reload.description
   end
 end
