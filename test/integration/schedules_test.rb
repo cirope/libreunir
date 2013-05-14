@@ -53,6 +53,7 @@ class SchedulesTest < ActionDispatch::IntegrationTest
     login(user: @user)
 
     assert page.has_no_css?('#schedule_modal')
+    assert page.has_css?('.btn-primary')
 
     within '[data-calendar-day]' do
       find('.btn-primary').click
