@@ -77,11 +77,11 @@ class LoansTest < ActionDispatch::IntegrationTest
 
     assert_no_difference 'Schedule.count' do
       within "tr[data-schedulable-id=\"#{loan.to_param}\"]" do
-        assert page.has_no_css?('.alert.alert-error')
+        assert page.has_no_css?('.text.error')
 
-        find('.btn.btn-primary').click
+        find('.btn-primary').click
 
-        assert page.has_css?('div.error')
+        assert page.has_css?('.text.error')
       end
     end
 

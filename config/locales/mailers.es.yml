@@ -1,0 +1,4 @@
+'es':
+  notifier:
+    remind:
+      subject: 'Recordatorio'

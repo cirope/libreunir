@@ -16,6 +16,6 @@ class DeviseBackgrounder
   end
   
   def deliver
-    Devise::Mailer.delay.send(@method, @record, @options)
+    ::Devise::Mailer.delay.send(@method, @record, @options)
   end
 end

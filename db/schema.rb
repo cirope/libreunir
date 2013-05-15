@@ -101,6 +101,19 @@ ActiveRecord::Schema.define(version: 20130513141625) do
   add_index "payments", ["number"], name: "index_payments_on_number", using: :btree
   add_index "payments", ["user_id"], name: "index_payments_on_user_id", using: :btree
 
+  create_table "reminders", force: true do |t|
+    t.datetime "remind_at",                    null: false
+    t.string   "kind",                         null: false
+    t.boolean  "notified",     default: false, null: false
+    t.boolean  "scheduled",    default: false, null: false
+    t.integer  "schedule_id",                  null: false
+    t.integer  "lock_version", default: 0,     null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "reminders", ["schedule_id"], name: "index_reminders_on_schedule_id", using: :btree
+
   create_table "schedules", force: true do |t|
     t.text     "description",                      null: false
     t.datetime "scheduled_at",                     null: false

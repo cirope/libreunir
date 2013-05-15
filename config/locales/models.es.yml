@@ -23,6 +23,9 @@
       payment:
         one: 'Cuota'
         other: 'Cuotas'
+      reminder:
+        one: 'Recordatorio'
+        other: 'Recordatorios'
       schedule:
         one: 'Evento'
         other: 'Eventos'
@@ -53,10 +56,15 @@
         number: 'Número'
         expired_at: 'Vencimiento'
         paid_at: 'Fecha de pago'
+      reminder:
+        remind_at: 'Fecha'
+        kind: 'Tipo'
+        notified: 'Notificado'
       schedule:
         description: 'Evento'
         scheduled_at: 'Fecha'
         done: 'Terminado'
+        remind_me: 'Recordarme por correo 15 minutos antes'
       user:
         user_id: 'Asesor'
         name: 'Nombre'
