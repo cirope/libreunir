@@ -94,6 +94,7 @@ ActiveRecord::Schema.define(version: 20130513132503) do
     t.datetime "remind_at",                    null: false
     t.string   "kind",                         null: false
     t.boolean  "notified",     default: false, null: false
+    t.boolean  "scheduled",    default: false, null: false
     t.integer  "schedule_id",                  null: false
     t.integer  "lock_version", default: 0,     null: false
     t.datetime "created_at"

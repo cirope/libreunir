@@ -59,6 +59,7 @@
         description: 'Evento'
         scheduled_at: 'Fecha'
         done: 'Terminado'
+        remind_me: 'Recordarme por correo 15 minutos antes'
       user:
         user_id: 'Asesor'
         name: 'Nombre'

@@ -2,6 +2,7 @@ class Schedule < ActiveRecord::Base
   include Schedules::DateCalculations
   include Schedules::DefaultDate
   include Schedules::Done
+  include Schedules::Reminders
   include Schedules::Schedulable
 
   has_paper_trail

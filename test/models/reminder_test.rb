@@ -15,12 +15,12 @@ class ReminderTest < ActiveSupport::TestCase
     assert_difference 'Version.count' do
       assert_no_difference 'Reminder.count' do
         assert @reminder.update_attributes(
-          remind_at: @reminder.scheduled_at + 5.hours
+          remind_at: @reminder.scheduled_at - 5.hours
         )
       end
     end
 
-    assert_equal @reminder.scheduled_at + 5.hours, @reminder.remind_at
+    assert_equal @reminder.scheduled_at - 5.hours, @reminder.remind_at
   end
     
   test 'destroy' do 
@@ -62,31 +62,30 @@ class ReminderTest < ActiveSupport::TestCase
       error_message_from_model(@reminder, :remind_at, :invalid_datetime),
     ].sort, @reminder.errors[:remind_at].sort
 
-    @reminder.remind_at = @reminder.scheduled_at - 1.minute
+    @reminder.remind_at = @reminder.scheduled_at + 1.minute
 
     assert @reminder.invalid?
     assert_equal 1, @reminder.errors.size
     assert_equal [
       error_message_from_model(
-        @reminder, :remind_at, :on_or_after,
+        @reminder, :remind_at, :on_or_before,
         restriction: I18n.l(@reminder.scheduled_at, format: :minimal)
       ),
     ], @reminder.errors[:remind_at]
   end
 
   test 'delivery' do
-    schedule = Fabricate(:schedule)
-    reminder_options = { schedule_id: schedule.id }
-
-    schedule.update_column :scheduled_at, 1.day.ago
-
-    Fabricate(:reminder, reminder_options.merge(remind_at: 1.hour.from_now)) # Too far away
-    Fabricate(:reminder, reminder_options.merge(remind_at: 1.minute.from_now, notified: true)) # Already notified
-    Fabricate(:reminder, reminder_options.merge(remind_at: 1.minute.from_now)) # This must be sended
-    Fabricate(:reminder, reminder_options.merge(remind_at: 1.minute.ago)) # This also must be sended
+    r1 = Fabricate(:reminder, remind_at: 1.hour.from_now) # Too far away
+    r2 = Fabricate(:reminder, remind_at: 1.minute.from_now, notified: true) # Already notified
+    r3 = Fabricate(:reminder, remind_at: 1.minute.from_now) # This must be sended
+    r4 = Fabricate(:reminder, remind_at: 1.minute.ago) # This also must be sended
 
     assert_difference 'ActionMailer::Base.deliveries.size', 2 do
       Reminder.send_reminders
+    end
+
+    { r1 => false, r2 => true, r3 => true, r4 => true }.each do |r, notified|
+      assert r.reload.scheduled == notified && r.reload.notified == notified
     end
   end
 end

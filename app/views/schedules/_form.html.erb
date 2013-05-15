@@ -1,18 +1,15 @@
 <% span_size = (@schedulable && @schedule.new_record?) ? 3 : 5 %>
-<%= simple_form_for([@schedulable, @schedule], remote: true, html: { id: nil },
-  data: { scheduled_form: true }, defaults: { label: false }) do |f| %>
-  <%= f.error_notification %>
-
+<%= simple_form_for([@schedulable, @schedule], remote: true, html: { id: nil }, data: { scheduled_form: true }) do |f| %>
   <div class="row-fluid">
     <div class="span<%= span_size %>">
       <div data-datetime-picker-id="<%= (@schedulable || @schedule).to_param %>"></div>
     </div>
     <div class="span<%= 12 - span_size %>">
-      <%= f.input :scheduled_at, as: :hidden, input_html: { 
+      <%= f.input :scheduled_at, as: :hidden, label: false, input_html: { 
         id: "datetime-picker-id-#{(@schedulable || @schedule).to_param}",
         value: l((@date || @schedule.scheduled_at), format: :minimal) 
       } %>
-      <%= f.input :description, id: false, input_html: { 
+      <%= f.input :description, id: false, label: false, input_html: { 
         rows: 12, class: 'span12',
         placeholder: Schedule.human_attribute_name('description') 
       } %>
@@ -21,4 +18,7 @@
       <span class=muted>| <%= link_to_cancel_schedule %></span>
     </div>
   </div>
+
+  <br />
+  <%= show_remind_me_schedule_checkbox(f) %>
 <% end %>

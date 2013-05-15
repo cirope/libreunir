@@ -87,7 +87,7 @@ class SchedulesController < ApplicationController
   private
 
   def schedule_params
-    params.require(:schedule).permit(:description, :scheduled_at, :lock_version)
+    params.require(:schedule).permit(:description, :scheduled_at, :remind_me, :lock_version)
   end
 
   def set_schedulable

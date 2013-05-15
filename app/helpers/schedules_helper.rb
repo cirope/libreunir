@@ -39,4 +39,10 @@ module SchedulesHelper
 
     link_to(t('label.cancel'), href, class: 'btn btn-mini', data: data)
   end
+
+  def show_remind_me_schedule_checkbox(form)
+    @schedule.remind_me = @schedule.remind_me_default_value
+
+    form.input(:remind_me, as: :boolean, wrapper: :checkbox)
+  end
 end

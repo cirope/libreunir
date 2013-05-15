@@ -94,4 +94,16 @@ class ScheduleTest < ActiveSupport::TestCase
     @schedule.scheduled_at = 1.minute.ago
     assert !@schedule.editable?
   end
+
+  test 'remind me' do
+    assert_difference '@schedule.reminders.count' do
+      @schedule.remind_me = true
+      assert @schedule.save
+    end
+
+    assert_difference '@schedule.reminders.count', -1 do
+      @schedule.remind_me = false
+      assert @schedule.save
+    end
+  end
 end
