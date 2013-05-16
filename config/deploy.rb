@@ -5,6 +5,7 @@ set (:bundle_cmd) { "#{release_path}/bin/bundle" }
 set :whenever_command, 'bundle exec whenever --set environment=production'
 require 'whenever/capistrano'
 
+set :sidekiq_cmd, 'bundle exec sidekiq'
 require 'sidekiq/capistrano'
 
 server 'libreunir.com', :web, :app, :db, primary: true
