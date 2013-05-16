@@ -88,4 +88,12 @@ class ReminderTest < ActiveSupport::TestCase
       assert r.reload.scheduled == notified && r.reload.notified == notified
     end
   end
+
+  test 'destruction constraints' do
+    @reminder.update_attributes! scheduled: true
+
+    assert_no_difference 'Reminder.count'  do
+      @reminder.destroy
+    end
+  end
 end

@@ -106,4 +106,20 @@ class ScheduleTest < ActiveSupport::TestCase
       assert @schedule.save
     end
   end
+
+  test 'allow remind me' do
+    assert @schedule.allow_remind_me?
+
+    Fabricate(:reminder, schedule_id: @schedule.id, scheduled: true)
+
+    assert !@schedule.reload.allow_remind_me?
+
+    @schedule.reminders.clear
+    @schedule.scheduled_at = 1.minute.ago
+
+    assert !@schedule.allow_remind_me?
+
+    @schedule.scheduled_at = 1.minute.from_now
+    assert @schedule.allow_remind_me?
+  end
 end

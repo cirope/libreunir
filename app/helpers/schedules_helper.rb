@@ -43,6 +43,9 @@ module SchedulesHelper
   def show_remind_me_schedule_checkbox(form)
     @schedule.remind_me = @schedule.remind_me_default_value
 
-    form.input(:remind_me, as: :boolean, wrapper: :checkbox)
+    form.input(
+      :remind_me, as: :boolean, wrapper: :checkbox,
+      input_html: { disabled: !@schedule.allow_remind_me? }
+    )
   end
 end

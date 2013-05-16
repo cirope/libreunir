@@ -11,6 +11,10 @@ module Schedules::Reminders
     self.new_record? && self.remind_me.nil? || self.reminders.present?
   end
 
+  def allow_remind_me?
+    self.new_record? || !self.past? && self.reminders.all?(&:allow_destruction?)
+  end
+
   private
 
   def build_reminder

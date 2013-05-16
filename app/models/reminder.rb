@@ -1,5 +1,6 @@
 class Reminder < ActiveRecord::Base
   include Reminders::Delivery
+  include Reminders::DestroyConstraints
 
   has_paper_trail
 
