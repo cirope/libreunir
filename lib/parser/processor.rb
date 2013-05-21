@@ -31,7 +31,9 @@ module Parser
     end
 
     def cleanup(klass)
-      klass.where('updated_at < :today', today: Time.now.midnight).find_each(&:destroy)
+      klass.where('updated_at < :date', date: Time.now.midnight).find_each do |o|
+        o.without_versioning :destroy
+      end
     end
   end
 end

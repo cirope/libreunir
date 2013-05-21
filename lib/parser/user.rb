@@ -14,8 +14,10 @@ module Parser
       }
 
       if user.try(:persisted?)
-        user.update_attributes(attributes)
-        user.touch
+        user.without_versioning do
+          user.update_attributes(attributes)
+          user.touch
+        end
       else
         create_user(row, attributes)
       end

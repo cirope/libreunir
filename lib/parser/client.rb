@@ -15,8 +15,10 @@ module Parser
       }
 
       if client.try(:persisted?)
-        client.update_attributes(attributes)
-        client.touch
+        client.without_versioning do
+          client.update_attributes(attributes)
+          client.touch
+        end
       else
         client = ::Client.create(attributes)
         Parser::Comment.parse(row, client)
