@@ -42,5 +42,9 @@ input[type="checkbox"].margin-less {
     color: #c09853;
     background-color: #fcf8E3;
     border: 1px solid #fbeed5;
+
+    &:hover {
+      color: #fff;
+    }
   }
 }
