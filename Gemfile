@@ -15,7 +15,6 @@ gem 'magick_columns'
 gem 'validates_timeliness'
 gem 'sidekiq'
 gem 'archive-zip'
-gem 'double-bag-ftps', github: 'cirope/double-bag-ftps'
 gem 'whenever', require: false
 gem 'capistrano'
 gem 'unicorn', require: false

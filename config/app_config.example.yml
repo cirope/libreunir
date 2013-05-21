@@ -11,11 +11,9 @@ public_host: 'public.domain.com'
 
 ftps:
   address: 'ftp.com'
-  port: 990
   user: 'user'
   password: 'password'
 
 zip:
-  path: '/folder'
   filename: 'data.zip'
   password: 'data'

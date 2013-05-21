@@ -5,9 +5,6 @@ namespace :importer do
   task get_file: :environment do
     @ftps = Parser::Ftps.new
     @ftps.make_folder
-    @ftps.set_mode
-    @ftps.set_context
-    @ftps.connect_and_login
     @ftps.get_file
   end
 
