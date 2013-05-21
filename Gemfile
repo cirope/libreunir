@@ -32,7 +32,6 @@ end
 
 group :test do
   gem 'turn'
-  gem 'minitest', require: false
   gem 'capybara', require: false
   gem 'selenium-webdriver'
   gem 'database_cleaner'

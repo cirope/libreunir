@@ -225,7 +225,6 @@ DEPENDENCIES
   faker
   jquery-rails
   magick_columns
-  minitest
   newrelic_rpm
   paper_trail!
   pg
