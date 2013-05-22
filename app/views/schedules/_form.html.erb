@@ -1,4 +1,4 @@
-<% span_size = (@schedulable && @schedule.new_record?) ? 3 : 5 %>
+<% span_size = (@schedulable && @schedule.new_record?) ? 4 : 5 %>
 <%= simple_form_for([@schedulable, @schedule], remote: true, html: { id: nil }, data: { scheduled_form: true }) do |f| %>
   <div class="row-fluid">
     <div class="span<%= span_size %>">

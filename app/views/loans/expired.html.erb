@@ -1,24 +1,21 @@
-<div class="readonly-data">
-  <table class="table table-condensed table-hover" data-endless-container="true">
-    <thead>
-      <tr>
-        <th><%= Loan.model_name.human(count: 1) %></th>
-        <th><%= Loan.human_attribute_name('client_id') %></th>
-        <th><%= Payment.human_attribute_name('expired_at') %></th>
-        <th><%= Loan.human_attribute_name('payment') %></th>
-        <th><%= Client.human_attribute_name('phone') %></th>
-        <th colspan="2"></th>
-      </tr>
-    </thead>
+<%= render 'sidebar' %>
 
-    <tbody>
-      <%= render partial: 'expired', collection: @loans, as: :loan %>
-    </tbody>
-  </table>
-</div>
+<table class="table table-condensed table-hover" data-endless-container="true">
+  <thead>
+    <tr>
+      <th><%= Loan.human_attribute_name('client_id') %></th>
+      <th><%= Payment.human_attribute_name('expired_at') %></th>
+      <th><%= Loan.human_attribute_name('payment') %></th>
+      <th><%= Client.human_attribute_name('phone') %></th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <%= render partial: 'expired', collection: @loans, as: :loan %>
+  </tbody>
+</table>
 
 <div class="pagination-container">
   <%= pagination_links(@loans) %>
 </div>
-
-<div class="form-actions"></div>

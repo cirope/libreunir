@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130513141625) do
+ActiveRecord::Schema.define(version: 20130521021740) do
 
   create_table "branches", force: true do |t|
     t.integer  "branch_id",  null: false
@@ -129,6 +129,29 @@ ActiveRecord::Schema.define(version: 20130513141625) do
   add_index "schedules", ["schedulable_id", "schedulable_type"], name: "index_schedules_on_schedulable_id_and_schedulable_type", using: :btree
   add_index "schedules", ["scheduled_at"], name: "index_schedules_on_scheduled_at", using: :btree
   add_index "schedules", ["user_id"], name: "index_schedules_on_user_id", using: :btree
+
+  create_table "taggings", force: true do |t|
+    t.integer  "tag_id",        null: false
+    t.integer  "taggable_id",   null: false
+    t.string   "taggable_type", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "taggings", ["tag_id"], name: "index_taggings_on_tag_id", using: :btree
+  add_index "taggings", ["taggable_id", "taggable_type"], name: "index_taggings_on_taggable_id_and_taggable_type", using: :btree
+
+  create_table "tags", force: true do |t|
+    t.string   "name",                     null: false
+    t.string   "category",                 null: false
+    t.integer  "user_id"
+    t.integer  "lock_version", default: 0, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tags", ["name"], name: "index_tags_on_name", using: :btree
+  add_index "tags", ["user_id"], name: "index_tags_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "name",                                null: false

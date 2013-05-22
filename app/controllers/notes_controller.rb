@@ -1,6 +1,5 @@
 class NotesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_note, only:  [:show, :edit, :update, :destroy]
   
   check_authorization
   load_resource :schedule, shallow: true

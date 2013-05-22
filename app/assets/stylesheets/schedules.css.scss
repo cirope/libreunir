@@ -5,7 +5,7 @@ div[data-schedule-info] {
 
 form[data-scheduled-form] {
   margin: 0;
-  padding: 10px;
+  padding: 10px 0;
 
   & textarea { 
     margin-bottom: 4px;
@@ -17,7 +17,7 @@ form[data-scheduled-form] {
   text-decoration: line-through;
 }
 
-div[data-calendar-container] .page-header {
+div[data-calendar-day] .page-header {
   margin: 0 0 15px;
 
   & h4 { margin: 0; }

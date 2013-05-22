@@ -11,27 +11,23 @@ class SchedulesController < ApplicationController
 
   respond_to :html, :js
 
-  layout ->(c) { c.request.xhr? ? false : 'application' }
+  layout ->(c) { c.request.xhr? ? false : 'columns' }
   
   # GET /schedules
   def index
     @title = t('view.schedules.index_title')
     @days = @schedules.for_date_of_month(@date).uniq
     @schedules = @schedules.for_date_of_day(@date).sorted
-
-    respond_with @schedules
   end
 
   # GET /schedules/1
   def show
     @title = t('view.schedules.show_title')
-    respond_with @schedule
   end
 
   # GET /schedules/new
   def new
     @title = t('view.schedules.new_title')
-    respond_with @schedule
   end
 
   # GET /schedules/1/edit
@@ -74,14 +70,10 @@ class SchedulesController < ApplicationController
   # PATCH /schedules/1/toggle_done
   def toggle_done
     @schedule.toggle_done
-
-    respond_with @schedule
   end
 
   def search
     @schedules = @schedules.for_date_of_day(@date).sorted
-
-    respond_with @schedules    
   end
 
   private

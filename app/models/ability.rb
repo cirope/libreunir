@@ -23,9 +23,10 @@ class Ability
   end
 
   def default_rules(user)
-    can :read, Loan, { user_id: user.id }
+    can [:read, :expired, :close_to_expired], Loan
     can :manage, Schedule, { user_id: user.id }
     can :read, Client
     can [:read, :create], Note
+    can [:read, :create], Tag
   end
 end

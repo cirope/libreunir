@@ -23,4 +23,5 @@ class User < ActiveRecord::Base
   has_many :made_payments, class_name: 'Payment'
   has_many :payments, through: :loans
   has_many :clients, -> { uniq }, through: :loans
+  has_many :tags, dependent: :destroy
 end

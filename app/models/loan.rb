@@ -13,6 +13,8 @@ class Loan < ActiveRecord::Base
   belongs_to :user
   has_many :payments, dependent: :destroy
   has_many :schedules, as: :schedulable, dependent: :destroy
+  has_many :taggings, as: :taggable, dependent: :destroy
+  has_many :tags, through: :taggings
 
   def to_s
     self.loan_id.to_s

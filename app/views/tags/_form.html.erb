@@ -1,0 +1,7 @@
+<%= simple_form_for(@tag) do |f| %>
+  <%= f.error_notification %>
+
+  <%= f.input :name %>
+  <%= f.input :category %>
+  <%= f.button :submit, class: 'btn-primary' %>
+<% end %>

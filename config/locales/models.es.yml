@@ -29,6 +29,9 @@
       schedule:
         one: 'Evento'
         other: 'Eventos'
+      tag:
+        one: 'Etiqueta'
+        other: 'Etiquetas'
       user:
         one: 'Asesor'
         other: 'Asesores'
@@ -65,6 +68,8 @@
         scheduled_at: 'Fecha'
         done: 'Terminado'
         remind_me: 'Recordarme por correo 15 minutos antes'
+      tag:
+        name: 'Nombre'
       user:
         user_id: 'Asesor'
         name: 'Nombre'

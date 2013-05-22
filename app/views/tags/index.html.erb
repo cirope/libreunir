@@ -1,0 +1,7 @@
+<ul class="nav nav-list">
+  <% if controller_name == 'loans' %>
+    <% @tags.each do |tag| %>
+      <li><%= link_to tag.name, [action_name, tag, 'loans'] %></li>
+    <% end %>
+  <% end %>
+</ul>

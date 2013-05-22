@@ -43,28 +43,7 @@ module ApplicationHelper
       )
     )
 
-    pagination_links ||= empty_pagination_links
-
-    content_tag :div, pagination_links + page_entries, class: 'pagination-container'
-  end
-
-  def empty_pagination_links
-    previous_tag = content_tag(
-      :li,
-      content_tag(:a, t('will_paginate.previous_label').html_safe),
-      class: 'previous_page disabled'
-    )
-    next_tag = content_tag(
-      :li,
-      content_tag(:a, t('will_paginate.next_label').html_safe),
-      class: 'next disabled'
-    )
-    
-    content_tag(
-      :div,
-      content_tag(:ul, previous_tag + next_tag),
-      class: 'pagination pagination-right'
-    )
+    content_tag :div, raw(pagination_links.to_s + page_entries), class: 'pagination-container'
   end
 
   def iconic_link(icon, *args)
