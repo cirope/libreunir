@@ -5,7 +5,7 @@ require 'capybara/rails'
 require 'sidekiq/testing/inline'
 require 'coveralls'
 
-Coveralls.wear!
+Coveralls.wear!('rails')
 
 class ActiveSupport::TestCase
   # Add more helper methods to be used by all tests here...
