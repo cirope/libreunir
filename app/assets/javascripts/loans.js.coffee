@@ -1,7 +1,7 @@
 new Rule
   condition: -> $('[data-tag-id]').length
   load: ->
-    @map.create_tagging ||= (event)->
+    @map.create_tagging ||= ->
       $('#tag_id').val($(this).data('tag-id'))
       $('#tag_id').closest('form').submit()
 

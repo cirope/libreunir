@@ -1,13 +1,16 @@
 <ul class="nav nav-list" data-user-tags="true">
   <li class="nav-header"><%= Tag.model_name.human(count: 0) %></li>
   <% current_user.tags.each do |tag| %>
-    <li data-user-tag-id="<%= tag.id %>">
-      <%= link_to tag.name, [action_name, tag, 'loans'], class: @tag == tag ? 'active' : '' %>
+    <li data-user-tag-id="<%= tag.id %>" <%== 'class="active"' if @tag == tag && action_name != 'create' %>>
+    <%= link_to tag.name, [(params[:action_name] || action_name), tag, 'loans'] %>
     </li>
   <% end %>
   <li class="divider"></li>
   <li>
-    <%= link_to t('view.tags.new'), new_tag_path, data: { remote: true } %>
+    <%= link_to(
+      t('view.tags.new'), 
+      new_tag_path(action_name: action_name), data: { remote: true } 
+    ) %>
     <div data-new-tag="tag"></div>
   </li>
 </ul>

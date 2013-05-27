@@ -37,15 +37,13 @@ class LoansController < ApplicationController
 
   # POST /create_tagging_loans
   def create_tagging
-    if params[:loans_ids].present?
-      loans = Loan.find(params[:loan_ids])
+    loans = Loan.find(params[:loan_ids])
 
-      loans.each do |loan|
-        loan.taggings.create(tag_id: @tag.id) 
-      end
-    else
-      head :ok
+    loans.each do |loan|
+      loan.taggings.create(tag_id: @tag.id) 
     end
+
+    redirect_to params[:redirect_to]
   end
 
   private
@@ -63,12 +61,6 @@ class LoansController < ApplicationController
   end
 
   def filter_loans_by_tag
-    if @tag
-      if @tag.is_zone?
-        @loans = @loans.joins(:taggings).where("#{Tagging.table_name}.tag_id" => @tag.id)
-      else
-        @loans = @tag.loans.page(params[:page])
-      end
-    end
+    @loans = @loans.joins(:taggings).where("#{Tagging.table_name}.tag_id" => @tag.id) if @tag
   end
 end

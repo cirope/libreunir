@@ -10,4 +10,9 @@ module LoansHelper
       }
     )
   end
+
+  def loan_category(loan)
+    tag = loan.tagged_by_user.first
+    content_tag(:span, tag.name, class: "badge badge-#{tag.category}") if tag
+  end
 end

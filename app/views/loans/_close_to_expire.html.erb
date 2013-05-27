@@ -1,7 +1,6 @@
-<% tag = loan.tagged_by_user.first %>
 <tr data-object-id="<%= loan.to_param %>" <%== 'class="warning"' if loan.is_scheduled? %>>
   <td><%= check_box_tag "loan_ids[]", loan.id, nil, { id: nil } %></td>
-  <td><%= content_tag(:span, tag.name, class: "badge badge-#{tag.category}") if tag %> <%= loan.client %></td>
+  <td><%= loan_category(loan) %> <%= loan.client %></td>
   <td><%= l(loan.next_payment_expire_at.to_date, format: :minimal) if loan.next_payment_expire_at %></td>
   <td><%= loan.client_phone %></td>
   <td><%= link_to_loan_info(loan) %></td>

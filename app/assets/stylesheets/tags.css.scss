@@ -6,15 +6,6 @@ ul[data-zone-tags] {
 
 ul[data-user-tags] {
   padding: 0 8px;
-
-  li[data-user-tag-id] {
-    a.active { 
-      color: #DD4B39; 
-      font-weight: bold;
-      border-left: 3px solid #DD4B39;
-      background-color: #eee;
-    }
-  }
 }
 
 div[data-new-tag] {
