@@ -8,25 +8,24 @@
   label:
     'yes': 'Si'
     'no': 'No'
+    all: 'Todo'
     cancel: 'Cancelar'
     close: 'Cerrar'
     delete: 'Eliminar'
     edit: 'Editar'
     list: 'Listado'
     loading: 'Cargando...'
+    more_info: 'Mas Información'
     new: 'Nuevo'
+    scheduler: 'Agendar'
     search: 'Buscar'
     show: 'Ver'
-    more_info: 'Mas Información'
-    scheduler: 'Agendar'
 
   menu:
     account: 'Mi cuenta'
     actions:
       logout: 'Salir'
     clients: 'Clientes'
-    dashboard: 'Tablero'
-    loans: 'Préstamos'
     schedules: 'Eventos'
     users: 'Asesores'
 
@@ -51,10 +50,10 @@
     dashboard:
       index_title: 'Tablero'
     loans:
-      expired: 'Con cuotas vencidas'
-      expired_title: 'Listado de préstamos vencidos'
-      close_to_expire: 'Con cuotas por vencer'
-      close_to_expire_title: 'Listado de préstamos por vencer'
+      expired: 'Por mora'
+      expired_title: 'Listado de préstamos por mora'
+      close_to_expire: 'Por renovación'
+      close_to_expire_title: 'Listado de préstamos por renovación'
     notes:
       created_at:
         html: '<span class="muted">Creada hace %{distance_time}</span>' 
@@ -69,6 +68,17 @@
       new: 'Nuevo evento'
       empty_schedules: 'No hay ningún evento programado'
       empty_past_schedules: 'No se programaron eventos'
+    tags:
+      index_title: 'Listado de etiquetas'
+      show_title: 'Detalle de etiqueta'
+      new_title: 'Nueva etiqueta'
+      edit_title: 'Modificar etiqueta'
+      correctly_created: 'Etiqueta agregada correctamente.'
+      correctly_updated: 'Etiqueta actualizada correctamente.'
+      stale_object_error: 'La etiqueta no pudo ser actualizada, intente nuevamente.'
+      empty_index: 'No hay ninguna etiqueta'
+      new: 'Nueva etiqueta'
+      zones: 'Zonas'
     users:
       index_title: 'Listado de usuarios'
       show_title: 'Detalle de usuario'

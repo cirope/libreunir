@@ -20,5 +20,6 @@
  *= require devise
  *= require notes
  *= require schedules
+ *= require tags
  *= require users
 */

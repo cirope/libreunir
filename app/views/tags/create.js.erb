@@ -1,0 +1,9 @@
+<% if @tag.persisted? %>
+  $('[data-user-tags]').html('<%= j render('user_tags') %>').effect('highlight', 'slow');
+  $('#navtags').siblings('ul').append('<%= j render(@tag) %>');
+<% else %>
+  $('[data-new-tag]').find('form').replaceWith(
+    '<%= j render(template: 'tags/new', formats: [:html]) %>'
+  );
+  $('#tag_name').focus();
+<% end %>

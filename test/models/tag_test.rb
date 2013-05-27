@@ -47,6 +47,16 @@ class TagTest < ActiveSupport::TestCase
       @tag.errors[:category]
   end
 
+  test 'validates unique attributes' do
+    new_tag = Fabricate(:tag, user_id: @tag.user.id)
+    @tag.name = new_tag.name
+
+    assert @tag.invalid?
+    assert_equal 1, @tag.errors.size
+    assert_equal [error_message_from_model(@tag, :name, :taken)],
+      @tag.errors[:name]
+  end
+
   test 'validates length of _long_ attributes' do
     @tag.name = 'abcde' * 52
 

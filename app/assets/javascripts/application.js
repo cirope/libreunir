@@ -32,4 +32,5 @@
 //= require effect_helper
 //= require loans
 //= require schedules
+//= require tags
 //= require users

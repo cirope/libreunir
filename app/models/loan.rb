@@ -31,4 +31,8 @@ class Loan < ActiveRecord::Base
   def is_scheduled?
     self.schedules.present?
   end
+
+  def tagged_by_user
+    self.tags.where("#{Tag.table_name}.user_id IS NOT NULL")
+  end
 end

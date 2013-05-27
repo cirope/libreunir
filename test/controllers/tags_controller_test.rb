@@ -19,10 +19,13 @@ class TagsControllerTest < ActionController::TestCase
 
   test "should create tag" do
     assert_difference('Tag.count') do
-      post :create, tag: Fabricate.attributes_for(:tag)
+      post :create, tag: Fabricate.attributes_for(:tag), format: :js
     end
 
-    assert_redirected_to tag_url(assigns(:tag))
+    assert_response :success
+    assert_not_nil assigns(:tag)
+    assert_select '#unexpected_error', false
+    assert_template "tags/create"
   end
 
   test "should get edit" do

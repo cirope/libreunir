@@ -1,6 +1,6 @@
 Libreunir::Application.routes.draw do
 
-  resources :tags do
+  resources :tags do   
     resources :loans, only: [] do
       collection do
         get 'expired', to: 'loans#expired', as: 'expired'
@@ -22,10 +22,11 @@ Libreunir::Application.routes.draw do
 
   get :dashboard, to: 'dashboard#index'
 
-  resources :loans, only: [:index, :show] do
+  resources :loans, only: [:show] do
     collection do
       get 'expired', to: 'loans#expired', as: 'expired'
       get 'close_to_expire', to: 'loans#close_to_expire', as: 'close_to_expire'
+      post 'create_taggings', to: 'loans#create_tagging', as: 'create_tagging'
     end
 
     resources :schedules, only: [:new, :create, :edit, :update]

@@ -15,6 +15,10 @@ class TagsController < ApplicationController
     @tags = Tag.page(params[:page])
   end
 
+  # GET /tags/new
+  def new 
+  end
+
   # GET /tags/1/edit
   def edit
     @title = t('view.tags.edit_title')
@@ -22,15 +26,7 @@ class TagsController < ApplicationController
 
   # POST /tags
   def create
-    @title = t('view.tags.new_title')
-
-    respond_to do |format|
-      if @tag.save
-        format.html { redirect_to @tag, notice: t('view.tags.correctly_created') }
-      else
-        format.html { render action: 'new' }
-      end
-    end
+    @tag.save
   end
 
   # PUT /tags/1

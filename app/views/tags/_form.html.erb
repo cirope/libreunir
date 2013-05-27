@@ -1,7 +1,17 @@
-<%= simple_form_for(@tag) do |f| %>
-  <%= f.error_notification %>
+<%= simple_form_for(@tag, data: { remote: true }) do |f| %>
+  <%= f.input :name, label: false, input_html: { class: 'span12' } %>
 
-  <%= f.input :name %>
-  <%= f.input :category %>
-  <%= f.button :submit, class: 'btn-primary' %>
+  <div class="btn-group">
+    <% Tag::CATEGORIES.each do |category| %>
+      <div data-tag-category="true" class="btn btn-<%= category == 'important' ? 'danger' : category %> 
+        <%= 'selected' if @tag.category == category %>">
+        <span class="iconic"><%= '&#x2713;'.html_safe %></span>
+        <%= f.radio_button :category, category %>
+      </div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= f.button :submit, class: 'btn-primary' %>
+  </div>
 <% end %>

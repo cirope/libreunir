@@ -1,20 +1,24 @@
 <%= render 'sidebar' %>
+<%= render 'topbar' %>
 
+<%= form_tag create_tagging_loans_path, method: :post, data: { remote: true } do %>
 <table class="table table-condensed table-hover" data-endless-container="true">
   <thead>
     <tr>
+      <th></th>
       <th><%= Loan.human_attribute_name('client_id') %></th>
-      <th><%= Payment.human_attribute_name('expired_at') %></th>
       <th><%= Loan.human_attribute_name('payment') %></th>
       <th><%= Client.human_attribute_name('phone') %></th>
-      <th></th>
-      <th></th>
+      <th colspan="2"></th>
     </tr>
   </thead>
+
   <tbody>
     <%= render partial: 'close_to_expire', collection: @loans, as: :loan %>
   </tbody>
 </table>
+<%= hidden_field_tag :tag_id %>
+<% end %>
 
 <div class="pagination-container">
   <%= pagination_links(@loans) %>

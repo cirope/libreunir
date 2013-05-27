@@ -29,8 +29,10 @@ module Parser
         end
       else
         attributes.merge!(field_id)
-        klass.create(attributes)
+        instance = klass.create(attributes)
       end 
+
+      instance
     end
   end
 end

@@ -1,0 +1,13 @@
+<ul class="nav nav-pills">
+  <li class="dropdown active">
+    <a class="dropdown-toggle" id="navtags" role="button" data-toggle="dropdown" href="#">
+      <%= content_tag(:span, '&#xe02b;'.html_safe, class: 'iconic') << ' ' << Tag.model_name.human(count: 0) %>
+      <b class="caret"></b>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="navtags">
+      <% current_user.tags.each do |tag|  %>
+        <li><%= link_to tag.name, '#', data: { tag_id: tag.id } %></li>
+      <% end %>
+    </ul>
+  </li> 
+</ul>

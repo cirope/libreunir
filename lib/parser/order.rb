@@ -12,7 +12,9 @@ module Parser
         created_at: row[8]
       }
 
-      save_instance(loan, { loan_id: row[0].to_i }, ::Loan, attributes)
+      loan = save_instance(loan, { loan_id: row[0].to_i }, ::Loan, attributes)
+      
+      Parser::Tag.parse(row[48], loan)
     end
 
     def row_valid?(row)
