@@ -38,4 +38,5 @@ group :test do
   gem 'fabrication'
   gem 'faker'
   gem 'timecop'
+  gem 'coveralls', require: false
 end
