@@ -49,7 +49,7 @@ class LoansController < ApplicationController
   private
   
   def load_resource_loans
-    @loans = current_user.loans.page(params[:page])
+    @loans = current_user.loans.includes(:client, :schedules).page(params[:page])
   end
 
   def load_resource_tags
