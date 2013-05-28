@@ -6,8 +6,6 @@
 
 === Code Status {<img src="https://codeclimate.com/github/cirope/libreunir.png"/>}[https://codeclimate.com/github/cirope/libreunir]
 
-=== Code Status {<img src="https://codeclimate.com/github/francocatena/x0y0.png"/>}[https://codeclimate.com/github/francocatena/x0y0]
-
 == (The MIT License)
 
 Copyright (c) 2013 Cirope S.A.
