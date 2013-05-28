@@ -11,7 +11,7 @@ class LoansController < ApplicationController
 
   def expired
     @title = t 'view.loans.expired_title'
-    @loans = @loans.expired.order('delayed_at DESC').uniq
+    @loans = @loans.expired.order('delayed_at DESC')
 
     load_resource_tags
     filter_loans_by_tag
@@ -24,7 +24,7 @@ class LoansController < ApplicationController
 
   def close_to_expire
     @title = t 'view.loans.close_to_expire_title'
-    @loans = @loans.not_expired.with_expiration.sorted_by_expiration.reverse_order.uniq
+    @loans = @loans.not_expired.with_expiration.sorted_by_expiration.reverse_order
 
     load_resource_tags
     filter_loans_by_tag
@@ -49,11 +49,11 @@ class LoansController < ApplicationController
   private
   
   def load_resource_loans
-    @loans = current_user.loans.includes(:client, :schedules).page(params[:page])
+    @loans = current_user.loans.includes(:client, :schedules).page(params[:page]).uniq
   end
 
   def load_resource_tags
-    @tags = Tag.zones_by_loans(@loans)
+    @tags = Tag.zones_by_loans(@loans).uniq
   end
 
   def set_tag

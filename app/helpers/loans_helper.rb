@@ -12,7 +12,12 @@ module LoansHelper
   end
 
   def loan_category(loan)
-    tag = loan.tagged_by_user.first
-    content_tag(:span, tag.name, class: "badge badge-#{tag.category}") if tag
+    tags = []
+
+    loan.tagged_by_user.each do |tag|
+      tags << content_tag(:span, tag.name, class: "badge badge-#{tag.category}")
+    end
+
+    tags.join(' ')
   end
 end

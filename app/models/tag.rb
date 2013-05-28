@@ -7,7 +7,7 @@ class Tag < ActiveRecord::Base
   default_scope { order("#{table_name}.name ASC") }
   scope :zones_by_loans, lambda { |loans| joins(:taggings).where(
       "#{table_name}.user_id IS NULL AND #{Tagging.table_name}.taggable_id IN(:loan_ids)", loan_ids: loans.map(&:id)
-    ).uniq 
+    )
   }
 
   # Callbacks

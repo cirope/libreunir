@@ -1,6 +1,6 @@
 <tr data-object-id="<%= loan.to_param %>" <%== 'class="warning"' if loan.is_scheduled? %>>
   <td><%= check_box_tag "loan_ids[]", loan.id, false, id: nil %></td>
-  <td><%= loan_category(loan) %> <%= loan.client %></td>
+  <td><%== loan_category(loan) %> <%= loan.client %></td>
   <td><%= l(loan.delayed_at.to_date, format: :minimal) if loan.delayed_at %></td>
   <td><%= loan.client_phone %></td>
   <td><%= link_to_loan_info(loan) %></td>
