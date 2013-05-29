@@ -1,31 +1,25 @@
-<% if controller_name == 'loans' %>
-  <ul class="nav nav-pills nav-stacked" data-zone-tags="true">
-    <li <%== 'class=active' unless @tag %>>
-      <%= link_to t('label.all'), [action_name, 'loans'] %>
-    </li>
-    <li>
-      <div class="accordion" id="accordion_zones">
-        <div class="accordion-group">
-          <div class="accordion-heading">
-            <%= link_to t('view.tags.zones'), '#zones', 
-              class: 'accordion-toggle', 
-              data: { toggle: 'collapse', parent: '#accordion_zones' } 
-            %>
-          </div>
-          <div id="zones" class="accordion-body collapse <%== 'in' if @tag && @tag.is_zone? %>">
-            <div class="accordion-inner">
-              <ul class="nav nav-pills nav-stacked">
-                <% @tags.each do |tag| %>
-                  <li <%== 'class="active"' if tag == @tag %>>
-                    <%= link_to tag.name, [action_name, tag, 'loans'] %>
-                  </li>
-                <% end %>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </li>
-  </ul>
-  <%= render 'tags/user_tags' %>
+<% if @tags.empty? %>
+  <%= render 'shared/empty_index' %>
+<% else %>
+  <div class="row-fluid">
+    <div class="span12">
+      <table class="table">
+        <thead>
+          <tr>
+            <th><%= Tag.human_attribute_name 'name' %></th>
+            <th><%= Tag.human_attribute_name 'category' %></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @tags.each do |tag| %>  
+            <tr>
+              <td><%= tag.name %></td>
+              <td><%= tag.category %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
 <% end %>

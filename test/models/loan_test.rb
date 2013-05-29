@@ -14,11 +14,11 @@ class LoanTest < ActiveSupport::TestCase
   test 'update' do
     assert_difference 'Version.count' do
       assert_no_difference 'Loan.count' do
-        assert @loan.update_attributes(approved_at: 5.days.ago.to_date)
+        assert @loan.update_attributes(capital: 100.0)
       end
     end
 
-    assert_equal 5.days.ago.to_date, @loan.reload.approved_at
+    assert_equal 100.0, @loan.reload.capital
   end
     
   test 'destroy' do 

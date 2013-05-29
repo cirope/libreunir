@@ -53,9 +53,11 @@ ActiveRecord::Schema.define(version: 20130521021740) do
     t.integer  "loan_id",                                                       null: false
     t.decimal  "capital",                  precision: 15, scale: 5
     t.decimal  "payment",                  precision: 15, scale: 5
+    t.decimal  "total_debt",               precision: 15, scale: 5
+    t.decimal  "days_overdue_average",     precision: 10, scale: 2
     t.integer  "expired_payments_count"
     t.integer  "payments_to_expire_count"
-    t.datetime "approved_at"
+    t.integer  "payments_count"
     t.datetime "delayed_at"
     t.datetime "next_payment_expire_at"
     t.integer  "client_id"
@@ -68,8 +70,10 @@ ActiveRecord::Schema.define(version: 20130521021740) do
 
   add_index "loans", ["branch_id"], name: "index_loans_on_branch_id", using: :btree
   add_index "loans", ["client_id"], name: "index_loans_on_client_id", using: :btree
+  add_index "loans", ["days_overdue_average"], name: "index_loans_on_days_overdue_average", using: :btree
   add_index "loans", ["delayed_at"], name: "index_loans_on_delayed_at", using: :btree
   add_index "loans", ["loan_id"], name: "index_loans_on_loan_id", unique: true, using: :btree
+  add_index "loans", ["total_debt"], name: "index_loans_on_total_debt", using: :btree
   add_index "loans", ["user_id"], name: "index_loans_on_user_id", using: :btree
 
   create_table "notes", force: true do |t|
@@ -85,6 +89,7 @@ ActiveRecord::Schema.define(version: 20130521021740) do
 
   create_table "payments", force: true do |t|
     t.integer  "number",                                            null: false
+    t.integer  "days_overdue"
     t.datetime "expired_at",                                        null: false
     t.datetime "paid_at"
     t.decimal  "amount_paid",  precision: 15, scale: 5

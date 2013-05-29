@@ -11,7 +11,7 @@ class LoansController < ApplicationController
 
   def expired
     @title = t 'view.loans.expired_title'
-    @loans = @loans.expired.order('delayed_at DESC')
+    @loans = @loans.expired.order('total_debt DESC')
 
     load_resource_tags
     filter_loans_by_tag
@@ -24,7 +24,7 @@ class LoansController < ApplicationController
 
   def close_to_expire
     @title = t 'view.loans.close_to_expire_title'
-    @loans = @loans.not_expired.with_expiration.sorted_by_expiration.reverse_order
+    @loans = @loans.not_expired.with_expiration.policy.sorted_by_expiration
 
     load_resource_tags
     filter_loans_by_tag
@@ -43,7 +43,9 @@ class LoansController < ApplicationController
       loan.taggings.create(tag_id: @tag.id) 
     end
 
-    redirect_to params[:redirect_to]
+    respond_to do |format|
+      format.js
+    end
   end
 
   private

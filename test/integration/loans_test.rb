@@ -69,14 +69,14 @@ class LoansTest < ActionDispatch::IntegrationTest
     click_link I18n.t('menu.clients')
     click_link I18n.t('view.loans.expired')
 
-    assert page.has_no_selector?("tr[data-schedulable-id=\"#{loan.to_param}\"]")
+    assert page.has_no_selector?("div[data-schedulable-id=\"#{loan.to_param}\"]")
 
     within "tr[data-object-id=\"#{loan.to_param}\"]" do
       click_link ''
     end
 
     assert_no_difference 'Schedule.count' do
-      within "tr[data-schedulable-id=\"#{loan.to_param}\"]" do
+      within "div[data-schedulable-id=\"#{loan.to_param}\"]" do
         assert page.has_no_css?('.text.error')
 
         find('.btn-primary').click
@@ -88,7 +88,7 @@ class LoansTest < ActionDispatch::IntegrationTest
     assert_difference 'Schedule.count' do
       assert page.has_no_css?('.warning')
 
-      within "tr[data-schedulable-id=\"#{loan.to_param}\"]" do
+      within "div[data-schedulable-id=\"#{loan.to_param}\"]" do
         within '.ui-datepicker-calendar' do
           click_link schedule.scheduled_at.day
         end

@@ -9,8 +9,9 @@ module Parser
 
     def save_loan(loan_id, attributes)
       loan = ::Loan.find_by(loan_id: loan_id)
+      attributes.merge!(loan_id: loan_id)
       
-      save_instance(loan, { loan_id: loan_id }, ::Loan, attributes)
+      save_instance(loan, ::Loan, attributes)
     end
 
     def row_valid?(row)

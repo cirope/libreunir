@@ -1,7 +1,6 @@
 <% if @schedulable %>
   <% if @schedule.persisted? %>
-    $('[data-object-id="<%= @schedulable.to_param %>"]').addClass('warning');
-    $('[data-schedulable-id="<%= @schedulable.to_param %>"]').remove();
+    Turbolinks.visit(window.location.pathname);
   <% else %>
     $('[data-schedulable-id="<%= @schedulable.to_param %>"]').find('form').replaceWith(
       '<%= j render(template: 'schedules/new', formats: [:html]) %>'

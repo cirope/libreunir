@@ -12,7 +12,6 @@ class TagsController < ApplicationController
   # GET /tags
   def index
     @title = t('view.tags.index_title')
-    @tags = Tag.page(params[:page])
   end
 
   # GET /tags/new
@@ -31,17 +30,11 @@ class TagsController < ApplicationController
 
   # PUT /tags/1
   def update
-    @title = t('view.tags.edit_title')
+    @tag.update(tag_params)
 
     respond_to do |format|
-      if @tag.update(tag_params)
-        format.html { redirect_to @tag, notice: t('view.tags.correctly_updated') }
-      else
-        format.html { render action: 'edit' }
-      end
+      format.js
     end
-  rescue ActiveRecord::StaleObjectError
-    redirect_to edit_tag_url(@tag), alert: t('view.tags.stale_object_error')
   end
 
   # DELETE /tags/1

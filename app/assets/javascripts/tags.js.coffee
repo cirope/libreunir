@@ -1,5 +1,5 @@
 new Rule
-  condition: -> $('[data-new-tag]').length
+  condition: -> $('[data-tags-new]').length
   load: ->
     @map.tag_category_check ||= ->
       $('[data-tag-category]').removeClass('selected')

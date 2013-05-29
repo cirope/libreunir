@@ -53,6 +53,7 @@
         client_id: 'Cliente'
         branch_id: 'Sucursal'
         user_id: 'Asesor'
+        total_debt: 'Deuda total'
       note:
         note: 'Nota'
       payment:
@@ -70,6 +71,7 @@
         remind_me: 'Recordarme por correo 15 minutos antes'
       tag:
         name: 'Nombre'
+        category: 'Categoría'
       user:
         user_id: 'Asesor'
         name: 'Nombre'

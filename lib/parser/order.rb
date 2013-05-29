@@ -6,13 +6,13 @@ module Parser
       branch = ::Branch.find_by(branch_id: row[7].to_i)
 
       attributes = {
-        approved_at: row[10], 
+        loan_id: row[0].to_i,
         user_id: user.try(:id), 
         branch_id: branch.try(:id), 
         created_at: row[8]
       }
 
-      loan = save_instance(loan, { loan_id: row[0].to_i }, ::Loan, attributes)
+      loan = save_instance(loan, ::Loan, attributes)
       
       Parser::Tag.parse(row[48], loan)
     end

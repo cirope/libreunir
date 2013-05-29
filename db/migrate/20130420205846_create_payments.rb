@@ -2,6 +2,7 @@ class CreatePayments < ActiveRecord::Migration
   def change
     create_table :payments do |t|
       t.integer :number, null: false
+      t.integer :days_overdue
       t.datetime :expired_at, null: false
       t.datetime :paid_at
       t.decimal :amount_paid, precision: 15, scale: 5

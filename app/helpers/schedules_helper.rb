@@ -34,7 +34,8 @@ module SchedulesHelper
     data = { dismiss: 'modal' }
 
     if @schedulable && @schedule.new_record?
-      data = { remove_target: "[data-schedulable-id=\"#{@schedulable.to_param}\"]" }
+      href = ''
+      data = {}
     end
 
     link_to(t('label.cancel'), href, data: data)

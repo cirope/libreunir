@@ -1,3 +1,4 @@
-<tr data-schedulable data-schedulable-id="<%= @schedulable.to_param %>">
-  <td colspan="7"><%= render(template: 'schedules/new', formats: [:html]) %></td>
-</tr>
+<%= render "#{@schedulable.class.to_s.pluralize.downcase}/#{@schedulable.class.to_s.downcase}_info" %>
+<div class="row-fluid" data-schedulable data-schedulable-id="<%= @schedulable.to_param %>">
+  <div class="span12"><%= render(template: 'schedules/new', formats: [:html]) %></div>
+</div>

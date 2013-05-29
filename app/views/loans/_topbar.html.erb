@@ -8,6 +8,8 @@
       <% current_user.tags.each do |tag|  %>
         <li><%= link_to tag.name, '#', data: { tag_id: tag.id } %></li>
       <% end %>
+      <li class="divider"></li>
+      <li><%= link_to t('view.tags.new'), new_tag_path, data: { remote: true } %></li>
     </ul>
   </li> 
 </ul>

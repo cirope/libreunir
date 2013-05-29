@@ -11,9 +11,9 @@ namespace :parser do
     user: 'usuario.txt',
     order: 'solicitud.txt',
     loan: 'prestamo.txt',
-    product: 'producto.txt',
     client: 'clientes.txt',
-    payment: 'cuota.txt'
+    payment: 'cuota.txt',
+    product: 'producto.txt'
   }
 
   @processor = Parser::Processor.new

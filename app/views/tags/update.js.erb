@@ -1,8 +1,8 @@
-<% if @tag.persisted? %>
+<% if @tag.errors.empty? %>
   Turbolinks.visit(window.location.pathname);
 <% else %>
   $('[data-tags-new]').find('form').replaceWith(
-    '<%= j render(template: 'tags/new', formats: [:html]) %>'
+    '<%= j render(template: 'tags/edit', formats: [:html]) %>'
   );
   $('#tag_name').focus();
 <% end %>

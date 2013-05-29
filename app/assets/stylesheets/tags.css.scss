@@ -1,15 +1,19 @@
-ul[data-zone-tags] {
+ul[data-tags-all] {
+  margin-bottom: 10px;
+}
+
+ul[data-tags-zones] {
   margin-bottom: 10px;
 
   .accordion { margin-bottom: 0; }
 }
 
-ul[data-user-tags] {
+ul[data-tags-user] {
   padding: 0 8px;
 }
 
-div[data-new-tag] {
-  margin-top: 10px;
+div[data-tags-new] {
+  form { margin: 10px 0; }
 
   .btn-group .btn {
     margin-bottom: 10px;

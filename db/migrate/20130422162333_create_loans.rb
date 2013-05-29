@@ -4,9 +4,11 @@ class CreateLoans < ActiveRecord::Migration
       t.integer :loan_id, null: false
       t.decimal :capital, precision: 15, scale: 5
       t.decimal :payment, precision: 15, scale: 5
+      t.decimal :total_debt, precision: 15, scale: 5
+      t.decimal :days_overdue_average, precision: 10, scale: 2
       t.integer :expired_payments_count
       t.integer :payments_to_expire_count
-      t.datetime :approved_at
+      t.integer :payments_count
       t.datetime :delayed_at
       t.datetime :next_payment_expire_at
       t.references :client, index: true
@@ -16,7 +18,10 @@ class CreateLoans < ActiveRecord::Migration
 
       t.timestamps
     end
+
     add_index :loans, :loan_id, unique: true
     add_index :loans, :delayed_at
+    add_index :loans, :total_debt
+    add_index :loans, :days_overdue_average
   end
 end

@@ -1,26 +1,31 @@
 <%= render 'sidebar' %>
 <%= render 'topbar' %>
 
-<%= form_tag create_tagging_loans_path, method: :post, data: { remote: true } do %>
-<table class="table table-condensed table-hover" data-endless-container="true">
-  <thead>
-    <tr>
-      <th></th>
-      <th><%= Loan.human_attribute_name('client_id') %></th>
-      <th><%= Loan.human_attribute_name('payment') %></th>
-      <th><%= Client.human_attribute_name('phone') %></th>
-      <th colspan="2"></th>
-    </tr>
-  </thead>
+<% if @loans.present? %>
+<div data-form-container="true">
+  <%= form_tag create_tagging_tag_loans_path('tag_id'), method: :post, data: { remote: true } do %>
+    <table class="table table-condensed table-hover" data-endless-container="true">
+      <thead>
+        <tr>
+          <th></th>
+          <th><%= Loan.human_attribute_name('client_id') %></th>
+          <th><%= Loan.human_attribute_name('total_debt') %></th>
+          <th><%= Payment.human_attribute_name('expired_at') %></th>
+          <th><%= Client.human_attribute_name('phone') %></th>
+          <th colspan="2"></th>
+        </tr>
+      </thead>
 
-  <tbody>
-    <%= render partial: 'expired', collection: @loans, as: :loan %>
-  </tbody>
-</table>
-<%= hidden_field_tag :tag_id %>
-<%= hidden_field_tag :redirect_to, url_for([action_name, @tag, 'loans'].compact) %>
-<% end %>
+      <tbody>
+        <%= render partial: 'expired', collection: @loans, as: :loan %>
+      </tbody>
+    </table>
+  <% end %>
 
-<div class="pagination-container">
-  <%= pagination_links(@loans) %>
+  <div class="pagination-container">
+    <%= pagination_links(@loans) %>
+  </div>
 </div>
+<% else %>
+  <%= render 'shared/empty_index' %>
+<% end %>

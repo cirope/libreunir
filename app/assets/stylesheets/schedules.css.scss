@@ -13,6 +13,10 @@ form[data-scheduled-form] {
   }
 }
 
+div[data-place-holder] {
+  .alert { margin: 0; }
+}
+
 .strike {
   text-decoration: line-through;
 }

@@ -21,14 +21,13 @@ module Parser
       end
     end
 
-    def save_instance(instance, field_id, klass, attributes)
+    def save_instance(instance, klass, attributes)
       if instance.try(:persisted?)
         instance.without_versioning do
           instance.update_attributes(attributes)
           instance.touch
         end
       else
-        attributes.merge!(field_id)
         instance = klass.create(attributes)
       end 
 

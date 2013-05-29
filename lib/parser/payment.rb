@@ -8,7 +8,9 @@ module Parser
       payment = ::Payment.find_by(loan_id: loan.try(:id), number: row[1])
 
       attributes = {
-        number: row[1], 
+        loan_id: loan.try(:id),
+        number: row[1],
+        days_overdue: days_overdue(row[2], row[16]),
         expired_at: row[2], 
         paid_at: row[16],
         amount_paid: row[17], 
@@ -16,13 +18,24 @@ module Parser
         user_id: user.try(:id)
       }
 
-      save_instance(payment, { loan_id: loan_id }, ::Payment, attributes)
+      save_instance(payment, ::Payment, attributes)
     end
 
     def row_valid?(row)
       return raise CSV::MalformedCSVError, 'Invalid row' unless row[0].start_with?('PR0')
       
       true
+    end
+
+    def days_overdue(expired_row, paid_row)
+      expired_at = Time.zone.parse(expired_row)
+      paid_at = Time.zone.parse(paid_row)
+
+      if expired_at && paid_at
+        overdue = (paid_at.to_date - expired_at.to_date).to_i 
+        
+        overdue < 0 ? 0 : overdue
+      end
     end
   end
 end
