@@ -4,10 +4,11 @@ gem 'rails', '4.0.0.rc1'
 
 gem 'pg'
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 gem 'turbolinks'
 gem 'will_paginate'
-gem 'simple_form', '~> 3.0.0.beta1'
-gem 'devise', github: 'plataformatec/devise', branch: 'rails4'
+gem 'simple_form', '~> 3.0.0.rc'
+gem 'devise', '~> 3.0.0.rc'
 gem 'cancan', github: 'francocatena/cancan'
 gem 'role_model'
 gem 'paper_trail', github: 'airblade/paper_trail', branch: 'rails4'
@@ -22,8 +23,8 @@ gem 'newrelic_rpm'
 
 # Old assets group
 gem 'sass-rails', '~> 4.0.0.rc1'
-gem 'coffee-rails', '~> 4.0.0.rc1'
-gem 'uglifier', '>= 1.0.30'
+gem 'coffee-rails'
+gem 'uglifier'
 
 group :development do
   gem 'unicorn'
@@ -38,4 +39,5 @@ group :test do
   gem 'fabrication'
   gem 'faker'
   gem 'timecop'
+  gem 'coveralls', require: false
 end
