@@ -4,6 +4,7 @@ gem 'rails', '4.0.0.rc1'
 
 gem 'pg'
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 gem 'turbolinks'
 gem 'will_paginate'
 gem 'simple_form', '~> 3.0.0.rc'
