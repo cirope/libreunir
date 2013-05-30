@@ -54,12 +54,12 @@ ActiveRecord::Schema.define(version: 20130521021740) do
     t.decimal  "capital",                  precision: 15, scale: 5
     t.decimal  "payment",                  precision: 15, scale: 5
     t.decimal  "total_debt",               precision: 15, scale: 5
-    t.decimal  "days_overdue_average",     precision: 10, scale: 2
+    t.integer  "days_overdue_average"
     t.integer  "expired_payments_count"
     t.integer  "payments_to_expire_count"
     t.integer  "payments_count"
-    t.datetime "delayed_at"
-    t.datetime "next_payment_expire_at"
+    t.date     "delayed_at"
+    t.date     "next_payment_expire_at"
     t.integer  "client_id"
     t.integer  "user_id"
     t.integer  "branch_id"
@@ -90,7 +90,7 @@ ActiveRecord::Schema.define(version: 20130521021740) do
   create_table "payments", force: true do |t|
     t.integer  "number",                                            null: false
     t.integer  "days_overdue"
-    t.datetime "expired_at",                                        null: false
+    t.date     "expired_at",                                        null: false
     t.datetime "paid_at"
     t.decimal  "amount_paid",  precision: 15, scale: 5
     t.decimal  "total_paid",   precision: 15, scale: 5

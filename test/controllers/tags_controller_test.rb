@@ -37,9 +37,15 @@ class TagsControllerTest < ActionController::TestCase
   end
 
   test "should update tag" do
-    put :update, id: @tag, 
-      tag: Fabricate.attributes_for(:tag, attr: 'value')
-    assert_redirected_to tag_url(assigns(:tag))
+    assert_no_difference 'Tag.count' do
+      xhr :put, :update, id: @tag, 
+        tag: Fabricate.attributes_for(:tag, attr: 'value'), format: :js
+    end
+
+    assert_response :success
+    assert_not_nil assigns(:tag)
+    assert_select '#unexpected_error', false
+    assert_template "tags/update"
   end
 
   test "should destroy tag" do

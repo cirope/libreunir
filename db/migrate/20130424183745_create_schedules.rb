@@ -10,7 +10,6 @@ class CreateSchedules < ActiveRecord::Migration
 
       t.timestamps
     end
-
     add_index :schedules, [:schedulable_id, :schedulable_type]
     add_index :schedules, :scheduled_at
   end

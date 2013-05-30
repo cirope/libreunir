@@ -7,7 +7,6 @@ class CreateNotes < ActiveRecord::Migration
 
       t.timestamps
     end
-
     add_index :notes, [:noteable_id, :noteable_type]
   end
 end

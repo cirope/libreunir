@@ -28,11 +28,13 @@ module Parser
     end
 
     def days_overdue(expired_row, paid_row)
-      expired_at = Time.zone.parse(expired_row)
+      expired_at = Date.parse(expired_row)
       paid_at = Time.zone.parse(paid_row)
 
-      if expired_at && paid_at
-        overdue = (paid_at.to_date - expired_at.to_date).to_i 
+      if expired_at.past? && !paid_at
+        (Date.today - expired_at).to_i
+      elsif paid_at
+        overdue = (paid_at.to_date - expired_at).to_i 
         
         overdue < 0 ? 0 : overdue
       end
