@@ -38,15 +38,18 @@ ul[data-tags-user] {
 div[data-tags-new] {
   form { margin: 10px 0; }
 
-  .btn-group .btn {
+  .btn-group {
     margin-bottom: 10px;
+  
+    .btn {
+      padding: 0.5em 0.7em;
+      input[type="radio"] { display: none; }
 
-    input[type="radio"] { display: none; }
+      span { visibility: hidden; }
 
-    span { visibility: hidden; }
-
-    &.selected {
-      span { visibility: visible; }
+      &.selected {
+        span { visibility: visible; }
+      }
     }
   }
 }
