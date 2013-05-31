@@ -13,5 +13,11 @@
 
   <div>
     <%= f.button :submit, class: 'btn-primary' %>
+    <span class="muted">|</span>
+    <small>
+      <%= link_to(
+        t('label.cancel'), '#', data: { remove_target: '[data-tags-new] *'} 
+      ) %>
+    </small>
   </div>
 <% end %>

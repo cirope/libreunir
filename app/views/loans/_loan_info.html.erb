@@ -1,16 +1,7 @@
-<div class="alert alert-info">
-  <h4><%= Loan.model_name.human(count: 1) %>  <%= @loan %></h4>
-  
-  <dl class="dl-horizontal">
-    <dt><%= Loan.human_attribute_name('capital') %></dt>
-    <dd><%= number_to_currency @loan.capital %></dd>
-    <dt><%= Loan.human_attribute_name('expired_payments_count') %></dt>
-    <dd><%= @loan.expired_payments_count %></dd>
-    <dt><%= Loan.human_attribute_name('payments_to_expire_count') %></dt>
-    <dd><%= @loan.payments_to_expire_count %></dd>
-    <dt><%= Client.human_attribute_name('phone') %></dt>
-    <dd><%= @loan.client_phone.present? ? @loan.client_phone : '-' %></dd>
-    <dt><%= Client.human_attribute_name('address') %></dt>
-    <dd><%= @loan.client_address.present? ? @loan.client_address : '-' %></dd>
-  </dl>
+<div class="row-fluid">
+  <div class="span12">
+    <div class="alert alert-info">
+      <h4><%= Loan.model_name.human(count: 1) %>  <%= @loan %></h4>
+    </div>
+  </div>
 </div>

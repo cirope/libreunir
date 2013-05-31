@@ -2,15 +2,14 @@
 <%= render 'topbar' %>
 
 <% if @loans.present? %>
-<div data-form-container="true">
-  <%= form_tag create_tagging_tag_loans_path('tag_id'), method: :post, data: { remote: true } do %>
+  <%= form_tag create_tagging_tag_loans_path('tag_id'), 
+    method: :post, data: { remote: true, form_container: true } do %>
     <table class="table table-condensed table-hover" data-endless-container="true">
       <thead>
         <tr>
           <th></th>
           <th><%= Loan.human_attribute_name('client_id') %></th>
           <th><%= Loan.human_attribute_name('payments_to_expire_count') %></th>
-          <th>Promedio</th>
           <th><%= Payment.human_attribute_name('expired_at') %></th>
           <th><%= Client.human_attribute_name('phone') %></th>
           <th colspan="2"></th>
@@ -23,10 +22,11 @@
     </table>
   <% end %>
 
+  <div data-schedule-form-placeholder="true"></div>
+
   <div class="pagination-container">
     <%= pagination_links(@loans) %>
   </div>
-</div>
 <% else %>
   <%= render 'shared/empty_index' %>
 <% end %>
