@@ -2,17 +2,16 @@
   <li class="nav-header"><%= Tag.model_name.human(count: 0) %></li>
   <% current_user.tags.each do |tag| %>
     <li data-user-tag-id="<%= tag.id %>" <%== 'class="active"' if @tag == tag %>>
-      <%= link_to tag.name, [action_name, tag, 'loans'], style: 'float: left; margin: 0; width: 65%;' %>
+      <%= link_to tag.name, [action_name, tag, 'loans'] %>
       <%= link_to(
         content_tag(:span, '&#x270e;'.html_safe, class: 'iconic'), 
-        edit_tag_path(tag), remote: true, style: 'float: right; margin: 0; width: 10%;'
+        edit_tag_path(tag), remote: true, class: 'edit_tag'
       ) %>
     </li>
-    <li class="clearfix"></li>
   <% end %>
   <li class="divider"></li>
-  <li>
+  <li class="tag_new">
     <%= link_to t('view.tags.new'), new_tag_path, data: { remote: true } %>
-    <div data-tags-new="true"></div>
   </li>
 </ul>
+<div data-tags-new="true"></div>
