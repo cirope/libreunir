@@ -14,7 +14,7 @@ module LoansHelper
   def loan_category(loan)
     tags = []
 
-    loan.tagged_by_user.each do |tag|
+    loan.tags.each do |tag|
       tags << content_tag(:span, tag.name, class: "badge badge-#{tag.category}")
     end
 

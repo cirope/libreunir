@@ -8,6 +8,11 @@
 }
 
 @media (min-width: 768px) and (max-width: 979px) {  
+  div[data-tags-new] {
+    .btn-group {
+      .btn { padding: 0.4em; }
+    }
+  }
 }
 
 @media (max-width: 979px) {
@@ -31,6 +36,11 @@
 }
 
 @media (min-width: 980px) {
+  div[data-tags-new] {
+    .btn-group {
+      .btn { padding: 0.5em 0.7em; }
+    }
+  }
 }
 
 @media (min-width: 1200px) {

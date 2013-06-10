@@ -3,17 +3,17 @@
     <div class="accordion" id="accordion_zones">
       <div class="accordion-group">
         <div class="accordion-heading">
-          <%= link_to t('view.tags.zones'), '#zones', 
+          <%= link_to Zone.model_name.human(count: 0), '#zones', 
             class: 'accordion-toggle', 
             data: { toggle: 'collapse', parent: '#accordion_zones' } 
           %>
         </div>
-        <div id="zones" class="accordion-body collapse <%== 'in' if @tag && @tag.is_zone? %>">
+        <div id="zones" class="accordion-body collapse <%== 'in' if @zone %>">
           <div class="accordion-inner">
             <ul class="nav nav-pills nav-stacked">
-              <% @tags.each do |tag| %>
-                <li <%== 'class="active"' if tag == @tag %>>
-                  <%= link_to tag.name, [action_name, tag, 'loans'] %>
+              <% @zones.each do |zone| %>
+                <li <%== 'class="active"' if zone == @zone %>>
+                  <%= link_to zone.name, [action_name, zone, 'loans'] %>
                 </li>
               <% end %>
             </ul>

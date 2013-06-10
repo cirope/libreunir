@@ -14,6 +14,7 @@ class CreateLoans < ActiveRecord::Migration
       t.references :client, index: true
       t.references :user, index: true
       t.references :branch, index: true
+      t.references :zone, index: true
       t.integer :lock_version, null: false, default: 0
 
       t.timestamps

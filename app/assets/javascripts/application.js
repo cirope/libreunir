@@ -22,6 +22,7 @@
 //= require turbolinks
 //= require common
 //= require url_helper
+//= require dashboard
 //= require date_pickers
 //= require endless_pagination
 //= require lazy_tabs
@@ -33,4 +34,5 @@
 //= require loans
 //= require schedules
 //= require tags
+//= require taggings
 //= require users

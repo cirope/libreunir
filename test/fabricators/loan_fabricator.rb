@@ -12,4 +12,5 @@ Fabricator(:loan) do
   client_id { Fabricate(:client).id }
   user_id { Fabricate(:user).id }
   branch_id { Fabricate(:branch).id }
+  zone_id { Fabricate(:zone).id }
 end

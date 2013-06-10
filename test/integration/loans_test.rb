@@ -7,8 +7,10 @@ class LoansTest < ActionDispatch::IntegrationTest
 
     login(user: user)
 
-    click_link I18n.t('menu.clients')
-    click_link I18n.t('view.loans.close_to_expire')
+    within 'div.navbar-inner' do
+      click_link I18n.t('menu.clients')
+      click_link I18n.t('view.loans.close_to_expire')
+    end
 
     assert page.has_css?('table[data-endless-container]')
     assert_equal 3, all('table[data-endless-container] tbody tr').size
@@ -21,9 +23,11 @@ class LoansTest < ActionDispatch::IntegrationTest
     end
 
     login(user: user)
-
-    click_link I18n.t('menu.clients')
-    click_link I18n.t('view.loans.expired')
+  
+    within 'div.navbar-inner' do
+      click_link I18n.t('menu.clients')
+      click_link I18n.t('view.loans.expired')
+    end
 
     assert page.has_css?('table[data-endless-container]')
     assert_equal 3, all('table[data-endless-container] tbody tr').size
@@ -38,8 +42,10 @@ class LoansTest < ActionDispatch::IntegrationTest
 
     login(user: user)
     
-    click_link I18n.t('menu.clients')
-    click_link I18n.t('view.loans.expired')
+    within 'div.navbar-inner' do
+      click_link I18n.t('menu.clients')
+      click_link I18n.t('view.loans.expired')
+    end
 
     assert page.has_no_selector?("tr[id=\"loan-info-#{loan.to_param}\"]")
 
@@ -66,8 +72,10 @@ class LoansTest < ActionDispatch::IntegrationTest
 
     login(user: user)
     
-    click_link I18n.t('menu.clients')
-    click_link I18n.t('view.loans.expired')
+    within 'div.navbar-inner' do
+      click_link I18n.t('menu.clients')
+      click_link I18n.t('view.loans.expired')
+    end
 
     assert page.has_no_selector?("div[data-schedulable-id=\"#{loan.to_param}\"]")
 

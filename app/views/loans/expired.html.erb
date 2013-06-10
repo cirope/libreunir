@@ -2,7 +2,7 @@
 <%= render 'topbar' %>
 
 <% if @loans.present? %>
-  <%= form_tag create_tagging_tag_loans_path('tag_id'), 
+  <%= form_tag tag_taggings_path('tag_id'), 
     method: :post, data: { remote: true, form_container: true } do %>
     <table class="table table-condensed table-hover" data-endless-container="true">
       <thead>

@@ -1,6 +1,6 @@
 <%= content_for :sidebar do %>
   <ul class="nav nav-pills nav-stacked" data-tags-all="true">
-    <li <%== 'class=active' unless @tag %>> 
+    <li <%== 'class=active' unless @filter %>> 
       <%= link_to t('label.all'), [action_name, 'loans'] %>
     </li>
   </ul>

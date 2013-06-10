@@ -7,10 +7,11 @@ class NotesTest < ActionDispatch::IntegrationTest
 
   test 'should create a note' do
     schedule = Fabricate(:schedule, user_id: @user.id, scheduled_at: 1.hour.from_now)
+    note = Fabricate.build(:note, noteable_id: schedule.id, noteable_type: schedule.class.to_s)
 
     login(user: @user)
 
-    note = Fabricate.build(:note, noteable_id: schedule.id, noteable_type: schedule.class.to_s)
+    visit schedules_path
 
     within "li[data-schedule-id=\"#{schedule.to_param}\"]" do
       click_link ''

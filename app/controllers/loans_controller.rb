@@ -1,20 +1,24 @@
 class LoansController < ApplicationController
   before_action :authenticate_user!
-  before_action :load_resource_loans, except: [:create_tagging, :show]
-  before_action :set_tag, except: :show
+
+  check_authorization
+  load_resource :tag, except: :show, shallow: true
+  load_resource :zone, except: :show, shallow: true
+
+  load_and_authorize_resource through: :current_user
+
+  before_action :set_filter, except: :show
 
   layout ->(c) { c.request.xhr? ? false : 'columns' }
 
   def show
-    @loan = current_user.loans.find(params[:id])
   end
 
   def expired
     @title = t 'view.loans.expired_title'
     @loans = @loans.expired.order('total_debt DESC')
 
-    load_resource_tags
-    filter_loans_by_tag
+    load_resource_loans
 
     respond_to do |format|
       format.html # expired.html.erb
@@ -26,8 +30,7 @@ class LoansController < ApplicationController
     @title = t 'view.loans.close_to_expire_title'
     @loans = @loans.not_expired.with_expiration.policy.sorted_by_expiration
 
-    load_resource_tags
-    filter_loans_by_tag
+    load_resource_loans
 
     respond_to do |format|
       format.html # close_to_expired.html.erb
@@ -35,34 +38,27 @@ class LoansController < ApplicationController
     end
   end
 
-  # POST /create_tagging_loans
-  def create_tagging
-    loans = Loan.find(params[:loan_ids])
-
-    loans.each do |loan|
-      loan.taggings.create(tag_id: @tag.id) 
-    end
-
-    respond_to do |format|
-      format.js
-    end
-  end
-
   private
   
-  def load_resource_loans
-    @loans = current_user.loans.includes(:client, :schedules).page(params[:page]).uniq
+  def set_filter
+    @filter = @tag || @zone
   end
 
-  def load_resource_tags
-    @tags = Tag.zones_by_loans(@loans).uniq
+  def load_resource_loans 
+    load_resource_zones
+    filter_loans
+    paginate_loans
   end
 
-  def set_tag
-    @tag = Tag.find(params[:tag_id]) if params[:tag_id].present?
+  def load_resource_zones
+    @zones = Zone.find_by_loans(@loans)
   end
 
-  def filter_loans_by_tag
-    @loans = @loans.joins(:taggings).where("#{Tagging.table_name}.tag_id" => @tag.id) if @tag
+  def filter_loans
+    @loans = @filter.loans.find_by_filtered_loans(@loans) if @filter
+  end
+
+  def paginate_loans
+    @loans = @loans.page(params[:page]).uniq
   end
 end

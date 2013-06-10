@@ -4,6 +4,8 @@ class Loan < ActiveRecord::Base
 
   has_paper_trail
 
+  FILTERS = ['loans_count', 'expired', 'close_to_expire', 'total_debt']
+
   # Validations
   validates :loan_id, presence: true
   validates :loan_id, uniqueness: true, allow_nil: true, allow_blank: true
@@ -11,6 +13,7 @@ class Loan < ActiveRecord::Base
   # Relations
   belongs_to :branch
   belongs_to :user
+  belongs_to :zone
   has_many :payments, dependent: :destroy
   has_many :schedules, as: :schedulable, dependent: :destroy
   has_many :taggings, as: :taggable, dependent: :destroy
@@ -30,9 +33,5 @@ class Loan < ActiveRecord::Base
 
   def is_scheduled?
     self.schedules.present?
-  end
-
-  def tagged_by_user
-    self.tags.where("#{Tag.table_name}.user_id IS NOT NULL")
   end
 end

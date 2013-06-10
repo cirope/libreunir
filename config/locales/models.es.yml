@@ -35,6 +35,9 @@
       user:
         one: 'Asesor'
         other: 'Asesores'
+      zone:
+        one: 'Zona'
+        other: 'Zonas'
 
     attributes:
       client:
@@ -87,3 +90,5 @@
           one: 'Perfil'
           other: 'Perfiles'
         remember_me: 'Recordarme'
+        zone:
+          name: 'Nombre'

@@ -1,0 +1,38 @@
+<div class="readonly-data">
+  <div class="row-fluid">
+    <div class="span12">
+      <div class="page-header">
+        <h1><%= t('view.dashboard.greetings.html', user: current_user.name) %></h1>
+      </div>
+      <table class="table table-condensed table-striped">
+        <thead>
+          <tr>
+            <th><%= Zone.model_name.human(count: 0) %></th>
+            <th><%= link_to Loan.model_name.human(count: 0), dashboard_path(filter: 'loans_count') %></th>
+            <th><%= link_to t('view.loans.expired'), dashboard_path(filter: 'expired') %></th>
+            <th><%= link_to t('label.show'), expired_loans_path, style: 'margin-left: 20px;' %></th>
+            <th><%= link_to t('view.loans.close_to_expire'), dashboard_path(filter: 'close_to_expire') %></th>
+            <th><%= link_to t('label.show'), close_to_expire_loans_path, style: 'margin-left: 20px;' %></th>
+            <th><%= link_to Loan.human_attribute_name('total_debt'), dashboard_path(filter: 'total_debt') %></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @filters.each do |filter| %>
+            <tr>
+              <td><%= filter %></td>
+              <td><%= filter.loans_count(@loans) %></td>
+              <td><%= filter.expired(@loans) %></td>
+              <td><%= link_to t('label.show'), ['expired', filter, 'loans'], style: 'margin-left: 20px;' %></td>
+              <td><%= filter.close_to_expire(@loans) %></td>
+              <td><%= link_to t('label.show'), ['close_to_expire', filter, 'loans'], style: 'margin-left: 20px;' %></td>
+              <td><%= number_to_currency filter.total_debt(@loans) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="form-actions"></div>

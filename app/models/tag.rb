@@ -1,14 +1,9 @@
 class Tag < ActiveRecord::Base
+  include Tags::Scopes
+
   has_paper_trail
   
   CATEGORIES = ['default', 'success', 'warning', 'important', 'info', 'inverse']
-
-  # Scopes
-  default_scope { order("#{table_name}.name ASC") }
-  scope :zones_by_loans, lambda { |loans| joins(:taggings).where(
-      "#{table_name}.user_id IS NULL AND #{Tagging.table_name}.taggable_id IN(:loan_ids)", loan_ids: loans.map(&:id)
-    )
-  }
 
   # Callbacks
   after_initialize :set_category
@@ -25,11 +20,27 @@ class Tag < ActiveRecord::Base
   has_many :taggings, dependent: :destroy
   has_many :loans, through: :taggings, source: :taggable, source_type: 'Loan'
 
+  def to_s
+    self.name
+  end
+
   def set_category
     self.category ||= 'default'
   end
 
-  def is_zone?
-    !self.user_id
+  def loans_count(loans)
+    self.loans.where(id: loans.map(&:id)).count
+  end
+  
+  def expired(loans)
+    self.loans.where(id: loans.map(&:id)).expired.count
+  end
+
+  def close_to_expire(loans)
+    self.loans.where(id: loans.map(&:id)).not_expired.with_expiration.policy.count
+  end
+
+  def total_debt(loans)
+    self.loans.where(id: loans.map(&:id)).map(&:total_debt).reduce(:+)
   end
 end

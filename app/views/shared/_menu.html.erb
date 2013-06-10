@@ -14,6 +14,9 @@
               name: 'users', controllers: 'users', path: users_path
             ) if can?(:read, User) %>
             <%= show_menu_link(
+              name: 'dashboard', controllers: 'dashboard', path: dashboard_path
+            ) %>
+            <%= show_menu_link(
               name: 'schedules', controllers: 'schedules', path: schedules_path
             ) if can?(:read, Schedule) %>
             <%= render 'shared/menu_dropdowns/loans' if can?(:read, Loan) %>

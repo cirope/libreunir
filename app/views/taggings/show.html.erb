@@ -1,0 +1,12 @@
+<div class="readonly-data">
+  <h2><%= @tagging %></h2>
+
+  <p>
+    <strong><%= Tagging.human_attribute_name 'tag' %></strong>:
+    <%= @tagging.tag %>
+  </p>
+</div>
+<div class="form-actions">
+  <%= link_to t('label.edit'), edit_tagging_path(@tagging) if can? :update, @tagging %> |
+  <%= link_to t('label.list'), taggings_path %>
+</div>

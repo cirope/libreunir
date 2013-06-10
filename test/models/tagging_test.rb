@@ -10,29 +10,38 @@ class TaggingTest < ActiveSupport::TestCase
       Tagging.create do |tagging|
         Fabricate.attributes_for(:tagging).each do |attr,value|
           tagging.send "#{attr}=", value
-        end
-      end
+        end 
+      end 
     end 
   end
-    
+
   test 'update' do
     tag = Fabricate(:tag)
 
     assert_difference 'Version.count' do
       assert_no_difference 'Tagging.count' do
         assert @tagging.update_attributes(tag_id: tag.id)
-      end
-    end
+      end 
+    end 
 
     assert_equal tag.id, @tagging.reload.tag_id
   end
-    
-  test 'destroy' do 
+
+  test 'destroy' do  
     assert_difference 'Version.count' do
       assert_difference('Tagging.count', -1) { @tagging.destroy }
-    end
+    end 
   end
 
+  test 'validates blank attributes' do
+    @tagging.tag_id = ''
+    
+    assert @tagging.invalid?
+    assert_equal 1, @tagging.errors.size
+    assert_equal [error_message_from_model(@tagging, :tag_id, :blank)],
+      @tagging.errors[:tag_id]
+  end
+    
   test 'validates unique attributes' do
     new_tagging = Fabricate(:tagging, taggable_id: @tagging.taggable_id, 
       taggable_type: @tagging.taggable_type)

@@ -11,12 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130521021740) do
+ActiveRecord::Schema.define(version: 20130606132547) do
 
   create_table "branches", force: true do |t|
-    t.integer  "branch_id",  null: false
-    t.string   "name",       null: false
+    t.integer  "branch_id",                null: false
+    t.string   "name",                     null: false
     t.string   "address"
+    t.integer  "lock_version", default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -39,9 +40,10 @@ ActiveRecord::Schema.define(version: 20130521021740) do
   add_index "clients", ["name"], name: "index_clients_on_name", using: :btree
 
   create_table "comments", force: true do |t|
-    t.text     "comment",    null: false
-    t.integer  "client_id",  null: false
-    t.integer  "user_id",    null: false
+    t.text     "comment",                  null: false
+    t.integer  "client_id",                null: false
+    t.integer  "user_id",                  null: false
+    t.integer  "lock_version", default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -63,6 +65,7 @@ ActiveRecord::Schema.define(version: 20130521021740) do
     t.integer  "client_id"
     t.integer  "user_id"
     t.integer  "branch_id"
+    t.integer  "zone_id"
     t.integer  "lock_version",                                      default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -75,6 +78,7 @@ ActiveRecord::Schema.define(version: 20130521021740) do
   add_index "loans", ["loan_id"], name: "index_loans_on_loan_id", unique: true, using: :btree
   add_index "loans", ["total_debt"], name: "index_loans_on_total_debt", using: :btree
   add_index "loans", ["user_id"], name: "index_loans_on_user_id", using: :btree
+  add_index "loans", ["zone_id"], name: "index_loans_on_zone_id", using: :btree
 
   create_table "notes", force: true do |t|
     t.text     "note",                      null: false
@@ -136,9 +140,10 @@ ActiveRecord::Schema.define(version: 20130521021740) do
   add_index "schedules", ["user_id"], name: "index_schedules_on_user_id", using: :btree
 
   create_table "taggings", force: true do |t|
-    t.integer  "tag_id",        null: false
-    t.integer  "taggable_id",   null: false
-    t.string   "taggable_type", null: false
+    t.integer  "tag_id",                    null: false
+    t.integer  "taggable_id",               null: false
+    t.string   "taggable_type",             null: false
+    t.integer  "lock_version",  default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -149,7 +154,7 @@ ActiveRecord::Schema.define(version: 20130521021740) do
   create_table "tags", force: true do |t|
     t.string   "name",                     null: false
     t.string   "category",                 null: false
-    t.integer  "user_id"
+    t.integer  "user_id",                  null: false
     t.integer  "lock_version", default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -197,5 +202,13 @@ ActiveRecord::Schema.define(version: 20130521021740) do
 
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
   add_index "versions", ["whodunnit"], name: "index_versions_on_whodunnit", using: :btree
+
+  create_table "zones", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "zones", ["name"], name: "index_zones_on_name", unique: true, using: :btree
 
 end

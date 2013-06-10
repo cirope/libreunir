@@ -3,6 +3,7 @@ class CreateTaggings < ActiveRecord::Migration
     create_table :taggings do |t|
       t.references :tag, null: false, index: true
       t.references :taggable, null: false, polymorphic: true
+      t.integer :lock_version, null: false, default: 0
 
       t.timestamps
     end

@@ -4,6 +4,7 @@ class CreateBranches < ActiveRecord::Migration
       t.integer :branch_id, null: false
       t.string :name, null: false
       t.string :address
+      t.integer :lock_version, null: false, default: 0
 
       t.timestamps
     end

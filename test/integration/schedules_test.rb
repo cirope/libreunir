@@ -9,6 +9,8 @@ class SchedulesTest < ActionDispatch::IntegrationTest
     3.times { Fabricate(:schedule, user_id: @user.id, scheduled_at: 1.hour.from_now) }
     login(user: @user)
 
+    visit schedules_path
+
     click_link Schedule.model_name.human(count: 0)
 
     assert page.has_css?('[data-calendar-day] ul')
@@ -25,9 +27,10 @@ class SchedulesTest < ActionDispatch::IntegrationTest
   end
 
   test 'should change monthly schedules' do
+    Fabricate(:schedule, user_id: @user.id, scheduled_at: 1.month.from_now)
     login(user: @user)
 
-    Fabricate(:schedule, user_id: @user.id, scheduled_at: 1.month.from_now)
+    visit schedules_path
 
     find('.ui-datepicker-next').click
 
@@ -39,6 +42,8 @@ class SchedulesTest < ActionDispatch::IntegrationTest
     schedule = Fabricate(:schedule, user_id: @user.id)
     login(user: @user)
 
+    visit schedules_path
+
     within '.ui-datepicker-calendar' do
       click_link schedule.scheduled_at.day 
     end
@@ -49,8 +54,9 @@ class SchedulesTest < ActionDispatch::IntegrationTest
 
   test 'should create schedule' do
     schedule = Fabricate.build(:schedule, scheduled_at: 1.month.from_now)
-
     login(user: @user)
+
+    visit schedules_path
 
     find('.ui-datepicker-next').click
 
@@ -80,6 +86,8 @@ class SchedulesTest < ActionDispatch::IntegrationTest
     schedule_attrs = Fabricate.attributes_for(:schedule)
 
     login(user: @user)
+
+    visit schedules_path
 
     assert page.has_no_css?('#schedule_modal')
 

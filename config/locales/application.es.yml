@@ -26,6 +26,7 @@
     actions:
       logout: 'Salir'
     clients: 'Clientes'
+    dashboard: 'Tablero'
     schedules: 'Eventos'
     users: 'Asesores'
 
@@ -49,11 +50,13 @@
       stale_object_error: 'El cliente no pudo ser actualizado, intente nuevamente.'
     dashboard:
       index_title: 'Tablero'
+      greetings:
+        html: 'Hola %{user}<small>, este es tu resumen de préstamos semanales</small>'
     loans:
-      expired: 'Por mora'
-      expired_title: 'Listado de préstamos por mora'
-      close_to_expire: 'Por renovación'
-      close_to_expire_title: 'Listado de préstamos por renovación'
+      expired: 'Morosos'
+      expired_title: 'Listado de préstamos morosos'
+      close_to_expire: 'Vencimientos'
+      close_to_expire_title: 'Listado de préstamos por vencimientos'
       empty_index:
         html: 'No se encontraron préstamos'
     notes:
@@ -81,7 +84,6 @@
       empty_index: 'No se encontraron etiquetas'
       index: 'Administrar etiquetas'
       new: 'Nueva etiqueta'
-      zones: 'Zonas'
     users:
       index_title: 'Listado de usuarios'
       show_title: 'Detalle de usuario'
