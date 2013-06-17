@@ -19,6 +19,8 @@ module Parser
       save_instance(loan, ::Loan, { days_overdue_average: overdue_average(loan) })
     end
     
+    private
+
     def overdue_average(loan)
       payments = loan.payments.map(&:days_overdue).compact
 

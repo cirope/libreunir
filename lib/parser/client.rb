@@ -9,9 +9,9 @@ module Parser
       attributes = {
         name: client_name[1].strip, 
         lastname: client_name[0].strip, 
-        identification: row[2], 
-        address: row[3].to_s.split(',').join(', ')
+        identification: row[2] 
       }
+      attributes.merge!(address: row[3]) if row[3].to_s.split(',').present?
 
       client = save_instance(client, ::Client, attributes)
 

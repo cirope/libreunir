@@ -8,7 +8,6 @@
   label:
     'yes': 'Si'
     'no': 'No'
-    all: 'Todo'
     cancel: 'Cancelar'
     close: 'Cerrar'
     delete: 'Eliminar'
