@@ -3,5 +3,4 @@ Fabricator(:client) do
   lastname { Faker::Name.last_name }
   identification { sequence(:client_identification) }
   address { Faker::Address.street_address }
-  phone { Faker::PhoneNumber.phone_number }
 end

@@ -7,7 +7,7 @@ class ClientTest < ActiveSupport::TestCase
 
   test 'create' do
     assert_difference 'Client.count' do
-      @client = Client.create(Fabricate.attributes_for(:client))
+      Client.create(Fabricate.attributes_for(:client))
     end
   end
 

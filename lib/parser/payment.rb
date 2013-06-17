@@ -21,12 +21,6 @@ module Parser
       save_instance(payment, ::Payment, attributes)
     end
 
-    def row_valid?(row)
-      return raise CSV::MalformedCSVError, 'Invalid row' unless row[0].start_with?('PR0')
-      
-      true
-    end
-
     def days_overdue(expired_row, paid_row)
       expired_at = Date.parse(expired_row)
       paid_at = Time.zone.parse(paid_row)

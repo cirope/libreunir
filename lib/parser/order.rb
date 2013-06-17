@@ -16,11 +16,5 @@ module Parser
 
       save_instance(loan, ::Loan, attributes)
     end
-
-    def row_valid?(row)
-      return raise CSV::MalformedCSVError, 'Invalid row' unless row[0] =~ /\A\d+\z/
-      
-      true
-    end
   end
 end

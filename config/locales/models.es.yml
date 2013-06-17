@@ -23,6 +23,9 @@
       payment:
         one: 'Cuota'
         other: 'Cuotas'
+      phone:
+        one: 'Teléfono'
+        other: 'Teléfonos'
       reminder:
         one: 'Recordatorio'
         other: 'Recordatorios'
@@ -63,6 +66,8 @@
         number: 'Número'
         expired_at: 'Vencimiento'
         paid_at: 'Fecha de pago'
+      phone:
+        phone: 'Teléfono'
       reminder:
         remind_at: 'Fecha'
         kind: 'Tipo'

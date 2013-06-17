@@ -19,12 +19,6 @@ module Parser
       save_instance(loan, ::Loan, { days_overdue_average: overdue_average(loan) })
     end
     
-    def row_valid?(row)
-      return raise CSV::MalformedCSVError, 'Ivalid row' unless row[0].start_with?('PR0')
-      
-      true
-    end
-
     def overdue_average(loan)
       payments = loan.payments.map(&:days_overdue).compact
 

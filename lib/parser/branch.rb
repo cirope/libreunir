@@ -6,11 +6,5 @@ module Parser
 
       save_instance(branch, ::Branch, attributes) 
     end
-
-    def row_valid?(row)
-      return raise CSV::MalformedCSVError, 'Invalid row' unless row[0] =~ /\A\d+\z/
-      
-      true
-    end
   end
 end

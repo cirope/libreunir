@@ -37,15 +37,5 @@ module Parser
         ::User.create(attributes.merge(email: email))
       end
     end
-
-    def row_valid?(row)
-      ['Job', 'UsuarioID', '---'].each do |str|
-        if row[0].start_with?(str)
-          return raise CSV::MalformedCSVError, 'Invalid row'
-        end
-      end
-      
-      true
-    end
   end
 end

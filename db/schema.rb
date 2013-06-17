@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130606132547) do
+ActiveRecord::Schema.define(version: 20130614162419) do
 
   create_table "branches", force: true do |t|
     t.integer  "branch_id",                null: false
@@ -29,7 +29,6 @@ ActiveRecord::Schema.define(version: 20130606132547) do
     t.string   "lastname",                   null: false
     t.string   "identification",             null: false
     t.string   "address"
-    t.string   "phone"
     t.integer  "lock_version",   default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -109,6 +108,16 @@ ActiveRecord::Schema.define(version: 20130606132547) do
   add_index "payments", ["loan_id"], name: "index_payments_on_loan_id", using: :btree
   add_index "payments", ["number"], name: "index_payments_on_number", using: :btree
   add_index "payments", ["user_id"], name: "index_payments_on_user_id", using: :btree
+
+  create_table "phones", force: true do |t|
+    t.string   "phone",                    null: false
+    t.integer  "client_id"
+    t.integer  "lock_version", default: 0, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "phones", ["client_id"], name: "index_phones_on_client_id", using: :btree
 
   create_table "reminders", force: true do |t|
     t.datetime "remind_at",                    null: false
@@ -204,7 +213,8 @@ ActiveRecord::Schema.define(version: 20130606132547) do
   add_index "versions", ["whodunnit"], name: "index_versions_on_whodunnit", using: :btree
 
   create_table "zones", force: true do |t|
-    t.string   "name"
+    t.string   "name",                     null: false
+    t.integer  "lock_version", default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

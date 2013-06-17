@@ -4,7 +4,12 @@ class Loan < ActiveRecord::Base
 
   has_paper_trail
 
-  FILTERS = ['loans_count', 'expired', 'close_to_expire', 'total_debt']
+  FILTERS = {
+    expired: { formatter: :none },
+    close_to_expire: { formatter: :none },
+    loans_count: { formatter: :none },
+    total_debt: { formatter: :currency }
+  }
 
   # Validations
   validates :loan_id, presence: true

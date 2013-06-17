@@ -9,6 +9,7 @@ class Client < ActiveRecord::Base
 
   # Relations
   has_many :loans
+  has_many :phones, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :schedules, as: :schedulable, dependent: :destroy
 

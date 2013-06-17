@@ -1,34 +1,38 @@
+<% columns = 2 %>
 <div class="readonly-data">
-  <div class="row-fluid">
-    <div class="span12">
-      <div class="page-header">
-        <h1><%= t('view.dashboard.greetings.html', user: current_user.name) %></h1>
-      </div>
-      <table class="table table-condensed table-striped">
-        <thead>
-          <tr>
-            <th><%= Zone.model_name.human(count: 0) %></th>
-            <th><%= link_to Loan.model_name.human(count: 0), dashboard_path(filter: 'loans_count') %></th>
-            <th><%= link_to t('view.loans.expired'), dashboard_path(filter: 'expired') %></th>
-            <th><%= link_to t('view.loans.close_to_expire'), dashboard_path(filter: 'close_to_expire') %></th>
-            <th><%= link_to Loan.human_attribute_name('total_debt'), dashboard_path(filter: 'total_debt') %></th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <% @filters.each do |filter| %>
-            <tr>
-              <td><%= filter %></td>
-              <td><%= filter.loans_count(@loans) %></td>
-              <td><%= link_to filter.expired(@loans), ['expired', filter, 'loans'] %></td>
-              <td><%= link_to filter.close_to_expire(@loans), ['close_to_expire', filter, 'loans'] %></td>
-              <td><%= number_to_currency filter.total_debt(@loans) %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
+  <div class="page-header">
+    <h1><%= t('view.dashboard.greetings.html', user: current_user.name) %></h1>
   </div>
+  <% @data_container.each_slice(columns) do |container| %>
+    <div class="row-fluid">
+      <%
+        container.each do |filter,zones|
+        formatter = Loan::FILTERS[filter][:formatter]
+      %>
+        <div class="span6">
+          <table class="table table-condensed table-striped">
+            <thead>
+              <tr>
+                <th><%= Zone.model_name.human(count: 0) %></th>
+                <th>
+                  <%= link_to_loans(
+                    filter, nil, t("view.dashboard.filters.#{filter}"), :none
+                  ) %>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <% zones.each do |zone, value| %>
+                <tr>
+                  <td><%= zone %></td>
+                  <td><%= link_to_loans(filter, zone, value, formatter) %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
 </div>
-
 <div class="form-actions"></div>

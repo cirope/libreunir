@@ -10,27 +10,14 @@ module Parser
         name: client_name[1].strip, 
         lastname: client_name[0].strip, 
         identification: row[2], 
-        address: row[3], 
-        phone: row[4]
+        address: row[3].to_s.split(',').join(', ')
       }
 
-      if client.try(:persisted?)
-        client.without_versioning do
-          client.update_attributes(attributes)
-          client.touch
-        end
-      else
-        client = ::Client.create(attributes)
-        Parser::Comment.parse(row, client)
-      end
+      client = save_instance(client, ::Client, attributes)
 
+      Parser::Phone.new(row, client).parse
+      Parser::Comment.new(row, client).parse
       Parser::Loan.new.save_loan(loan_id, client_id: client.id)
-    end
-
-    def row_valid?(row)
-      return raise CSV::MalformedCSVError, 'Ivalid row' unless row[0].start_with?('PR0')
-
-      true
     end
   end
 end
