@@ -1,25 +1,27 @@
 module Parser
   class Base
-    def initialize(path = nil, encoding = nil, col_sep = nil, headers = nil)
-      @path       = path
+    COL_SEP = '|'
+    FIRST_ROW = 4
+    ENCODING = 'utf-16:utf-8'
+
+    def initialize(path = nil)
       @tmp_row    = []
-      @col_sep    = col_sep  || '|'
-      @headers    = headers  || 3
-      @encoding   = encoding || 'utf-16:utf-8'
-      @row_length = initialize_row_length if path
+
+      if path
+        @file       = File.open(@path, encoding: ENCODING)
+        @row_length = initialize_row_length
+      end
     end
 
     def initialize_row_length
-      File.foreach(@path, encoding: @encoding) do |row|
-        return row.split(' - ').length if row.start_with?('---')
+      @file.each do |row|
+        return row.split(' ').length if @file.lineno == 3
       end
     end
 
     def parse
-      index = 0
-
-      File.foreach(@path, encoding: @encoding) do |line|
-        if index > @headers
+      @file.each do |line|
+        if @file.lineno > FIRST_ROW
           begin
             row = parse_line(line)
 
@@ -38,8 +40,9 @@ module Parser
             Parser::Logger.log row
           end
         end
-        index += 1
       end
+
+      @file.close
     end
 
     def save_instance(instance, klass, attributes)
@@ -61,17 +64,17 @@ module Parser
       if @tmp_row.empty?
         @tmp_row = row
       else
-        @tmp_row[-1] += " #{row.shift}"
+        @tmp_row[-1] += "\r\n#{row.shift}"
         @tmp_row.concat(row)
       end
     end
 
     def parse_line(line)
-      line.split(@col_sep).map { |r| r.to_s.strip }
+      line.split(COL_SEP).map { |r| r.to_s.strip }
     end
 
     def row_valid?(row)
-      @row_length <= row.length
+      @row_length == row.length
     end
   end
 end
