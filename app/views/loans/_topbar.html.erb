@@ -12,4 +12,7 @@
       <li><%= link_to t('view.tags.new'), new_tag_path, data: { remote: true } %></li>
     </ul>
   </li> 
+  <li class="active hidden">
+    <%= link_to 'Eliminar', '#', id: :destroy_tagging %>
+  </li>
 </ul>

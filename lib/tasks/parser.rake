@@ -4,7 +4,8 @@ require_relative '../parser/base'
 
 namespace :parser do
   desc 'Parse CSV files from SFTP'
-  task run: ['importer:work', :process, :cleanup]
+  #task run: ['importer:work', :process, :cleanup]
+  task run: [:process]
 
   files = {
     branch: 'sucursal.txt',
@@ -28,7 +29,7 @@ namespace :parser do
 
       "Parser::#{model.to_s.capitalize}".constantize.new(path).parse
 
-      @processor.move_processed(path)
+      #@processor.move_processed(path)
     end
   end
 

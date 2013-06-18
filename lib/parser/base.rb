@@ -8,7 +8,7 @@ module Parser
       @tmp_row    = []
 
       if path
-        @file       = File.open(@path, encoding: ENCODING)
+        @file       = File.open(path, encoding: ENCODING)
         @row_length = initialize_row_length
       end
     end
@@ -70,11 +70,11 @@ module Parser
     end
 
     def parse_line(line)
-      line.split(COL_SEP).map { |r| r.to_s.strip }
+      line.split('|').map { |r| r.to_s.strip.gsub('(null)', '') }
     end
 
     def row_valid?(row)
-      @row_length == row.length
+      @row_length <= row.length
     end
   end
 end

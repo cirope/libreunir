@@ -8,3 +8,13 @@ new Rule
     $(document).on 'click', '[data-tag-id]', @map.create_tagging
   unload: ->
     $(document).off 'click', '[data-tag-id]', @map.create_tagging
+
+new Rule
+  condition: -> $('[data-form-container]').length
+  load: ->
+    @map.destroy_tagging ||= ->
+      $('#destroy_tagging').show()
+
+    $(document).on 'click', '[data-form-container]', @map.destroy_tagging
+  unload: ->
+    $(document).off 'click', '[data-form-container]', @map.destroy_tagging
