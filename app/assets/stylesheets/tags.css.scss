@@ -12,6 +12,7 @@ ul[data-tags-user] {
   padding: 0 5px;
 
   li[data-user-tag-id], .tag_new {
+    width: 100px;
     position: relative;
 
     a { 
@@ -36,6 +37,7 @@ ul[data-tags-user] {
 }
 
 div[data-tags-new] {
+  padding: 0 5px;
   form { margin: 10px 0; }
 
   .btn-group {
