@@ -70,7 +70,7 @@ module Parser
     end
 
     def parse_line(line)
-      line.split('|').map { |r| r.to_s.strip.gsub('(null)', '') }
+      line.split(' | ').map { |r| r.to_s.strip.gsub('(null)', '') }
     end
 
     def row_valid?(row)

@@ -11,7 +11,9 @@
   <% end %>
   <li class="divider"></li>
   <li class="tag_new">
-    <%= link_to t('view.tags.new'), new_tag_path, data: { remote: true } %>
+    <%= link_to(
+      t('view.tags.new'), new_tag_path, class: 'btn btn-mini', data: { remote: true }
+    ) %>
   </li>
 </ul>
 <div data-tags-new="true"></div>
