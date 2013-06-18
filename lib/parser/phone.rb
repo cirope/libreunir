@@ -23,6 +23,8 @@ module Parser
     private
 
     def create_phone(attributes)
+      attributes[:carrier] = nil if attributes[:carrier].blank?
+
       @client.phones.create(attributes)
     end
 
