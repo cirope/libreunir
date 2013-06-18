@@ -31,7 +31,6 @@ class TagsTest < ActionDispatch::IntegrationTest
     end
   end
 
-=begin
   test 'should create a tagging' do
     tag = Fabricate(:tag, category: 'important', user_id: @user.id)
     loan = Fabricate(:loan, user_id: @user.id)
@@ -52,5 +51,4 @@ class TagsTest < ActionDispatch::IntegrationTest
       assert page.has_css?('.badge.badge-important')
     end
   end
-=end
 end

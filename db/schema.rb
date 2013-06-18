@@ -111,7 +111,7 @@ ActiveRecord::Schema.define(version: 20130614162419) do
 
   create_table "phones", force: true do |t|
     t.string   "phone",                    null: false
-    t.integer  "client_id"
+    t.integer  "client_id",                null: false
     t.integer  "lock_version", default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
