@@ -19,7 +19,7 @@ module LoansHelper
         concat tag.name
         concat ' '
         concat link_to('&#x2718;'.html_safe,
-          [tag, loan.taggings.find_by(tag_id: tag.id)],
+          [tag, loan.find_tagging_by(tag)],
           data: {
             remote: true, method: :delete, confirm: t('messages.confirmation')
           }
@@ -38,15 +38,5 @@ module LoansHelper
         phone.phone
       end
     end
-  end
-
-  def show_phones(phones)
-    phones.map do |phone|
-      if phone.carrier.present?
-        content_tag(:abbr, phone.phone, title: phone.carrier)
-      else
-        phone.phone
-      end
-    end.join(' - ').html_safe
   end
 end

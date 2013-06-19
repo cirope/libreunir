@@ -39,4 +39,8 @@ class Loan < ActiveRecord::Base
   def is_scheduled?
     self.schedules.present?
   end
+
+  def find_tagging_by(tag)
+    self.taggings.find_by(tag_id: tag.id)
+  end
 end

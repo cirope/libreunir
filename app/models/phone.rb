@@ -1,6 +1,9 @@
 class Phone < ActiveRecord::Base
   has_paper_trail
 
+  # Scopes
+  default_scope { order("#{table_name}.created_at ASC") }
+
   # Validations
   validates :phone, presence: true
   validates :phone, length: { maximum: 255 }, allow_nil: true, allow_blank: true

@@ -47,7 +47,7 @@
         name: 'Nombre'
         lastname: 'Apellido'
         identification: 'CUIL'
-        phone: 'Teléfono'
+        phones: 'Teléfonos'
         address: 'Dirección'
         last_comments: 'Últimos comentarios'
       loan:
