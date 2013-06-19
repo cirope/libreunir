@@ -14,7 +14,7 @@ class TagsTest < ActionDispatch::IntegrationTest
 
     assert page.has_no_css?('form#new_tag')
 
-    within 'li.tag_new' do
+    within 'div.tag_new' do
       click_link I18n.t('view.tags.new')
     end
 

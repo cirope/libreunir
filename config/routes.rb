@@ -8,8 +8,7 @@ Libreunir::Application.routes.draw do
       end
     end
 
-    resources :taggings, only: [:create]
-    post 'destroy', to: 'taggings#destroy', as: 'taggings_destroy'
+    resources :taggings, only: [:create, :destroy]
   end
 
   resources :zones, only: [] do

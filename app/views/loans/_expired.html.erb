@@ -3,7 +3,7 @@
   <td><%== loan_category(loan) %> <%= loan.client %></td>
   <td><%= number_to_currency loan.total_debt %></td>
   <td><%= l(loan.delayed_at.to_date, format: :minimal) if loan.delayed_at %></td>
-  <td><%= loan.client_phones %></td>
+  <td><%= show_phones(loan.client_phones) %></td>
   <td><%= link_to_loan_info(loan) %></td>
   <td><%= link_to_new_schedule(loan) %></td>
 </tr>

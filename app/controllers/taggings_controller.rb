@@ -2,6 +2,7 @@ class TaggingsController < ApplicationController
   before_action :authenticate_user!
   
   load_resource :tag, shallow: true
+  load_resource :tagging, through: :tag, shallow: true
 
   respond_to :html, :js
 
@@ -21,8 +22,7 @@ class TaggingsController < ApplicationController
 
   # DELETE /taggings/1
   def destroy
-    loans = Loan.where(id: params[:loan_ids])
-    loans.each { |loan| loan.taggings.where(tag_id: @tag.id).map(&:destroy) } if @tag
+    @tagging.destroy
 
     respond_to do |format|
       format.js { render 'reload' }

@@ -13,7 +13,7 @@
     <dt><%= Loan.human_attribute_name('payments_to_expire_count') %></dt>
     <dd><%= loan.payments_to_expire_count %></dd>
     <dt><%= Phone.human_attribute_name('phone') %></dt>
-    <dd><%= loan.phones.present? ? loan.client_phones : '-' %></dd>
+    <dd><%= loan.phones.present? ? show_phones(loan.client_phones) : '-' %></dd>
     <dt><%= Client.human_attribute_name('address') %></dt>
     <dd><%= loan.client_address.present? ? loan.client_address : '-' %></dd>
   </dl>

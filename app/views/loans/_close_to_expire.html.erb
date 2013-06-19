@@ -3,7 +3,7 @@
   <td><%== loan_category(loan) %> <%= loan.client %></td>
   <td><%= loan.payments_to_expire_count %></td>
   <td><%= l(loan.next_payment_expire_at.to_date, format: :minimal) if loan.next_payment_expire_at %></td>
-  <td><%= loan.client_phones %></td>
+  <td><%= show_phones(loan.client_phones) %></td>
   <td><%= link_to_loan_info(loan) %></td>
   <td><%= link_to_new_schedule(loan) %></td>
 </tr>

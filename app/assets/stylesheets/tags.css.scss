@@ -8,11 +8,14 @@ ul[data-tags-zones] {
   .accordion { margin-bottom: 0; }
 }
 
+.tag_new {
+  padding: 0 5px;
+}
+
 ul[data-tags-user] {
   padding: 0 5px;
 
-  li[data-user-tag-id], .tag_new {
-    width: 100px;
+  li[data-user-tag-id] {
     position: relative;
 
     a { 
