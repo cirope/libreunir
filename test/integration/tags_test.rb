@@ -36,7 +36,6 @@ class TagsTest < ActionDispatch::IntegrationTest
     loan = Fabricate(:loan, user_id: @user.id)
 
     login(user: @user)
-
     visit close_to_expire_loans_path
 
     within "tr[data-object-id=\"#{loan.id}\"]" do
@@ -47,8 +46,27 @@ class TagsTest < ActionDispatch::IntegrationTest
 
     assert_difference 'Tagging.count' do
       find("[data-tag-id=\"#{tag.id}\"]").click
-    
+
       assert page.has_css?('.badge.badge-important')
+    end
+  end
+
+  test 'should destroy a tagging' do
+    tag = Fabricate(:tag, category: 'important', user_id: @user.id)
+    loan = Fabricate(:loan, user_id: @user.id)
+    loan.taggings.create(tag_id: tag.id)
+
+    login(user: @user)
+    visit close_to_expire_loans_path
+
+    assert_difference 'Tagging.count', -1 do
+      within "tr[data-object-id=\"#{loan.id}\"]" do
+        click_link '✘'
+
+        page.driver.browser.switch_to.alert.accept
+      end
+
+      assert page.has_no_css?('.badge.badge-important')
     end
   end
 end

@@ -30,6 +30,16 @@ module LoansHelper
     tags.join(' ')
   end
 
+  def show_phone(phone)
+    if phone
+      if phone.carrier.present?
+        content_tag(:abbr, phone.phone, title: phone.carrier)
+      else
+        phone.phone
+      end
+    end
+  end
+
   def show_phones(phones)
     phones.map do |phone|
       if phone.carrier.present?
