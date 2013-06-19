@@ -52,15 +52,15 @@
       filters:
         loans_count: 'Préstamos'
         expired: 'Morosos'
-        close_to_expire: 'Vencimientos'
+        close_to_expire: 'Renovación'
         total_debt: 'Deuda total'
       greetings:
         html: 'Hola %{user}<small>, este es tu resumen de préstamos semanales</small>'
     loans:
       expired: 'Morosos'
       expired_title: 'Listado de préstamos morosos'
-      close_to_expire: 'Vencimientos'
-      close_to_expire_title: 'Listado de préstamos por vencimientos'
+      close_to_expire: 'Renovación'
+      close_to_expire_title: 'Listado de préstamos por renovación'
       empty_index:
         html: 'No se encontraron préstamos'
     notes:
