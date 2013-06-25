@@ -31,7 +31,14 @@ module LoansHelper
   end
 
   def loan_progress(loan)
-    content_tag(:div, class: 'progress progress-danger') do
+    progress = case loan.progress
+      when 0..50   then 'progress-success'
+      when 51..80  then 'progress-info'
+      when 81..89  then 'progress-warning'
+      when 90..100 then 'progress-danger'
+    end
+
+    content_tag(:div, class: "progress #{progress}") do
       content_tag(:div, "#{loan.progress}%", class: 'bar', style: "width: #{loan.progress}%;")
     end
   end
