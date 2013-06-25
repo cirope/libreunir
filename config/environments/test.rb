@@ -35,9 +35,9 @@ Libreunir::Application.configure do
   config.active_support.deprecation = :stderr
 
   # Set timecop to January 5, 2013 10:05:00 AM UTC
-  config.after_initialize do
-    t = Time.utc(2013, 1, 5, 10, 5, 0)
+  # config.after_initialize do
+  #  t = Time.utc(2013, 1, 5, 10, 5, 0)
 
-    Timecop.travel(t)
-  end
+  #  Timecop.travel(t)
+  #end
 end

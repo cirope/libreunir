@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.0.0.rc1'
+gem 'rails', '4.0.0'
 
 gem 'pg'
 gem 'jquery-rails'
@@ -38,6 +38,6 @@ group :test do
   gem 'database_cleaner'
   gem 'fabrication'
   gem 'faker'
-  gem 'timecop'
+  #gem 'timecop'
   gem 'coveralls', require: false
 end
