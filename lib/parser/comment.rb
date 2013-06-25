@@ -1,8 +1,8 @@
 module Parser
   class Comment
-    def initialize(row, client)
+    def initialize(row, loan)
       @row = row
-      @client = client
+      @loan = loan
     end
 
     def parse
@@ -22,7 +22,7 @@ module Parser
     def process(c_row)
       user = ::User.find_by(username: c_row[1])
 
-      @client.comments.find_or_create_by(
+      @loan.comments.find_or_create_by(
         comment: c_row[2], user_id: user.id, created_at: Time.parse(c_row[0])
       ) if user.try(:persisted?)
     end

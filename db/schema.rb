@@ -40,14 +40,14 @@ ActiveRecord::Schema.define(version: 20130614162419) do
 
   create_table "comments", force: true do |t|
     t.text     "comment",                  null: false
-    t.integer  "client_id",                null: false
+    t.integer  "loan_id",                  null: false
     t.integer  "user_id",                  null: false
     t.integer  "lock_version", default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "comments", ["client_id"], name: "index_comments_on_client_id", using: :btree
+  add_index "comments", ["loan_id"], name: "index_comments_on_loan_id", using: :btree
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
   create_table "loans", force: true do |t|
@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 20130614162419) do
     t.integer  "expired_payments_count"
     t.integer  "payments_to_expire_count"
     t.integer  "payments_count"
+    t.integer  "progress"
     t.date     "delayed_at"
     t.date     "next_payment_expire_at"
     t.integer  "client_id"
@@ -75,6 +76,7 @@ ActiveRecord::Schema.define(version: 20130614162419) do
   add_index "loans", ["days_overdue_average"], name: "index_loans_on_days_overdue_average", using: :btree
   add_index "loans", ["delayed_at"], name: "index_loans_on_delayed_at", using: :btree
   add_index "loans", ["loan_id"], name: "index_loans_on_loan_id", unique: true, using: :btree
+  add_index "loans", ["progress"], name: "index_loans_on_progress", using: :btree
   add_index "loans", ["total_debt"], name: "index_loans_on_total_debt", using: :btree
   add_index "loans", ["user_id"], name: "index_loans_on_user_id", using: :btree
   add_index "loans", ["zone_id"], name: "index_loans_on_zone_id", using: :btree

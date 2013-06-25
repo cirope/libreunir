@@ -16,15 +16,23 @@ module Parser
 
       loan = save_instance(loan, ::Loan, attributes)
       
-      save_instance(loan, ::Loan, { days_overdue_average: overdue_average(loan) })
+      save_instance(
+        loan, ::Loan,
+        {
+          progress: percentage_progress(loan),
+          days_overdue_average: overdue_average(loan)
+        }
+      )
     end
     
     private
 
-    def overdue_average(loan)
-      payments = loan.payments.map(&:days_overdue).compact
+    def percentage_progress(loan)
+      (((loan.expired_payments_count + loan.payments_to_expire_count) / loan.payments_count.to_f) * 100).round if loan.payments_count > 0
+    end
 
-      payments.reduce(:+) / payments.count if payments.count > 0
+    def overdue_average(loan)
+      loan.payments.where.not(days_overdue: nil).average(:days_overdue).try(:round)
     end
   end
 end

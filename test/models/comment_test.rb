@@ -30,7 +30,7 @@ class CommentTest < ActiveSupport::TestCase
   test 'validates blank attributes' do
     @comment.comment = ''
     @comment.user_id = nil
-    @comment.client_id = nil
+    @comment.loan_id = nil
     
     assert @comment.invalid?
     assert_equal 3, @comment.errors.size
@@ -38,7 +38,7 @@ class CommentTest < ActiveSupport::TestCase
       @comment.errors[:comment]
     assert_equal [error_message_from_model(@comment, :user_id, :blank)],
       @comment.errors[:user_id]
-    assert_equal [error_message_from_model(@comment, :client_id, :blank)],
-      @comment.errors[:client_id]
+    assert_equal [error_message_from_model(@comment, :loan_id, :blank)],
+      @comment.errors[:loan_id]
   end
 end

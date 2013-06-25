@@ -9,6 +9,7 @@ class CreateLoans < ActiveRecord::Migration
       t.integer :expired_payments_count
       t.integer :payments_to_expire_count
       t.integer :payments_count
+      t.integer :progress
       t.date :delayed_at
       t.date :next_payment_expire_at
       t.references :client, index: true
@@ -23,5 +24,6 @@ class CreateLoans < ActiveRecord::Migration
     add_index :loans, :delayed_at
     add_index :loans, :total_debt
     add_index :loans, :days_overdue_average
+    add_index :loans, :progress
   end
 end

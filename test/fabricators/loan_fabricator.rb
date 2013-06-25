@@ -8,6 +8,7 @@ Fabricator(:loan) do
   expired_payments_count 0
   payments_to_expire_count 12
   payments_count 24
+  progress 50
   next_payment_expire_at { 10.days.from_now.to_date }
   client_id { Fabricate(:client).id }
   user_id { Fabricate(:user).id }

@@ -30,6 +30,12 @@ module LoansHelper
     tags.join(' ')
   end
 
+  def loan_progress(loan)
+    content_tag(:div, class: 'progress progress-danger') do
+      content_tag(:div, "#{loan.progress}%", class: 'bar', style: "width: #{loan.progress}%;")
+    end
+  end
+
   def show_phone(phone)
     if phone
       if phone.carrier.present?

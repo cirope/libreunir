@@ -6,11 +6,11 @@ class Comment < ActiveRecord::Base
   scope :inverse_order, -> { order("#{table_name}.created_at DESC") }
     
   # Validations
-  validates :comment, :client_id, :user_id, presence: true
-  validates :comment, uniqueness: { case_sensitive: false, scope: [:user_id, :client_id, :created_at] },
+  validates :comment, :loan_id, :user_id, presence: true
+  validates :comment, uniqueness: { case_sensitive: false, scope: [:user_id, :loan_id, :created_at] },
     allow_nil: true, allow_blank: true
   
   # Relations
-  belongs_to :client
+  belongs_to :loan
   belongs_to :user
 end

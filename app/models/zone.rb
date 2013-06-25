@@ -17,6 +17,6 @@ class Zone < ActiveRecord::Base
   end
 
   def self.find_by_loans(loans)
-    where("#{table_name}.id" => loans.map(&:zone_id)).order("#{table_name}.name ASC")
+    where(id: loans.pluck('zone_id')).order("#{table_name}.name ASC")
   end
 end

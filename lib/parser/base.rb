@@ -1,6 +1,6 @@
 module Parser
   class Base
-    COL_SEP = '|'
+    COL_SEP = ' | '
     FIRST_ROW = 4
     ENCODING = 'utf-16:utf-8'
 
@@ -36,8 +36,8 @@ module Parser
                 @tmp_row.clear
               end
             end
-          rescue
-            Parser::Logger.log row
+          rescue Exception => e
+            Parser::Logger.log "#{e.message} == #{row}"
           end
         end
       end
@@ -70,7 +70,7 @@ module Parser
     end
 
     def parse_line(line)
-      line.split(' | ').map { |r| r.to_s.strip.gsub('(null)', '') }
+      line.split(COL_SEP).map { |r| r.to_s.strip.gsub('(null)', '') }
     end
 
     def row_valid?(row)

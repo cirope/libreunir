@@ -16,9 +16,11 @@ class LoansController < ApplicationController
 
   def expired
     @title = t 'view.loans.expired_title'
-    @loans = @loans.expired.order('total_debt DESC')
+    @loans = @loans.expired
 
     load_resource_loans
+
+    @loans = @loans.sorted_by_total_debt.page(params[:page]).uniq
 
     respond_to do |format|
       format.html # expired.html.erb
@@ -28,9 +30,11 @@ class LoansController < ApplicationController
 
   def close_to_expire
     @title = t 'view.loans.close_to_expire_title'
-    @loans = @loans.not_expired.with_expiration.policy.sorted_by_expiration
+    @loans = @loans.policy
 
     load_resource_loans
+
+    @loans = @loans.sorted_by_progress.page(params[:page]).uniq
 
     respond_to do |format|
       format.html # close_to_expired.html.erb
@@ -47,7 +51,6 @@ class LoansController < ApplicationController
   def load_resource_loans 
     load_resource_zones
     filter_loans
-    paginate_loans
   end
 
   def load_resource_zones
@@ -55,10 +58,6 @@ class LoansController < ApplicationController
   end
 
   def filter_loans
-    @loans = @filter.loans.find_by_filtered_loans(@loans) if @filter
-  end
-
-  def paginate_loans
-    @loans = @loans.page(params[:page]).uniq
+    @loans = @filter.loans.find_by_loans(@loans) if @filter
   end
 end

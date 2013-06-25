@@ -1,5 +1,6 @@
 class Client < ActiveRecord::Base
   include Clients::MagickColumns
+  include Clients::Loan
 
   has_paper_trail
 
@@ -10,15 +11,10 @@ class Client < ActiveRecord::Base
   # Relations
   has_many :loans
   has_many :phones, dependent: :destroy
-  has_many :comments, dependent: :destroy
   has_many :schedules, as: :schedulable, dependent: :destroy
 
   def to_s
     [self.lastname, self.name].compact.join(', ')
-  end
-
-  def last_comments
-    self.comments.inverse_order.limit(10)
   end
 
   def is_scheduled?

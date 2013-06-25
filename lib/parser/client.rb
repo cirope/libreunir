@@ -14,10 +14,10 @@ module Parser
       attributes.merge!(address: row[3]) if row[3].to_s.split(',').present?
 
       client = save_instance(client, ::Client, attributes)
-
       Parser::Phone.new(row, client).parse
-      Parser::Comment.new(row, client).parse
-      Parser::Loan.new.save_loan(loan_id, client_id: client.id)
+
+      loan = Parser::Loan.new.save_loan(loan_id, client_id: client.id)
+      Parser::Comment.new(row, loan).parse
     end
   end
 end

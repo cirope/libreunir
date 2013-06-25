@@ -52,12 +52,6 @@ class ClientTest < ActiveSupport::TestCase
       @client.errors[:identification]
   end
 
-  test 'should get last comments' do
-    15.times { Fabricate(:comment, client_id: @client.id) }
-
-    assert_equal 10, @client.last_comments.size
-  end
-
   test 'magick search' do
     5.times { Fabricate(:client, name: 'magick_name') }
     3.times { Fabricate(:client, lastname: 'magick_lastname') }

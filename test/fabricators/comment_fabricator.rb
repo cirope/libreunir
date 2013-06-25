@@ -1,5 +1,5 @@
 Fabricator(:comment) do
   comment { Faker::Lorem.paragraph }
-  client_id { Fabricate(:client).id }
+  loan_id { Fabricate(:loan).id }
   user_id { Fabricate(:user).id }
 end

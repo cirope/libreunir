@@ -10,7 +10,7 @@ class LoanTest < ActiveSupport::TestCase
       @loan = Loan.create(Fabricate.attributes_for(:loan))
     end 
   end
-    
+
   test 'update' do
     assert_difference 'Version.count' do
       assert_no_difference 'Loan.count' do
@@ -20,13 +20,19 @@ class LoanTest < ActiveSupport::TestCase
 
     assert_equal 100.0, @loan.reload.capital
   end
-    
+
   test 'destroy' do 
     assert_difference 'Version.count' do
       assert_difference('Loan.count', -1) { @loan.destroy }
     end
   end
+
+  test 'should get last comments' do
+    15.times { Fabricate(:comment, loan_id: @loan.id) }
     
+    assert_equal 10, @loan.last_comments.size
+  end
+
   test 'validates blank attributes' do
     @loan.loan_id = ''
     
@@ -35,7 +41,7 @@ class LoanTest < ActiveSupport::TestCase
     assert_equal [error_message_from_model(@loan, :loan_id, :blank)],
       @loan.errors[:loan_id]
   end
-    
+
   test 'validates unique attributes' do
     new_loan = Fabricate(:loan)
     @loan.loan_id = new_loan.loan_id
@@ -46,9 +52,9 @@ class LoanTest < ActiveSupport::TestCase
       @loan.errors[:loan_id]
   end
 
-  test 'not expired' do
-    assert_difference 'Loan.not_expired.count' do
-      Fabricate(:loan, expired_payments_count: 0)
+  test 'policy' do
+    assert_no_difference 'Loan.policy.count' do
+      Fabricate(:loan, days_overdue_average: 8)
     end
   end
 

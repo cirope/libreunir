@@ -49,17 +49,18 @@
         identification: 'CUIL'
         phones: 'Teléfonos'
         address: 'Dirección'
-        last_comments: 'Últimos comentarios'
       loan:
         approved_at: 'Fecha de aprovación'
         capital: 'Capital'
-        payment: 'Valor de cuota'
         expired_payments_count: 'Pagos atrasados'
+        last_comments: 'Últimos comentarios'
+        payment: 'Valor de cuota'
         payments_to_expire_count: 'Cuotas restantes'
+        progress: 'Avance'
+        total_debt: 'Deuda total'
         client_id: 'Cliente'
         branch_id: 'Sucursal'
         user_id: 'Asesor'
-        total_debt: 'Deuda total'
       note:
         note: 'Nota'
       payment:

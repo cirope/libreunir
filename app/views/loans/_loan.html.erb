@@ -29,10 +29,10 @@
     <% end %>
   </ul>
 
-  <% if loan.client_last_comments.present? %>
-    <h5><%= Client.human_attribute_name('last_comments') %></h5>
+  <% if loan.comments.present? %>
+    <h5><%= Loan.human_attribute_name('last_comments') %></h5>
     <ul>
-      <% loan.client_last_comments.each do |comment| %>
+      <% loan.last_comments.each do |comment| %>
         <li>
           [<%= l(comment.created_at.to_date) %>]
           <%= comment.user %>: <%= comment.comment %>

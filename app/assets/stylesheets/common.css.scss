@@ -78,6 +78,8 @@ html, body {
   display: none;
 }
 
-.tab-content {
-  overflow: hidden;
-}
+form[data-form-container="true"] {
+  .progress {
+    margin-bottom: 0px;
+  }
+}  
