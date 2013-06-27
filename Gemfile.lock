@@ -44,7 +44,7 @@ GEM
     archive-zip (0.6.0)
       io-like (>= 0.3.0)
     arel (4.0.0)
-    atomic (1.1.9)
+    atomic (1.1.10)
     bcrypt-ruby (3.0.1)
     builder (3.1.4)
     capistrano (2.15.4)
@@ -188,6 +188,7 @@ GEM
     thread_safe (0.1.0)
       atomic
     tilt (1.4.1)
+    timecop (0.6.1)
     timeliness (0.3.7)
     timers (1.1.0)
     treetop (1.4.14)
@@ -242,10 +243,11 @@ DEPENDENCIES
   pg
   rails (= 4.0.0)
   role_model
-  sass-rails (~> 4.0.0.rc1)
+  sass-rails
   selenium-webdriver
   sidekiq
   simple_form (~> 3.0.0.rc)
+  timecop
   turbolinks
   turn
   uglifier

@@ -22,7 +22,7 @@ gem 'unicorn', require: false
 gem 'newrelic_rpm'
 
 # Old assets group
-gem 'sass-rails', '~> 4.0.0.rc1'
+gem 'sass-rails'
 gem 'coffee-rails'
 gem 'uglifier'
 
@@ -38,6 +38,6 @@ group :test do
   gem 'database_cleaner'
   gem 'fabrication'
   gem 'faker'
-  #gem 'timecop'
+  gem 'timecop'
   gem 'coveralls', require: false
 end

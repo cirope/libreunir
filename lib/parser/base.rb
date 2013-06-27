@@ -1,21 +1,28 @@
 module Parser
   class Base
-    COL_SEP = ' | '
     FIRST_ROW = 4
+    COL_SEP_SIZE = 3
     ENCODING = 'utf-16:utf-8'
 
     def initialize(path = nil)
-      @tmp_row    = []
-
       if path
-        @file       = File.open(path, encoding: ENCODING)
-        @row_length = initialize_row_length
+        @file      = File.open(path, encoding: ENCODING)
+        @tmp_line  = ''
+        @columns   = []
+        @header    = 0
+
+        initialize_attrs
       end
     end
 
-    def initialize_row_length
+    def initialize_attrs
       @file.each do |row|
-        return row.split(' ').length if @file.lineno == 3
+        if @file.lineno == 4
+          @header = row.length
+          row.split(' ').reject { |c| c == '-' }.map { |c| @columns << c.length }
+
+          return
+        end
       end
     end
 
@@ -23,21 +30,19 @@ module Parser
       @file.each do |line|
         if @file.lineno > FIRST_ROW
           begin
-            row = parse_line(line)
-
-            if row_valid?(row)
-              process_row(row)
+            if line_valid?(line)
+              process_row(parse_line(line))
             else
-              fix_row(row)
+              @tmp_line << line
 
-              if row_valid?(@tmp_row)
-                process_row(@tmp_row)
+              if line_valid?(@tmp_line)
+                process_row(parse_line(@tmp_line))
 
-                @tmp_row.clear
+                @tmp_line = ''
               end
             end
           rescue Exception => e
-            Parser::Logger.log "#{e.message} == #{row}"
+            Parser::Logger.log "#{e.message} == #{line}"
           end
         end
       end
@@ -60,21 +65,20 @@ module Parser
 
     private
 
-    def fix_row(row)
-      if @tmp_row.empty?
-        @tmp_row = row
-      else
-        @tmp_row[-1] += "\r\n#{row.shift}"
-        @tmp_row.concat(row)
-      end
-    end
-
     def parse_line(line)
-      line.split(COL_SEP).map { |r| r.to_s.strip.gsub('(null)', '') }
+      tmp_c = 0
+      tmp_row = []
+
+      @columns.each do |c|
+        tmp_row << line[tmp_c, c]
+        tmp_c += (c + COL_SEP_SIZE)
+      end
+
+      tmp_row.map { |r| r.to_s.strip.gsub('(null)', '') }
     end
 
-    def row_valid?(row)
-      @row_length <= row.length
+    def line_valid?(line)
+      line.length >= (@header - @columns[-1])
     end
   end
 end
