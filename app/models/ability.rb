@@ -27,7 +27,7 @@ class Ability
     can :manage, Schedule, { user_id: user.id }
     can :read, Client
     can [:read, :create], Note
-    can [:read, :create, :update], Tag
+    can [:read, :create, :update, :destroy], Tag
     can :read, Zone
   end
 end

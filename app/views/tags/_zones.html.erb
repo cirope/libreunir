@@ -1,25 +1,26 @@
-<ul class="nav nav-pills nav-stacked" data-tags-zones="true">
-  <li>
-    <div class="accordion" id="accordion_zones">
-      <div class="accordion-group">
-        <div class="accordion-heading">
-          <%= link_to Zone.model_name.human(count: 0), '#zones', 
-            class: 'accordion-toggle', 
-            data: { toggle: 'collapse', parent: '#accordion_zones' } 
-          %>
-        </div>
-        <div id="zones" class="accordion-body collapse <%== 'in' if @zone %>">
-          <div class="accordion-inner">
-            <ul class="nav nav-pills nav-stacked">
-              <% @zones.each do |zone| %>
-                <li <%== 'class="active"' if zone == @zone %>>
-                  <%= link_to zone.name, [action_name, zone, 'loans'] %>
-                </li>
-              <% end %>
-            </ul>
-          </div>
-        </div>
+<% fade_in = @zone || !@filter %>
+<div class="accordion">
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <ul class="nav nav-pills nav-stacked">
+        <li <%== 'class="active"' unless @filter %>>
+          <%= link_to '#zones', class: 'accordion-toggle', data: { toggle: 'collapse' } do %>
+            <span class="iconic"><%= (fade_in ? '&#xe016;' : '&#xe015;').html_safe %></span>
+          <% end %>
+          <%= link_to t("view.loans.#{action_name}"), [action_name, 'loans'], class: 'root-tag' %>
+        </li>
+      </ul>
+    </div>
+    <div id="zones" class="accordion-body collapse <%== 'in' if fade_in %>">
+      <div class="accordion-inner">
+        <ul class="nav nav-pills nav-stacked">
+          <% @zones.each do |zone| %>
+            <li <%== 'class="active"' if zone == @zone %>>
+              <%= link_to zone.name, [action_name, zone, 'loans'] %>
+            </li>
+          <% end %>
+        </ul>
       </div>
     </div>
-  </li>
-</ul>
+  </div>
+</div>

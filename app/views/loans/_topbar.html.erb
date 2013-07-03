@@ -1,12 +1,20 @@
-<ul class="nav nav-pills">
+<% tags = current_user.tags %>
+<ul class="nav nav-pills navtags">
   <li class="dropdown active">
-    <a class="dropdown-toggle" id="navtags" role="button" data-toggle="dropdown" href="#">
+    <%= link_to '#', id: 'navtags', class: 'dropdown-toggle', data: { toggle: 'dropdown' } do %>
       <%= content_tag(:span, '&#xe02b;'.html_safe, class: 'iconic') << ' ' << Tag.model_name.human(count: 0) %>
       <b class="caret"></b>
-    </a>
+    <% end %>
     <ul class="dropdown-menu" aria-labelledby="navtags">
-      <% current_user.tags.each do |tag|  %>
-        <li><%= link_to tag.name, '#', data: { tag_id: tag.id } %></li>
+      <% roots(tags).each do |root_tag| %>
+        <li class="root-tag"><%= link_to root_tag.name, '#', data: { tag_id: root_tag.id } %></li>
+        <% children(tags, root_tag).each do |child| %>
+          <li class="child-tag">
+            <%= link_to '#', data: { tag_id: child.id } do %>
+              <span class="muted"><small><%= child.name %></small></span>
+            <% end %>
+          </li>
+        <% end %>
       <% end %>
       <li class="divider"></li>
       <li><%= link_to t('view.tags.new'), new_tag_path, data: { remote: true } %></li>

@@ -21,5 +21,9 @@ module Loans::Scopes
     def find_by_loans(loans)
       where("#{table_name}.id" => loans.ids)
     end
+
+    def filter_by_tag(tag)
+      joins(:tags).where("#{Tag.table_name}.path && ARRAY[?]", tag.id)
+    end
   end
 end

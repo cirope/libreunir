@@ -1,4 +1,4 @@
-<%= simple_form_for(@tag, data: { remote: true }) do |f| %>
+<%= simple_form_for([@parent_tag, @tag], data: { remote: true }) do |f| %>
   <%= f.input :name, label: false, input_html: { class: 'span12' } %>
 
   <div class="btn-group">

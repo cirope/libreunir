@@ -29,7 +29,10 @@ class TagsControllerTest < ActionController::TestCase
   end
 
   test "should get edit" do
-    get :edit, id: @tag
+    tag = Fabricate(:tag, user_id: @user.id)
+
+    xhr :get, :edit, id: tag.id, format: :js
+
     assert_response :success
     assert_not_nil assigns(:tag)
     assert_select '#unexpected_error', false
@@ -37,9 +40,11 @@ class TagsControllerTest < ActionController::TestCase
   end
 
   test "should update tag" do
+    tag = Fabricate(:tag, user_id: @user.id)
+
     assert_no_difference 'Tag.count' do
-      xhr :put, :update, id: @tag, 
-        tag: Fabricate.attributes_for(:tag, attr: 'value'), format: :js
+      xhr :put, :update, id: tag.id,
+        tag: Fabricate.attributes_for(:tag, name: 'new_value'), format: :js
     end
 
     assert_response :success
@@ -49,10 +54,15 @@ class TagsControllerTest < ActionController::TestCase
   end
 
   test "should destroy tag" do
+    tag = Fabricate(:tag, user_id: @user.id)
+
     assert_difference('Tag.count', -1) do
-      delete :destroy, id: @tag
+      xhr :delete, :destroy, id: tag.id, format: :js
     end
 
-    assert_redirected_to tags_path
+    assert_response :success
+    assert_not_nil assigns(:tag)
+    assert_select '#unexpected_error', false
+    assert_template "tags/destroy"
   end
 end

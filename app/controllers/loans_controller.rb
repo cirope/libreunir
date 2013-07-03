@@ -1,8 +1,8 @@
 class LoansController < ApplicationController
   before_action :authenticate_user!
+  before_action :load_resource_tag, except: :show
 
   check_authorization
-  load_resource :tag, except: :show, shallow: true
   load_resource :zone, except: :show, shallow: true
 
   load_and_authorize_resource through: :current_user
@@ -57,7 +57,18 @@ class LoansController < ApplicationController
     @zones = Zone.find_by_loans(@loans)
   end
 
+  def load_resource_tag
+    @tag = Tag.find(params[:tag_id]) if params[:tag_id].present?
+  rescue
+    redirect_to tag_id: nil
+  end
+
   def filter_loans
-    @loans = @filter.loans.find_by_loans(@loans) if @filter
+    case @filter
+      when Tag
+        @loans = @loans.filter_by_tag(@filter)
+      when Zone
+        @loans = @filter.loans.find_by_loans(@loans)
+      end
   end
 end

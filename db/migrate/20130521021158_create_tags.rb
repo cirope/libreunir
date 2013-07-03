@@ -3,6 +3,7 @@ class CreateTags < ActiveRecord::Migration
     create_table :tags do |t|
       t.string :name, null: false
       t.string :category, null: false
+      t.integer :path, array: true
       t.references :user, null: false, index: true
       t.integer :lock_version, null: false, default: 0
 

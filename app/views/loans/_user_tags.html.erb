@@ -1,19 +1,6 @@
-<ul class="nav nav-list" data-tags-user="true">
-  <li class="nav-header"><%= Tag.model_name.human(count: 0) %></li>
-  <% current_user.tags.each do |tag| %>
-    <li data-user-tag-id="<%= tag.id %>" <%== 'class="active"' if @tag == tag %>>
-      <%= link_to tag.name, [action_name, tag, 'loans'] %>
-      <%= link_to(
-        content_tag(:span, '&#x270e;'.html_safe, class: 'iconic'), 
-        edit_tag_path(tag), remote: true, class: 'edit_tag'
-      ) %>
-    </li>
+<% tags = current_user.tags %>
+<div class="accordion">
+  <% roots(tags).each do |root_tag| %>
+    <%= render 'tags/nested_set', tags: tags, root_tag: root_tag %>
   <% end %>
-  <li class="divider"></li>
-</ul>
-<div class="tag_new">
-  <%= link_to(
-    t('view.tags.new'), new_tag_path, class: 'btn btn-mini', data: { remote: true }
-  ) %>
 </div>
-<div data-tags-new="true"></div>

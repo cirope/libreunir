@@ -1,6 +1,6 @@
 class TagsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_tag, only:  [:edit, :update, :destroy]
+  before_action :set_parent_tag, only: [:create, :new]
   
   check_authorization
   load_and_authorize_resource through: :current_user 
@@ -15,7 +15,7 @@ class TagsController < ApplicationController
   end
 
   # GET /tags/new
-  def new 
+  def new
   end
 
   # GET /tags/1/edit
@@ -25,6 +25,8 @@ class TagsController < ApplicationController
 
   # POST /tags
   def create
+    @tag.path = @parent_tag.path if @parent_tag
+
     @tag.save
   end
 
@@ -39,14 +41,19 @@ class TagsController < ApplicationController
 
   # DELETE /tags/1
   def destroy
-    @tag.destroy
-    redirect_to tags_url, notice: t('view.tags.correctly_destroyed')
+    @tag.self_and_descendents.each do |child|
+      child.destroy
+    end
+
+    respond_to do |format|
+      format.js
+    end
   end
 
   private
 
-  def set_tag
-    @tag = Tag.find(params[:id])
+  def set_parent_tag
+    @parent_tag = Tag.find_by(id: params[:tag_id])
   end
 
   def tag_params

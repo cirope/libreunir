@@ -1,5 +1,6 @@
-class Tag < ActiveRecord::Base
-  include Common::Filters
+ class Tag < ActiveRecord::Base
+  include NestedSet
+  include Filters
 
   has_paper_trail
   
@@ -9,7 +10,7 @@ class Tag < ActiveRecord::Base
   default_scope { order("#{table_name}.name ASC") }
 
   # Callbacks
-  after_initialize :set_category
+  after_initialize :initialize_attrs
 
   # Validations
   validates :name, :category, presence: true
@@ -27,7 +28,7 @@ class Tag < ActiveRecord::Base
     self.name
   end
 
-  def set_category
+  def initialize_attrs
     self.category ||= 'default'
   end
 end

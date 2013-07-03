@@ -166,6 +166,7 @@ ActiveRecord::Schema.define(version: 20130614162419) do
   create_table "tags", force: true do |t|
     t.string   "name",                     null: false
     t.string   "category",                 null: false
+    t.integer  "path",                                  array: true
     t.integer  "user_id",                  null: false
     t.integer  "lock_version", default: 0, null: false
     t.datetime "created_at"

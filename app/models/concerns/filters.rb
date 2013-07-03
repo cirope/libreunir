@@ -1,4 +1,4 @@
-module Common::Filters
+module Filters
   extend ActiveSupport::Concern
 
   def loans_count(loans)

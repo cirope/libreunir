@@ -1,0 +1,34 @@
+<% 
+  tags_children = children(tags, root_tag) 
+  fade_in = @tag == root_tag || tags_children.include?(@tag)
+%>
+<div class="accordion-group">
+  <div class="accordion-heading">
+    <ul class="nav nav-pills nav-stacked">
+      <li <%== 'class="active"' if root_tag == @tag %>>
+        <% if tags_children.present? %>
+          <%= link_to "#children-#{root_tag.to_param}", 
+            class: 'accordion-toggle', data: { toggle: 'collapse' } do %>
+            <span class="iconic"><%= (fade_in ? '&#xe016;' : '&#xe015;').html_safe %></span>
+          <% end %>
+        <% end %>
+        <%= link_to root_tag.name, [action_name, root_tag, 'loans'], class: 'root-tag' %>
+        <%= render 'tags/actions', tag: root_tag %>
+      </li>
+    </ul>
+  </div>
+  <% if tags_children.present? %>
+    <div id="children-<%= root_tag.to_param %>" class="accordion-body collapse <%== 'in' if fade_in %>">
+      <div class="accordion-inner">
+        <ul class="nav nav-pills nav-stacked">
+          <% tags_children.each do |child| %>
+            <li <%== 'class="active"' if child == @tag %>>
+              <%= link_to child.name, [action_name, child, 'loans'] %>
+              <%= render 'tags/actions', tag: child %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+</div>

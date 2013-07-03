@@ -8,6 +8,7 @@ Libreunir::Application.routes.draw do
       end
     end
 
+    resources :tags, only: [:create, :new]
     resources :taggings, only: [:create, :destroy]
   end
 

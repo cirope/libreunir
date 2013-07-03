@@ -1,46 +1,54 @@
-ul[data-tags-all] {
-  margin-bottom: 10px;
-}
-
-ul[data-tags-zones] {
+.accordion {
   margin-bottom: 10px;
 
-  .accordion { margin-bottom: 0; }
-}
+  ul.nav { margin-bottom: 0; }
 
-.tag_new {
-  padding: 0 5px;
-}
+  .accordion-group {
+    li {
+      position: relative;
 
-ul[data-tags-user] {
-  padding: 0 5px;
-
-  li[data-user-tag-id] {
-    position: relative;
-
-    a { 
-      margin: 0; 
-      padding: 3px 15px 3px 5px;
-
-      &.edit_tag { 
+      a.accordion-toggle, div.tag-actions {
         position: absolute;
-        top: 0;
-        right: 0;
-        padding: 2px 10px;
+        padding: 0;
+        margin: 0;
+      }
+      a.accordion-toggle { top: 8px; left: 5px; }
+      div.tag-actions { top: 5px; right: 5px; }
+
+      a.root-tag {
+        margin: 0;
+        padding: 8px;
+        text-indent: 20px;
+        border-radius: 4px;
+      }
+      &.active {
+        a { color: #fff; }
       }
     }
+  }
 
-    &:hover { background-color: #eee; }
-    &.active {
-      background-color: #0088CC;
-      color: #FFFFFF;
-      text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
-    }
+  .accordion-inner {
+    padding: 2px;
+
+    > a { padding: 4px 30px; }
+  }
+}
+
+.navtags {
+  margin-bottom: 10px;
+
+  .root-tag {
+    line-heigth: 0;
+    a { padding: 2px 20px; }
+  }
+
+  .child-tag {
+    line-heigth: 0;
+    a { text-indent: 10px; padding: 0 20px; }
   }
 }
 
 div[data-tags-new] {
-  padding: 0 5px;
   form { margin: 10px 0; }
 
   .btn-group {

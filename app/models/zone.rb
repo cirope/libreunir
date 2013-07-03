@@ -1,5 +1,5 @@
 class Zone < ActiveRecord::Base
-  include Common::Filters
+  include Filters
 
   has_paper_trail
 

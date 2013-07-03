@@ -1,10 +1,11 @@
 <%= content_for :sidebar do %>
-  <ul class="nav nav-pills nav-stacked" data-tags-all="true">
-    <li <%== 'class=active' unless @filter %>> 
-      <%= link_to t("view.loans.#{action_name}"), [action_name, 'loans'] %>
-    </li>
-  </ul>
-
   <%= render 'tags/zones' %>
   <%= render 'user_tags' %>
+
+  <div class="tag_new">
+    <%= link_to(
+      t('view.tags.new'), new_tag_path, class: 'btn btn-mini', data: { remote: true }
+    ) %>
+  </div>
+  <div data-tags-new="true"></div>
 <% end %>

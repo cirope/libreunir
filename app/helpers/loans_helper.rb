@@ -17,12 +17,9 @@ module LoansHelper
     loan.tags.each do |tag|
       tags << content_tag(:span, class: "tagging badge badge-#{tag.category}") do
         concat tag.name
-        concat ' '
-        concat link_to('&#x2718;'.html_safe,
-          [tag, loan.find_tagging_by(tag)],
-          data: {
-            remote: true, method: :delete, confirm: t('messages.confirmation')
-          }
+        concat ' | '
+        concat link_to('x', [tag, loan.find_tagging_by(tag)],
+          data: { remote: true, method: :delete, confirm: t('messages.confirmation') }
         )
       end
     end
