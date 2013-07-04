@@ -9,7 +9,7 @@ Libreunir::Application.routes.draw do
     end
 
     resources :tags, only: [:create, :new]
-    resources :taggings, only: [:create, :destroy]
+    resources :taggings, only: [:create]
   end
 
   resources :zones, only: [] do
@@ -41,6 +41,7 @@ Libreunir::Application.routes.draw do
     end
 
     resources :schedules, only: [:new, :create, :edit, :update]
+    resources :taggings, only: [:destroy]
   end
 
   resources :users do

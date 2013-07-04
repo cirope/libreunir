@@ -13,13 +13,13 @@ class TaggingsControllerTest < ActionController::TestCase
     2.times { loan_ids << Fabricate(:loan).id }
 
     assert_difference 'Tagging.count', 2 do
-      xhr :post, :create, tag_id: @tag.id, loan_ids: loan_ids, format: :js
+      xhr :post, :create, tag_id: @tag.id, taggable_ids: loan_ids, action_name: 'close_to_expire', format: :js
     end
 
     assert_response :success
     assert_not_nil assigns(:tag)
     assert_equal 2, @tag.loans.count
-    assert_template 'taggings/reload'
+    assert_template 'taggings/create'
   end
 
   test "should destroy tagging" do
@@ -27,12 +27,12 @@ class TaggingsControllerTest < ActionController::TestCase
     tagging = loan.taggings.create(tag_id: @tag.id)
 
     assert_difference 'Tagging.count', -1 do
-      xhr :post, :destroy, id: tagging.id, tag_id: @tag.id, format: :js
+      xhr :post, :destroy, id: tagging.id, loan_id: loan.id, action_name: 'expired', format: :js
     end
 
     assert_response :success
-    assert_not_nil assigns(:tag)
+    assert_not_nil assigns(:taggable)
     assert_equal 0, @tag.loans.count
-    assert_template 'taggings/reload'
+    assert_template 'taggings/destroy'
   end
 end

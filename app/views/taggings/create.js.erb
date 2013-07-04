@@ -1,0 +1,5 @@
+<% if @taggables.present?
+  @taggables.each do |taggable| %>
+    <%= render 'taggable', :@taggable => taggable, formats: [:js] %>
+  <% end %>
+<% end %>

@@ -2,7 +2,7 @@ new Rule
   load: ->
     # For browsers with no autofocus support
     $('[autofocus]:not([readonly]):not([disabled]):visible:first').focus()
-    $('[data-show-tooltip]').tooltip()
+    $('[data-show-tooltip=\"true\"]').tooltip()
 
     timers = @map.timers = []
     
@@ -19,16 +19,6 @@ jQuery ($) ->
   .ajaxStop ->
     $('#loading_caption').stop(true, true).fadeOut(100)
   
-  $(document).on 'submit', 'form', ->
-    $(this).find('input[type="submit"], input[name="utf8"]').attr 'disabled', true
-    $(this).find('a.submit').removeClass('submit').addClass('disabled')
-    $(this).find('.dropdown-toggle').addClass('disabled')
-    
-    if location.hash
-      hiddenHash = $('<input type="hidden" name="_hash" />').val(location.hash.substr(1))
-
-      $(this).append hiddenHash
-
   Inspector.instance().load()
 
 $(document).on 'click', '[data-remove-target]', (e) ->

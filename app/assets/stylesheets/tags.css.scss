@@ -21,15 +21,13 @@
         text-indent: 20px;
         border-radius: 4px;
       }
-      &.active {
-        a { color: #fff; }
-      }
+      &.active { a { color: #fff; } }
+      &:hover .tag-actions { display: inline !important; }
     }
   }
 
   .accordion-inner {
     padding: 2px;
-
     > a { padding: 4px 30px; }
   }
 }

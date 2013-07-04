@@ -1,0 +1,3 @@
+$("[data-object-id=\"<%= @taggable.to_param %>\"]").replaceWith(
+  '<%= j render("#{@taggable.class.to_s.tableize}/taggable") %>'
+);

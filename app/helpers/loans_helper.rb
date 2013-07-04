@@ -13,12 +13,14 @@ module LoansHelper
 
   def loan_category(loan)
     tags = []
+    action = params[:action_name] || action_name
 
     loan.tags.each do |tag|
       tags << content_tag(:span, class: "tagging badge badge-#{tag.category}") do
-        concat tag.name
+        concat link_to tag.name, [action, tag, 'loans']
         concat ' | '
-        concat link_to('x', [tag, loan.find_tagging_by(tag)],
+        concat link_to('x',
+          loan_tagging_path(loan, loan.find_tagging_by(tag), action_name: action),
           data: { remote: true, method: :delete, confirm: t('messages.confirmation') }
         )
       end
