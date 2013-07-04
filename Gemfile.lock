@@ -47,7 +47,7 @@ GEM
     atomic (1.1.10)
     bcrypt-ruby (3.0.1)
     builder (3.1.4)
-    capistrano (2.15.4)
+    capistrano (2.15.5)
       highline
       net-scp (>= 1.0.0)
       net-sftp (>= 2.0.0)
