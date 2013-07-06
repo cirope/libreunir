@@ -15,7 +15,7 @@
     list: 'Listado'
     loading: 'Cargando...'
     more_info: 'Mas Información'
-    new: 'Nuevo'
+    new: 'Agregar'
     scheduler: 'Agendar'
     search: 'Buscar'
     show: 'Ver'
@@ -49,11 +49,6 @@
       stale_object_error: 'El cliente no pudo ser actualizado, intente nuevamente.'
     dashboard:
       index_title: 'Tablero'
-      filters:
-        loans_count: 'Préstamos'
-        expired: 'Morosos'
-        close_to_expire: 'Renovación'
-        total_debt: 'Deuda total'
       greetings:
         html: 'Hola %{user}<small>, este es tu resumen de préstamos semanales</small>'
     loans:

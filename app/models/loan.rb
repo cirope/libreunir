@@ -4,13 +4,6 @@ class Loan < ActiveRecord::Base
 
   has_paper_trail
 
-  FILTERS = {
-    expired: { formatter: :none },
-    close_to_expire: { formatter: :none },
-    loans_count: { formatter: :none },
-    total_debt: { formatter: :currency }
-  }
-
   # Validations
   validates :loan_id, presence: true
   validates :loan_id, uniqueness: true, allow_nil: true, allow_blank: true
@@ -38,9 +31,5 @@ class Loan < ActiveRecord::Base
 
   def is_scheduled?
     self.schedules.present?
-  end
-
-  def find_tagging_by(tag)
-    self.taggings.find_by(tag_id: tag.id)
   end
 end

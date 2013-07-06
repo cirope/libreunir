@@ -1,6 +1,4 @@
 class Zone < ActiveRecord::Base
-  include Filters
-
   has_paper_trail
 
   # Validations
@@ -18,5 +16,9 @@ class Zone < ActiveRecord::Base
 
   def self.find_by_loans(loans)
     where(id: loans.pluck('zone_id')).order("#{table_name}.name ASC")
+  end
+
+  def self.filter_by_loans(loans)
+    where("#{Loan.table_name}.id" => loans.ids)
   end
 end

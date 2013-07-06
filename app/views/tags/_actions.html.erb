@@ -1,7 +1,5 @@
 <div class="pull-right tag-actions hidden-desktop">
-  <%= link_to(
-    content_tag(:span, '&#xe008;'.html_safe, class: 'iconic'), new_tag_tag_path(tag), remote: true
-  ) if tag.root? %>
-  <%= link_to content_tag(:span, '&#x270e;'.html_safe, class: 'iconic'), edit_tag_path(tag), remote: true %>
-  <%= link_to_destroy tag_path(tag), 'data-show-tooltip' => 'false', remote: true %>
+  <%= link_to_new(new_tag_tag_path(tag), remote: true) if tag.root? %>
+  <%= link_to_edit edit_tag_path(tag), remote: true %>
+  <%= link_to_destroy tag_path(tag), remote: true %>
 </div>

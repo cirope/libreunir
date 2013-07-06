@@ -7,17 +7,19 @@
     <% end %>
     <ul class="dropdown-menu" aria-labelledby="navtags">
       <% roots(tags).each do |root_tag| %>
-        <li class="root-tag"><%= link_to root_tag.name, '#', data: { tag_id: root_tag.id } %></li>
+        <li class="root-tag">
+          <%= link_to_tag root_tag, url: '#', data: { tag_id: root_tag.id } %>
+        </li>
         <% children(tags, root_tag).each do |child| %>
           <li class="child-tag">
-            <%= link_to '#', data: { tag_id: child.id } do %>
-              <span class="muted"><small><%= child.name %></small></span>
+            <%= link_to '#', data: { title: child.name, show_tooltip: true, tag_id: child.id } do %>
+              <span class="muted"><small><%= tag_name(child) %></small></span>
             <% end %>
           </li>
         <% end %>
       <% end %>
       <li class="divider"></li>
-      <li><%= link_to t('view.tags.new'), new_tag_path, data: { remote: true } %></li>
+      <li><%= link_to t('view.tags.new'), new_tag_path, remote: true %></li>
     </ul>
   </li> 
 </ul>

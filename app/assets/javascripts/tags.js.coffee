@@ -15,8 +15,9 @@ new Rule
   condition: -> $('.accordion').length
   load: ->
     @map.accordion_toggle ||= (e)->
-      text = if e.type == 'hidden' then '' else ''
-      $(this).find('.accordion-toggle .iconic').text(text)
+      if $(e.target).hasClass('accordion-body')
+        text = if e.type == 'hidden' then '' else ''
+        $(this).find('.accordion-toggle .iconic').text(text)
 
     $(document).on 'shown hidden', '.accordion-group', @map.accordion_toggle
   unload: ->

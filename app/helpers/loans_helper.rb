@@ -17,7 +17,7 @@ module LoansHelper
 
     loan.tags.each do |tag|
       tags << content_tag(:span, class: "tagging badge badge-#{tag.category}") do
-        concat link_to tag.name, [action, tag, 'loans']
+        concat link_to tag_name(tag), [action, tag, 'loans']
         concat ' | '
         concat link_to('x',
           loan_tagging_path(loan, loan.find_tagging_by(tag), action_name: action),

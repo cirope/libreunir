@@ -1,8 +1,12 @@
 module Loans::Scopes
   extend ActiveSupport::Concern
 
+  def find_tagging_by(tag)
+    taggings.find_by(tag_id: tag.id)
+  end
+
   module ClassMethods
-    def policy
+    def close_to_expire
       where("#{table_name}.days_overdue_average <= ?", 7)
     end
 
@@ -11,15 +15,22 @@ module Loans::Scopes
     end
 
     def sorted_by_total_debt
-      order("#{Loan.table_name}.total_debt DESC")
+      order("#{table_name}.total_debt DESC")
     end
 
     def sorted_by_progress
       order("#{table_name}.progress DESC")
     end
 
-    def find_by_loans(loans)
-      where("#{table_name}.id" => loans.ids)
+    def find_by_filter(filter)
+      case filter
+        when Tag  then filter_by_tag(filter)
+        when Zone then filter_by_zone(filter)
+      end
+    end
+
+    def filter_by_zone(zone)
+      where(zone_id: zone.id)
     end
 
     def filter_by_tag(tag)

@@ -1,6 +1,6 @@
 module DashboardHelper
-  def link_to_loans(filter, zone, value, formatter)
-    href = url_for [filter, zone, 'loans'].compact rescue nil
+  def link_to_loans(action, filter, value, formatter)
+    href = url_for [action, filter, 'loans'].compact rescue nil
 
     value = case formatter
       when :currency

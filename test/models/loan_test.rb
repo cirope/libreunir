@@ -52,8 +52,8 @@ class LoanTest < ActiveSupport::TestCase
       @loan.errors[:loan_id]
   end
 
-  test 'policy' do
-    assert_no_difference 'Loan.policy.count' do
+  test 'close to expire' do
+    assert_no_difference 'Loan.close_to_expire.count' do
       Fabricate(:loan, days_overdue_average: 8)
     end
   end

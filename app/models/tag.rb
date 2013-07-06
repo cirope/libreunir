@@ -1,6 +1,5 @@
  class Tag < ActiveRecord::Base
   include NestedSet
-  include Filters
 
   has_paper_trail
   
@@ -30,5 +29,9 @@
 
   def initialize_attrs
     self.category ||= 'default'
+  end
+
+  def self.filter_by_loans(loans)
+    joins(:loans).where("#{Loan.table_name}.id" => loans.ids).uniq
   end
 end

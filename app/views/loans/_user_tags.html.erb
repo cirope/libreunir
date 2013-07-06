@@ -1,6 +1,4 @@
 <% tags = current_user.tags %>
 <div class="accordion">
-  <% roots(tags).each do |root_tag| %>
-    <%= render 'tags/nested_set', tags: tags, root_tag: root_tag %>
-  <% end %>
+  <%= render partial: 'tags/nested_set', locals: { tags: tags }, collection: roots(tags), as: :root_tag %>
 </div>

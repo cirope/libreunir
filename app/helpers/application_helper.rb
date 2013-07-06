@@ -56,6 +56,14 @@ module ApplicationHelper
     link_to icon, *args, options
   end
 
+  def link_to_new(*args)
+    options = args.extract_options!
+
+    options['title'] ||= t('label.new')
+
+    iconic_link '&#xe008;'.html_safe, *args, options
+  end
+
   def link_to_show(*args)
     options = args.extract_options!
 

@@ -2,7 +2,9 @@ new Rule
   load: ->
     # For browsers with no autofocus support
     $('[autofocus]:not([readonly]):not([disabled]):visible:first').focus()
-    $('[data-show-tooltip=\"true\"]').tooltip()
+    $('[data-show-tooltip=\"true\"]').tooltip(
+      delay: { show: 800, hide: 0 }
+    )
 
     timers = @map.timers = []
     

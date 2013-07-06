@@ -1,37 +1,33 @@
-<% columns = 2 %>
 <div class="readonly-data">
   <div class="page-header">
     <h1><%= t('view.dashboard.greetings.html', user: current_user.name) %></h1>
   </div>
-  <% @data_container.each_slice(columns) do |container| %>
+  <% @summaries.each do |summary| %>
     <div class="row-fluid">
-      <%
-        container.each do |filter,zones|
-        formatter = Loan::FILTERS[filter][:formatter]
-      %>
-        <div class="span6">
-          <table class="table table-condensed table-striped">
-            <thead>
-              <tr>
-                <th><%= Zone.model_name.human(count: 0) %></th>
-                <th>
-                  <%= link_to_loans(
-                    filter, nil, t("view.dashboard.filters.#{filter}"), :none
-                  ) %>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <% zones.each do |zone, value| %>
-                <tr>
-                  <td><%= zone %></td>
-                  <td><%= link_to_loans(filter, zone, value, formatter) %></td>
-                </tr>
+      <div class="span12">
+        <table class="table table-condensed table-striped">
+          <thead>
+            <tr>
+              <% summary.headers.each do |header| %>
+                <th><%= header %></th>
               <% end %>
-            </tbody>
-          </table>
-        </div>
-      <% end %>
+            </tr>
+          </thead>
+          <tbody>
+            <% summary.rows.each do |column| %>
+              <tr>
+                <td><%= truncate(column[:filter].name, length: 20) %></td>
+                <td>
+                  <%= link_to_loans(
+                    summary.action, column[:filter], column[:value], summary.formatter
+                  ) %>
+                </td>
+                <td><%= column[:amount] %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
     </div>
   <% end %>
 </div>

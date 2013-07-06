@@ -1,6 +1,6 @@
 <% 
   tags_children = children(tags, root_tag) 
-  fade_in = @tag == root_tag || tags_children.include?(@tag)
+  shown = @tag == root_tag || tags_children.include?(@tag)
 %>
 <div class="accordion-group">
   <div class="accordion-heading">
@@ -9,21 +9,21 @@
         <% if tags_children.present? %>
           <%= link_to "#children-#{root_tag.to_param}", 
             class: 'accordion-toggle', data: { toggle: 'collapse' } do %>
-            <span class="iconic"><%= (fade_in ? '&#xe016;' : '&#xe015;').html_safe %></span>
+            <span class="iconic"><%= (shown ? '&#xe016;' : '&#xe015;').html_safe %></span>
           <% end %>
         <% end %>
-        <%= link_to root_tag.name, [action_name, root_tag, 'loans'], class: 'root-tag' %>
+        <%= link_to_tag root_tag, class: 'root-tag' %>
         <%= render 'tags/actions', tag: root_tag %>
       </li>
     </ul>
   </div>
   <% if tags_children.present? %>
-    <div id="children-<%= root_tag.to_param %>" class="accordion-body collapse <%== 'in' if fade_in %>">
+    <div id="children-<%= root_tag.to_param %>" class="accordion-body collapse <%== 'in' if shown %>">
       <div class="accordion-inner">
         <ul class="nav nav-pills nav-stacked">
           <% tags_children.each do |child| %>
             <li <%== 'class="active"' if child == @tag %>>
-              <%= link_to child.name, [action_name, child, 'loans'] %>
+              <%= link_to_tag child %>
               <%= render 'tags/actions', tag: child %>
             </li>
           <% end %>

@@ -30,7 +30,7 @@ class LoansController < ApplicationController
 
   def close_to_expire
     @title = t 'view.loans.close_to_expire_title'
-    @loans = @loans.policy
+    @loans = @loans.close_to_expire
 
     load_resource_loans
 
@@ -64,11 +64,6 @@ class LoansController < ApplicationController
   end
 
   def filter_loans
-    case @filter
-      when Tag
-        @loans = @loans.filter_by_tag(@filter)
-      when Zone
-        @loans = @filter.loans.find_by_loans(@loans)
-      end
+    @loans = @loans.find_by_filter(@filter) if @filter
   end
 end
