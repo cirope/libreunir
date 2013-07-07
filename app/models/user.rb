@@ -17,10 +17,9 @@ class User < ActiveRecord::Base
 
   # Relations
   belongs_to :branch
-  has_many :loans, dependent: :destroy
-  has_many :comments, dependent: :destroy
+  has_many :loans
+  has_many :comments
   has_many :schedules, dependent: :destroy
-  has_many :made_payments, class_name: 'Payment'
   has_many :payments, through: :loans
   has_many :clients, -> { uniq }, through: :loans
   has_many :tags, dependent: :destroy
