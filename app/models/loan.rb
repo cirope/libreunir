@@ -12,7 +12,7 @@ class Loan < ActiveRecord::Base
   belongs_to :branch
   belongs_to :user
   belongs_to :zone
-  has_many :payments, dependent: :destroy
+  has_many :payments, dependent: :destroy, counter_cache: ''
   has_many :schedules, as: :schedulable, dependent: :destroy
   has_many :taggings, as: :taggable, dependent: :destroy
   has_many :tags, through: :taggings
