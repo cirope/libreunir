@@ -2,7 +2,6 @@ class UsersController < ApplicationController
   include Users::Profile
 
   before_action :authenticate_user!
-  before_action :load_current_user, only: [:edit_profile, :update_profile]
 
   check_authorization
   load_and_authorize_resource
