@@ -28,7 +28,13 @@ module Parser
     private
 
     def percentage_progress(loan)
-      (((loan.expired_payments_count + loan.payments_to_expire_count) / loan.payments_count.to_f) * 100).round if loan.payments_count > 0
+      if loan.payments_count > 0
+        (((loan.payments_count - expired(loan)) / loan.payments_count.to_f) * 100).round
+      end
+    end
+
+    def expired(loan)
+      loan.expired_payments_count + loan.payments_to_expire_count
     end
 
     def overdue_average(loan)
