@@ -6,12 +6,12 @@ module Loans::Scopes
   end
 
   module ClassMethods
-    def close_to_expire
+    def policy
       where("#{table_name}.days_overdue_average <= ?", 7)
     end
 
     def expired
-      where("#{table_name}.expired_payments_count > ?", 0)
+      where("#{table_name}.expired_payments_count = ?", 1)
     end
 
     def sorted_by_total_debt

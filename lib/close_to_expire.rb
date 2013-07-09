@@ -18,7 +18,7 @@ class CloseToExpire
   private
 
   def loans
-    @current_user.loans.close_to_expire
+    @current_user.loans.policy
   end
 
   def value(loans)

@@ -30,7 +30,7 @@ class LoansController < ApplicationController
 
   def close_to_expire
     @title = t 'view.loans.close_to_expire_title'
-    @loans = @loans.close_to_expire
+    @loans = @loans.policy
 
     load_resource_loans
 
