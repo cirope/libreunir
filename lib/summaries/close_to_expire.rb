@@ -1,9 +1,10 @@
-class CloseToExpire
-  include Summary
+class Summaries::CloseToExpire
+  include Summaries::Summary
 
-  attr_reader :current_user
+  attr_reader :current_user, :filter
 
-  def initialize(current_user)
+  def initialize(current_user, filter = nil)
+    @filter       = filter
     @current_user = current_user
   end
 
@@ -16,6 +17,10 @@ class CloseToExpire
   end
 
   private
+
+  def sorted(loans)
+    loans.sorted_by_progress
+  end
 
   def loans
     @current_user.loans.policy

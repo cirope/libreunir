@@ -14,11 +14,7 @@ class Zone < ActiveRecord::Base
     self.name
   end
 
-  def self.find_by_loans(loans)
-    where(id: loans.pluck('zone_id')).order("#{table_name}.name ASC")
-  end
-
   def self.filter_by_loans(loans)
-    where("#{Loan.table_name}.id" => loans.ids)
+    where("#{Loan.table_name}.id" => loans.ids).order("#{table_name}.name ASC")
   end
 end

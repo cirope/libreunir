@@ -1,8 +1,8 @@
-module Summary
+module Summaries::Summary
   LIMIT = 5
-  
+ 
   def self.classes
-    [Expired, CloseToExpire]
+    [Summaries::Expired, Summaries::CloseToExpire]
   end
 
   def headers
@@ -27,7 +27,11 @@ module Summary
       rows << row 
     end 
 
-    rows.sort_by { |row| row[:value] }.reverse!.first(Summary::LIMIT)
+    rows.sort_by { |row| row[:value] }.reverse!.first(LIMIT)
+  end
+
+  def loans_filtered
+    sorted(filter ? loans.find_by_filter(filter) : loans)
   end
 
   def filters

@@ -1,9 +1,10 @@
-class Expired
-  include Summary
+class Summaries::Expired
+  include Summaries::Summary
 
-  attr_reader :current_user
+  attr_reader :current_user, :filter
 
-  def initialize(current_user)
+  def initialize(current_user, filter = nil)
+    @filter       = filter
     @current_user = current_user
   end
 
@@ -16,7 +17,11 @@ class Expired
   end
 
   private
-  
+
+  def sorted(loans)
+    loans.sorted_by_total_debt
+  end
+
   def loans
     @current_user.loans.expired    
   end
