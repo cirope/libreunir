@@ -34,7 +34,7 @@ module SchedulesHelper
     data = { dismiss: 'modal' }
 
     if @schedulable && @schedule.new_record?
-      href = ''
+      href = '?'
       data = {}
     end
 
