@@ -1,24 +1,25 @@
 $('#schedule_modal').modal('hide');
 
+<% today = Date.today %>
 var days = <%== @days %>;
-var today = new Date('<%= Date.today %>');
+var today = new Date(<%= today.year %>, <%= today.month-1 %>, <%= today.day %>);
 
 $('[data-calendar-month]').datepicker({
-    beforeShowDay: function(date){
+    dateFormat: 'yy-mm-dd',
+    beforeShowDay: function(date) {
       var included = $.inArray($.datepicker.formatDate('yy-mm-dd', date), days) != -1;
       var can_read = (date >= today || included) ? true : false;
 
       return [ can_read, included ? 'has_event' : '' ]
     },
-    onSelect: function(date, obj){
-      var date = new Date(obj.currentYear, obj.currentMonth, obj.currentDay);
-      $.getScript('/schedules/search/' + date.toISOString().substring(0, 10));
+    onSelect: function(date, obj) {
+      $.getScript('/schedules/search/' + date);
     },
-    onChangeMonthYear: function(year, month, obj){
+    onChangeMonthYear: function(year, month, obj) {
       var date = new Date(year, month-1, obj.currentDay);
-      $.getScript('/schedules/' + date.toISOString().substring(0, 10));
+      $.getScript('/schedules/' + $.datepicker.formatDate('yy-mm-dd', date));
     }
-}).datepicker('setDate', '<%= l @date.to_date, format: :minimal %>').datepicker('refresh');
+}).datepicker('setDate', '<%= l @date.to_date, format: :minimal %>');
 
 $('[data-calendar-day]').html('<%= j render('schedules_day') %>');
 $('[data-loading]').remove();
