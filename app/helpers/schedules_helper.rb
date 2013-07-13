@@ -12,7 +12,7 @@ module SchedulesHelper
   def show_mark_schedule_as_done_check_box(schedule)
     output = link_to(
       '-', toggle_done_schedule_path(schedule),
-      data: { remote: true, method: :patch, toggle_schedule_done_link: true },
+      data: { remote: true, method: :put, toggle_schedule_done_link: true },
       class: 'hidden'
     )
 

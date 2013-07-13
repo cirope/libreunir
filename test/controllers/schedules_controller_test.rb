@@ -84,7 +84,7 @@ class SchedulesControllerTest < ActionController::TestCase
   test 'should toggle schedule done' do
     assert !@schedule.done
 
-    patch :toggle_done, id: @schedule, format: :js
+    put :toggle_done, id: @schedule, format: :js
 
     assert_response :success
     assert_not_nil assigns(:schedule)

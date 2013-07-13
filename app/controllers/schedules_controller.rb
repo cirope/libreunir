@@ -67,7 +67,7 @@ class SchedulesController < ApplicationController
     redirect_to edit_schedule_url(@schedule), alert: t('view.schedules.stale_object_error')
   end
 
-  # PATCH /schedules/1/toggle_done
+  # PATCH /schedules/1/toggle_done  # Changed to PUT method - IE7 doesn't work!
   def toggle_done
     @schedule.toggle_done
   end
