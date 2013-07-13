@@ -23,7 +23,7 @@
         <ul class="nav nav-pills nav-stacked">
           <% tags_children.each do |child| %>
             <li <%== 'class="active"' if child == @tag %>>
-              <%= link_to_tag child %>
+              <%= link_to_tag child, class: 'root-tag' %>
               <%= render 'tags/actions', tag: child %>
             </li>
           <% end %>
