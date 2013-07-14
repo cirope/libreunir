@@ -8,7 +8,7 @@
     <ul class="dropdown-menu" aria-labelledby="navtags">
       <% roots(tags).each do |root_tag| %>
         <li class="root-tag">
-          <%= link_to_tag root_tag, url: '#', data: { tag_id: root_tag.id } %>
+          <%= link_to_tag root_tag, data: { url: '#', tag_id: root_tag.id } %>
         </li>
         <% children(tags, root_tag).each do |child| %>
           <li class="child-tag">

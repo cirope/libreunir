@@ -16,7 +16,7 @@ module TagsHelper
 
     options['title'] ||= tag.name
     options['data-show-tooltip'] ||= true
-    url = options['url'] || [action_name, tag, controller_name]
+    url = options['data-url'] || [action_name, tag, controller_name]
 
     link_to tag_name(tag), url, options
   end
