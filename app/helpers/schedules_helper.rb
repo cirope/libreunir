@@ -49,4 +49,14 @@ module SchedulesHelper
       input_html: { disabled: !@schedule.allow_remind_me? }
     )
   end
+
+  def show_tags(schedulable)
+    if schedulable.respond_to?(:tags)
+      tags = []
+      schedulable.tags.each do |tag|
+        tags << content_tag(:span, tag_name(tag), class: "tagging badge badge-#{tag.category}")
+      end
+      tags.join(' ')
+    end
+  end
 end

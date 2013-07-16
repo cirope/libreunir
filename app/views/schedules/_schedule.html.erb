@@ -1,32 +1,35 @@
-<li data-schedule-id="<%= schedule.to_param %>" <%== 'class="muted strike"' if schedule.done? %>>
-  <%= show_mark_schedule_as_done_check_box(schedule) %>
-  <span class="muted">
-    <%= l schedule.scheduled_at, format: :mini %> |
+<div data-schedule-id="<%= schedule.to_param %>">
+  <%== show_tags(schedule.schedulable) %>
+  <span <%== 'class="muted strike"' if schedule.done? %>>
+    <%= show_mark_schedule_as_done_check_box(schedule) %>
+    <span class="muted">
+      <%= l schedule.scheduled_at, format: :mini %> |
+    </span>
+    <% if schedule.schedulable %>
+      <%= link_to_schedulable(schedule)%>
+      <span class="muted">|</span>
+    <% end %>
+    <%= schedule.description %>
+
+    <% if schedule.editable? %>
+      <% if can?(:update, schedule) %>
+        <span class="muted">|</span>
+        <%= link_to_edit(
+          edit_polymorphic_path([schedule.schedulable, schedule]),
+          data: { remote: true }
+        ) %>
+      <% end %>
+
+      <% if can?(:read, Note) %>
+        <span class="muted">|</span>
+        <%= link_to_notes(
+          schedule,
+          polymorphic_path([schedule, Note]), data: { remote: true }
+        ) %>
+      <% end %>
+    <% end %>
+
+    <div data-info-id="<%= schedule.to_param %>"></div>
+    <div data-noteable-id="<%= schedule.to_param %>"></div>
   </span>
-  <% if schedule.schedulable %>
-    <%= link_to_schedulable(schedule)%>
-    <span class="muted">|</span>
-  <% end %>
-  <%= schedule.description %> 
-
-  <% if schedule.editable? %>
-    <% if can?(:update, schedule) %>
-      <span class="muted">|</span>
-      <%= link_to_edit(
-        edit_polymorphic_path([schedule.schedulable, schedule]),
-        data: { remote: true }
-      ) %> 
-    <% end %>
-
-    <% if can?(:read, Note) %>
-      <span class="muted">|</span>
-      <%= link_to_notes(
-        schedule,
-        polymorphic_path([schedule, Note]), data: { remote: true }
-      ) %>
-    <% end %>
-  <% end %>
-
-  <div data-info-id="<%= schedule.to_param %>"></div>
-  <div data-noteable-id="<%= schedule.to_param %>"></div>
-</li>
+</div>

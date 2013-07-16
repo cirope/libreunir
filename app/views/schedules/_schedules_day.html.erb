@@ -4,9 +4,7 @@
   
 <% if @date.at_beginning_of_day >= Time.zone.now.at_beginning_of_day %>
   <% if @schedules.present? %>
-    <ul>
-      <%= render(@schedules, as: :schedule, formats: [:html]) %>
-    </ul>
+    <%= render(@schedules, as: :schedule, formats: [:html]) %>
     
     <% if can? :create, Schedule %> 
       <hr />
@@ -23,9 +21,7 @@
   <% end %>
 <% else %>
   <% if @schedules.present? %>
-    <ul>
-      <%= render(@schedules, as: :schedule, formats: [:html]) %>
-    </ul>
+    <%= render(@schedules, as: :schedule, formats: [:html]) %>
   <% else %>
     <div class="alert alert-warning">
       <h4><%= t('view.schedules.empty_past_schedules') %></h4>

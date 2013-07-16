@@ -13,13 +13,13 @@ class SchedulesTest < ActionDispatch::IntegrationTest
 
     click_link Schedule.model_name.human(count: 0)
 
-    assert page.has_css?('[data-calendar-day] ul')
+    assert page.has_css?('[data-calendar-day]')
     
-    within '[data-calendar-day] ul' do
+    within '[data-calendar-day]' do
       assert_difference 'Schedule.done.count' do
         assert page.has_no_css?('.strike')
 
-        find('li:first-child input[data-toggle-schedule-done]').click
+        first('input[data-toggle-schedule-done]').click
 
         assert page.has_css?('.strike')
       end
@@ -91,7 +91,7 @@ class SchedulesTest < ActionDispatch::IntegrationTest
 
     assert page.has_no_css?('#schedule_modal')
 
-    within "li[data-schedule-id=\"#{schedule.to_param}\"]" do
+    within "[data-schedule-id=\"#{schedule.to_param}\"]" do
       click_link '✎'
     end
 

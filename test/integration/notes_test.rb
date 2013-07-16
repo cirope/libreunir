@@ -13,7 +13,7 @@ class NotesTest < ActionDispatch::IntegrationTest
 
     visit schedules_path
 
-    within "li[data-schedule-id=\"#{schedule.to_param}\"]" do
+    within "[data-schedule-id=\"#{schedule.to_param}\"]" do
       click_link ''
     end
 
