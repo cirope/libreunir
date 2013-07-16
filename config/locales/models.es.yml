@@ -51,10 +51,13 @@
         address: 'Dirección'
       loan:
         approved_at: 'Fecha de aprovación'
+        debt_percentage: 'Porcentaje de deuda'
         capital: 'Capital'
+        delayed_at: 'Atraso'
         expired_payments_count: 'Pagos atrasados'
         last_comments: 'Últimos comentarios'
         payment: 'Valor de cuota'
+        payments_count: 'Cuotas'
         payments_to_expire_count: 'Cuotas restantes'
         progress: 'Avance'
         total_debt: 'Deuda total'

@@ -38,14 +38,6 @@ class SchedulesControllerTest < ActionController::TestCase
   end
 
   test 'should show schedule' do
-    get :show, id: @schedule
-    assert_response :success
-    assert_not_nil assigns(:schedule)
-    assert_select '#unexpected_error', false
-    assert_template 'schedules/show'
-  end
-
-  test 'should show schedule in js' do
     get :show, id: @schedule, format: :js
     assert_response :success
     assert_not_nil assigns(:schedule)
@@ -55,14 +47,6 @@ class SchedulesControllerTest < ActionController::TestCase
   end
 
   test 'should get edit' do
-    get :edit, id: @schedule
-    assert_response :success
-    assert_not_nil assigns(:schedule)
-    assert_select '#unexpected_error', false
-    assert_template 'schedules/edit'
-  end
-
-  test 'should get edit in js' do
     get :edit, id: @schedule, format: :js
     assert_response :success
     assert_not_nil assigns(:schedule)

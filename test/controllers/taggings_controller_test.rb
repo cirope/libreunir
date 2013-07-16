@@ -23,7 +23,7 @@ class TaggingsControllerTest < ActionController::TestCase
   end
 
   test "should destroy tagging" do
-    loan = Fabricate(:loan)
+    loan = Fabricate(:loan, delayed_at: Date.today)
     tagging = loan.taggings.create(tag_id: @tag.id)
 
     assert_difference 'Tagging.count', -1 do

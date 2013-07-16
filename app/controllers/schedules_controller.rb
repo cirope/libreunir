@@ -23,6 +23,7 @@ class SchedulesController < ApplicationController
   # GET /schedules/1
   def show
     @title = t('view.schedules.show_title')
+    @total_debt = current_user.loans.sum('total_debt')
   end
 
   # GET /schedules/new

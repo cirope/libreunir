@@ -11,7 +11,7 @@ module Loans::Scopes
     end
 
     def expired
-      where("#{table_name}.expired_payments_count = ?", 1)
+      where("#{table_name}.expired_payments_count > ?", 0)
     end
 
     def sorted_by_total_debt

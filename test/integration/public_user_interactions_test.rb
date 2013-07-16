@@ -8,7 +8,7 @@ class PublicUserInteractionsTest < ActionDispatch::IntegrationTest
     
     assert_page_has_no_errors!
   end
-  
+
   test 'should send reset password instructions' do
     user = Fabricate(:user)
     
@@ -18,6 +18,7 @@ class PublicUserInteractionsTest < ActionDispatch::IntegrationTest
     
     find('#reset-password').click
 
+    assert page.has_css?('.email')
     assert_equal new_user_password_path, current_path
     assert_page_has_no_errors!
     
@@ -36,7 +37,7 @@ class PublicUserInteractionsTest < ActionDispatch::IntegrationTest
       assert page.has_content?(I18n.t('devise.passwords.send_instructions'))
     end
   end
-  
+
   test 'should be able to login and logout' do
     login
     

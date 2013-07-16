@@ -11,6 +11,7 @@ class LoansController < ApplicationController
   layout ->(c) { c.request.xhr? ? false : 'columns' }
 
   def show
+    @total_debt = current_user.loans.sum('total_debt')
   end
 
   def expired

@@ -130,6 +130,7 @@
           quadrillion: "mil billones"
 
   datetime:
+    days: 'días'
     distance_in_words:
       half_a_minute: "medio minuto"
       less_than_x_seconds:

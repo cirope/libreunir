@@ -10,16 +10,6 @@ class LoansControllerTest < ActionController::TestCase
   test 'should get expired' do
     fabricate_expired
 
-    get :expired
-
-    assert_response :success
-    assert_equal 3, assigns(:loans).size
-    assert_template 'loans/expired'
-  end
-
-  test 'should get expired in js' do
-    fabricate_expired
-
     xhr :get, :expired, format: :js
 
     assert_response :success
@@ -28,16 +18,6 @@ class LoansControllerTest < ActionController::TestCase
   end
 
   test 'should get close to expire' do
-    fabricate_close_to_expire
-
-    get :close_to_expire
-
-    assert_response :success
-    assert_equal 3, assigns(:loans).size
-    assert_template 'loans/close_to_expire'
-  end
-
-  test 'should get close to expire in js' do
     fabricate_close_to_expire
 
     xhr :get, :close_to_expire, format: :js
@@ -61,7 +41,7 @@ class LoansControllerTest < ActionController::TestCase
 
   def fabricate_expired
     3.times do
-      Fabricate(:loan, user_id: @user.id, expired_payments_count: 1)
+      Fabricate(:loan, user_id: @user.id, expired_payments_count: 1, delayed_at: 2.days.ago.to_date)
     end
 
     Fabricate(:loan, user_id: @user.id, expired_payments_count: 0)

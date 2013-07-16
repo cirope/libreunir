@@ -1,11 +1,14 @@
 require 'test_helper'
 
 class LoansTest < ActionDispatch::IntegrationTest
-  test 'should get loans with close to expire' do
-    user = Fabricate(:user, password: '123456')
-    3.times { Fabricate(:loan, user_id: user.id, next_payment_expire_at: Date.tomorrow) }
+  setup do
+    @user = Fabricate(:user, password: '123456', role: :normal)
+  end
 
-    login(user: user)
+  test 'should get loans with close to expire' do
+    3.times { Fabricate(:loan, user_id: @user.id, next_payment_expire_at: Date.tomorrow) }
+
+    login(user: @user)
 
     within 'div.navbar-inner' do
       click_link I18n.t('menu.clients')
@@ -17,12 +20,8 @@ class LoansTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get loans with expired' do
-    user = Fabricate(:user, password: '123456')
-    3.times do
-      Fabricate(:loan, user_id: user.id, expired_payments_count: 1, next_payment_expire_at: 2.days.ago.to_date)
-    end
-
-    login(user: user)
+    3.times { fabricate_expired }
+    login(user: @user)
   
     within 'div.navbar-inner' do
       click_link I18n.t('menu.clients')
@@ -34,13 +33,9 @@ class LoansTest < ActionDispatch::IntegrationTest
   end
 
   test 'should show and close loan info' do
-    user = Fabricate(:user, password: '123456')
-    3.times do
-      Fabricate(:loan, user_id: user.id, expired_payments_count: 1, next_payment_expire_at: 2.days.ago.to_date)
-    end
-    loan = Fabricate(:loan, user_id: user.id, expired_payments_count: 1, next_payment_expire_at: 2.days.ago.to_date)
-
-    login(user: user)
+    3.times { fabricate_expired }
+    loan = fabricate_expired
+    login(user: @user)
     
     within 'div.navbar-inner' do
       click_link I18n.t('menu.clients')
@@ -63,14 +58,10 @@ class LoansTest < ActionDispatch::IntegrationTest
   end
 
   test 'should show error and create scheduled' do
-    user = Fabricate(:user, password: '123456')
-    3.times do
-      Fabricate(:loan, user_id: user.id, expired_payments_count: 1, next_payment_expire_at: 2.days.ago.to_date)
-    end
-    loan = Fabricate(:loan, user_id: user.id, expired_payments_count: 1, next_payment_expire_at: 2.days.ago.to_date)
+    loan = fabricate_expired
     schedule = Fabricate.build(:schedule)
 
-    login(user: user)
+    login(user: @user)
     
     within 'div.navbar-inner' do
       click_link I18n.t('menu.clients')
@@ -108,5 +99,14 @@ class LoansTest < ActionDispatch::IntegrationTest
 
       assert page.has_css?('.warning')
     end
+  end
+
+  private
+
+  def fabricate_expired
+    Fabricate(
+      :loan, user_id: @user.id, expired_payments_count: 1,
+      next_payment_expire_at: 2.days.ago.to_date, delayed_at: 2.days.ago.to_date
+    )
   end
 end
