@@ -14,6 +14,6 @@ module Schedules::Done
   end
 
   def editable?
-    !self.past? && !self.done
+    !self.done
   end
 end
