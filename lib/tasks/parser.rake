@@ -8,6 +8,7 @@ namespace :parser do
 
   files = [
     { model: :branch,  name: 'sucursal.txt',  cleanup: false },
+    { model: :zone,    name: 'zona.txt',      cleanup: false },
     { model: :user,    name: 'usuario.txt',   cleanup: false },
     { model: :order,   name: 'solicitud.txt', cleanup: true  },
     { model: :loan,    name: 'prestamo.txt',  cleanup: true  },

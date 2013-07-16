@@ -7,7 +7,7 @@ module TagsHelper
     nestedable.select { |n| n.path.length > root.path.length && n.path.include?(root.id) }
   end
 
-  def tag_name(tag, length = nil)
+  def truncate_tag_name(tag, length = nil)
     truncate(tag.name, length: (length || 20))
   end
 
@@ -18,6 +18,6 @@ module TagsHelper
     options['data-show-tooltip'] ||= true
     url = options['data-url'] || [action_name, tag, controller_name]
 
-    link_to tag_name(tag), url, options
+    link_to truncate_tag_name(tag), url, options
   end
 end

@@ -13,7 +13,7 @@
         <% children(tags, root_tag).each do |child| %>
           <li class="child-tag">
             <%= link_to '#', data: { title: child.name, show_tooltip: true, tag_id: child.id } do %>
-              <span class="muted"><small><%= tag_name(child) %></small></span>
+              <span class="muted"><small><%= truncate_tag_name(child) %></small></span>
             <% end %>
           </li>
         <% end %>

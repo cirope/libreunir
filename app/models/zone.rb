@@ -2,11 +2,13 @@ class Zone < ActiveRecord::Base
   has_paper_trail
 
   # Validations
-  validates :name, presence: true
-  validates :name, uniqueness: { case_sensitive: false }, allow_nil: true, allow_blank: true
-  validates :name, length: { maximum: 255 }, allow_nil: true, allow_blank: true
+  validates :name, :zone_id, :branch_id, presence: true
+  validates :name, uniqueness: { case_sensitive: false, scope: [:zone_id, :branch_id] },
+    allow_nil: true, allow_blank: true
+  validates :name, :zone_id, length: { maximum: 255 }, allow_nil: true, allow_blank: true
 
   # Relations
+  belongs_to :branch
   has_many :loans
   has_many :users, through: :loans
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130614162419) do
+ActiveRecord::Schema.define(version: 20130716153129) do
 
   create_table "branches", force: true do |t|
     t.integer  "branch_id",                null: false
@@ -217,12 +217,16 @@ ActiveRecord::Schema.define(version: 20130614162419) do
   add_index "versions", ["whodunnit"], name: "index_versions_on_whodunnit", using: :btree
 
   create_table "zones", force: true do |t|
-    t.string   "name",                     null: false
+    t.string   "zone_id",                  null: false
     t.integer  "lock_version", default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name"
+    t.integer  "branch_id"
   end
 
-  add_index "zones", ["name"], name: "index_zones_on_name", unique: true, using: :btree
+  add_index "zones", ["branch_id"], name: "index_zones_on_branch_id", using: :btree
+  add_index "zones", ["name"], name: "index_zones_on_name", using: :btree
+  add_index "zones", ["zone_id"], name: "index_zones_on_zone_id", unique: true, using: :btree
 
 end

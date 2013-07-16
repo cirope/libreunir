@@ -4,7 +4,7 @@ module Parser
       loan = ::Loan.find_by(loan_id: row[0].to_i)
       user = ::User.find_by(username: row[2])
       branch = ::Branch.find_by(branch_id: row[7].to_i)
-      zone = ::Zone.find_or_create_by(name: row[48])
+      zone = ::Zone.find_by(zone_id: row[48])
 
       attributes = {
         loan_id: row[0].to_i,

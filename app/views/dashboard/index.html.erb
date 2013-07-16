@@ -16,7 +16,7 @@
           <tbody>
             <% summary.rows.each do |column| %>
               <tr>
-                <td><%= truncate(column[:filter].name, length: 20) %></td>
+                <td><%= show_filter(column[:filter]) %></td>
                 <td>
                   <%= link_to_loans(
                     summary.action, column[:filter], column[:value], summary.formatter

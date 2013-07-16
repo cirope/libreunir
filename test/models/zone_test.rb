@@ -6,7 +6,7 @@ class ZoneTest < ActiveSupport::TestCase
   end
 
   test 'create' do
-    assert_difference ['Zone.count', 'Version.count'] do
+    assert_difference 'Zone.count' do
       @zone = Zone.create(Fabricate.attributes_for(:zone))
     end 
   end
@@ -29,16 +29,24 @@ class ZoneTest < ActiveSupport::TestCase
     
   test 'validates blank attributes' do
     @zone.name = ''
+    @zone.zone_id = ''
+    @zone.branch_id = nil
     
     assert @zone.invalid?
-    assert_equal 1, @zone.errors.size
+    assert_equal 3, @zone.errors.size
     assert_equal [error_message_from_model(@zone, :name, :blank)],
       @zone.errors[:name]
+    assert_equal [error_message_from_model(@zone, :zone_id, :blank)],
+      @zone.errors[:zone_id]
+    assert_equal [error_message_from_model(@zone, :branch_id, :blank)],
+      @zone.errors[:branch_id]
   end
     
   test 'validates unique attributes' do
     new_zone = Fabricate(:zone)
     @zone.name = new_zone.name
+    @zone.zone_id = new_zone.zone_id
+    @zone.branch_id = new_zone.branch_id
 
     assert @zone.invalid?
     assert_equal 1, @zone.errors.size
