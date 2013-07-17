@@ -35,9 +35,10 @@ class LoansController < ApplicationController
   private
   
   def load_resources
+    @searchable = true
     summary = "Summaries::#{action_name.camelize}".constantize.new(current_user, @filter)
 
-    @loans = summary.loans_filtered.page(params[:page]).uniq
+    @loans = summary.loans_filtered.joins(:client).filtered_list(params[:q]).page(params[:page]).uniq
     @zones = summary.zones
   end
 

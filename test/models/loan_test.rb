@@ -63,4 +63,32 @@ class LoanTest < ActiveSupport::TestCase
       Fabricate(:loan, expired_payments_count: 1)
     end
   end
+
+  test 'magick search' do
+    5.times {
+      Fabricate(:loan,
+        client_id: Fabricate(:client, name: 'magick_name', lastname: 'magick_lastname').id
+      )
+    }
+    Fabricate(:loan, loan_id: '1053810')
+
+    loans = Loan.joins(:client).magick_search('magick')
+
+    assert_equal 5, loans.count
+    assert loans.all? { |l| l.client.to_s =~ /magick/ }
+
+    loans = Loan.joins(:client).magick_search('magick_name')
+
+    assert_equal 5, loans.count
+    assert loans.all? { |l| l.client.to_s =~ /magick_name/ }
+
+    loans = Loan.joins(:client).magick_search('1053810')
+
+    assert_equal 1, loans.count
+    assert loans.all? { |l| l.to_s =~ /1053810/ }
+
+    loans = Loan.joins(:client).magick_search('nobody')
+
+    assert loans.empty?
+  end
 end

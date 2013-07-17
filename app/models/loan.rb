@@ -1,6 +1,7 @@
 class Loan < ActiveRecord::Base
   include Loans::Client
   include Loans::Scopes
+  include Loans::MagickColumns
 
   has_paper_trail
 
