@@ -1,0 +1,26 @@
+.summary {
+  top: 40px;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1000;
+
+  .container {
+    .content {
+      padding: 0;
+      border-radius: 0;
+      box-shadow: 0 3px 3px #888;
+    }
+  }
+}
+
+.columns-container {
+  margin: 0 20px;
+}
+
+.logged_in[data-action="close_to_expire"], 
+.logged_in[data-action="expired"] {
+  .columns-container {
+    margin-top: 30px;
+  }
+}

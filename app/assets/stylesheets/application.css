@@ -18,6 +18,7 @@
  *= require common
  *= require common-responsive
  *= require devise
+ *= require loans
  *= require notes
  *= require schedules
  *= require taggings

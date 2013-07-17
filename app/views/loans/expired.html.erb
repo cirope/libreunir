@@ -1,5 +1,5 @@
+<%= render 'summary' %>
 <%= render 'sidebar' %>
-<%= render 'topbar' %>
 
 <% if @loans.present? %>
   <%= form_tag nil, method: :post, data: { action: tag_taggings_path('tag_id', action_name: action_name),

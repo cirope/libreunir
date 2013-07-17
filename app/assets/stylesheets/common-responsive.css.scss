@@ -38,6 +38,14 @@
       }
     }
   }
+
+  .logged_in[data-action="close_to_expire"],
+  .logged_in[data-action="expired"] {
+    .container > .content {
+      padding-top: 0;
+      .summary { position: static; }
+    }
+  }
 }
 
 @media (min-width: 980px) {
