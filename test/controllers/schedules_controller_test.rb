@@ -65,6 +65,17 @@ class SchedulesControllerTest < ActionController::TestCase
     assert_equal 'Updated', @schedule.reload.description
   end
 
+  test 'should destroy schedule' do
+    assert_difference 'Schedule.count', -1 do
+      xhr :delete, :destroy, id: @schedule.id, format: :js
+    end
+
+    assert_response :success
+    assert_not_nil assigns(:schedule)
+    assert_equal 0, Schedule.count
+    assert_template 'schedules/destroy'
+  end
+
   test 'should toggle schedule done' do
     assert !@schedule.done
 

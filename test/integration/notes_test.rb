@@ -14,7 +14,7 @@ class NotesTest < ActionDispatch::IntegrationTest
     visit schedules_path
 
     within "[data-schedule-id=\"#{schedule.to_param}\"]" do
-      click_link ''
+      click_link ''
     end
 
     assert_difference 'Note.count' do

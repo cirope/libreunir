@@ -14,18 +14,17 @@
     <% if schedule.editable? %>
       <% if can?(:update, schedule) %>
         <span class="muted">|</span>
-        <%= link_to_edit(
-          edit_polymorphic_path([schedule.schedulable, schedule]),
-          data: { remote: true }
-        ) %>
+        <%= link_to_edit edit_polymorphic_path([schedule.schedulable, schedule]), remote: true %>
       <% end %>
 
       <% if can?(:read, Note) %>
         <span class="muted">|</span>
-        <%= link_to_notes(
-          schedule,
-          polymorphic_path([schedule, Note]), data: { remote: true }
-        ) %>
+        <%= link_to_notes polymorphic_path([schedule, Note]), remote: true %>
+        <small class="muted">(<%= schedule.notes.count %>)</small>
+      <% end %>
+      <% if can? :destroy, schedule %>
+        <span class="muted">|</span>
+        <%= link_to_destroy schedule, remote: true %>
       <% end %>
     <% end %>
 
