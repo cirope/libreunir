@@ -1,6 +1,6 @@
 class SchedulesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_filter_date, only: [:index, :search, :new]
+  before_action :load_date, only: [:index, :search, :new]
 
   check_authorization
   load_resource :loan, shallow: true
@@ -56,7 +56,7 @@ class SchedulesController < ApplicationController
     @title = t('view.schedules.edit_title')
 
     respond_to do |format|
-      if @schedule.update(params[:schedule])
+      if @schedule.update(schedule_params)
         format.js { 
           redirect_to schedules_url(date: @schedule.scheduled_at.to_date), format: :js 
         }
@@ -92,7 +92,7 @@ class SchedulesController < ApplicationController
     @schedulable = @loan
   end
 
-  def set_filter_date
+  def load_date
     @date = Timeliness.parse(params[:date], zone: :local) || Time.zone.now
   end
 end

@@ -14,7 +14,7 @@
     <div id="zones" class="accordion-body collapse <%== 'in' if fade_in %>">
       <div class="accordion-inner">
         <ul class="nav nav-pills nav-stacked">
-          <% @zones.each do |zone| %>
+          <% @summary.zones.each do |zone| %>
             <li <%== 'class="active"' if zone == @zone %>>
               <%= link_to zone.name, [action_name, zone, 'loans'] %>
             </li>

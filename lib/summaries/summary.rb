@@ -30,8 +30,20 @@ module Summaries::Summary
     rows.sort_by { |row| row[:value] }.reverse!.first(LIMIT)
   end
 
-  def loans_filtered
-    sorted(filter ? loans.find_by_filter(filter) : loans)
+  def current_loans
+    (filter ? loans.find_by_filter(filter) : loans).joins(:client).filtered_list(query)
+  end
+
+  def loans_sorted
+    sorted(current_loans)
+  end
+
+  def loans_count
+    current_loans.count
+  end
+
+  def loans_summary
+    value(current_loans)
   end
 
   def filters

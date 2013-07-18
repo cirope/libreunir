@@ -1,10 +1,11 @@
 class Summaries::Expired
   include Summaries::Summary
 
-  attr_reader :current_user, :filter
+  attr_reader :current_user, :filter, :query
 
-  def initialize(current_user, filter = nil)
+  def initialize(current_user, filter = nil, query = nil)
     @filter       = filter
+    @query        = query
     @current_user = current_user
   end
 

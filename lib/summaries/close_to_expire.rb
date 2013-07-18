@@ -1,10 +1,11 @@
 class Summaries::CloseToExpire
   include Summaries::Summary
 
-  attr_reader :current_user, :filter
+  attr_reader :current_user, :filter, :query
 
-  def initialize(current_user, filter = nil)
+  def initialize(current_user, filter = nil, query = nil)
     @filter       = filter
+    @query        = query
     @current_user = current_user
   end
 
@@ -27,6 +28,6 @@ class Summaries::CloseToExpire
   end
 
   def value(loans)
-    loans.where('progress > 80').count
+    loans.where('progress >= 75').count
   end 
 end

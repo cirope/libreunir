@@ -1,11 +1,10 @@
 <div data-schedule-id="<%= schedule.to_param %>">
+  <%= show_mark_schedule_as_done_check_box(schedule) %>
+  <span class="muted"><%= l schedule.scheduled_at, format: :mini %> |</span>
   <%== show_tags(schedule.schedulable) %>
   <span <%== 'class="muted strike"' if schedule.done? %>>
-    <%= show_mark_schedule_as_done_check_box(schedule) %>
-    <span class="muted">
-      <%= l schedule.scheduled_at, format: :mini %> |
-    </span>
     <% if schedule.schedulable %>
+      <span class="muted">|</span>
       <%= link_to_schedulable(schedule)%>
       <span class="muted">|</span>
     <% end %>

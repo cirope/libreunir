@@ -22,4 +22,15 @@
       <li><%= link_to t('view.tags.new'), new_tag_path, remote: true %></li>
     </ul>
   </li> 
+  <li>
+    <ul class="inline summary-info">
+      <li>
+        <strong><%= Loan.model_name.human(count: 0) %>:</strong> <%= @summary.loans_count %>
+      </li>
+      <li>
+        <strong><%= t("view.loans.#{action_name}_summary") %>:</strong>
+        <%= format_value(@summary.loans_summary, @summary.formatter) %>
+      </li>
+    </ul>
+  </li>
 </ul>

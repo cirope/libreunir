@@ -32,8 +32,8 @@ module LoansHelper
   def loan_progress(loan)
     progress = case loan.progress
       when 0..50   then 'progress-success'
-      when 51..80  then 'progress-info'
-      when 81..89  then 'progress-warning'
+      when 51..74  then 'progress-info'
+      when 75..89  then 'progress-warning'
       when 90..100 then 'progress-danger'
     end
 
