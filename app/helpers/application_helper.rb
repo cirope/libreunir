@@ -43,7 +43,14 @@ module ApplicationHelper
       )
     )
 
-    content_tag :div, raw(pagination_links.to_s + page_entries), class: 'pagination-container'
+    content_tag :div, raw(pagination_links.to_s + page_entries), class: 'pagination-container hidden-print'
+  end
+
+  def pagination_print(collection)
+    to = collection.offset + collection.length
+    count = collection.total_entries
+
+    t('will_paginate.page_entries_info.multi_page_html', from: 1, to: to, count: count)
   end
 
   def iconic_link(icon, *args)

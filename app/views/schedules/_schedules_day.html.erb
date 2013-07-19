@@ -1,21 +1,23 @@
 <div class="page-header">
   <span class="badge badge-info"><%= l @date.to_date, format: :mini_long %></span>
 </div>
-  
+
 <% if @date.at_beginning_of_day >= Time.zone.now.at_beginning_of_day %>
   <% if @schedules.present? %>
     <%= render(@schedules, as: :schedule, formats: [:html]) %>
     
-    <% if can? :create, Schedule %> 
-      <hr />
-      <p> 
-        <%= link_to(
-          t('view.schedules.new', default: :'label.new'),
-          new_schedule_path(date: @date.to_date), 
-          class: 'btn btn-primary', data: { remote: true }
-        ) %>
-      </p>
-    <% end %>
+    <div class="hidden-print">
+      <% if can? :create, Schedule %>
+        <hr />
+        <p>
+          <%= link_to(
+            t('view.schedules.new', default: :'label.new'),
+            new_schedule_path(date: @date.to_date),
+            class: 'btn btn-primary', data: { remote: true }
+          ) %>
+        </p>
+      <% end %>
+    </div>
   <% else %>
     <%= render('empty_index') %>
   <% end %>

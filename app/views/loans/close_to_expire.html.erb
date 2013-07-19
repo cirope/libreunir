@@ -27,6 +27,9 @@
   <div class="pagination-container">
     <%= pagination_links(@loans) %>
   </div>
+  <div class="pagination-print visible-print pull-right">
+    <%= pagination_print(@loans) %>
+  </div>
 <% else %>
   <%= render 'shared/empty_index' %>
 <% end %>

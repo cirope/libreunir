@@ -1,5 +1,11 @@
 @import "mixins";
 
+@media print {
+  a[href]:after {
+    content: none;
+  }
+}
+
 footer.alert {
   position: fixed;
   bottom: 0em;

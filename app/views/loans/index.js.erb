@@ -8,7 +8,8 @@
 
 <% if @loans.next_page %>
   $('.pagination-container').replaceWith('<%= j pagination_links(@loans) %>');
+  $('.pagination-print').html('<%= j pagination_print(@loans) %>');
   $(document).scroll();
 <% else %>
-  $('.pagination-container').hide();
+  $('.pagination-container, .pagination-print').remove();
 <% end %>

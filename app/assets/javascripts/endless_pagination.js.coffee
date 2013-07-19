@@ -6,7 +6,7 @@ isScrolledIntoView = (elem) ->
   elemBottom = elemTop + $(elem).height()
 
   ((elemBottom >= docViewTop) && (elemTop <= docViewBottom) &&
-    (elemBottom <= docViewBottom) && (elemTop >= docViewTop) )
+    (elemBottom <= docViewBottom) && (elemTop >= docViewTop))
 
 new Rule
   condition: -> $('*[data-endless-container]').length

@@ -10,22 +10,24 @@
     <% end %>
     <%= schedule.description %>
 
-    <% if schedule.editable? %>
-      <% if can?(:update, schedule) %>
-        <span class="muted">|</span>
-        <%= link_to_edit edit_polymorphic_path([schedule.schedulable, schedule]), remote: true %>
-      <% end %>
+    <span class="hidden-print">
+      <% if schedule.editable? %>
+        <% if can?(:update, schedule) %>
+          <span class="muted">|</span>
+          <%= link_to_edit edit_polymorphic_path([schedule.schedulable, schedule]), remote: true %>
+        <% end %>
 
-      <% if can?(:read, Note) %>
-        <span class="muted">|</span>
-        <%= link_to_notes polymorphic_path([schedule, Note]), remote: true %>
-        <small class="muted">(<%= schedule.notes.count %>)</small>
+        <% if can?(:read, Note) %>
+          <span class="muted">|</span>
+          <%= link_to_notes polymorphic_path([schedule, Note]), remote: true %>
+          <small class="muted">(<%= schedule.notes.count %>)</small>
+        <% end %>
+        <% if can? :destroy, schedule %>
+          <span class="muted">|</span>
+          <%= link_to_destroy schedule, remote: true %>
+        <% end %>
       <% end %>
-      <% if can? :destroy, schedule %>
-        <span class="muted">|</span>
-        <%= link_to_destroy schedule, remote: true %>
-      <% end %>
-    <% end %>
+    </span>
 
     <div data-info-id="<%= schedule.to_param %>"></div>
     <div data-noteable-id="<%= schedule.to_param %>"></div>
