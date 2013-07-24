@@ -1,8 +1,5 @@
 $('[data-schedule-modal]').html(
-  '<%= j render(template: 'schedules/schedule_modal', formats: [:html]) %>'
+  '<%= j render(template: 'schedules/schedule_modal', locals: { content: render('form', formats: [:html]) }) %>'
 );
-$('#schedule_modal').modal().on('shown', function(){
-  $(this).find('textarea:first').focus();
-});
 
 <%= render 'datepicker_setup' %>

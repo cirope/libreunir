@@ -10,16 +10,10 @@ module SchedulesHelper
   end
 
   def show_mark_schedule_as_done_check_box(schedule)
-    output = link_to(
-      '-', toggle_done_schedule_path(schedule),
-      data: { remote: true, method: :put, toggle_schedule_done_link: true },
-      class: 'hidden'
-    )
-
-    output + check_box_tag(
-      'schedule', "mark_#{schedule.to_param}_as_done", schedule.done,
+    check_box_tag(
+      'schedule_ids[]', schedule.to_param, false,
       class: 'margin-less', disabled: !schedule.doable?, id: nil,
-      data: { toggle_schedule_done: schedule.to_param }
+      data: { mark_done: schedule.done }
     )
   end
 

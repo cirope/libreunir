@@ -23,5 +23,6 @@ $('[data-calendar-month]').datepicker({
 
 $('[data-calendar-day]').html('<%= j render('schedules_day') %>');
 $('[data-loading]').remove();
+$('.navtags > li.active').siblings().addClass('hidden');
 
 Inspector.instance().reload();

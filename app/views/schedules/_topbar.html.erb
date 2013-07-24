@@ -1,0 +1,21 @@
+<ul class="nav nav-pills navtags hidden-print">
+  <li class="dropdown active">
+    <%= link_to '#', class: 'dropdown-toggle', data: { toggle: 'dropdown' } do %>
+      <%= t('label.mark') %>
+      <b class="caret"></b>
+    <% end %>
+
+    <ul class="dropdown-menu"> 
+      <li><%= link_to t('label.all'),    '#', data: { mark: true }       %></li>
+      <li><%= link_to t('label.none'),   '#', data: { mark: false }      %></li>
+      <li><%= link_to t('label.done'),   '#', data: { mark_done: true }  %></li>
+      <li><%= link_to t('label.nodone'), '#', data: { mark_done: false } %></li>
+    </ul>
+  </li>
+  <li class="hidden">
+    <%= link_to t('label.toggle'), '#', data: { mark_as: true, action: 'toggle_done' } %>
+  </li>
+  <li class="hidden">
+    <%= link_to t('label.move'), calendar_schedules_path, remote: true %>
+  </li>
+</ul>

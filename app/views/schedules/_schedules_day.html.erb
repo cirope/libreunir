@@ -1,33 +1,31 @@
-<div class="page-header">
-  <span class="badge badge-info"><%= l @date.to_date, format: :mini_long %></span>
-</div>
+<%= form_tag nil, method: :put, data: { action: schedules_path('action'), form_mark_as: true, remote: true } do %>
+  <% if @date.at_beginning_of_day >= Time.zone.now.at_beginning_of_day %>
+    <% if @schedules.present? %>
+      <%= render(@schedules, as: :schedule, formats: [:html]) %>
 
-<% if @date.at_beginning_of_day >= Time.zone.now.at_beginning_of_day %>
-  <% if @schedules.present? %>
-    <%= render(@schedules, as: :schedule, formats: [:html]) %>
-    
-    <div class="hidden-print">
-      <% if can? :create, Schedule %>
-        <hr />
-        <p>
-          <%= link_to(
-            t('view.schedules.new', default: :'label.new'),
-            new_schedule_path(date: @date.to_date),
-            class: 'btn btn-primary', data: { remote: true }
-          ) %>
-        </p>
-      <% end %>
-    </div>
+      <div class="hidden-print">
+        <% if can? :create, Schedule %>
+          <hr />
+          <p>
+            <%= link_to(
+              t('view.schedules.new', default: :'label.new'),
+              new_schedule_path(date: @date.to_date),
+              class: 'btn btn-primary', data: { remote: true }
+            ) %>
+          </p>
+        <% end %>
+      </div>
+    <% else %>
+      <%= render('empty_index') %>
+    <% end %>
   <% else %>
-    <%= render('empty_index') %>
-  <% end %>
-<% else %>
-  <% if @schedules.present? %>
-    <%= render(@schedules, as: :schedule, formats: [:html]) %>
-  <% else %>
-    <div class="alert alert-warning">
-      <h4><%= t('view.schedules.empty_past_schedules') %></h4>
-    </div>
+    <% if @schedules.present? %>
+      <%= render(@schedules, as: :schedule, formats: [:html]) %>
+    <% else %>
+      <div class="alert alert-warning">
+        <h4><%= t('view.schedules.empty_past_schedules') %></h4>
+      </div>
+    <% end %>
   <% end %>
 <% end %>
 

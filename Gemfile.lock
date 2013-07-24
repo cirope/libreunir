@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/airblade/paper_trail.git
-  revision: 1baead241804bbe476a8fa89b24ab4bdcb6d0c95
+  revision: c441a5de2d61042126bb042c3c18012fca3af32b
   branch: rails4
   specs:
     paper_trail (2.7.2)
@@ -188,7 +188,7 @@ GEM
     thread_safe (0.1.0)
       atomic
     tilt (1.4.1)
-    timecop (0.6.2)
+    timecop (0.6.2.2)
     timeliness (0.3.7)
     timers (1.1.0)
     treetop (1.4.14)
@@ -214,7 +214,7 @@ GEM
     warden (1.2.3)
       rack (>= 1.0)
     websocket (1.0.7)
-    whenever (0.8.3)
+    whenever (0.8.4)
       activesupport (>= 2.3.4)
       chronic (>= 0.6.3)
     will_paginate (3.0.4)

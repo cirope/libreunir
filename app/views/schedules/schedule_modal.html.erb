@@ -1,11 +1,19 @@
 <div id="schedule_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="scheduled_label" aria-hidden="true">
-  <% if @schedule.schedulable %>
+  <% if @schedule.try(:schedulable) %>
   <div class="modal-header">
     <h4 id="scheduled_label"><%= @schedule.label %></h4> 
   </div>
   <% end %>
   <div class="modal-body">
-    <%= render 'form' %>
+    <%= content %>
   </div>
   <div class="modal-footer"></div>
 </div>
+
+<%= javascript_tag do %>
+  $(document).ready(function() {
+    $('#schedule_modal').modal().on('shown', function(){
+      $(this).find('textarea:first').focus();
+    });
+  });
+<% end %>

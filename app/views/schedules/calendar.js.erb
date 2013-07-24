@@ -1,0 +1,14 @@
+$('[data-schedule-modal]').html(
+  '<%= j render(template: 'schedules/schedule_modal', locals: { content: '<div data-calendar-placeholder></div>'.html_safe }) %>'
+);
+
+$(document).ready(function() {
+  $('[data-calendar-placeholder]').datepicker({
+    dateFormat: 'yy-mm-dd',
+    minDate: '<%= l @date.to_date, format: :minimal %>',
+    onSelect: function(date, obj) {
+      action = '/schedules/move/' + date;
+      $('form[data-form-mark-as]').attr('action', action).submit();
+    }
+  });
+});
