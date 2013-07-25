@@ -14,9 +14,9 @@ class TaggingsController < ApplicationController
 
   # POST /taggings
   def create
-    if params[:taggable_ids].present?
-      @taggables = Loan.find(params[:taggable_ids])
-      @taggables.each { |taggable| taggable.taggings.create(tag_id: @tag.id) } if @tag
+    if params[:taggable_ids].present? && @tag
+      @taggables = current_user.loans.where(id: params[:taggable_ids])
+      @taggables.each { |taggable| taggable.taggings.create(tag_id: @tag.id) }
     end
   end
 

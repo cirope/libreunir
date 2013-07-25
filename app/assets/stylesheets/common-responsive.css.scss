@@ -39,8 +39,7 @@
     }
   }
 
-  .logged_in[data-action="close_to_expire"],
-  .logged_in[data-action="expired"] {
+  #c_loans, #c_schedules {
     .container > .content {
       padding-top: 0;
       .summary { position: static; }

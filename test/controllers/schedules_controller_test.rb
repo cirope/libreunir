@@ -77,13 +77,14 @@ class SchedulesControllerTest < ActionController::TestCase
   end
 
   test 'should toggle schedule done' do
-    assert !@schedule.done
+    schedule_ids = []
+    2.times { schedule_ids << Fabricate(:schedule).id }
 
-    put :toggle_done, id: @schedule, format: :js
+    put :toggle_done, schedule_ids: schedule_ids, format: :js
 
     assert_response :success
-    assert_not_nil assigns(:schedule)
-    assert @schedule.reload.done
+    assert_not_nil assigns(:schedules)
+    assigns(:schedules).each { |s| assert s.reload.done }
     assert_select '#unexpected_error', false
     assert_template 'schedules/toggle_done'
     assert_equal :js, @request.format.symbol

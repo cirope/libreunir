@@ -1,5 +1,11 @@
 $('[data-schedule-modal]').html(
-  '<%= j render(template: 'schedules/schedule_modal', locals: { content: '<div data-calendar-placeholder></div>'.html_safe }) %>'
+  '<%= j render(template: 'schedules/schedule_modal',
+    locals: {
+      header: t('helpers.select.prompt'),
+      body: '<div data-calendar-placeholder></div>'.html_safe,
+      cancel: true
+    })
+  %>'
 );
 
 $(document).ready(function() {

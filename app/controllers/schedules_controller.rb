@@ -7,12 +7,12 @@ class SchedulesController < ApplicationController
 
   before_action :set_schedulable
 
-  load_and_authorize_resource through: :schedulable, shallow: true 
+  load_and_authorize_resource through: :schedulable, shallow: true
 
   respond_to :html, :js
 
   layout ->(c) { c.request.xhr? ? false : 'columns' }
-  
+
   # GET /schedules
   def index
     @title = t('view.schedules.index_title')
@@ -42,8 +42,8 @@ class SchedulesController < ApplicationController
 
     respond_to do |format|
       if @schedule.save && @schedulable.nil?
-        format.js { 
-          redirect_to schedules_url(date: @schedule.scheduled_at.to_date), format: :js 
+        format.js {
+          redirect_to schedules_url(date: @schedule.scheduled_at.to_date), format: :js
         }
       else
         format.js
@@ -58,7 +58,7 @@ class SchedulesController < ApplicationController
     respond_to do |format|
       if @schedule.update(schedule_params)
         format.js { 
-          redirect_to schedules_url(date: @schedule.scheduled_at.to_date), format: :js 
+          redirect_to schedules_url(date: @schedule.scheduled_at.to_date), format: :js
         }
       else
         format.js
@@ -80,7 +80,7 @@ class SchedulesController < ApplicationController
   # PUT /schedules/toggle_done
   def toggle_done
     if params[:schedule_ids].present?
-      @schedules = Schedule.find(params[:schedule_ids])
+      @schedules = current_user.schedules.where(id: params[:schedule_ids])
       @schedules.each { |schedule| schedule.toggle_done }
     else
       head :ok
@@ -90,7 +90,7 @@ class SchedulesController < ApplicationController
   # PUT /schedules/move
   def move
     if params[:schedule_ids].present? && @date 
-      @schedules = Schedule.find(params[:schedule_ids])
+      @schedules = current_user.schedules.where(id: params[:schedule_ids])
 
       @schedules.each do |schedule| 
         schedule.update(scheduled_at: schedule.scheduled_at.change(

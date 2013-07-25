@@ -1,5 +1,10 @@
 $('[data-schedule-modal]').html(
-  '<%= j render(template: 'schedules/schedule_modal', locals: { content: render('form', formats: [:html]) }) %>'
+  '<%= j render(template: 'schedules/schedule_modal',
+    locals: {
+      header: @schedule.label,
+      body: render('form', formats: [:html]),
+      cancel: false
+    }
+  ) %>'
 );
-
 <%= render 'datepicker_setup' %>

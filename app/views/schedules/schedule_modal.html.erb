@@ -1,13 +1,15 @@
-<div id="schedule_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="scheduled_label" aria-hidden="true">
-  <% if @schedule.try(:schedulable) %>
+<div id="schedule_modal" class="modal hide fade">
   <div class="modal-header">
-    <h4 id="scheduled_label"><%= @schedule.label %></h4> 
+    <h4 id="scheduled_label"><%= header %></h4>
   </div>
+  <div class="modal-body"><%= body %></div>
+  <div class="modal-footer">
+  <% if cancel %>
+    <%= link_to(
+      t('label.cancel'), '#', data: { dismiss: 'modal', aria_hidden: true }
+    ) %>
   <% end %>
-  <div class="modal-body">
-    <%= content %>
   </div>
-  <div class="modal-footer"></div>
 </div>
 
 <%= javascript_tag do %>

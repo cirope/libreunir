@@ -80,6 +80,10 @@ html, body {
   }
 }
 
+#c_schedules, #c_loans {
+  .columns-container { margin: 30px 20px 0 20px; }
+}
+
 .ui-datepicker-trigger {
   display: none;
 }

@@ -17,15 +17,3 @@
     }
   }
 }
-
-.columns-container {
-  margin: 0 20px;
-}
-
-.logged_in[data-action="index"],
-.logged_in[data-action="close_to_expire"], 
-.logged_in[data-action="expired"] {
-  .columns-container {
-    margin-top: 30px;
-  }
-}

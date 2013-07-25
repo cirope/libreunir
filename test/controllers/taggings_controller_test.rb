@@ -10,7 +10,7 @@ class TaggingsControllerTest < ActionController::TestCase
 
   test "should create tagging" do
     loan_ids = []
-    2.times { loan_ids << Fabricate(:loan).id }
+    2.times { loan_ids << Fabricate(:loan, user_id: @user.id).id }
 
     assert_difference 'Tagging.count', 2 do
       xhr :post, :create, tag_id: @tag.id, taggable_ids: loan_ids, action_name: 'close_to_expire', format: :js
