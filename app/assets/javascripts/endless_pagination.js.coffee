@@ -12,10 +12,11 @@ new Rule
   condition: -> $('*[data-endless-container]').length
   load: ->
     @map.scroll_function ||= ->
+      visible = $('.pagination-container').is(':visible')
       url = $('.pagination a.next').attr('href')
       atBottom = $(window).scrollTop() > $(document).height() - $(window).height() - 150
       
-      if url and (atBottom or isScrolledIntoView('.pagination-container'))
+      if url and visible and (atBottom or isScrolledIntoView('.pagination-container'))
         $('.pagination-container').html(
           $('<div class="alert"></div>').html($('#loading_caption').html())
         )

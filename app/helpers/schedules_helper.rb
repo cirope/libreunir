@@ -24,15 +24,13 @@ module SchedulesHelper
   end
 
   def link_to_cancel_schedule
-    href = '#'
     data = { dismiss: 'modal' }
 
     if @schedulable && @schedule.new_record?
-      href = '?'
-      data = {}
+      data = { show_siblings: '[data-object-id]' }
     end
 
-    link_to(t('label.cancel'), href, data: data)
+    link_to t('label.cancel'), '#', data: data
   end
 
   def show_remind_me_schedule_checkbox(form)

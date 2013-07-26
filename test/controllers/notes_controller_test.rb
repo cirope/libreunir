@@ -24,14 +24,13 @@ class NotesControllerTest < ActionController::TestCase
     schedule = Fabricate(:schedule, user_id: @user.id)
 
     assert_difference 'Note.count' do
-      post :create, schedule_id: schedule.id, note: 
+      xhr :post, :create, schedule_id: schedule.id, note:
         Fabricate.attributes_for(
           :note, schedule_id: nil, schedule_type: nil
         ), format: :js
     end
 
-    assert_response :success
     assert_not_nil assigns(:note)
-    assert_template 'notes/create'
+    assert_redirected_to schedules_url
   end
 end

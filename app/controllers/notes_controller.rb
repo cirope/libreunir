@@ -21,7 +21,11 @@ class NotesController < ApplicationController
   def create
     @title = t('view.notes.new_title')
 
-    @note.save
+    if @note.save
+      respond_to do |format|
+        format.js { redirect_to schedules_url, format: :js }
+      end
+    end
   end
 
   private

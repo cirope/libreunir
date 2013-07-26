@@ -1,15 +1,1 @@
-var noteable = $('[data-noteable-id="<%= @noteable.to_param %>"]');
-
-<% if @note.persisted? %>
-  noteable.find('form').before(
-    '<%= j render(template: 'notes/show', formats: [:html]) %>'
-  );
-  
-  noteable.find('form').siblings(':last').effect('highlight', 'slow');
-<% end %>
-
-noteable.find('form').replaceWith(
-  '<%= j render(template: 'notes/new', formats: [:html]) %>'
-);
-
-noteable.find('textarea:first').focus();
+$('#new_note').replaceWith('<%= j render(template: 'notes/new', formats: [:html]) %>');

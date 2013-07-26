@@ -40,13 +40,11 @@ class SchedulesController < ApplicationController
   def create
     @title = t('view.schedules.new_title')
 
-    respond_to do |format|
-      if @schedule.save && @schedulable.nil?
+    if @schedule.save && @schedulable.nil?
+      respond_to do |format|
         format.js {
           redirect_to schedules_url(date: @schedule.scheduled_at.to_date), format: :js
         }
-      else
-        format.js
       end
     end
   end
@@ -55,13 +53,11 @@ class SchedulesController < ApplicationController
   def update
     @title = t('view.schedules.edit_title')
 
-    respond_to do |format|
-      if @schedule.update(schedule_params)
+    if @schedule.update(schedule_params)
+      respond_to do |format|
         format.js { 
           redirect_to schedules_url(date: @schedule.scheduled_at.to_date), format: :js
         }
-      else
-        format.js
       end
     end
   rescue ActiveRecord::StaleObjectError

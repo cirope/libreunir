@@ -17,16 +17,16 @@ class NotesTest < ActionDispatch::IntegrationTest
       click_link ''
     end
 
-    assert_difference 'Note.count' do
-      within "div[data-noteable-id=\"#{schedule.to_param}\"]" do
-        fill_in find('textarea')[:name], with: note.note
+    assert page.has_css?('.new_note')
 
-        find('.btn-mini').click
-      end
-    
-      sleep 1
-      
-      assert_equal 1, all('[data-noteable] blockquote').size
+    within '.new_note' do
+      fill_in 'note_note', with: note.note
+    end
+
+    assert_difference 'Note.count' do
+      find('.btn-mini').click
+
+      assert page.has_no_css?('.new_note')
     end
   end
 end

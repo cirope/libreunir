@@ -76,17 +76,42 @@ class SchedulesControllerTest < ActionController::TestCase
     assert_template 'schedules/destroy'
   end
 
-  test 'should toggle schedule done' do
-    schedule_ids = []
-    2.times { schedule_ids << Fabricate(:schedule).id }
-
-    put :toggle_done, schedule_ids: schedule_ids, format: :js
+  test 'should get calendar' do
+    xhr :get, :calendar, format: :js
 
     assert_response :success
-    assert_not_nil assigns(:schedules)
+    assert_not_nil assigns(:date)
+    assert_select '#unexpected_error', false
+    assert_template 'schedules/calendar'
+  end
+
+  test 'should toggle schedule done' do
+    schedule_ids = []
+    3.times { schedule_ids << Fabricate(:schedule, user_id: @user.id).id }
+
+    xhr :put, :toggle_done, schedule_ids: schedule_ids, format: :js
+
+    assert_response :success
+    assert_equal 3, assigns(:schedules).count
     assigns(:schedules).each { |s| assert s.reload.done }
     assert_select '#unexpected_error', false
     assert_template 'schedules/toggle_done'
+    assert_equal :js, @request.format.symbol
+  end
+
+  test 'should move the schedules to another date' do
+    date = 3.days.from_now
+    schedule_ids = []
+    3.times { schedule_ids << Fabricate(:schedule, user_id: @user.id).id }
+
+    xhr :put, :move, schedule_ids: schedule_ids, date: date.to_s(:db), format: :js
+
+    assert_response :redirect
+    assert_equal 3, assigns(:schedules).count
+    assigns(:schedules).each do |s|
+      assert_equal date.to_date, s.reload.scheduled_at.to_date
+    end
+    assert_select '#unexpected_error', false
     assert_equal :js, @request.format.symbol
   end
 

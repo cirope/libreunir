@@ -22,6 +22,20 @@ new Rule
     $(document).off 'click', 'a[data-mark-as]', @map.form_mark_as
 
 new Rule
+  condition: -> $('[data-schedule-form-placeholder]').length
+  load: ->
+    @map.show_siblings ||= (e)->
+      $('[data-schedule-form-placeholder]').empty()
+      $('.pagination-container').show()
+      $($(this).data('show-siblings')).show()
+
+      false
+
+    $(document).on 'click', '[data-show-siblings]', @map.show_siblings
+  unload: ->
+    $(document).off 'click', '[data-show-siblings]', @map.show_siblings
+
+new Rule
   condition: -> $('a[data-mark]').length
   load: ->
     @map.mark ||= (e)->

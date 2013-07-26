@@ -12,17 +12,19 @@ class SchedulesTest < ActionDispatch::IntegrationTest
     visit schedules_path
 
     click_link Schedule.model_name.human(count: 0)
-
     assert page.has_css?('[data-calendar-day]')
-    
-    within '[data-calendar-day]' do
-      assert_difference 'Schedule.done.count' do
-        assert page.has_no_css?('.strike')
 
-        first('input[data-toggle-schedule-done]').click
+    within '.navtags' do
+      click_link I18n.t('label.mark')
+      assert page.has_css?('li.open')
 
-        assert page.has_css?('.strike')
-      end
+      click_link I18n.t('label.all')
+    end
+
+    assert_difference 'Schedule.done.count', 3 do
+      find('[data-action="toggle_done"]').click
+
+      assert page.has_css?('.strike')
     end
   end
 
@@ -45,7 +47,7 @@ class SchedulesTest < ActionDispatch::IntegrationTest
     visit schedules_path
 
     within '.ui-datepicker-calendar' do
-      click_link schedule.scheduled_at.day 
+      click_link schedule.scheduled_at.day
     end
 
     assert page.has_css?('.has_event')

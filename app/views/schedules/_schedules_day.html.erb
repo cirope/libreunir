@@ -1,32 +1,31 @@
-<%= form_tag nil, method: :put, data: { action: schedules_path('action'), form_mark_as: true, remote: true } do %>
-  <% if @date.at_beginning_of_day >= Time.zone.now.at_beginning_of_day %>
-    <% if @schedules.present? %>
-      <%= render(@schedules, as: :schedule, formats: [:html]) %>
+<% if @schedules.present? %>
+  <%= form_tag nil, method: :put, data: { action: schedules_path('action'), form_mark_as: true, remote: true } do %>
+    <%= render(@schedules, as: :schedule, formats: [:html]) %>
+  <% end %>
 
-      <div class="hidden-print">
-        <% if can? :create, Schedule %>
-          <hr />
-          <p>
-            <%= link_to(
-              t('view.schedules.new', default: :'label.new'),
-              new_schedule_path(date: @date.to_date),
-              class: 'btn btn-primary', data: { remote: true }
-            ) %>
-          </p>
-        <% end %>
-      </div>
-    <% else %>
-      <%= render('empty_index') %>
-    <% end %>
+  <div data-schedule-form-placeholder="true"></div>
+
+  <% if @date.end_of_day.future? %>
+    <div class="hidden-print">
+      <% if can? :create, Schedule %>
+        <hr />
+        <p>
+          <%= link_to(
+            t('view.schedules.new', default: :'label.new'),
+            new_schedule_path(date: @date.to_date),
+            class: 'btn btn-primary', data: { remote: true }
+          ) %>
+        </p>
+      <% end %>
+    </div>
+  <% end %>
+<% else %>
+  <% if @date.end_of_day.future? %>
+    <%= render('empty_index') %>
   <% else %>
-    <% if @schedules.present? %>
-      <%= render(@schedules, as: :schedule, formats: [:html]) %>
-    <% else %>
-      <div class="alert alert-warning">
-        <h4><%= t('view.schedules.empty_past_schedules') %></h4>
-      </div>
-    <% end %>
+    <div class="alert alert-warning">
+      <h4><%= t('view.schedules.empty_past_schedules') %></h4>
+    </div>
   <% end %>
 <% end %>
-
-<div data-schedule-modal></div>
+<div data-schedule-modal="true"></div>

@@ -1,7 +1,7 @@
 <% if @schedulable %>
-  $('.pagination-container').remove();
+  $('.pagination-container').hide();
   $('[data-object-id="<%= @schedulable.to_param %>"]').siblings('tr').hide();
-  $('[data-schedule-form-placeholder]').replaceWith('<%= j render 'schedulable' %>');
+  $('[data-schedule-form-placeholder]').html('<%= j render 'schedulable' %>');
   $('#schedule_description').focus();
 <% else %>
   $('[data-schedule-modal]').html(
