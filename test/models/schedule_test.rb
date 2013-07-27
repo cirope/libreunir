@@ -55,23 +55,25 @@ class ScheduleTest < ActiveSupport::TestCase
     ], @schedule.errors[:scheduled_at]
   end
 
-  test 'toggle done' do
+  test 'mark as done and mark as pending' do
     assert !@schedule.done
-    assert @schedule.toggle_done
+    assert @schedule.mark_as_done
     assert @schedule.done
+    assert @schedule.mark_as_pending
+    assert !@schedule.done
   end
 
   test 'can not set to undone if in the past' do
-    assert @schedule.toggle_done
+    assert @schedule.mark_as_done
     assert @schedule.done
     assert @schedule.update_column(:scheduled_at, 1.minute.ago)
-    assert !@schedule.toggle_done
+    assert !@schedule.mark_as_done
     assert @schedule.reload.done
   end
 
   test 'doable' do
     assert @schedule.doable?
-    assert @schedule.toggle_done
+    assert @schedule.mark_as_done
     assert @schedule.doable?
     assert @schedule.update_column(:scheduled_at, 1.minute.ago)
     assert !@schedule.doable?
@@ -88,7 +90,7 @@ class ScheduleTest < ActiveSupport::TestCase
   test 'editable?' do
     assert @schedule.editable?
 
-    @schedule.toggle_done
+    @schedule.mark_as_done
     assert !@schedule.editable?
 
     @schedule.scheduled_at = 1.minute.ago

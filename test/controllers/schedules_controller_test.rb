@@ -85,15 +85,29 @@ class SchedulesControllerTest < ActionController::TestCase
     assert_template 'schedules/calendar'
   end
 
-  test 'should toggle schedule done' do
+  test 'should mark schedule as done' do
     schedule_ids = []
     3.times { schedule_ids << Fabricate(:schedule, user_id: @user.id).id }
 
-    xhr :put, :toggle_done, schedule_ids: schedule_ids, format: :js
+    xhr :put, :done, schedule_ids: schedule_ids, format: :js
 
     assert_response :success
     assert_equal 3, assigns(:schedules).count
     assigns(:schedules).each { |s| assert s.reload.done }
+    assert_select '#unexpected_error', false
+    assert_template 'schedules/toggle_done'
+    assert_equal :js, @request.format.symbol
+  end
+
+  test 'should mark schedule as pending' do
+    schedule_ids = []
+    3.times { schedule_ids << Fabricate(:schedule, user_id: @user.id, done: true).id }
+
+    xhr :put, :pending, schedule_ids: schedule_ids, format: :js
+
+    assert_response :success
+    assert_equal 3, assigns(:schedules).count
+    assigns(:schedules).each { |s| assert !s.reload.done }
     assert_select '#unexpected_error', false
     assert_template 'schedules/toggle_done'
     assert_equal :js, @request.format.symbol

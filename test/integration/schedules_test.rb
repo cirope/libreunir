@@ -5,7 +5,7 @@ class SchedulesTest < ActionDispatch::IntegrationTest
     @user = Fabricate(:user, password: '123456', role: :normal)
   end
 
-  test 'should get schedules and mark as done one' do
+  test 'should get schedules and mark all as done' do
     3.times { Fabricate(:schedule, user_id: @user.id, scheduled_at: 1.hour.from_now) }
     login(user: @user)
 
@@ -22,9 +22,32 @@ class SchedulesTest < ActionDispatch::IntegrationTest
     end
 
     assert_difference 'Schedule.done.count', 3 do
-      find('[data-action="toggle_done"]').click
+      find('[data-action="done"]').click
 
       assert page.has_css?('.strike')
+    end
+  end
+
+  test 'should get schedules and mark all as pending' do
+    3.times { Fabricate(:schedule, user_id: @user.id, done: true, scheduled_at: 1.hour.from_now) }
+    login(user: @user)
+
+    visit schedules_path
+
+    click_link Schedule.model_name.human(count: 0)
+    assert page.has_css?('[data-calendar-day]')
+
+    within '.navtags' do
+      click_link I18n.t('label.mark')
+      assert page.has_css?('li.open')
+
+      click_link I18n.t('label.all')
+    end
+
+    assert_difference 'Schedule.done.count', -3 do
+      find('[data-action="pending"]').click
+
+      assert page.has_no_css?('.strike')
     end
   end
 

@@ -24,7 +24,8 @@ Libreunir::Application.routes.draw do
   get '/schedules(/:date)', to: 'schedules#index', as: 'schedules', constraints: { date: /\d{4}-\d{2}-\d{2}/ }
   get '/schedules/new(/:date)', to: 'schedules#new', as: 'new_schedule', constraints: { date: /\d{4}-\d{2}-\d{2}/ }
   resources :schedules, except: [:index, :new] do
-    put 'toggle_done', on: :collection, as: 'toggle_done'
+    put 'done', on: :collection, as: 'done'
+    put 'pending', on: :collection, as: 'pending'
     put 'move(/:date)', on: :collection, to: 'schedules#move', as: 'move', constraints: { date: /\d{4}-\d{2}-\d{2}/ }
     get 'search(/:date)', on: :collection, to: 'schedules#search', as: 'search', constraints: { date: /\d{4}-\d{2}-\d{2}/ }
     get 'calendar(/:date)', on: :collection, to: 'schedules#calendar', as: 'calendar', constraints: { date: /\d{4}-\d{2}-\d{2}/ }

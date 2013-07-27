@@ -1,4 +1,6 @@
 class SchedulesController < ApplicationController
+  include Schedules::Actions
+
   before_action :authenticate_user!
   before_action :load_date, only: [:index, :search, :new, :move, :calendar]
 
@@ -67,45 +69,6 @@ class SchedulesController < ApplicationController
   # DELETE /schedules/1
   def destroy
     @schedule.destroy
-  end
-
-  # GET /schadules/calendar
-  def calendar
-  end
-
-  # PUT /schedules/toggle_done
-  def toggle_done
-    if params[:schedule_ids].present?
-      @schedules = current_user.schedules.where(id: params[:schedule_ids])
-      @schedules.each { |schedule| schedule.toggle_done }
-    else
-      head :ok
-    end
-  end
-
-  # PUT /schedules/move
-  def move
-    if params[:schedule_ids].present? && @date 
-      @schedules = current_user.schedules.where(id: params[:schedule_ids])
-
-      @schedules.each do |schedule| 
-        schedule.update(scheduled_at: schedule.scheduled_at.change(
-          year: @date.year, month: @date.month, day: @date.day)
-        )
-      end
-  
-      respond_to do |format|
-        format.js { 
-          redirect_to schedules_url(date: @date.to_date), format: :js 
-        }
-      end
-    else
-      head :ok
-    end
-  end
-
-  def search
-    @schedules = @schedules.for_date_of_day(@date).sorted
   end
 
   private
