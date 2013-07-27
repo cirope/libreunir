@@ -30,7 +30,9 @@ class NotesControllerTest < ActionController::TestCase
         ), format: :js
     end
 
+    assert_response :success
     assert_not_nil assigns(:note)
-    assert_redirected_to schedules_url
+    assert_select '#unexpected_error', false
+    assert_template 'notes/create'
   end
 end

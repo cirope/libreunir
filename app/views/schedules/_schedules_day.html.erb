@@ -1,3 +1,7 @@
+<div class="page-header">
+  <span class="badge badge-info"><%= l @date.to_date, format: :mini_long %></span>
+</div>
+
 <% if @schedules.present? %>
   <%= form_tag nil, method: :put, data: { action: schedules_path('action'), form_mark_as: true, remote: true } do %>
     <%= render(@schedules, as: :schedule, formats: [:html]) %>

@@ -17,7 +17,7 @@ class NotesTest < ActionDispatch::IntegrationTest
       click_link ''
     end
 
-    assert page.has_css?('.new_note')
+    assert page.has_css?('#new_note')
 
     within '.new_note' do
       fill_in 'note_note', with: note.note
@@ -26,7 +26,7 @@ class NotesTest < ActionDispatch::IntegrationTest
     assert_difference 'Note.count' do
       find('.btn-mini').click
 
-      assert page.has_no_css?('.new_note')
+      assert page.has_css?('blockquote')
     end
   end
 end

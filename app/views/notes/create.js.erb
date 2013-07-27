@@ -1,1 +1,14 @@
-$('#new_note').replaceWith('<%= j render(template: 'notes/new', formats: [:html]) %>');
+var noteable = $('.notes');
+
+<% if @note.persisted? %>
+  $("[data-schedule-id=\"<%= @noteable.to_param %>\"]").replaceWith(
+    '<%= j render(@noteable) %>'
+  );
+  noteable.find('form').before('<%= j render(@note) %>');
+  noteable.find('form').siblings(':last').effect('highlight', 'slow');
+<% end %>
+
+noteable.find('form').replaceWith(
+  '<%= j render(template: 'notes/new', formats: [:html]) %>'
+);
+noteable.find('textarea:first').focus();
