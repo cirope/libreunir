@@ -8,6 +8,7 @@
   label:
     'yes': 'Si'
     'no': 'No'
+    actions: 'Acciones'
     all: 'Todos'
     cancel: 'Cancelar'
     close: 'Cerrar'
@@ -16,7 +17,8 @@
     edit: 'Editar'
     list: 'Listado'
     loading: 'Cargando...'
-    mark: 'Marcar'
+    mark_as_done: 'Marcar como realizado'
+    mark_as_pending: 'Marcar como pendiente'
     more_info: 'Más Información'
     move: 'Mover'
     new: 'Agregar'
@@ -24,6 +26,7 @@
     pending: 'Pendientes'
     scheduler: 'Agendar'
     search: 'Buscar'
+    select: 'Seleccionar'
     show: 'Ver'
 
   menu:

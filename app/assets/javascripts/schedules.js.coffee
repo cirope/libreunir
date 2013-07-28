@@ -1,8 +1,8 @@
 showActions = ()->
   if $('form input[type="checkbox"]:enabled:checked').length > 0
-    $('.navtags > li.active').siblings().removeClass()
+    $('.nav-actions').removeClass('hidden')
   else
-    $('.navtags > li.active').siblings().addClass('hidden')
+    $('.nav-actions').addClass('hidden')
 
 new Rule
   condition: -> $('[data-calendar-container] [data-loading]').length
@@ -13,7 +13,7 @@ new Rule
   condition: -> $('a[data-mark-as]').length
   load: ->
     @map.form_mark_as ||= (e)->
-      action = $('form[data-form-mark-as]').data('action').replace('action', $(this).data('action'))
+      action = $('form[data-form-mark-as]').data('action').replace('action', $(this).data('mark-as'))
       $('form[data-form-mark-as]').attr('action', action).submit()
       e.preventDefault()
 

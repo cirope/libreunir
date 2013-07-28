@@ -1,4 +1,4 @@
 <% @schedules.each do |schedule| %>
   $('[data-schedule-id="<%= schedule.to_param %>"]').replaceWith('<%= j render(schedule) %>');
 <% end %>
-$('.navtags > li.active').siblings().addClass('hidden');
+$('.nav-actions').addClass('hidden');
