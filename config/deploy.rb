@@ -1,12 +1,12 @@
 require 'bundler/capistrano'
-set :bundle_flags, '--deployment --quiet --binstubs'
-set (:bundle_cmd) { "#{release_path}/bin/bundle" }
 
 set :whenever_command, 'bundle exec whenever --set environment=production'
 require 'whenever/capistrano'
 
 set :sidekiq_cmd, 'bundle exec sidekiq'
 require 'sidekiq/capistrano'
+
+default_run_options[:shell] = '/bin/bash --login'
 
 server 'libreunir.com', :web, :app, :db, primary: true
 
@@ -23,16 +23,13 @@ set :branch, 'master'
 after 'deploy:restart', 'deploy:cleanup'
 
 namespace :deploy do
-  %w[start stop restart].each do |command|
-    desc "#{command} unicorn server"
-    task command, roles: :app, except: { no_release: true } do
-      run "/etc/init.d/unicorn_#{application} #{command}"
-    end
+  task :start do ; end
+  task :stop do ; end
+  task :restart, roles: :app, except: { no_release: true } do
+    run "touch #{File.join(current_path, 'tmp', 'restart.txt')}"
   end
 
   task :setup_config, roles: :app do
-    sudo "ln -nfs #{current_path}/config/nginx.conf /etc/nginx/sites-enabled/#{application}"
-    sudo "ln -nfs #{current_path}/config/unicorn_init.sh /etc/init.d/unicorn_#{application}"
     run "mkdir -p #{shared_path}/config"
     put File.read('config/app_config.example.yml'), "#{shared_path}/config/app_config.yml"
     puts "Now edit the config files in #{shared_path}."
@@ -53,12 +50,4 @@ namespace :deploy do
     end
   end
   before 'deploy', 'deploy:check_revision'
-
-  desc 'Creates the synmlink to tmp/pids'
-  task :create_tmp_pids_symlink, roles: :app, except: { no_release: true } do
-    run "mkdir -p #{release_path}/tmp"
-    run "mkdir -p #{shared_path}/tmp/pids"
-    run "ln -nfs #{shared_path}/tmp/pids #{release_path}/tmp/pids"
-  end
-  after 'deploy:update_code', 'deploy:create_tmp_pids_symlink'
 end
