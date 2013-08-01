@@ -19,8 +19,8 @@
     <% end %>
 
     <ul class="dropdown-menu">
-      <li><%= link_to t('label.mark_as_done'), '#', data: { mark_as: 'done' } %></li>
-      <li><%= link_to t('label.mark_as_pending'), '#', data: { mark_as: 'pending' } %></li>
+      <li><%= link_to t('label.mark_as_done'), '#', data: { mark_action: 'mark_as_done' } %></li>
+      <li><%= link_to t('label.mark_as_pending'), '#', data: { mark_action: 'mark_as_pending' } %></li>
       <li><%= link_to t('label.move'), calendar_schedules_path, data: { remote: true } %></li>
     </ul>
   </li>

@@ -16,7 +16,7 @@ module LoansHelper
     action = params[:action_name] || action_name
 
     loan.tags.each do |tag|
-      tags << content_tag(:span, class: "tagging badge badge-#{tag.category}") do
+      tags << content_tag(:span, class: "tagging label label-#{tag.category}") do
         concat link_to truncate_tag_name(tag), [action, tag, 'loans']
         concat ' | '
         concat link_to('x',

@@ -5,49 +5,23 @@ module Schedules::Actions
   def calendar
   end 
 
-  # PUT /schedules/done
-  def done
-    if params[:schedule_ids].present?
-      @schedules = current_user.schedules.where(id: params[:schedule_ids])
-      @schedules.each { |schedule| schedule.mark_as_done }
-
-      respond_to do |format|
-        format.js { render 'toggle_done' }
-      end
-    else
-      head :ok 
-    end
+  # PUT /schedules/mark_as_done
+  def mark_as_done
+    mark_as { |schedule| schedule.mark_as_done }
   end
 
-  # PUT /schedules/pending
-  def pending
-    if params[:schedule_ids].present?
-      @schedules = current_user.schedules.where(id: params[:schedule_ids])
-      @schedules.each { |schedule| schedule.mark_as_pending }
-
-      respond_to do |format|
-        format.js { render 'toggle_done' }
-      end
-    else
-      head :ok 
-    end
+  # PUT /schedules/mark_as_pending
+  def mark_as_pending
+    mark_as { |schedule| schedule.mark_as_pending }
   end
 
   # PUT /schedules/move
   def move
-    if params[:schedule_ids].present? && @date
-      @schedules = current_user.schedules.where(id: params[:schedule_ids])
-
-      @schedules.each do |schedule|
+    if @schedules_ids && @date
+      @schedules_ids.each do |schedule|
         schedule.update_attribute(:scheduled_at, schedule.scheduled_at.change(
           year: @date.year, month: @date.month, day: @date.day)
         )
-      end
-
-      respond_to do |format|
-        format.js {
-          redirect_to schedules_url(date: @date.to_date), format: :js
-        }
       end
     else
       head :ok
@@ -57,5 +31,26 @@ module Schedules::Actions
   # GET /schedules/search
   def search
     @schedules = @schedules.for_date_of_day(@date).sorted
+  end
+
+  # GET /schedules/pending
+  def pending
+    @schedules = @schedules.pending.sorted.group_by { |s| s.scheduled_at.to_date }
+
+    render layout: 'application'
+  end
+
+  private
+  
+  def mark_as(&block)
+    if @schedules_ids
+      @schedules_ids.each(&block)
+
+      respond_to do |format|
+        format.js { render 'toggle_done' }
+      end
+    else
+      head :ok 
+    end
   end
 end

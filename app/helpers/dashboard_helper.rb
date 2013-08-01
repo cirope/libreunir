@@ -19,7 +19,7 @@ module DashboardHelper
   def show_filter(filter)
     case filter
     when Tag
-      content_tag(:span, truncate_tag_name(filter), class: "tagging badge badge-#{filter.category}")
+      content_tag(:span, truncate_tag_name(filter), class: "tagging label label-#{filter.category}")
     else
       truncate_tag_name(filter)
     end

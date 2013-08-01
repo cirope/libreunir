@@ -1,7 +1,7 @@
 $('[data-schedule-modal]').html(
   '<%= j render(template: 'schedules/schedule_modal',
     locals: {
-      header: @schedule.label,
+      header: (@schedule.schedulable ? @schedule.label : ''),
       body: render('form', formats: [:html]),
       cancel: false
     }

@@ -2,8 +2,8 @@ require 'test_helper'
 
 class SchedulesControllerTest < ActionController::TestCase
   setup do
-    @schedule = Fabricate(:schedule)
     @user = Fabricate(:user)
+    @schedule = Fabricate(:schedule, user_id: @user.id)
 
     sign_in @user
   end
@@ -89,11 +89,11 @@ class SchedulesControllerTest < ActionController::TestCase
     schedule_ids = []
     3.times { schedule_ids << Fabricate(:schedule, user_id: @user.id).id }
 
-    xhr :put, :done, schedule_ids: schedule_ids, format: :js
+    xhr :put, :mark_as_done, schedule_ids: schedule_ids, format: :js
 
     assert_response :success
-    assert_equal 3, assigns(:schedules).count
-    assigns(:schedules).each { |s| assert s.reload.done }
+    assert_equal 3, assigns(:schedules_ids).count
+    assigns(:schedules_ids).each { |s| assert s.reload.done }
     assert_select '#unexpected_error', false
     assert_template 'schedules/toggle_done'
     assert_equal :js, @request.format.symbol
@@ -103,11 +103,11 @@ class SchedulesControllerTest < ActionController::TestCase
     schedule_ids = []
     3.times { schedule_ids << Fabricate(:schedule, user_id: @user.id, done: true).id }
 
-    xhr :put, :pending, schedule_ids: schedule_ids, format: :js
+    xhr :put, :mark_as_pending, schedule_ids: schedule_ids, format: :js
 
     assert_response :success
-    assert_equal 3, assigns(:schedules).count
-    assigns(:schedules).each { |s| assert !s.reload.done }
+    assert_equal 3, assigns(:schedules_ids).count
+    assigns(:schedules_ids).each { |s| assert !s.reload.done }
     assert_select '#unexpected_error', false
     assert_template 'schedules/toggle_done'
     assert_equal :js, @request.format.symbol
@@ -121,8 +121,8 @@ class SchedulesControllerTest < ActionController::TestCase
     xhr :put, :move, schedule_ids: schedule_ids, date: date.to_s(:db), format: :js
 
     assert_response :redirect
-    assert_equal 3, assigns(:schedules).count
-    assigns(:schedules).each do |s|
+    assert_equal 3, assigns(:schedules_ids).count
+    assigns(:schedules_ids).each do |s|
       assert_equal date.to_date, s.reload.scheduled_at.to_date
     end
     assert_select '#unexpected_error', false
@@ -139,5 +139,13 @@ class SchedulesControllerTest < ActionController::TestCase
     assert_select '#unexpected_error', false
     assert_template 'schedules/search'
     assert_equal :js, @request.format.symbol
+  end
+
+  test 'should get schedules pending' do
+    get :pending
+    assert_response :success
+    assert_not_nil assigns(:schedules)
+    assert_select '#unexpected_error', false
+    assert_template 'schedules/pending'
   end
 end

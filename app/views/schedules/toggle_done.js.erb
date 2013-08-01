@@ -1,3 +1,6 @@
+$('[data-schedules-pending-count]').replaceWith(
+  '<%= j render('shared/menu_dropdowns/schedules') %>' 
+);
 <% @schedules.each do |schedule| %>
   $('[data-schedule-id="<%= schedule.to_param %>"]').replaceWith('<%= j render(schedule) %>');
 <% end %>

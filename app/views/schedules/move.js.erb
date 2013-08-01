@@ -1,0 +1,4 @@
+
+<% @schedules_ids.each do |schedule| %>
+  $("[data-schedule-id=\"<%= schedule.to_param %>\"]").remove();
+<% end %>

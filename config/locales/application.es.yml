@@ -83,6 +83,8 @@
       new: 'Nuevo evento'
       empty_schedules: 'No hay ningún evento programado'
       empty_past_schedules: 'No se programaron eventos'
+      today: 'Eventos de hoy'
+      pending: 'Pendientes'
     tags:
       index_title: 'Listado de etiquetas'
       show_title: 'Detalle de etiqueta'

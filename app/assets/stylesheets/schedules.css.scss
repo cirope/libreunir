@@ -21,10 +21,20 @@ div[data-place-holder] {
   text-decoration: line-through;
 }
 
-div[data-calendar-day] .page-header {
-  margin: 0 0 15px;
+div[data-calendar-day] {
+  .page-header { 
+    margin: 0 0 10px; 
+    padding-bottom: 5px;
+  }
+}
 
-  & h4 { margin: 0; }
+.schedules_pending {
+  .page-header { 
+    margin: 20px 0 5px 0; 
+    padding: 0;
+
+    h5 { margin: 0; }
+  }
 }
 
 input[type="checkbox"].margin-less {

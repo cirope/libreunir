@@ -1,4 +1,4 @@
-$('[data-schedule-id="<%= @schedule.to_param %>"]').siblings('[data-schedule-id]').hide();
+$('[data-schedule-id="<%= @schedule.to_param %>"]').siblings().hide();
 $('[data-schedule-form-placeholder]').html(
   '<%= j render(template: 'notes/index', formats: [:html]) %>'
 ).find('textarea:first').focus();

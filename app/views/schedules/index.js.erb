@@ -13,16 +13,12 @@ $('[data-calendar-month]').datepicker({
       return [ can_read, included ? 'has_event' : '' ]
     },
     onSelect: function(date, obj) {
-      $.getScript('/schedules/search/' + date);
+      Turbolinks.visit('/schedules/' + date);
     },
     onChangeMonthYear: function(year, month, obj) {
       var date = new Date(year, month-1, obj.currentDay);
-      $.getScript('/schedules/' + $.datepicker.formatDate('yy-mm-dd', date));
+      Turbolinks.visit('/schedules/' + $.datepicker.formatDate('yy-mm-dd', date));
     }
 }).datepicker('setDate', '<%= l @date.to_date, format: :minimal %>');
 
-$('[data-calendar-day]').html('<%= j render('schedules_day') %>');
-$('[data-loading]').remove();
 $('.nav-actions').addClass('hidden');
-
-Inspector.instance().reload();
