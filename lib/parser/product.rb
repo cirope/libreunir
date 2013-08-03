@@ -9,8 +9,8 @@ module Parser
         delayed_at: row[3], 
         total_debt: row[8],
         payments_count: row[20],
-        expired_payments_count: row[95], 
-        payments_to_expire_count: row[96], 
+        expired_payments_count: expired_payments_count(loan),
+        payments_to_expire_count: payments_to_expire_count(loan),
         next_payment_expire_at: row[97]
       }
 
@@ -26,6 +26,14 @@ module Parser
     end
     
     private
+
+    def expired_payments_count(loan)
+      loan.payments.where('paid_at IS NULL AND expired_at < ?', Date.today).count if loan
+    end
+
+    def payments_to_expire_count(loan)
+      loan.payments.where('paid_at IS NULL AND expired_at >= ?', Date.today).count if loan
+    end
 
     def percentage_progress(loan)
       if loan.payments_count > 0
