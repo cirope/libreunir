@@ -28,7 +28,6 @@ Libreunir::Application.routes.draw do
     put 'mark_as_pending', on: :collection, as: 'mark_as_pending'
     put 'move(/:date)', on: :collection, to: 'schedules#move', as: 'move', constraints: { date: /\d{4}-\d{2}-\d{2}/ }
     get 'pending', on: :collection, to: 'schedules#pending', as: 'pending'
-    get 'search(/:date)', on: :collection, to: 'schedules#search', as: 'search', constraints: { date: /\d{4}-\d{2}-\d{2}/ }
     get 'calendar(/:date)', on: :collection, to: 'schedules#calendar', as: 'calendar', constraints: { date: /\d{4}-\d{2}-\d{2}/ }
 
     resources :notes, only: [:index, :create]

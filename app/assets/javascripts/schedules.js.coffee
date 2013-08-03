@@ -56,7 +56,7 @@ new Rule
     $(document).off 'click', 'a[data-mark-done]', @map.mark_done
 
 new Rule
-  condition: -> $('form input[type="checkbox"]:enabled').length
+  condition: -> $('[data-calendar-day]').length
   load: ->
     @map.check_show_hidden ||= ->
       showActions()

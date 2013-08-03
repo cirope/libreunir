@@ -1,8 +1,13 @@
 $('#schedule_modal').modal('hide');
+$('[data-schedules-pending-count]').replaceWith(
+  '<%= j render('shared/menu_dropdowns/schedules') %>' 
+);
 
 <% today = Date.today %>
 var days = <%== @days %>;
 var today = new Date(<%= today.year %>, <%= today.month-1 %>, <%= today.day %>);
+
+$('[data-calendar-month]').datepicker("destroy");
 
 $('[data-calendar-month]').datepicker({
     dateFormat: 'yy-mm-dd',
@@ -21,4 +26,5 @@ $('[data-calendar-month]').datepicker({
     }
 }).datepicker('setDate', '<%= l @date.to_date, format: :minimal %>');
 
+$('[data-calendar-day]').html('<%= j render('schedules_day') %>');
 $('.nav-actions').addClass('hidden');

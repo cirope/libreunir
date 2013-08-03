@@ -1,6 +1,5 @@
-$('[data-schedule-modal]').find('form').replaceWith(
-  '<%= j render(template: 'schedules/edit', formats: [:html]) %>'
+$("#edit_schedule_<%= @schedule.to_param %>").replaceWith(
+  '<%= j render(template: 'schedules/edit', formats: [:html]) %>' 
 );
-$('#schedule_description').focus();
-
 <%= render 'datepicker_setup' %>
+$('#schedule_description').focus();

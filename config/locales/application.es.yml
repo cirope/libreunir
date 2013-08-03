@@ -83,6 +83,7 @@
       new: 'Nuevo evento'
       empty_schedules: 'No hay ningún evento programado'
       empty_past_schedules: 'No se programaron eventos'
+      empty_pending: 'No hay eventos pendientes'
       today: 'Eventos de hoy'
       pending: 'Pendientes'
     tags:

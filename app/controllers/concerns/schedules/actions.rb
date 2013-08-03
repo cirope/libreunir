@@ -17,20 +17,16 @@ module Schedules::Actions
 
   # PUT /schedules/move
   def move
-    if @schedules_ids && @date
-      @schedules_ids.each do |schedule|
+    if @schedules.present? && @date
+      @schedules.each do |schedule|
         schedule.update_attribute(:scheduled_at, schedule.scheduled_at.change(
           year: @date.year, month: @date.month, day: @date.day)
         )
       end
+      redirect_to :back
     else
       head :ok
     end
-  end
-
-  # GET /schedules/search
-  def search
-    @schedules = @schedules.for_date_of_day(@date).sorted
   end
 
   # GET /schedules/pending
@@ -43,8 +39,8 @@ module Schedules::Actions
   private
   
   def mark_as(&block)
-    if @schedules_ids
-      @schedules_ids.each(&block)
+    if @schedules.present?
+      @schedules.each(&block)
 
       respond_to do |format|
         format.js { render 'toggle_done' }

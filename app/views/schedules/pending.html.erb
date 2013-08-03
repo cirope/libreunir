@@ -1,21 +1,27 @@
-<%= render 'shared/summary' %>
 <div class="row-fluid">
   <div class="span12">
     <div class="columns-container">
-      <div class="schedules_pending">
-        <%= form_tag nil, method: :put, 
-          data: { action: schedules_path('action'), form_mark_as: true, remote: true } do %>
-          <% @schedules.each do |date, schedules_date| %>
-            <div class="page-header">
-              <h5><%= l date, format: :long %></strong></h5>
-            </div>
-            <%= render(schedules_date, as: :schedule, formats: [:html]) %>
+      <% if @schedules.present? %>
+        <%= render 'shared/summary' %>
+        <div data-calendar-day="true" class="schedules_pending">
+          <%= form_tag nil, method: :put, 
+            data: { action: schedules_path('action'), form_mark_as: true, remote: true } do %>
+            <% @schedules.each do |date, schedules_day| %>
+              <div class="page-header">
+                <h5><%= l date, format: :long %></strong></h5>
+              </div>
+              <%= render(schedules_day, as: :schedule, formats: [:html]) %>
+            <% end %>
           <% end %>
-        <% end %>
-        <div data-schedule-form-placeholder="true"></div>
-      </div>
+          <div data-schedule-form-placeholder="true"></div>
+        </div>
+        <div data-schedule-modal="true"></div>
+      <% else %>
+        <span>
+          <%= t('view.schedules.empty_pending') %>
+        </span>
+      <% end %>
     </div>
   </div>
-</div>  
-<div data-schedule-modal="true"></div>
+</div>
 <div class="form-actions"></div>
