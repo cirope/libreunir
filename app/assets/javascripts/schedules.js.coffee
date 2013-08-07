@@ -5,21 +5,16 @@ showActions = ()->
     $('.nav-actions').addClass('hidden')
 
 new Rule
-  condition: -> $('[data-calendar-container] [data-loading]').length
+  condition: -> $('a[data-mark-action]').length
   load: ->
-    $.getScript('/schedules')
-
-new Rule
-  condition: -> $('a[data-mark-as]').length
-  load: ->
-    @map.form_mark_as ||= (e)->
-      action = $('form[data-form-mark-as]').data('action').replace('action', $(this).data('mark-as'))
+    @map.mark_action ||= (e)->
+      action = $('form[data-form-mark-as]').data('action').replace('action', $(this).data('mark-action'))
       $('form[data-form-mark-as]').attr('action', action).submit()
       e.preventDefault()
 
-    $(document).on 'click', 'a[data-mark-as]', @map.form_mark_as
+    $(document).on 'click', 'a[data-mark-action]', @map.mark_action
   unload: ->
-    $(document).off 'click', 'a[data-mark-as]', @map.form_mark_as
+    $(document).off 'click', 'a[data-mark-action]', @map.mark_action
 
 new Rule
   condition: -> $('[data-schedule-form-placeholder]').length
@@ -27,7 +22,7 @@ new Rule
     @map.show_siblings ||= (e)->
       $('[data-schedule-form-placeholder]').empty()
       $('.pagination-container').show()
-      $($(this).data('show-siblings')).show()
+      $($(this).data('show-siblings')).siblings().show()
 
       false
 
@@ -61,7 +56,7 @@ new Rule
     $(document).off 'click', 'a[data-mark-done]', @map.mark_done
 
 new Rule
-  condition: -> $('form input[type="checkbox"]:enabled').length
+  condition: -> $('.main-page').length
   load: ->
     @map.check_show_hidden ||= ->
       showActions()

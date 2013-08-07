@@ -2,8 +2,8 @@ require 'test_helper'
 
 class SchedulesControllerTest < ActionController::TestCase
   setup do
-    @schedule = Fabricate(:schedule)
     @user = Fabricate(:user)
+    @schedule = Fabricate(:schedule, user_id: @user.id)
 
     sign_in @user
   end
@@ -18,6 +18,19 @@ class SchedulesControllerTest < ActionController::TestCase
     assert_template 'schedules/index'
   end
 
+  test 'should get schedules with date' do
+    xhr :get, :index, date: @schedule.scheduled_at.to_date.to_s(:db), format: :js
+
+    assert_response :success
+    assert_not_nil assigns(:schedules)
+    assert_not_nil assigns(:date)
+    assert_equal assigns(:date).to_date, @schedule.scheduled_at.to_date
+    assert_equal 1, assigns(:schedules).size
+    assert_select '#unexpected_error', false
+    assert_template 'schedules/index'
+    assert_equal :js, @request.format.symbol
+  end
+
   test 'should get new' do
     get :new
     assert_response :success
@@ -28,13 +41,12 @@ class SchedulesControllerTest < ActionController::TestCase
 
   test 'should create schedule' do
     assert_difference ['Schedule.count', '@user.schedules.count'] do
-      post :create, format: :js,
-        schedule: Fabricate.attributes_for(:schedule).slice(
+      xhr :post, :create, schedule: Fabricate.attributes_for(:schedule).slice(
         :description, :scheduled_at, :lock_version
-      )
+      ), format: :js
     end
 
-    assert_redirected_to schedules_url(date: assigns(:schedule).scheduled_at.to_date)
+    assert_redirected_to schedules_url
   end
 
   test 'should show schedule' do
@@ -56,24 +68,28 @@ class SchedulesControllerTest < ActionController::TestCase
   end
 
   test 'should update schedule' do
-    patch :update, id: @schedule, format: :js,
-      schedule: Fabricate.attributes_for(:schedule, description: 'Updated').slice(
-        :description, :scheduled_at, :lock_version
-      )
+    @request.env['HTTP_REFERER'] = schedules_url
 
-    assert_redirected_to schedules_url(date: @schedule.scheduled_at.to_date)
+    xhr :put, :update, id: @schedule, schedule:
+      Fabricate.attributes_for(:schedule, description: 'Updated').slice(
+        :description, :scheduled_at, :lock_version
+      ), format: :js
+
+    assert_redirected_to schedules_url
     assert_equal 'Updated', @schedule.reload.description
   end
 
   test 'should destroy schedule' do
+    @request.env['HTTP_REFERER'] = schedules_url
+
     assert_difference 'Schedule.count', -1 do
       xhr :delete, :destroy, id: @schedule.id, format: :js
     end
 
-    assert_response :success
+    assert_response 303
     assert_not_nil assigns(:schedule)
     assert_equal 0, Schedule.count
-    assert_template 'schedules/destroy'
+    assert_redirected_to schedules_url
   end
 
   test 'should get calendar' do
@@ -89,7 +105,7 @@ class SchedulesControllerTest < ActionController::TestCase
     schedule_ids = []
     3.times { schedule_ids << Fabricate(:schedule, user_id: @user.id).id }
 
-    xhr :put, :done, schedule_ids: schedule_ids, format: :js
+    xhr :put, :mark_as_done, schedule_ids: schedule_ids, format: :js
 
     assert_response :success
     assert_equal 3, assigns(:schedules).count
@@ -103,7 +119,7 @@ class SchedulesControllerTest < ActionController::TestCase
     schedule_ids = []
     3.times { schedule_ids << Fabricate(:schedule, user_id: @user.id, done: true).id }
 
-    xhr :put, :pending, schedule_ids: schedule_ids, format: :js
+    xhr :put, :mark_as_pending, schedule_ids: schedule_ids, format: :js
 
     assert_response :success
     assert_equal 3, assigns(:schedules).count
@@ -129,15 +145,16 @@ class SchedulesControllerTest < ActionController::TestCase
     assert_equal :js, @request.format.symbol
   end
 
-  test 'should search schedule' do
-    get :search, date: @schedule.scheduled_at.to_date, format: :js
+  test 'should get schedules pending' do
+    3.times {
+      Fabricate(:schedule, user_id: @user.id).update_column(:scheduled_at, 1.day.ago)
+    }
 
+    get :pending
     assert_response :success
     assert_not_nil assigns(:schedules)
-    assert_not_nil assigns(:date)
-    assert_equal 1, assigns(:schedules).size
+    assert_equal 3, assigns(:schedules).values.first.count
     assert_select '#unexpected_error', false
-    assert_template 'schedules/search'
-    assert_equal :js, @request.format.symbol
+    assert_template 'schedules/pending'
   end
 end

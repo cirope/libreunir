@@ -7,5 +7,10 @@
 
   <%= f.button :submit, class: 'btn-mini' %>
   <span class="muted">|</span>
-  <small><%= link_to t('label.cancel'), '#', data: { show_siblings: '[data-schedule-id]'} %></small>
+  <small>
+    <%= link_to(
+      t('label.cancel'), '#', 
+      data: { show_siblings: "[data-schedule-id=\"#{@noteable.to_param}\"]"} 
+    ) %>
+  </small>
 <% end %>

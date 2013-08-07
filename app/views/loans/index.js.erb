@@ -1,3 +1,4 @@
+$('[data-schedule-form-placeholder]').empty();
 <% render_options = { partial: action_name, collection: @loans, as: :loan } %>
 <% if params[:page].blank? %>
   $('table[data-endless-container] > tbody').html('<%= j render(render_options) %>');

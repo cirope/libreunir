@@ -1,0 +1,30 @@
+<div class="row-fluid schedules_pending">
+  <div class="span12">
+    <div class="columns-container">
+      <%= render 'shared/summary', offset: 0 %>
+      <% if @schedules.present? %>
+        <div class="main-page">
+          <%= form_tag nil, method: :put, 
+            data: { action: schedules_path('action'), form_mark_as: true, remote: true } do %>
+            <% @schedules.each do |date, schedules_day| %>
+              <div class="page-header">
+                <h5><%= l date, format: :long %></strong></h5>
+              </div>
+              <%= render(schedules_day, as: :schedule, formats: [:html]) %>
+            <% end %>
+          <% end %>
+          <div data-schedule-form-placeholder="true"></div>
+        </div>
+        <div data-schedule-modal="true"></div>
+      <% else %>
+        <div class="alert alert-warning">
+          <%= t('view.schedules.empty_pending') %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<% unless request.xhr? %>
+<div class="form-actions"></div>
+<% end %>

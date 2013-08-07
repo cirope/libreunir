@@ -12,7 +12,7 @@ class SchedulesTest < ActionDispatch::IntegrationTest
     visit schedules_path
 
     click_link Schedule.model_name.human(count: 0)
-    assert page.has_css?('[data-calendar-day]')
+    assert page.has_css?('.main-page')
 
     within '.navtags' do
       click_link I18n.t('label.select')
@@ -24,7 +24,7 @@ class SchedulesTest < ActionDispatch::IntegrationTest
     click_link I18n.t('label.actions')
 
     assert_difference 'Schedule.done.count', 3 do
-      find('[data-mark-as="done"]').click
+      find('[data-mark-action="mark_as_done"]').click
 
       assert page.has_css?('.strike')
     end
@@ -37,7 +37,7 @@ class SchedulesTest < ActionDispatch::IntegrationTest
     visit schedules_path
 
     click_link Schedule.model_name.human(count: 0)
-    assert page.has_css?('[data-calendar-day]')
+    assert page.has_css?('.main-page')
 
     within '.navtags' do
       click_link I18n.t('label.select')
@@ -49,12 +49,12 @@ class SchedulesTest < ActionDispatch::IntegrationTest
     click_link I18n.t('label.actions')
 
     assert_difference 'Schedule.done.count', -3 do
-      find('[data-mark-as="pending"]').click
+      find('[data-mark-action="mark_as_pending"]').click
 
       assert page.has_no_css?('.strike')
     end
   end
-=begin
+
   test 'should change monthly schedules' do
     Fabricate(:schedule, user_id: @user.id, scheduled_at: 1.month.from_now)
     login(user: @user)
@@ -82,12 +82,10 @@ class SchedulesTest < ActionDispatch::IntegrationTest
   end
 
   test 'should create schedule' do
-    schedule = Fabricate.build(:schedule, scheduled_at: 1.month.from_now)
+    schedule = Fabricate.build(:schedule, scheduled_at: 1.hour.from_now)
     login(user: @user)
 
     visit schedules_path
-
-    find('.ui-datepicker-next').click
 
     assert page.has_no_css?('#schedule_modal')
     assert page.has_css?('.btn-primary')
@@ -139,5 +137,4 @@ class SchedulesTest < ActionDispatch::IntegrationTest
     assert_equal 1, all('.has_event').size
     assert_equal schedule_attrs[:description], schedule.reload.description
   end
-=end
 end

@@ -1,38 +1,23 @@
-div[data-schedule-info] {
+.schedule-info {
   margin: 10px 0;
   & .alert { margin-bottom: 10px; }
-}
-
-form[data-scheduled-form] {
-  margin: 0;
-  padding: 10px 0;
-
-  & textarea { 
-    margin-bottom: 4px;
-    padding: 10px 6px;
-  }
-}
-
-div[data-place-holder] {
-  .alert { margin: 0; }
 }
 
 .strike {
   text-decoration: line-through;
 }
 
-div[data-calendar-day] .page-header {
-  margin: 0 0 15px;
-
-  & h4 { margin: 0; }
-}
-
 input[type="checkbox"].margin-less {
   margin: 0px;
 }
 
-#scheduled_label {
-  margin: 0;
+.main-page {
+  .page-header { 
+    padding-bottom: 3px;
+    margin: 0 0 5px 0;
+
+    h5 { margin: 15px 0 0; }
+  }
 }
 
 .ui-datepicker {
@@ -55,8 +40,4 @@ input[type="checkbox"].margin-less {
 
 .ui-widget {
   font-size: 0.9em;
-}
-
-.topbar {
-  margin: 12px;
 }

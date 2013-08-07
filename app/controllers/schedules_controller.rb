@@ -1,15 +1,6 @@
 class SchedulesController < ApplicationController
+  include Schedules::Authorizations 
   include Schedules::Actions
-
-  before_action :authenticate_user!
-  before_action :load_date, only: [:index, :search, :new, :move, :calendar]
-
-  check_authorization
-  load_resource :loan, shallow: true
-
-  before_action :set_schedulable
-
-  load_and_authorize_resource through: :schedulable, shallow: true
 
   respond_to :html, :js
 
@@ -42,13 +33,11 @@ class SchedulesController < ApplicationController
   def create
     @title = t('view.schedules.new_title')
 
-    if @schedule.save && @schedulable.nil?
-      respond_to do |format|
-        format.js {
-          redirect_to schedules_url(date: @schedule.scheduled_at.to_date), format: :js
-        }
-      end
+    if @schedule.save
+      redirect_to :back
     end
+  rescue ActionController::RedirectBackError
+    redirect_to schedules_url
   end
 
   # PATCH /schedules/1
@@ -56,32 +45,18 @@ class SchedulesController < ApplicationController
     @title = t('view.schedules.edit_title')
 
     if @schedule.update(schedule_params)
-      respond_to do |format|
-        format.js { 
-          redirect_to schedules_url(date: @schedule.scheduled_at.to_date), format: :js
-        }
-      end
+      redirect_to :back
     end
-  rescue ActiveRecord::StaleObjectError
+  rescue ActiveRecord::StaleObjectError, ActionController::RedirectBackError
     redirect_to edit_schedule_url(@schedule), alert: t('view.schedules.stale_object_error')
   end
 
   # DELETE /schedules/1
   def destroy
     @schedule.destroy
-  end
+    redirect_to :back, status: 303
 
-  private
-
-  def schedule_params
-    params.require(:schedule).permit(:description, :scheduled_at, :remind_me, :lock_version)
-  end
-
-  def set_schedulable
-    @schedulable = @loan
-  end
-
-  def load_date
-    @date = Timeliness.parse(params[:date], zone: :local) || Time.zone.now
+  rescue ActionController::RedirectBackError
+    redirect_to schedules_url
   end
 end

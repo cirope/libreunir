@@ -8,7 +8,7 @@ require 'sidekiq/capistrano'
 
 default_run_options[:shell] = '/bin/bash --login'
 
-server 'libreunir.com', :web, :app, :db, primary: true
+server 'prueba.libreunir.com', :web, :app, :db, primary: true
 
 set :application, 'libreunir'
 set :user, 'deployer'

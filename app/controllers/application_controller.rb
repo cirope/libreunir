@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery
 
-  helper_method :flash_hash
+  helper_method :flash_hash, :pending_schedules_count
 
   after_action -> { expires_now if user_signed_in? }
 
@@ -24,5 +24,9 @@ class ApplicationController < ActionController::Base
 
   def flash_hash
     request.xhr? ? flash.now : flash
+  end
+
+  def pending_schedules_count
+    current_user.schedules.pending.count
   end
 end

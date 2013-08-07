@@ -1,7 +1,8 @@
+$('#schedule_modal').modal('hide');
 $('[data-schedules-pending-count]').replaceWith(
   '<%= j render('shared/menu_dropdowns/schedules') %>' 
 );
-<% @schedules.each do |schedule| %>
-  $('[data-schedule-id="<%= schedule.to_param %>"]').replaceWith('<%= j render(schedule) %>');
-<% end %>
+$('.schedules_pending').replaceWith(
+  '<%= j render(template: 'schedules/pending', formats: [:html]) %>'
+);
 $('.nav-actions').addClass('hidden');

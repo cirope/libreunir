@@ -9,6 +9,7 @@ class Schedule < ActiveRecord::Base
 
   # Scopes
   scope :sorted, -> { order("#{table_name}.scheduled_at ASC") }
+  scope :pending, -> { where('done IS FALSE AND scheduled_at < ?', Time.now) }
 
   # Validations
   validates :user_id, :description, :scheduled_at, presence: true

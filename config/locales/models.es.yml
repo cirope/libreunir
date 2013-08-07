@@ -60,7 +60,7 @@
         payments_count: 'Cuotas'
         payments_to_expire_count: 'Cuotas restantes'
         progress: 'Avance'
-        total_debt: 'Deuda total'
+        total_debt: 'Deuda'
         client_id: 'Cliente'
         branch_id: 'Sucursal'
         user_id: 'Asesor'

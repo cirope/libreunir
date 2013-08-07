@@ -16,7 +16,7 @@ module LoansHelper
     action = params[:action_name] || action_name
 
     loan.tags.each do |tag|
-      tags << content_tag(:span, class: "tagging badge badge-#{tag.category}") do
+      tags << content_tag(:span, class: "tagging label label-#{tag.category}") do
         concat link_to truncate_tag_name(tag), [action, tag, 'loans']
         concat ' | '
         concat link_to('x',
@@ -54,5 +54,9 @@ module LoansHelper
 
   def show_debt_percentage(loan)
     number_to_percentage(loan.total_debt.to_f * 100.0 / @total_debt) if @total_debt > 0
+  end
+
+  def show_delayed_at(loan)
+    t('datetime.distance_in_words.x_days', count: (Date.today - loan.delayed_at).to_i) rescue ''
   end
 end

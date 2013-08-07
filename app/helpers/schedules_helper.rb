@@ -46,7 +46,7 @@ module SchedulesHelper
     if schedulable.respond_to?(:tags)
       tags = []
       schedulable.tags.each do |tag|
-        tags << content_tag(:span, truncate_tag_name(tag), class: "tagging badge badge-#{tag.category}")
+        tags << content_tag(:span, truncate_tag_name(tag), class: "tagging label label-#{tag.category}")
       end
       tags.join(' ')
     end

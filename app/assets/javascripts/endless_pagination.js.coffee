@@ -15,7 +15,7 @@ new Rule
       visible = $('.pagination-container').is(':visible')
       url = $('.pagination a.next').attr('href')
       atBottom = $(window).scrollTop() > $(document).height() - $(window).height() - 150
-      
+
       if url and visible and (atBottom or isScrolledIntoView('.pagination-container'))
         $('.pagination-container').html(
           $('<div class="alert"></div>').html($('#loading_caption').html())
