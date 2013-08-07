@@ -1,9 +1,9 @@
-<div class="row-fluid">
+<div class="row-fluid schedules_pending">
   <div class="span12">
     <div class="columns-container">
+      <%= render 'shared/summary', offset: 0 %>
       <% if @schedules.present? %>
-        <%= render 'shared/summary' %>
-        <div data-calendar-day="true" class="schedules_pending">
+        <div class="main-page">
           <%= form_tag nil, method: :put, 
             data: { action: schedules_path('action'), form_mark_as: true, remote: true } do %>
             <% @schedules.each do |date, schedules_day| %>
@@ -17,11 +17,14 @@
         </div>
         <div data-schedule-modal="true"></div>
       <% else %>
-        <span>
+        <div class="alert alert-warning">
           <%= t('view.schedules.empty_pending') %>
-        </span>
+        </div>
       <% end %>
     </div>
   </div>
 </div>
+
+<% unless request.xhr? %>
 <div class="form-actions"></div>
+<% end %>

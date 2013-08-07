@@ -27,6 +27,8 @@ module Schedules::Actions
     else
       head :ok
     end
+  rescue ActionController::RedirectBackError
+    redirect_to schedules_url
   end
 
   # GET /schedules/pending

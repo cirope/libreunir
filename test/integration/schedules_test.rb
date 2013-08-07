@@ -12,7 +12,7 @@ class SchedulesTest < ActionDispatch::IntegrationTest
     visit schedules_path
 
     click_link Schedule.model_name.human(count: 0)
-    assert page.has_css?('[data-calendar-day]')
+    assert page.has_css?('.main-page')
 
     within '.navtags' do
       click_link I18n.t('label.select')
@@ -37,7 +37,7 @@ class SchedulesTest < ActionDispatch::IntegrationTest
     visit schedules_path
 
     click_link Schedule.model_name.human(count: 0)
-    assert page.has_css?('[data-calendar-day]')
+    assert page.has_css?('.main-page')
 
     within '.navtags' do
       click_link I18n.t('label.select')
@@ -82,12 +82,10 @@ class SchedulesTest < ActionDispatch::IntegrationTest
   end
 
   test 'should create schedule' do
-    schedule = Fabricate.build(:schedule, scheduled_at: 1.month.from_now)
+    schedule = Fabricate.build(:schedule, scheduled_at: 1.hour.from_now)
     login(user: @user)
 
     visit schedules_path
-
-    find('.ui-datepicker-next').click
 
     assert page.has_no_css?('#schedule_modal')
     assert page.has_css?('.btn-primary')

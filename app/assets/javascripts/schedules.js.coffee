@@ -56,7 +56,7 @@ new Rule
     $(document).off 'click', 'a[data-mark-done]', @map.mark_done
 
 new Rule
-  condition: -> $('[data-calendar-day]').length
+  condition: -> $('.main-page').length
   load: ->
     @map.check_show_hidden ||= ->
       showActions()

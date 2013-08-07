@@ -47,7 +47,7 @@ class TagsTest < ActionDispatch::IntegrationTest
     assert_difference 'Tagging.count' do
       find("[data-tag-id=\"#{tag.id}\"]").click
 
-      assert page.has_css?('.badge.badge-important')
+      assert page.has_css?('.label.label-important')
     end
   end
 
@@ -66,7 +66,7 @@ class TagsTest < ActionDispatch::IntegrationTest
         page.driver.browser.switch_to.alert.accept
       end
 
-      assert page.has_no_css?('.badge.badge-important')
+      assert page.has_no_css?('.label.label-important')
     end
   end
 end

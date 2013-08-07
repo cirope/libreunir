@@ -26,5 +26,5 @@ $('[data-calendar-month]').datepicker({
     }
 }).datepicker('setDate', '<%= l @date.to_date, format: :minimal %>');
 
-$('[data-calendar-day]').html('<%= j render('schedules_day') %>');
+$('.main-page').html('<%= j render('schedules_day') %>');
 $('.nav-actions').addClass('hidden');

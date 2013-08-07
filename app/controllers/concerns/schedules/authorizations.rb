@@ -10,7 +10,7 @@ module Schedules::Authorizations
 
     before_action :set_schedulable
 
-    load_and_authorize_resource through: [:schedulable, :current_user] 
+    load_and_authorize_resource through: [:schedulable, :current_user]
 
     before_action :load_schedules, only: [:mark_as_done, :mark_as_pending, :move]
   end
