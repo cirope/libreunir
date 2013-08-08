@@ -6,4 +6,10 @@ class Notifier < ActionMailer::Base
 
     mail to: @reminder.user_email
   end
+
+  def summary(user)
+    @schedules = user.schedules.today
+
+    mail to: user.email
+  end
 end

@@ -10,7 +10,7 @@ class SchedulesController < ApplicationController
   def index
     @title = t('view.schedules.index_title')
     @days = @schedules.for_date_of_month(@date).uniq
-    @schedules = @schedules.for_date_of_day(@date).sorted
+    @schedules = @schedules.for_date_of_day(@date)
   end
 
   # GET /schedules/1

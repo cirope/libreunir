@@ -8,8 +8,9 @@ class Schedule < ActiveRecord::Base
   has_paper_trail
 
   # Scopes
-  scope :sorted, -> { order("#{table_name}.scheduled_at ASC") }
+  default_scope -> { order("scheduled_at ASC") }
   scope :pending, -> { where('done IS FALSE AND scheduled_at < ?', Time.now) }
+  scope :today, -> { where(scheduled_at: (Time.now.at_beginning_of_day..Time.now.at_end_of_day)) }
 
   # Validations
   validates :user_id, :description, :scheduled_at, presence: true

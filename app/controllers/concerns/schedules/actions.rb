@@ -33,7 +33,7 @@ module Schedules::Actions
 
   # GET /schedules/pending
   def pending
-    @schedules = @schedules.pending.sorted.group_by { |s| s.scheduled_at.to_date }
+    @schedules = @schedules.pending.group_by { |s| s.scheduled_at.to_date }
 
     render layout: 'application'
   end

@@ -124,4 +124,12 @@ class ScheduleTest < ActiveSupport::TestCase
     @schedule.scheduled_at = 1.minute.from_now
     assert @schedule.allow_remind_me?
   end
+
+  test 'delivery' do
+    3.times { Fabricate(:schedule, scheduled_at: 1.hour.from_now) }
+
+    assert_difference 'ActionMailer::Base.deliveries.size', 3 do
+      Reminder.send_summaries
+    end
+  end
 end

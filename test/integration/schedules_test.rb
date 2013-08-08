@@ -63,8 +63,7 @@ class SchedulesTest < ActionDispatch::IntegrationTest
 
     find('.ui-datepicker-next').click
 
-    assert page.has_css?('.has_event')
-    assert_equal 1, all('.has_event').size
+    assert page.has_css?('td.has_event', count: 1)
   end
 
   test 'should change daily schedules' do
@@ -77,8 +76,7 @@ class SchedulesTest < ActionDispatch::IntegrationTest
       click_link schedule.scheduled_at.day
     end
 
-    assert page.has_css?('.has_event')
-    assert_equal 1, all('.has_event').size
+    assert page.has_css?('td.has_event', count: 1)
   end
 
   test 'should create schedule' do
@@ -103,8 +101,7 @@ class SchedulesTest < ActionDispatch::IntegrationTest
         find('.btn-primary').click
       end
 
-      assert page.has_css?('.has_event')
-      assert_equal 1, all('.has_event').size
+      assert page.has_css?('td.has_event', count: 1)
     end
   end
 
@@ -115,8 +112,6 @@ class SchedulesTest < ActionDispatch::IntegrationTest
     login(user: @user)
 
     visit schedules_path
-
-    assert page.has_no_css?('#schedule_modal')
 
     within "[data-schedule-id=\"#{schedule.to_param}\"]" do
       click_link '✎'
@@ -131,10 +126,10 @@ class SchedulesTest < ActionDispatch::IntegrationTest
 
         find('.btn-primary').click
       end
+
+      assert page.has_css?('td.has_event', count: 1)
     end
 
-    assert page.has_css?('.has_event')
-    assert_equal 1, all('.has_event').size
     assert_equal schedule_attrs[:description], schedule.reload.description
   end
 end

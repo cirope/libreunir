@@ -1,0 +1,10 @@
+Para el <%= l(Date.today, format: :long) %>,
+================================================================================
+
+<% @schedules.each do |schedule| %>
+  <%= l(schedule.scheduled_at, format: :mini) %>|
+  <% if schedule.schedulable %>
+    <%= schedule.label %>|
+  <% end %>
+  <%= schedule.description %>
+<% end %>

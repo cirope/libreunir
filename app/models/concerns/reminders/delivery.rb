@@ -21,5 +21,11 @@ module Reminders::Delivery
         ReminderWorker.perform_at(reminder.remind_at, reminder.id)
       end
     end
+
+    def send_summaries
+      User.all.find_each do |user|
+        Notifier.summary(user).deliver if user.schedules.today.count > 0
+      end
+    end
   end
 end

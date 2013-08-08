@@ -2,3 +2,5 @@
   notifier:
     remind:
       subject: 'Recordatorio'
+    summary:
+      subject: 'Recordatorio'
