@@ -1,4 +1,4 @@
-$('#schedule_modal').modal('hide');
+$('#schedule_modal').modal('hide').remove();
 $('[data-schedules-pending-count]').replaceWith(
   '<%= j render('shared/menu_dropdowns/schedules') %>' 
 );
@@ -10,6 +10,7 @@ var today = new Date(<%= today.year %>, <%= today.month-1 %>, <%= today.day %>);
 $('[data-calendar-month]').datepicker("destroy");
 
 $('[data-calendar-month]').datepicker({
+    defaultDate: '<%= l @date.to_date, format: :minimal %>',
     dateFormat: 'yy-mm-dd',
     beforeShowDay: function(date) {
       var included = $.inArray($.datepicker.formatDate('yy-mm-dd', date), days) != -1;
@@ -24,7 +25,7 @@ $('[data-calendar-month]').datepicker({
       var date = new Date(year, month-1, obj.currentDay);
       Turbolinks.visit('/schedules/' + $.datepicker.formatDate('yy-mm-dd', date));
     }
-}).datepicker('setDate', '<%= l @date.to_date, format: :minimal %>');
+});
 
 $('.main-page').html('<%= j render('schedules_day') %>');
 $('.nav-actions').addClass('hidden');

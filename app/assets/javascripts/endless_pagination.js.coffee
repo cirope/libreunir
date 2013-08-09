@@ -5,8 +5,7 @@ isScrolledIntoView = (elem) ->
   elemTop = $(elem).offset().top
   elemBottom = elemTop + $(elem).height()
 
-  ((elemBottom >= docViewTop) && (elemTop <= docViewBottom) &&
-    (elemBottom <= docViewBottom) && (elemTop >= docViewTop))
+  ((elemBottom <= docViewBottom) && (elemTop >= docViewTop))
 
 new Rule
   condition: -> $('*[data-endless-container]').length
@@ -23,7 +22,7 @@ new Rule
 
         $.getScript(url, -> Inspector.instance().reload(); $(document).scroll())
 
-    $(document).on 'scroll touchmove', @map.scroll_function
+    $(window).on 'scroll touchmove', @map.scroll_function
     $(document).scroll()
 
-  unload: -> $(document).off 'scroll touchmove', @map.scroll_function
+  unload: -> $(window).off 'scroll touchmove', @map.scroll_function

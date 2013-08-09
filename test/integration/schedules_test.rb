@@ -11,9 +11,6 @@ class SchedulesTest < ActionDispatch::IntegrationTest
 
     visit schedules_path
 
-    click_link Schedule.model_name.human(count: 0)
-    assert page.has_css?('.main-page')
-
     within '.navtags' do
       click_link I18n.t('label.select')
       assert page.has_css?('li.open')
@@ -36,9 +33,6 @@ class SchedulesTest < ActionDispatch::IntegrationTest
 
     visit schedules_path
 
-    click_link Schedule.model_name.human(count: 0)
-    assert page.has_css?('.main-page')
-
     within '.navtags' do
       click_link I18n.t('label.select')
       assert page.has_css?('li.open')
@@ -56,16 +50,18 @@ class SchedulesTest < ActionDispatch::IntegrationTest
   end
 
   test 'should change monthly schedules' do
-    Fabricate(:schedule, user_id: @user.id, scheduled_at: 1.month.from_now)
+    schedule = Fabricate(:schedule, user_id: @user.id, scheduled_at: 1.month.from_now)
     login(user: @user)
 
     visit schedules_path
 
     find('.ui-datepicker-next').click
 
-    assert page.has_css?('td.has_event', count: 1)
+    assert page.has_css?('td.has_event')
 
-    logout
+    within 'td.has_event a' do
+      assert page.has_content?(schedule.scheduled_at.day)
+    end
   end
 
   test 'should change daily schedules' do
@@ -78,37 +74,38 @@ class SchedulesTest < ActionDispatch::IntegrationTest
       click_link schedule.scheduled_at.day
     end
 
-    assert page.has_css?('td.has_event', count: 1)
+    assert page.has_css?('.has_event.ui-datepicker-current-day')
 
-    logout
+    within 'td.has_event.ui-datepicker-current-day' do
+      assert page.has_content?(schedule.scheduled_at.day)
+    end
   end
 
   test 'should create schedule' do
     schedule = Fabricate.build(:schedule, scheduled_at: 1.hour.from_now)
-    login(user: @user)
+    login
 
     visit schedules_path
 
     assert page.has_no_css?('#schedule_modal')
-    assert page.has_css?('.btn-primary')
 
     find('.btn-primary').click
 
     assert page.has_css?('#schedule_modal')
+    assert find('#schedule_modal').visible?
 
     assert_difference 'Schedule.count' do
-      within '[data-schedule-modal]' do
-        click_link schedule.scheduled_at.day
+      assert page.has_no_css?('td.has_event')
 
+      within '#schedule_modal' do
         fill_in 'schedule_description', with: schedule.description
-
         find('.btn-primary').click
       end
 
-      assert page.has_css?('td.has_event', count: 1)
+      assert page.has_no_css?('#schedule_modal')
     end
 
-    logout
+    assert page.has_css?('[data-schedule-id]')
   end
 
   test 'should edit schedule' do
@@ -124,19 +121,20 @@ class SchedulesTest < ActionDispatch::IntegrationTest
     end
 
     assert page.has_css?('#schedule_modal')
+    assert find('#schedule_modal').visible?
 
     assert_no_difference 'Schedule.count' do
-      within '[data-schedule-modal]' do
+      within '#schedule_modal' do
         find('.ui-datepicker-next').click
+        click_link schedule.scheduled_at.day
         fill_in 'schedule_description', with: schedule_attrs[:description]
 
         find('.btn-primary').click
       end
 
-      assert page.has_css?('td.has_event', count: 1)
+      assert page.has_no_css?('#schedule_modal')
+      assert page.has_no_css?('td.has_event')
     end
     assert_equal schedule_attrs[:description], schedule.reload.description
-
-    logout
   end
 end
