@@ -66,6 +66,8 @@ class ActionDispatch::IntegrationTest
   end
 
   def logout
+    sleep 1
+
     click_link I18n.t('menu.account')
     assert page.has_css?('li.open')
 

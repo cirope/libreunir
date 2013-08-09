@@ -135,7 +135,6 @@ class SchedulesTest < ActionDispatch::IntegrationTest
 
       assert page.has_css?('td.has_event', count: 1)
     end
-
     assert_equal schedule_attrs[:description], schedule.reload.description
 
     logout
