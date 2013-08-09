@@ -137,5 +137,7 @@ class SchedulesTest < ActionDispatch::IntegrationTest
     end
 
     assert_equal schedule_attrs[:description], schedule.reload.description
+
+    logout
   end
 end
