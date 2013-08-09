@@ -57,14 +57,20 @@ class ActionDispatch::IntegrationTest
 
     find('.btn-primary.submit').click
 
-    assert_equal dashboard_path, current_path
-
     assert_page_has_no_errors!
     assert page.has_css?('.alert.alert-info')
 
     within '.alert.alert-info' do
       assert page.has_content?(I18n.t('devise.sessions.signed_in'))
     end
+  end
+
+  def logout
+    click_link I18n.t('menu.account')
+    assert page.has_css?('li.open')
+
+    click_link I18n.t('menu.actions.logout')
+    assert page.has_css?('.alert.alert-info')
   end
 
   def assert_page_has_no_errors!

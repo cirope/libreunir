@@ -28,7 +28,7 @@ module Schedules::Actions
       head :ok
     end
   rescue ActionController::RedirectBackError
-    redirect_to schedules_url
+    redirect_to root_url
   end
 
   # GET /schedules/pending

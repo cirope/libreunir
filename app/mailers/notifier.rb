@@ -8,7 +8,8 @@ class Notifier < ActionMailer::Base
   end
 
   def summary(user)
-    @schedules = user.schedules.today
+    @user = user
+    @schedules = user.schedules.for_tomorrow
 
     mail to: user.email
   end

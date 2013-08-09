@@ -126,9 +126,11 @@ class ScheduleTest < ActiveSupport::TestCase
   end
 
   test 'delivery' do
-    3.times { Fabricate(:schedule, scheduled_at: 1.hour.from_now) }
+    user = Fabricate(:user)
+    2.times { Fabricate(:schedule, user_id: @schedule.user_id) }
+    3.times { Fabricate(:schedule, user_id: user.id) }
 
-    assert_difference 'ActionMailer::Base.deliveries.size', 3 do
+    assert_difference 'ActionMailer::Base.deliveries.size', 2 do
       Reminder.send_summaries
     end
   end

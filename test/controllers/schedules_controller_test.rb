@@ -46,7 +46,7 @@ class SchedulesControllerTest < ActionController::TestCase
       ), format: :js
     end
 
-    assert_redirected_to schedules_url
+    assert_redirected_to root_url
   end
 
   test 'should show schedule' do

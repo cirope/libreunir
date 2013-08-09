@@ -37,7 +37,7 @@ class SchedulesController < ApplicationController
       redirect_to :back
     end
   rescue ActionController::RedirectBackError
-    redirect_to schedules_url
+    redirect_to root_url
   end
 
   # PATCH /schedules/1
@@ -57,6 +57,6 @@ class SchedulesController < ApplicationController
     redirect_to :back, status: 303
 
   rescue ActionController::RedirectBackError
-    redirect_to schedules_url
+    redirect_to root_url
   end
 end

@@ -64,6 +64,8 @@ class SchedulesTest < ActionDispatch::IntegrationTest
     find('.ui-datepicker-next').click
 
     assert page.has_css?('td.has_event', count: 1)
+
+    logout
   end
 
   test 'should change daily schedules' do
@@ -77,6 +79,8 @@ class SchedulesTest < ActionDispatch::IntegrationTest
     end
 
     assert page.has_css?('td.has_event', count: 1)
+
+    logout
   end
 
   test 'should create schedule' do
@@ -103,6 +107,8 @@ class SchedulesTest < ActionDispatch::IntegrationTest
 
       assert page.has_css?('td.has_event', count: 1)
     end
+
+    logout
   end
 
   test 'should edit schedule' do

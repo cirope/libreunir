@@ -24,7 +24,7 @@ module Reminders::Delivery
 
     def send_summaries
       User.all.find_each do |user|
-        Notifier.summary(user).deliver if user.schedules.today.count > 0
+        Notifier.delay.summary(user) if user.schedules.for_tomorrow.count > 0
       end
     end
   end

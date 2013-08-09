@@ -10,7 +10,11 @@ class Schedule < ActiveRecord::Base
   # Scopes
   default_scope -> { order("scheduled_at ASC") }
   scope :pending, -> { where('done IS FALSE AND scheduled_at < ?', Time.now) }
-  scope :today, -> { where(scheduled_at: (Time.now.at_beginning_of_day..Time.now.at_end_of_day)) }
+  scope :for_tomorrow, -> {
+    where(
+      scheduled_at: (Date.tomorrow.at_beginning_of_day..Date.tomorrow.at_end_of_day)
+    )
+  }
 
   # Validations
   validates :user_id, :description, :scheduled_at, presence: true

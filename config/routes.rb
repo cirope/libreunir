@@ -54,5 +54,5 @@ Libreunir::Application.routes.draw do
     end
   end
 
-  root to: redirect('/users/sign_in')
+  root to: 'dashboard#index'
 end

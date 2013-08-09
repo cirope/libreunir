@@ -77,10 +77,12 @@
         kind: 'Tipo'
         notified: 'Notificado'
       schedule:
+        address: 'Dirección'
         description: 'Evento'
-        scheduled_at: 'Fecha'
         done: 'Terminado'
+        phone: 'Teléfono'
         remind_me: 'Recordarme por correo 15 minutos antes'
+        scheduled_at: 'Fecha'
       tag:
         name: 'Nombre'
         category: 'Categoría'
