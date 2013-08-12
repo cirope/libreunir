@@ -2,7 +2,7 @@ module Summaries::Summary
   LIMIT = 5
  
   def self.classes
-    [Summaries::Expired, Summaries::CloseToExpire]
+    [Summaries::Expired, Summaries::CloseToExpire, Summaries::CanceledNotRenewed]
   end
 
   def headers
