@@ -51,7 +51,7 @@
         address: 'Dirección'
       loan:
         approved_at: 'Aprovación'
-        canceled_at: 'Cancelación'
+        canceled_at: 'Cancelado'
         capital: 'Monto'
         debt_percentage: 'Porcentaje de deuda'
         delayed_at: 'Atraso'

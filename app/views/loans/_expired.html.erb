@@ -2,7 +2,7 @@
   <td><%= check_box_tag "taggable_ids[]", loan.id, false, id: nil %></td>
   <td><%== loan_category(loan) %> <%= loan.client %></td>
   <td><%= number_to_currency loan.total_debt %></td>
-  <td><%= show_delayed_at(loan) %></td>
+  <td><%= show_distance_in_words(loan.delayed_at) %></td>
   <td><%= show_phone(loan.phones.first) %></td>
   <td class="hidden-print"><%= link_to_loan_info(loan) %></td>
   <td class="hidden-print"><%= link_to_new_schedule(loan) %></td>

@@ -56,7 +56,7 @@ module LoansHelper
     number_to_percentage(loan.total_debt.to_f * 100.0 / @total_debt) if @total_debt > 0
   end
 
-  def show_delayed_at(loan)
-    t('datetime.distance_in_words.x_days', count: (Date.today - loan.delayed_at).to_i) rescue ''
+  def show_distance_in_words(delayed_at)
+    t('datetime.distance_in_words.x_days', count: (Date.today - delayed_at).to_i) rescue ''
   end
 end
