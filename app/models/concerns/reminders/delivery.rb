@@ -16,7 +16,7 @@ module Reminders::Delivery
 
   module ClassMethods
     def send_reminders
-      upcoming.find_each do |reminder|
+      unscoped.upcoming.find_each do |reminder|
         reminder.update_attributes! scheduled: true
 
         ReminderWorker.perform_at(reminder.remind_at, reminder.id)
