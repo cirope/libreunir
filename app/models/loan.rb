@@ -30,7 +30,7 @@ class Loan < ActiveRecord::Base
     self.expired_payments_count > 0
   end
 
-  def is_scheduled?
-    self.schedules.present?
+  def is_scheduled?(user)
+    self.schedules.where(user_id: user.id, done: false).present?
   end
 end
