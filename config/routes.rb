@@ -5,7 +5,7 @@ Libreunir::Application.routes.draw do
       collection do
         get 'expired', to: 'loans#expired', as: 'expired'
         get 'close_to_expire', to: 'loans#close_to_expire', as: 'close_to_expire'
-        get 'canceled_not_renewed', to: 'loans#canceled_not_renewed', as: 'canceled_not_renewed'
+        get 'not_renewed', to: 'loans#not_renewed', as: 'not_renewed'
       end
     end
 
@@ -18,7 +18,7 @@ Libreunir::Application.routes.draw do
       collection do
         get 'expired', to: 'loans#expired', as: 'expired'
         get 'close_to_expire', to: 'loans#close_to_expire', as: 'close_to_expire'
-        get 'canceled_not_renewed', to: 'loans#canceled_not_renewed', as: 'canceled_not_renewed'
+        get 'not_renewed', to: 'loans#not_renewed', as: 'not_renewed'
       end
     end
   end
@@ -43,7 +43,7 @@ Libreunir::Application.routes.draw do
     collection do
       get 'expired', to: 'loans#expired', as: 'expired'
       get 'close_to_expire', to: 'loans#close_to_expire', as: 'close_to_expire'
-      get 'canceled_not_renewed', to: 'loans#canceled_not_renewed', as: 'canceled_not_renewed'
+      get 'not_renewed', to: 'loans#not_renewed', as: 'not_renewed'
     end
 
     resources :schedules, only: [:new, :create, :edit, :update]

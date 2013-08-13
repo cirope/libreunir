@@ -13,8 +13,8 @@ class Summaries::CloseToExpire
     :close_to_expire
   end
 
-  def formatter
-    :none
+  def value_formatted(value)
+    value
   end
 
   private

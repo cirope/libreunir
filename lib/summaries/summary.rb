@@ -1,8 +1,10 @@
 module Summaries::Summary
+  include ActiveSupport::NumberHelper
+
   LIMIT = 5
  
   def self.classes
-    [Summaries::Expired, Summaries::CloseToExpire, Summaries::CanceledNotRenewed]
+    [Summaries::Expired, Summaries::CloseToExpire, Summaries::NotRenewed]
   end
 
   def headers

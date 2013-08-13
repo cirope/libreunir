@@ -1,4 +1,4 @@
-class Summaries::CanceledNotRenewed
+class Summaries::NotRenewed
   include Summaries::Summary
 
   attr_reader :current_user, :filter, :query
@@ -10,11 +10,11 @@ class Summaries::CanceledNotRenewed
   end
 
   def action
-    :canceled_not_renewed
+    :not_renewed
   end
 
-  def formatter
-    :none
+  def value_formatted(value)
+    number_to_percentage value, precision: 0
   end
 
   private
@@ -28,6 +28,6 @@ class Summaries::CanceledNotRenewed
   end
 
   def value(loans)
-    loans.canceled.count
+    ((loans.count * 100) / @current_user.loans.canceled.count).to_f
   end 
 end

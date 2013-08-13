@@ -27,7 +27,7 @@ module Loans::Scopes
     end
 
     def sorted_by_canceled_at
-      order('canceled_at DESC')
+      order('canceled_at ASC')
     end
 
     def find_by_filter(filter)

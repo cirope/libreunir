@@ -1,0 +1,9 @@
+<tr data-object-id="<%= loan.to_param %>" <%== 'class="warning"' if loan.is_scheduled? %>>
+  <td><%= check_box_tag "taggable_ids[]", loan.id, false, id: nil %></td>
+  <td><%== loan_category(loan) %> <%= loan.client %></td>
+  <td><%= show_phone(loan.phones.first) %></td>
+  <td><%= number_to_currency loan.capital %></td>
+  <td><%= l loan.canceled_at, format: :minimal %></td>
+  <td class="hidden-print"><%= link_to_loan_info(loan) %></td>
+  <td class="hidden-print"><%= link_to_new_schedule(loan) %></td>
+</tr>
