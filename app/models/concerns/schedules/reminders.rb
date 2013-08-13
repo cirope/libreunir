@@ -5,6 +5,7 @@ module Schedules::Reminders
     attr_accessor :remind_me
 
     before_save :build_reminder
+    after_update :update_reminder
   end
 
   def remind_me_default_value
@@ -19,7 +20,7 @@ module Schedules::Reminders
 
   def build_reminder
     if build_reminder?
-      self.reminders.build(remind_at: self.scheduled_at - 15.minutes, kind: 'email')
+      self.reminders.build(remind_at: self.scheduled_at - delay, kind: 'email')
     elsif remove_reminder?
       self.reminders.clear
     end
@@ -31,5 +32,15 @@ module Schedules::Reminders
 
   def remove_reminder?
     self.remind_me == '0' || self.remind_me == false
+  end
+
+  def update_reminder
+    if self.scheduled_at_changed?
+      self.reminders.each { |r| r.update_attributes(remind_at: (self.scheduled_at - delay)) }
+    end
+  end
+
+  def delay
+    15.minutes
   end
 end

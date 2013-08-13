@@ -107,6 +107,16 @@ class ScheduleTest < ActiveSupport::TestCase
       @schedule.remind_me = false
       assert @schedule.save
     end
+
+    @schedule.remind_me = true
+    @schedule.save
+
+    assert_no_difference '@schedule.reminders.count' do
+      @schedule.move(5.days.from_now)
+      assert @schedule.reminders.reload.all? do |s|
+        s.remind_at == (@schedule.scheduled_at - @schedule.delay)
+      end
+    end
   end
 
   test 'allow remind me' do

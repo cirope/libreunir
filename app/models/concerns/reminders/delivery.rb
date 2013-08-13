@@ -3,13 +3,14 @@ module Reminders::Delivery
 
   included do
     scope :upcoming, -> {
-      where(
+      includes(:schedule).where(
         [
           "#{table_name}.remind_at <= :date",
-          "#{table_name}.scheduled  = :false"
+          "#{table_name}.scheduled  = :false",
+          "#{Schedule.table_name}.done = :false"
         ].join(' AND '),
         { date: 5.minutes.from_now, false: false }
-      )
+      ).references(:schedule)
     }
   end
 
@@ -23,7 +24,7 @@ module Reminders::Delivery
     end
 
     def send_summaries
-      User.all.find_each do |user|
+      User.find_each do |user|
         Notifier.delay.summary(user) if user.schedules.for_tomorrow.count > 0
       end
     end

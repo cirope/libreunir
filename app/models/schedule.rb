@@ -25,4 +25,12 @@ class Schedule < ActiveRecord::Base
   belongs_to :user
   has_many :notes, as: :noteable, dependent: :destroy
   has_many :reminders, dependent: :destroy
+
+  def move(date)
+    self.update_attribute(
+      :scheduled_at, self.scheduled_at.change(
+        year: date.year, month: date.month, day: date.day
+      )
+    ) if date
+  end
 end

@@ -17,12 +17,8 @@ module Schedules::Actions
 
   # PUT /schedules/move
   def move
-    if @schedules.present? && @date
-      @schedules.each do |schedule|
-        schedule.update_attribute(:scheduled_at, schedule.scheduled_at.change(
-          year: @date.year, month: @date.month, day: @date.day)
-        )
-      end
+    if @schedules.present?
+      @schedules.each { |s| s.move(@date) }
       redirect_to :back
     else
       head :ok
@@ -34,7 +30,6 @@ module Schedules::Actions
   # GET /schedules/pending
   def pending
     @schedules = @schedules.pending.group_by { |s| s.scheduled_at.to_date }
-
     render layout: 'application'
   end
 
