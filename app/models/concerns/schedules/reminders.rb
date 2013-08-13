@@ -35,8 +35,10 @@ module Schedules::Reminders
   end
 
   def update_reminder
-    if self.scheduled_at_changed?
-      self.reminders.each { |r| r.update_attributes(remind_at: (self.scheduled_at - delay)) }
+    self.reminders.each do |reminder|
+      reminder.update_attributes(
+        remind_at: (self.scheduled_at - delay), scheduled: false, notified: false
+      ) if self.scheduled_at_changed?
     end
   end
 
