@@ -4,10 +4,11 @@
 <% if @loans.present? %>
   <%= form_tag nil, method: :post, data: { action: tag_taggings_path('tag_id', action_name: action_name),
     remote: true, form_container: true } do %>
-    <table class="table table-condensed table-hover" data-endless-container="true">
+    <table class="table table-condensed" data-endless-container="true">
       <thead>
         <tr>
           <th></th>
+          <th><%= Schedule.model_name.human(count: 1) %></th>
           <th><%= Loan.human_attribute_name('client_id') %></th>
           <th><%= Loan.human_attribute_name('progress') %></th>
           <th><%= Payment.human_attribute_name('expired_at') %></th>

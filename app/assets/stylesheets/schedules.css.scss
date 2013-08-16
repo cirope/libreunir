@@ -28,13 +28,10 @@ input[type="checkbox"].margin-less {
   table { font-size: 0.7em; }
 
   & .has_event > a {
-    color: #c09853;
     background-color: #fcf8E3;
     border: 1px solid #fbeed5;
 
-    &:hover {
-      color: #fff;
-    }
+    &:hover { color: #fff; }
   }
 }
 

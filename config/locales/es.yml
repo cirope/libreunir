@@ -6,6 +6,7 @@
       mini_long: "%d de %B"
       long: "%d de %B de %Y"
       minimal: "%Y-%m-%d"
+      mini_short: "%d %b"
 
     day_names:
       - domingo

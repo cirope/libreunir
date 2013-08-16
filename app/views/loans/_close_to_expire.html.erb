@@ -1,5 +1,6 @@
-<tr data-object-id="<%= loan.to_param %>" <%== 'class="warning"' if loan.is_scheduled?(current_user) %>>
+<tr data-object-id="<%= loan.to_param %>" <%== 'class="warning"' if loan.closest_schedule %>>
   <td><%= check_box_tag "taggable_ids[]", loan.id, nil, { id: nil } %></td>
+  <td><%= show_schedule(loan) %></td>
   <td><%== loan_category(loan) %> <%= loan.client %></td>
   <td><%= loan_progress(loan) %></td>
   <td><%= l loan.next_payment_expire_at.to_date if loan.next_payment_expire_at %></td>

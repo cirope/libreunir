@@ -67,3 +67,13 @@ div[data-tags-new] {
     }
   }
 }
+
+.ene, .abr, .jul, .oct {
+  > a { color: #ffc40d !important; }
+}
+.feb, .may, .ago, .nov {
+  > a { color: #9d261d !important; }
+}
+.mar, .jun, .sep, .dic {
+  > a { color: #049cdb !important; }
+}

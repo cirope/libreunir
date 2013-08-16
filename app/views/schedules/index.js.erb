@@ -16,7 +16,7 @@ $('[data-calendar-month]').datepicker({
       var included = $.inArray($.datepicker.formatDate('yy-mm-dd', date), days) != -1;
       var can_read = (date >= today || included) ? true : false;
 
-      return [ can_read, included ? 'has_event' : '' ]
+      return [ can_read, included ? "has_event " + $.datepicker.formatDate('M', date).toLowerCase() : '' ]
     },
     onSelect: function(date, obj) {
       Turbolinks.visit('/schedules/' + date);

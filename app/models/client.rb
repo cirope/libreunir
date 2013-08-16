@@ -16,8 +16,4 @@ class Client < ActiveRecord::Base
   def to_s
     [self.lastname, self.name].compact.join(', ')
   end
-
-  def is_scheduled?
-    self.schedules.present?
-  end
 end

@@ -59,4 +59,14 @@ module LoansHelper
   def show_delayed_at(loan)
     t('datetime.distance_in_words.x_days', count: (Date.today - loan.delayed_at).to_i) rescue ''
   end
+
+  def show_schedule(loan)
+    if schedule = loan.closest_schedule
+      content_tag(:span, class: "#{ t('date.abbr_month_names')[schedule.scheduled_at.month]}") do
+        link_to( (l schedule.scheduled_at.to_date, format: :mini_short),
+          schedules_path(date: (l schedule.scheduled_at.to_date, format: :minimal))
+        )
+      end
+    end
+  end
 end
