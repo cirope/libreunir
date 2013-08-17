@@ -7,7 +7,7 @@ module Loans::Scopes
 
   module ClassMethods
     def policy
-      where('days_overdue_average <= ?', 7)
+      where('canceled_at IS NULL AND days_overdue_average <= ?', 7)
     end
 
     def expired

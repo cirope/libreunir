@@ -31,7 +31,7 @@ module Parser
         attributes.merge!(address: attrs[:address])
       end
 
-      save_instance(client, ::Client, attributes)
+      save_instance(nil, ::Client, attributes)
     end
 
     def client_phones(row, client)

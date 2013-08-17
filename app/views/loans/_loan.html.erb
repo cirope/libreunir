@@ -12,12 +12,14 @@
     <dd><%= number_to_currency loan.payment %></dd>
     <dt><%= Loan.human_attribute_name('payments_count') %></dt>
     <dd><%= loan.payments_count %></dd>
+    <% unless loan.canceled_at %>
     <dt><%= Loan.human_attribute_name('expired_payments_count') %></dt>
     <dd><%= loan.expired_payments_count %></dd>
     <dt><%= Loan.human_attribute_name('payments_to_expire_count') %></dt>
     <dd><%= loan.payments_to_expire_count %></dd>
     <dt><%= Loan.human_attribute_name('debt_percentage') %></dt>
     <dd><%= show_debt_percentage(loan) %></dd>
+    <% end %>
     <dt><%= Client.human_attribute_name('address') %></dt>
     <dd><%= loan.client_address.present? ? loan.client_address : '-' %></dd>
   </dl>
