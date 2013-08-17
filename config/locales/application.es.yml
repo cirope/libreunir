@@ -65,8 +65,11 @@
       expired_title: 'Listado de préstamos morosos'
       close_to_expire: 'Renovación'
       close_to_expire_title: 'Listado de préstamos por renovación'
+      not_renewed: 'No renovados'
+      not_renewed_title: 'Listado de préstamos no renovados'
       expired_summary: 'Mora'
       close_to_expire_summary: 'Renovación'
+      not_renewed_summary: 'No renovados'
       empty_index:
         html: 'No se encontraron préstamos'
     notes:

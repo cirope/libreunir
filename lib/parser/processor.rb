@@ -29,11 +29,5 @@ module Parser
         "#{File.expand_path(PROCESSED_PATH)}/#{@current_date}/#{File.basename(path).downcase}"
       )
     end
-
-    def cleanup(klass)
-      klass.where('updated_at < :date', date: Time.now.midnight).find_each do |o|
-        o.without_versioning :destroy
-      end
-    end
   end
 end

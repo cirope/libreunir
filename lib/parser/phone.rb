@@ -7,19 +7,19 @@ module Parser
       'PERS' => 'Personal'
     }
 
-    def initialize(row, client)
-      @row = row
+    def initialize(phones, client)
+      @phones = phones
       @client = client
-      @phones = client.phones.pluck('phone')
+      @db_phones = client.phones.pluck('phone')
     end
 
     def parse
       phones = extract_phones
 
-      phones.delete_if { |p| p[:phone].blank? }
-      phones.each { |p| create_phone(p) unless @phones.include?(p[:phone]) }
+      phones.delete_if { |p| p[:phone].blank? || p[:phone].gsub('-', ' ').blank? }
+      phones.each { |p| create_phone(p) unless @db_phones.include?(p[:phone]) }
 
-      (@phones - phones.map { |p| p[:phone] }).each { |p| destroy_phone(p) }
+      (@db_phones - phones.map { |p| p[:phone] }).each { |p| destroy_phone(p) }
     end
 
     private
@@ -27,20 +27,20 @@ module Parser
     def extract_phones
       phones = []
 
-      [4, 8, 9, 10, 11].each { |idx| phones << { phone: @row[idx] } }
+      [:tel1, :tel2, :tel3, :tel4, :tel5].each { |key| phones << { phone: @phones[key] } }
 
-      phones << extract_phone([12, 13], 14)
-      phones << extract_phone([15], 14)
-      phones << extract_phone([16, 17], 18)
-      phones << extract_phone([19], 18)
+      phones << extract_phone([:cel1_code, :cel1], :cel1_com)
+      phones << extract_phone([:cel1_radio], :cel1_com)
+      phones << extract_phone([:cel2_code, :cel2], :cel2_com)
+      phones << extract_phone([:cel2_radio], :cel2_com)
 
       phones
     end
 
     def extract_phone(phone_cols, carrier_col)
       {
-        phone: phone_cols.map { |col| @row[col] }.reject(&:blank?).join(' '),
-        carrier: CARRIER[@row[carrier_col]]
+        phone: phone_cols.map { |col| @phones[col] }.reject(&:blank?).join(' '),
+        carrier: CARRIER[@phones[carrier_col]]
       }
     end
 

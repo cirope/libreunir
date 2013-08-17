@@ -32,6 +32,15 @@ class LoansController < ApplicationController
     end
   end
 
+  def not_renewed
+    @title = t 'view.loans.not_renewed_title'
+
+    respond_to do |format|
+      format.html # not_renewed.html.erb
+      format.js { render 'index' }
+    end
+  end
+
   private
   
   def load_resources

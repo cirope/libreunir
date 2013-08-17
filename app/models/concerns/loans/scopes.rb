@@ -7,19 +7,27 @@ module Loans::Scopes
 
   module ClassMethods
     def policy
-      where("#{table_name}.days_overdue_average <= ?", 7)
+      where('canceled_at IS NULL AND days_overdue_average <= ?', 7)
     end
 
     def expired
-      where("#{table_name}.expired_payments_count > ?", 0)
+      where('expired_payments_count > ?', 0)
+    end
+
+    def canceled
+      where.not(canceled_at: nil)
     end
 
     def sorted_by_total_debt
-      order("#{table_name}.total_debt DESC")
+      order('total_debt DESC')
     end
 
     def sorted_by_progress
-      order("#{table_name}.progress DESC")
+      order('progress DESC')
+    end
+
+    def sorted_by_canceled_at
+      order('canceled_at DESC')
     end
 
     def find_by_filter(filter)

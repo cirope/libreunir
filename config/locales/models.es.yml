@@ -50,9 +50,10 @@
         phones: 'Teléfonos'
         address: 'Dirección'
       loan:
-        approved_at: 'Fecha de aprovación'
+        approved_at: 'Aprovación'
+        canceled_at: 'Cancelado'
+        capital: 'Monto'
         debt_percentage: 'Porcentaje de deuda'
-        capital: 'Capital'
         delayed_at: 'Atraso'
         expired_payments_count: 'Pagos atrasados'
         last_comments: 'Últimos comentarios'

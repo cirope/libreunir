@@ -1,8 +1,10 @@
 module Summaries::Summary
+  include ActiveSupport::NumberHelper
+
   LIMIT = 5
  
   def self.classes
-    [Summaries::Expired, Summaries::CloseToExpire]
+    [Summaries::Expired, Summaries::CloseToExpire, Summaries::NotRenewed]
   end
 
   def headers
@@ -31,7 +33,7 @@ module Summaries::Summary
   end
 
   def current_loans
-    (filter ? loans.find_by_filter(filter) : loans).joins(:client).filtered_list(query)
+    @current_loans ||= (filter ? loans.find_by_filter(filter) : loans).joins(:client).filtered_list(query)
   end
 
   def loans_sorted
@@ -39,7 +41,7 @@ module Summaries::Summary
   end
 
   def loans_count
-    current_loans.count
+    @current_loans_count ||= current_loans.count
   end
 
   def loans_summary

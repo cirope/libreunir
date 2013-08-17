@@ -1,4 +1,4 @@
-class Summaries::CloseToExpire
+class Summaries::NotRenewed
   include Summaries::Summary
 
   attr_reader :current_user, :filter, :query
@@ -10,24 +10,24 @@ class Summaries::CloseToExpire
   end
 
   def action
-    :close_to_expire
+    :not_renewed
   end
 
   def value_formatted(value)
-    value
+    number_to_percentage value, precision: 0
   end
 
   private
 
   def sorted(loans)
-    loans.sorted_by_progress
+    loans.sorted_by_canceled_at
   end
 
   def loans
-    @current_user.loans.policy
+    @current_user.loans.canceled
   end
 
   def value(loans)
-    loans.where('progress >= 75').count
+    ((loans.count * 100) / loans_count).to_f rescue 0
   end 
 end

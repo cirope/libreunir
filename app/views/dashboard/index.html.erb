@@ -19,7 +19,7 @@
                 <td><%= show_filter(column[:filter]) %></td>
                 <td>
                   <%= link_to_loans(
-                    summary.action, column[:filter], column[:value], summary.formatter
+                    summary.action, column[:filter], column[:value], summary.value_formatted(column[:value])
                   ) %>
                 </td>
                 <td><%= column[:amount] %></td>

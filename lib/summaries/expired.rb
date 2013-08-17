@@ -13,8 +13,8 @@ class Summaries::Expired
     :expired
   end
 
-  def formatter
-    :currency
+  def value_formatted(value)
+    number_to_currency value
   end
 
   private

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130716153129) do
+ActiveRecord::Schema.define(version: 20130812125018) do
 
   create_table "branches", force: true do |t|
     t.integer  "branch_id",                null: false
@@ -69,9 +69,11 @@ ActiveRecord::Schema.define(version: 20130716153129) do
     t.integer  "lock_version",                                      default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.date     "canceled_at"
   end
 
   add_index "loans", ["branch_id"], name: "index_loans_on_branch_id", using: :btree
+  add_index "loans", ["canceled_at"], name: "index_loans_on_canceled_at", using: :btree
   add_index "loans", ["client_id"], name: "index_loans_on_client_id", using: :btree
   add_index "loans", ["days_overdue_average"], name: "index_loans_on_days_overdue_average", using: :btree
   add_index "loans", ["delayed_at"], name: "index_loans_on_delayed_at", using: :btree
