@@ -4,18 +4,17 @@ require_relative '../parser/base'
 
 namespace :parser do
   desc 'Parse CSV files from SFTP'
-  #task run: ['importer:work', :process]
-  task run: [:process]
+  task run: ['importer:work', :process]
 
   files = [
-    #{ model: :branch,  name: 'sucursal.txt'  },
-    #{ model: :zone,    name: 'zona.txt'      },
-    #{ model: :user,    name: 'usuario.txt'   },
-    #{ model: :order,   name: 'solicitud.txt' },
-    #{ model: :loan,    name: 'prestamo.txt'  },
-    #{ model: :client,  name: 'clientes.txt'  },
-    #{ model: :payment, name: 'cuota.txt'     },
-    #{ model: :product, name: 'producto.txt'  }
+    { model: :branch,  name: 'sucursal.txt'  },
+    { model: :zone,    name: 'zona.txt'      },
+    { model: :user,    name: 'usuario.txt'   },
+    { model: :order,   name: 'solicitud.txt' },
+    { model: :loan,    name: 'prestamo.txt'  },
+    { model: :client,  name: 'clientes.txt'  },
+    { model: :payment, name: 'cuota.txt'     },
+    { model: :product, name: 'producto.txt'  }
     { model: :not_renewed, name: 'clientessinrenovar.txt' }
   ]
 
