@@ -14,7 +14,7 @@ namespace :parser do
     { model: :loan,    name: 'prestamo.txt'  },
     { model: :client,  name: 'clientes.txt'  },
     { model: :payment, name: 'cuota.txt'     },
-    { model: :product, name: 'producto.txt'  }
+    { model: :product, name: 'producto.txt'  },
     { model: :not_renewed, name: 'clientessinrenovar.txt' }
   ]
 
