@@ -1,4 +1,4 @@
-<tr data-object-id="<%= loan.to_param %>" <%== 'class="warning"' if loan.is_scheduled?(current_user) %>>
+<tr data-object-id="<%= loan.to_param %>" <%== 'class="warning"' if loan.closest_schedule %>>
   <td><%= check_box_tag "taggable_ids[]", loan.id, false, id: nil %></td>
   <td><%== loan_category(loan) %> <%= loan.client %></td>
   <td><%= show_phone(loan.phones.first) %></td>
