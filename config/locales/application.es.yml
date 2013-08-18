@@ -60,6 +60,8 @@
       index_title: 'Tablero'
       greetings:
         html: 'Hola %{user}<small>, este es tu resumen de préstamos semanales</small>'
+      empty_index:
+        html: 'No se encontraron préstamos'
     loans:
       expired: 'Morosos'
       expired_title: 'Listado de préstamos morosos'

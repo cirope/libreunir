@@ -2,33 +2,53 @@
   <div class="page-header">
     <h1><%= t('view.dashboard.greetings.html', user: current_user.name) %></h1>
   </div>
-  <% @summaries.each do |summary| %>
-    <div class="row-fluid">
-      <div class="span12">
-        <table class="table table-condensed table-striped">
-          <thead>
-            <tr>
-              <% summary.headers.each do |header| %>
-                <th><%= header %></th>
-              <% end %>
-            </tr>
-          </thead>
-          <tbody>
-            <% summary.rows.each do |column| %>
-              <tr>
-                <td><%= show_filter(column[:filter]) %></td>
-                <td>
-                  <%= link_to_loans(
-                    summary.action, column[:filter], column[:value], summary.value_formatted(column[:value])
-                  ) %>
-                </td>
-                <td><%= column[:amount] %></td>
-              </tr>
+  <div class="row-fluid">
+    <div class="span12">
+      <ul class="nav nav-tabs">
+        <% @summaries.each_with_index do |summary, idx| %>
+          <li <%== 'class="active"' if idx == 0 %>>
+            <%= link_to(
+              t("view.loans.#{summary.action}"),
+              "##{summary.action}", data: { toggle: 'tab' }
+            ) %>
+          </li>
+        <% end %>
+      </ul>
+      <div class="tab-content">
+        <% @summaries.each_with_index do |summary, idx| %>
+          <div class="tab-pane <%= 'active' if idx == 0 %>" id="<%= summary.action %>">
+            <% if summary.rows.present? %>
+              <table class="table table-condensed table-striped">
+                <thead>
+                  <tr>
+                    <% summary.headers.each do |header| %>
+                      <th><%= header %></th>
+                    <% end %>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% summary.rows.each do |column| %>
+                    <tr>
+                      <td><%= show_filter(column[:filter]) %></td>
+                      <td>
+                        <%= link_to_loans(
+                          summary.action, column[:filter],
+                          column[:value],
+                          summary.value_formatted(column[:value])
+                        ) %>
+                      </td>
+                      <td><%= column[:amount] %></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            <% else %>
+              <%= render 'shared/empty_index' %>
             <% end %>
-          </tbody>
-        </table>
+          </div>
+        <% end %>
       </div>
     </div>
-  <% end %>
+  </div>
 </div>
 <div class="form-actions"></div>
