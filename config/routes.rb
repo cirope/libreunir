@@ -46,6 +46,7 @@ Libreunir::Application.routes.draw do
       get 'not_renewed', to: 'loans#not_renewed', as: 'not_renewed'
     end
 
+    get '/schedules(/:date)', to: 'schedules#index', as: 'schedules', constraints: { date: /\d{4}-\d{2}-\d{2}/ }
     resources :schedules, only: [:new, :create, :edit, :update]
     resources :taggings, only: [:destroy]
   end

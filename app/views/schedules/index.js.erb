@@ -19,11 +19,13 @@ $('[data-calendar-month]').datepicker({
       return [ can_read, included ? "has_event " + $.datepicker.formatDate('M', date).toLowerCase() : '' ]
     },
     onSelect: function(date, obj) {
-      Turbolinks.visit('/schedules/' + date);
+      var url = window.location.pathname;
+      Turbolinks.visit(url.replace(url.match(/\d{4}-\d{2}-\d{2}/), date));
     },
     onChangeMonthYear: function(year, month, obj) {
-      var date = new Date(year, month-1, obj.currentDay);
-      Turbolinks.visit('/schedules/' + $.datepicker.formatDate('yy-mm-dd', date));
+      var url = window.location.pathname;
+      var date = $.datepicker.formatDate('yy-mm-dd', new Date(year, month-1, obj.currentDay));
+      Turbolinks.visit(url.replace(url.match(/\d{4}-\d{2}-\d{2}/), date));
     }
 });
 

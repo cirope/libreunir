@@ -63,8 +63,8 @@ module LoansHelper
   def show_schedule(loan)
     if schedule = loan.closest_schedule
       content_tag(:span, class: "#{ t('date.abbr_month_names')[schedule.scheduled_at.month]}") do
-        link_to( (l schedule.scheduled_at.to_date, format: :mini_short),
-          schedules_path(date: (l schedule.scheduled_at.to_date, format: :minimal))
+        link_to((l schedule.scheduled_at.to_date, format: :mini_short),
+          loan_schedules_path(loan, (l schedule.scheduled_at.to_date, format: :minimal))
         )
       end
     end

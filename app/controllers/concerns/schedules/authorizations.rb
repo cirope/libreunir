@@ -3,7 +3,8 @@ module Schedules::Authorizations
 
   included do
     before_action :authenticate_user!
-    before_action :load_date, only: [:index, :new, :move, :calendar, :pending]
+    before_action :load_date, only: [:index, :move]
+    before_action :load_today, only: [:new, :calendar]
 
     check_authorization
     load_resource :loan, shallow: true
@@ -26,7 +27,15 @@ module Schedules::Authorizations
   end
 
   def load_date
-    @date = Timeliness.parse(params[:date], zone: :local) || Time.zone.now
+    if params[:date].present?
+      @date = Timeliness.parse(params[:date], zone: :local)
+    else
+      redirect_to schedules_url(Date.today)
+    end
+  end
+
+  def load_today
+    @date = Timeliness.parse(params[:date], zone: :local) || Time.now
   end
 
   def load_schedules

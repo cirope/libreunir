@@ -19,9 +19,13 @@
             new_schedule_path(date: @date.to_date),
             class: 'btn btn-primary', data: { remote: true }
           ) %>
+          <span class="muted">|</span>
+          <%= link_to t('label.back'), :back %>
         </p>
       <% end %>
     </div>
+  <% else %>
+    <%= link_to t('label.back'), :back %>
   <% end %>
 <% else %>
   <% if @date.end_of_day.future? %>

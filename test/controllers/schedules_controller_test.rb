@@ -9,7 +9,7 @@ class SchedulesControllerTest < ActionController::TestCase
   end
 
   test 'should get index' do
-    get :index
+    get :index, date: Date.today
     assert_response :success
     assert_not_nil assigns(:schedules)
     assert_not_nil assigns(:date)
