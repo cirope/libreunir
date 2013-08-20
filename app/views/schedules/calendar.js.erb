@@ -11,6 +11,7 @@ $('[data-schedule-modal]').html(
 $(document).ready(function() {
   $('[data-calendar-placeholder]').datepicker({
     dateFormat: 'yy-mm-dd',
+    defaultDate: '<%= l @date.to_date, format: :minimal %>',
     minDate: '<%= l @date.to_date, format: :minimal %>',
     onSelect: function(date, obj) {
       action = '/schedules/move/' + date;

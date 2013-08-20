@@ -36,8 +36,6 @@ class SchedulesController < ApplicationController
     if @schedule.save
       redirect_to :back
     end
-  rescue ActionController::RedirectBackError
-    redirect_to root_url
   end
 
   # PATCH /schedules/1
@@ -47,7 +45,7 @@ class SchedulesController < ApplicationController
     if @schedule.update(schedule_params)
       redirect_to :back
     end
-  rescue ActiveRecord::StaleObjectError, ActionController::RedirectBackError
+  rescue ActiveRecord::StaleObjectError
     redirect_to edit_schedule_url(@schedule), alert: t('view.schedules.stale_object_error')
   end
 
@@ -55,8 +53,5 @@ class SchedulesController < ApplicationController
   def destroy
     @schedule.destroy
     redirect_to :back, status: 303
-
-  rescue ActionController::RedirectBackError
-    redirect_to root_url
   end
 end

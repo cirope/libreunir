@@ -64,6 +64,12 @@ class LoanTest < ActiveSupport::TestCase
     end
   end
 
+  test 'canceled' do
+    assert_difference 'Loan.canceled.count' do
+      Fabricate(:loan, canceled_at: 3.day.ago)
+    end
+  end
+
   test 'magick search' do
     5.times {
       Fabricate(:loan,

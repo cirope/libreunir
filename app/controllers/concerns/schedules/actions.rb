@@ -17,14 +17,13 @@ module Schedules::Actions
 
   # PUT /schedules/move
   def move
-    if @schedules.present?
+    if @schedules.present? && @date && @date.end_of_day.future?
       @schedules.each { |s| s.move(@date) }
+
       redirect_to :back
     else
       head :ok
     end
-  rescue ActionController::RedirectBackError
-    redirect_to root_url
   end
 
   # GET /schedules/pending

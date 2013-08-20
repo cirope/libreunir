@@ -31,6 +31,6 @@ class Schedule < ActiveRecord::Base
       :scheduled_at, self.scheduled_at.change(
         year: date.year, month: date.month, day: date.day
       )
-    ) if date
+    )
   end
 end

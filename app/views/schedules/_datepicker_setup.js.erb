@@ -2,7 +2,6 @@ $('[data-datetime-picker-id=<%= (@schedulable || @schedule).to_param %>]').datet
   altField: '#datetime-picker-id-<%= (@schedulable || @schedule).to_param %>',
   showButtonPanel: false,
   altFieldTimeOnly: false,
-  minDateTime: new Date('<%= l 10.minutes.from_now, format: :datetime %>')
-}).datetimepicker(
-  'setDate', '<%= l (@date || @schedule.scheduled_at), format: :minimal %>'
-);
+  defaultDate: '<%= l (@date || @schedule.scheduled_at), format: :minimal %>',
+  minDateTime: new Date('<%= l 20.minutes.from_now, format: :datetime %>')
+});

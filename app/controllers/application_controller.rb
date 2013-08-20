@@ -11,6 +11,16 @@ class ApplicationController < ActionController::Base
     current_user.try(:id)
   end
 
+  rescue_from Exception do |exception|
+    begin
+      case exception
+        when ActionController::RedirectBackError then redirect_to root_url
+      end
+    rescue => ex
+      log_exception(ex)
+    end
+  end
+
   private
 
   # Overwriting the sign_out redirect path method
@@ -20,5 +30,9 @@ class ApplicationController < ActionController::Base
 
   def pending_schedules_count
     current_user.schedules.pending.count
+  end
+
+  def log_exception(exception)
+    logger.error(([exception, ''] + exception.backtrace).join("\n"))
   end
 end

@@ -144,4 +144,20 @@ class ScheduleTest < ActiveSupport::TestCase
       Reminder.send_summaries
     end
   end
+
+  test 'move' do
+    date = 5.days.from_now
+    @schedule.move(date)
+
+    assert_equal date.to_date, @schedule.reload.scheduled_at.to_date
+  end
+
+  test 'pending' do
+    user = Fabricate(:user)
+    3.times do
+      Fabricate(:schedule, user_id: user.id).update_column(:scheduled_at, 2.days.ago)
+    end
+
+    assert_equal 3, user.schedules.pending.count
+  end
 end

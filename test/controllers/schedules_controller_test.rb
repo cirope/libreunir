@@ -9,21 +9,28 @@ class SchedulesControllerTest < ActionController::TestCase
   end
 
   test 'should get index' do
-    get :index, date: Date.today
-    assert_response :success
-    assert_not_nil assigns(:schedules)
-    assert_not_nil assigns(:date)
-    assert_not_nil assigns(:days)
-    assert_select '#unexpected_error', false
-    assert_template 'schedules/index'
+    get :index
+    assert_redirected_to schedules_url(date: Date.today)
   end
 
   test 'should get schedules with date' do
     xhr :get, :index, date: @schedule.scheduled_at.to_date.to_s(:db), format: :js
 
     assert_response :success
-    assert_not_nil assigns(:schedules)
-    assert_not_nil assigns(:date)
+    assert_equal assigns(:date).to_date, @schedule.scheduled_at.to_date
+    assert_equal 1, assigns(:schedules).size
+    assert_select '#unexpected_error', false
+    assert_template 'schedules/index'
+    assert_equal :js, @request.format.symbol
+  end
+
+  test 'should get schedules filtered by loan and date' do
+    xhr :get, :index,
+      loan_id: @schedule.schedulable.id,
+      date: @schedule.scheduled_at.to_date.to_s(:db), format: :js
+
+    assert_response :success
+    assert_not_nil assigns(:loan)
     assert_equal assigns(:date).to_date, @schedule.scheduled_at.to_date
     assert_equal 1, assigns(:schedules).size
     assert_select '#unexpected_error', false
@@ -129,13 +136,16 @@ class SchedulesControllerTest < ActionController::TestCase
     assert_equal :js, @request.format.symbol
   end
 
-  test 'should move the schedules to another date' do
-    date = 3.days.from_now
+  test 'should move the schedules to future' do
+    date = 3.days.ago
     schedule_ids = []
     3.times { schedule_ids << Fabricate(:schedule, user_id: @user.id).id }
 
     xhr :put, :move, schedule_ids: schedule_ids, date: date.to_s(:db), format: :js
+    assert_response :success
 
+    date = 3.days.from_now
+    xhr :put, :move, schedule_ids: schedule_ids, date: date.to_s(:db), format: :js
     assert_response :redirect
     assert_equal 3, assigns(:schedules).count
     assigns(:schedules).each do |s|

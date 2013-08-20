@@ -27,6 +27,16 @@ class LoansControllerTest < ActionController::TestCase
     assert_template 'loans/_close_to_expire'
   end
 
+  test 'should get not renewed' do
+    fabricate_canceled
+
+    xhr :get, :not_renewed, format: :js
+
+    assert_response :success
+    assert_equal 3, assigns(:loans).size
+    assert_template 'loans/_not_renewed'
+  end
+
   test 'should get show' do
     loan = Fabricate(:loan, user_id: @user.id)
 
@@ -51,5 +61,11 @@ class LoansControllerTest < ActionController::TestCase
     3.times { Fabricate(:loan, user_id: @user.id) }
 
     Fabricate(:loan, user_id: @user.id, expired_payments_count: 1, progress: 8, days_overdue_average: 8)
+  end
+
+  def fabricate_canceled
+    3.times { Fabricate(:loan, user_id: @user.id, canceled_at: 3.days.ago.to_date) }
+
+    Fabricate(:loan, user_id: @user.id)
   end
 end

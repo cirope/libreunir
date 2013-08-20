@@ -35,7 +35,7 @@ module Schedules::Authorizations
   end
 
   def load_today
-    @date = Timeliness.parse(params[:date], zone: :local) || Time.now
+    @date = Timeliness.parse(params[:date], zone: :local) || Time.zone.now
   end
 
   def load_schedules

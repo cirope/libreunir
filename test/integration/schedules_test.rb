@@ -137,4 +137,40 @@ class SchedulesTest < ActionDispatch::IntegrationTest
     end
     assert_equal schedule_attrs[:description], schedule.reload.description
   end
+
+  test 'should move schedules' do
+    date = 5.days.from_now
+    3.times { Fabricate(:schedule, user_id: @user.id, scheduled_at: 1.hour.from_now) }
+    login(user: @user)
+
+    visit schedules_path
+
+    within '.navtags' do
+      click_link I18n.t('label.select')
+      assert page.has_css?('li.open')
+
+      click_link I18n.t('label.all')
+    end
+
+    click_link I18n.t('label.actions')
+
+    assert_no_difference 'Schedule.count' do
+      assert page.has_css?('li.open')
+
+      click_link I18n.t('label.move')
+
+      assert page.has_css?('#schedule_modal')
+      assert find('#schedule_modal').visible?
+
+      within '#schedule_modal' do
+        click_link(date.day)
+      end
+
+      assert page.has_no_css?('#schedule_modal')
+
+      within 'td.has_event' do
+        assert page.has_content?(date.day)
+      end
+    end
+  end
 end
