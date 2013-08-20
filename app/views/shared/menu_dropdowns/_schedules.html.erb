@@ -1,16 +1,24 @@
-<li data-schedules-pending-count="true" class="dropdown<%== ' active' if controller_name == 'schedules' %>">
-  <% if pending_schedules_count > 0 %>
+<li data-schedules-pending-count="true" class="dropdown <%== 'active' if controller_name == 'schedules' %>">
+  <% if pending_schedules_past_count > 0 %>
     <%= link_to '#', class: 'dropdown-toggle', data: { toggle: 'dropdown' } do %>
       <%= t('menu.schedules') %>
-      <%= content_tag(:span, pending_schedules_count, class: 'badge badge-important') %>
+      <%= content_tag(:span, pending_schedules_past_count, class: 'badge badge-important') %>
       <b class="caret"></b>
     <% end %>
     <ul class="dropdown-menu">
-      <li><%= link_to t('view.schedules.today'), schedules_path %></li>
       <li>
-        <%= link_to pending_schedules_path do %>
-          <%= t('view.schedules.pending') %>
-          <%= content_tag(:span, pending_schedules_count, class: 'badge badge-important') %>
+        <%= link_to t('view.schedules.today'), schedules_path %>
+      </li>
+      <li>
+        <%= link_to pending_schedules_path(:past) do %>
+          <%= t('view.schedules.pending.past') %>
+          <%= content_tag(:span, pending_schedules_past_count, class: 'badge badge-important') %>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to pending_schedules_path(:future) do %>
+          <%= t('view.schedules.pending.future') %>
+          <%= content_tag(:span, pending_schedules_future_count, class: 'badge badge-success') %>
         <% end %>
       </li>
     </ul>

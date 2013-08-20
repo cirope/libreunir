@@ -3,7 +3,6 @@ module Schedules::Done
 
   included do
     scope :done, -> { where(done: true) }
-    scope :pending, -> { where(done: false) }
   end
 
   def mark_as_done

@@ -26,10 +26,14 @@ module Schedules::Actions
     end
   end
 
-  # GET /schedules/pending
+  # GET /schedules/pending/(:time)
   def pending
-    @schedules = @schedules.pending.group_by { |s| s.scheduled_at.to_date }
-    render layout: 'application'
+    if ['past', 'future'].include?(params[:time])
+      @schedules = @schedules.send(params[:time]).group_by { |s| s.scheduled_at.to_date }
+      render 'pending', layout: 'application'
+    else
+      head :ok
+    end
   end
 
   private

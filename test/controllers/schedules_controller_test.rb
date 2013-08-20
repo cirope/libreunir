@@ -155,15 +155,26 @@ class SchedulesControllerTest < ActionController::TestCase
     assert_equal :js, @request.format.symbol
   end
 
-  test 'should get schedules pending' do
+  test 'should get schedules pending past' do
     3.times {
       Fabricate(:schedule, user_id: @user.id).update_column(:scheduled_at, 1.day.ago)
     }
 
-    get :pending
+    xhr :get, :pending, time: 'past', format: :js
     assert_response :success
-    assert_not_nil assigns(:schedules)
     assert_equal 3, assigns(:schedules).values.first.count
+    assert_select '#unexpected_error', false
+    assert_template 'schedules/pending'
+  end
+
+  test 'should get schedules pending future' do
+    3.times {
+      Fabricate(:schedule, user_id: @user.id, scheduled_at: 1.days.from_now)
+    }
+
+    xhr :get, :pending, time: 'future', format: :js
+    assert_response :success
+    assert_equal 4, assigns(:schedules).values.first.count
     assert_select '#unexpected_error', false
     assert_template 'schedules/pending'
   end

@@ -152,12 +152,21 @@ class ScheduleTest < ActiveSupport::TestCase
     assert_equal date.to_date, @schedule.reload.scheduled_at.to_date
   end
 
-  test 'pending' do
+  test 'pending past' do
     user = Fabricate(:user)
     3.times do
       Fabricate(:schedule, user_id: user.id).update_column(:scheduled_at, 2.days.ago)
     end
 
-    assert_equal 3, user.schedules.pending.count
+    assert_equal 3, user.schedules.past.count
+  end
+
+  test 'pending future' do
+    user = Fabricate(:user)
+    3.times do
+      Fabricate(:schedule, user_id: user.id, scheduled_at: 2.days.from_now)
+    end
+
+    assert_equal 3, user.schedules.future.count
   end
 end

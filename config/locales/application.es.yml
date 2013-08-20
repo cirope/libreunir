@@ -90,8 +90,10 @@
       empty_schedules: 'No hay ningún evento programado'
       empty_past_schedules: 'No se programaron eventos'
       empty_pending: 'No hay eventos pendientes'
-      today: 'Eventos de hoy'
-      pending: 'Pendientes'
+      today: 'Hoy'
+      pending:
+        past: 'Pasado'
+        future: 'Futuro'
     tags:
       index_title: 'Listado de etiquetas'
       show_title: 'Detalle de etiqueta'
