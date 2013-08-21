@@ -14,6 +14,7 @@ module Parser
         canceled_at: row[25],
         user_id: ::User.where('name ILIKE ?', "%#{row[22]}%").first.try(:id),
         branch_id: ::Branch.where('name ILIKE ?', "%#{row[23]}%").first.try(:id),
+        segment_id: ::Segment.where('short_description ILIKE ?', "%#{row[20]}%").first.try(:id),
         client_id: client.id
       }
 

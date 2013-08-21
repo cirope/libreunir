@@ -69,4 +69,8 @@ module LoansHelper
       end
     end
   end
+
+  def show_client_info(loan)
+    content_tag(:abbr, loan.client, title: loan.segment)
+  end
 end

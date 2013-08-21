@@ -3,7 +3,7 @@
     <button type="button" class="close" data-remove-target="#loan-info-<%= loan.to_param %>">&times;</button>
   <% end %>
 
-  <h4><%= Loan.model_name.human(count: 1) %>  <%= loan %></h4>
+  <h4><%= Loan.model_name.human(count: 1) %>  <%= loan %> - <%= loan.segment %></h4>
 
   <dl class="dl-horizontal">
     <dt><%= Loan.human_attribute_name('capital') %></dt>

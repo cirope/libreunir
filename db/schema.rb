@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130812125018) do
+ActiveRecord::Schema.define(version: 20130821135325) do
 
   create_table "branches", force: true do |t|
     t.integer  "branch_id",                null: false
@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(version: 20130812125018) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.date     "canceled_at"
+    t.integer  "segment_id"
   end
 
   add_index "loans", ["branch_id"], name: "index_loans_on_branch_id", using: :btree
@@ -79,6 +80,7 @@ ActiveRecord::Schema.define(version: 20130812125018) do
   add_index "loans", ["delayed_at"], name: "index_loans_on_delayed_at", using: :btree
   add_index "loans", ["loan_id"], name: "index_loans_on_loan_id", unique: true, using: :btree
   add_index "loans", ["progress"], name: "index_loans_on_progress", using: :btree
+  add_index "loans", ["segment_id"], name: "index_loans_on_segment_id", using: :btree
   add_index "loans", ["total_debt"], name: "index_loans_on_total_debt", using: :btree
   add_index "loans", ["user_id"], name: "index_loans_on_user_id", using: :btree
   add_index "loans", ["zone_id"], name: "index_loans_on_zone_id", using: :btree
@@ -152,6 +154,16 @@ ActiveRecord::Schema.define(version: 20130812125018) do
   add_index "schedules", ["schedulable_id", "schedulable_type"], name: "index_schedules_on_schedulable_id_and_schedulable_type", using: :btree
   add_index "schedules", ["scheduled_at"], name: "index_schedules_on_scheduled_at", using: :btree
   add_index "schedules", ["user_id"], name: "index_schedules_on_user_id", using: :btree
+
+  create_table "segments", force: true do |t|
+    t.string   "segment_id",        null: false
+    t.string   "description"
+    t.string   "short_description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "segments", ["segment_id"], name: "index_segments_on_segment_id", unique: true, using: :btree
 
   create_table "taggings", force: true do |t|
     t.integer  "tag_id",                    null: false
