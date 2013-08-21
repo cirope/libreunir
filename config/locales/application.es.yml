@@ -92,8 +92,8 @@
       empty_pending: 'No hay eventos pendientes'
       today: 'Hoy'
       pending:
-        past: 'Pasado'
-        future: 'Futuro'
+        past: 'Pendientes'
+        future: 'Próximos'
     tags:
       index_title: 'Listado de etiquetas'
       show_title: 'Detalle de etiqueta'
