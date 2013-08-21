@@ -16,6 +16,12 @@ module Schedules::Reminders
     self.new_record? || !self.past? && self.reminders.all?(&:allow_destruction?)
   end
 
+  module ClassMethods
+    def for_tomorrow
+      where(scheduled_at: (Date.tomorrow.at_beginning_of_day..Date.tomorrow.at_end_of_day))
+    end
+  end
+
   private
 
   def build_reminder

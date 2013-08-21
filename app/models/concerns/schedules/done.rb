@@ -5,6 +5,16 @@ module Schedules::Done
     scope :done, -> { where(done: true) }
   end
 
+  module ClassMethods
+    def past
+      where('done IS FALSE AND scheduled_at < ?', Time.now)
+    end
+
+    def future
+      where('done IS FALSE AND scheduled_at > ?', Time.now)
+    end
+  end
+
   def mark_as_done
     self.update_attribute(:done, true) if self.doable?
   end
