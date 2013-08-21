@@ -11,7 +11,7 @@
       <%= link_to schedules_path do %>
         <%= t('view.schedules.today') %>
         <span class="badge badge-warning">
-          <%= current_user.schedules.count %>
+          <%= today_schedules_count %>
         </span>
       <% end %>
     </li>

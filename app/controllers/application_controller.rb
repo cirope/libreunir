@@ -3,7 +3,8 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery
 
-  helper_method :pending_schedules_past_count, :pending_schedules_future_count
+  helper_method :today_schedules_count, :pending_schedules_past_count,
+    :pending_schedules_future_count
 
   after_action -> { expires_now if user_signed_in? }
 
@@ -28,12 +29,16 @@ class ApplicationController < ActionController::Base
     new_user_session_path
   end
 
+  def today_schedules_count
+    @_today_schedules_count ||= current_user.schedules.for_date_of_day(Date.today).count
+  end
+
   def pending_schedules_past_count
-    @pending_past ||= current_user.schedules.past.count
+    @_pending_past ||= current_user.schedules.past.count
   end
 
   def pending_schedules_future_count
-    @pending_future ||= current_user.schedules.future.count
+    @_pending_future ||= current_user.schedules.future.count
   end
 
   def log_exception(exception)
