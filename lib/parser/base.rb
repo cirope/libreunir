@@ -54,7 +54,6 @@ module Parser
       if instance.try(:persisted?)
         instance.without_versioning do
           instance.update_attributes(attributes)
-          instance.touch
         end
       else
         instance = klass.create(attributes)
