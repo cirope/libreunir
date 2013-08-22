@@ -5,7 +5,6 @@ module Parser
       branch = ::Branch.find_by(branch_id: row[1].to_i)
 
       attributes = {
-        name: row[2], 
         username: row[0], 
         file_number: row[6].gsub(/[^0-9]/, ''),
         identification: row[7].gsub(/[^0-9]/, ''), 
@@ -28,7 +27,7 @@ module Parser
       email = "#{options.compact.join('_')}@cordialnegocios.com.ar"
       password = rand(1000000..9000000)
 
-      attributes.merge!(email: email, password: password, password_confirmation: password)
+      attributes.merge!(name: row[2], email: email, password: password, password_confirmation: password)
       user = ::User.create(attributes)
 
       if user.errors.any?
