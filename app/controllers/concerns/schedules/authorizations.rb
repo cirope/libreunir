@@ -10,6 +10,7 @@ module Schedules::Authorizations
     load_resource :loan, shallow: true
 
     before_action :set_schedulable
+    before_action :load_referer, only: [:index]
 
     load_and_authorize_resource through: [:schedulable, :current_user]
 
@@ -24,6 +25,10 @@ module Schedules::Authorizations
 
   def set_schedulable
     @schedulable = @loan
+  end
+
+  def load_referer
+    session[:referer] = request.referer if session[:referer].blank? && @loan
   end
 
   def load_date

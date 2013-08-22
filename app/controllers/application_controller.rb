@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   helper_method :today_schedules_count, :pending_schedules_past_count,
     :pending_schedules_future_count
 
+  before_action :clear_referer
   after_action -> { expires_now if user_signed_in? }
 
   def user_for_paper_trail
@@ -34,14 +35,18 @@ class ApplicationController < ActionController::Base
   end
 
   def pending_schedules_past_count
-    @_pending_past ||= current_user.schedules.past.count
+    @pending_past_count ||= current_user.schedules.past.count
   end
 
   def pending_schedules_future_count
-    @_pending_future ||= current_user.schedules.future.count
+    @pending_future_count ||= current_user.schedules.future.count
   end
 
   def log_exception(exception)
     logger.error(([exception, ''] + exception.backtrace).join("\n"))
+  end
+
+  def clear_referer
+    session.delete(:referer) if controller_name != 'schedules'
   end
 end
