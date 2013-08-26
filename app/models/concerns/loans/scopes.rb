@@ -11,7 +11,7 @@ module Loans::Scopes
     end
 
     def expired
-      where('expired_payments_count > ?', 0)
+      where('canceled_at IS NULL AND expired_payments_count > ?', 0)
     end
 
     def canceled

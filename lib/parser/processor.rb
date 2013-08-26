@@ -29,5 +29,21 @@ module Parser
         "#{File.expand_path(PROCESSED_PATH)}/#{@current_date}/#{File.basename(path).downcase}"
       )
     end
+
+    def cleanup
+      Loan.where('updated_at < :date AND canceled_at IS NULL', date: Time.now.midnight).find_each do |l|
+        l.without_versioning do
+          l.update(
+            total_debt: nil,
+            progress: nil,
+            days_overdue_average: nil,
+            expired_payments_count: nil,
+            payments_to_expire_count: nil,
+            delayed_at: nil,
+            next_payment_expire_at: nil
+          )
+        end
+      end
+    end
   end
 end

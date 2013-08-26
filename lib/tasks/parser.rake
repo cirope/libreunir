@@ -4,7 +4,7 @@ require_relative '../parser/base'
 
 namespace :parser do
   desc 'Parse CSV files from SFTP'
-  task run: ['importer:work', :process]
+  task run: ['importer:work', :process, :cleanup]
 
   files = [
     { model: :segment,  name: 'segmento.txt'  },
@@ -33,5 +33,10 @@ namespace :parser do
 
       @processor.move_processed(path)
     end
+  end
+
+  task cleanup: :environment do
+    Parser::Logger.log "Cleaning loans..."
+    @processor.cleanup
   end
 end
