@@ -31,7 +31,7 @@ module Parser
     end
 
     def cleanup
-      Loan.where('updated_at < :date AND canceled_at IS NULL', date: Time.now.midnight).find_each do |l|
+      ::Loan.where('updated_at < :date AND canceled_at IS NULL', date: Time.now.midnight).find_each do |l|
         l.without_versioning do
           l.update(
             total_debt: nil,
