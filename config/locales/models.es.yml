@@ -109,5 +109,7 @@
           one: 'Perfil'
           other: 'Perfiles'
         remember_me: 'Recordarme'
+        branch: 'Sucursal'
+        parent_id: 'Superior'
         zone:
           name: 'Nombre'
