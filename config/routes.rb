@@ -51,6 +51,7 @@ Libreunir::Application.routes.draw do
     resources :taggings, only: [:destroy]
   end
 
+  get '/switch/:tenant_id', to: 'users#switch', as: 'switch'
   resources :users do
     member do
       get :edit_profile

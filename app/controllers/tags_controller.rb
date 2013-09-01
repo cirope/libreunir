@@ -2,7 +2,7 @@ class TagsController < ApplicationController
   before_action :authenticate_user!
   
   check_authorization
-  load_and_authorize_resource through: :current_user 
+  load_and_authorize_resource through: :selected_user 
 
   layout ->(c) { c.request.xhr? ? false : 'application' }
 

@@ -73,6 +73,11 @@ class UsersController < ApplicationController
     end
   end
 
+  def switch
+    session[:tenant_id] = params[:tenant_id] if params[:tenant_id].present?
+    redirect_to :back
+  end
+
   private
   
   def user_params

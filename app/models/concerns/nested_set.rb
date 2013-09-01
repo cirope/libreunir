@@ -42,6 +42,10 @@ module NestedSet
     self.class.find_by(id: self.parent_id)
   end
 
+  def can_show?(tenant)
+    tenant.path.include?(self.id) if tenant
+  end
+
   private
     def update_self
       update_path(self, self.parent.try(:path))
