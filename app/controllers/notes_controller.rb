@@ -3,10 +3,10 @@ class NotesController < ApplicationController
   
   check_authorization
   load_resource :schedule, shallow: true
-
   before_action :set_noteable
 
   load_and_authorize_resource through: :noteable
+  before_action :load_current_user, only: [:create]
 
   layout ->(c) { c.request.xhr? ? false : 'application' }
 
@@ -25,16 +25,19 @@ class NotesController < ApplicationController
   end
 
   private
+    def set_note
+      @note = Note.find(params[:id])
+    end
 
-  def set_note
-    @note = Note.find(params[:id])
-  end
+    def note_params
+      params.require(:note).permit(:note)
+    end
 
-  def note_params
-    params.require(:note).permit(:note)
-  end
+    def set_noteable
+      @noteable = @schedule
+    end
 
-  def set_noteable
-    @noteable = @schedule
-  end
+    def load_current_user
+      @note.user = current_user
+    end
 end

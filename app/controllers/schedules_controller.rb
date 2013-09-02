@@ -33,18 +33,14 @@ class SchedulesController < ApplicationController
   def create
     @title = t('view.schedules.new_title')
 
-    if @schedule.save
-      redirect_to :back
-    end
+    redirect_to :back if @schedule.save
   end
 
   # PATCH /schedules/1
   def update
     @title = t('view.schedules.edit_title')
 
-    if @schedule.update(schedule_params)
-      redirect_to :back
-    end
+    redirect_to :back if @schedule.update(schedule_params)
   rescue ActiveRecord::StaleObjectError
     redirect_to edit_schedule_url(@schedule), alert: t('view.schedules.stale_object_error')
   end

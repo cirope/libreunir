@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery
 
-  helper_method :selected_user
+  helper_method :selected_user, :current_tenant
   before_action :clear_referer
   after_action -> { expires_now if user_signed_in? }
 

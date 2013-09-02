@@ -14,6 +14,7 @@ module Schedules::Authorizations
 
     load_and_authorize_resource through: [:schedulable, :selected_user]
 
+    before_action :set_current_tenant, only: [:create, :update]
     before_action :load_schedules, only: [:mark_as_done, :mark_as_pending, :move]
   end
 
@@ -49,5 +50,9 @@ module Schedules::Authorizations
     else
       @schedules = []
     end
+  end
+
+  def set_current_tenant
+    @schedule.tenant = current_user if current_tenant
   end
 end

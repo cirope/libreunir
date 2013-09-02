@@ -17,6 +17,7 @@ class Schedule < ActiveRecord::Base
   
   # Relations
   belongs_to :user
+  belongs_to :tenant, class_name: 'User'
   has_many :notes, as: :noteable, dependent: :destroy
   has_many :reminders, dependent: :destroy
 

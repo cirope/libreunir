@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130828180603) do
+ActiveRecord::Schema.define(version: 20130902142226) do
 
   create_table "branches", force: true do |t|
     t.integer  "branch_id",                null: false
@@ -92,9 +92,11 @@ ActiveRecord::Schema.define(version: 20130828180603) do
     t.integer  "lock_version",  default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id",                   null: false
   end
 
   add_index "notes", ["noteable_id", "noteable_type"], name: "index_notes_on_noteable_id_and_noteable_type", using: :btree
+  add_index "notes", ["user_id"], name: "index_notes_on_user_id", using: :btree
 
   create_table "payments", force: true do |t|
     t.integer  "number",                                            null: false
@@ -149,10 +151,12 @@ ActiveRecord::Schema.define(version: 20130828180603) do
     t.integer  "lock_version",     default: 0,     null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "tenant_id"
   end
 
   add_index "schedules", ["schedulable_id", "schedulable_type"], name: "index_schedules_on_schedulable_id_and_schedulable_type", using: :btree
   add_index "schedules", ["scheduled_at"], name: "index_schedules_on_scheduled_at", using: :btree
+  add_index "schedules", ["tenant_id"], name: "index_schedules_on_tenant_id", using: :btree
   add_index "schedules", ["user_id"], name: "index_schedules_on_user_id", using: :btree
 
   create_table "segments", force: true do |t|
