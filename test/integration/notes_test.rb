@@ -7,7 +7,7 @@ class NotesTest < ActionDispatch::IntegrationTest
 
   test 'should create a note' do
     schedule = Fabricate(:schedule, user_id: @user.id, scheduled_at: 1.hour.from_now)
-    note = Fabricate.build(:note, noteable_id: schedule.id, noteable_type: schedule.class.to_s)
+    note = Fabricate.build(:note, user_id: nil, noteable_id: schedule.id, noteable_type: schedule.class.to_s)
 
     login(user: @user)
 

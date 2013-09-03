@@ -1,11 +1,10 @@
 class ApplicationController < ActionController::Base
   include Application::CancanStrongParameters
+  include Application::Tenancy
 
   protect_from_forgery
 
-  helper_method :today_schedules_count, :pending_schedules_past_count,
-    :pending_schedules_future_count
-
+  helper_method :selected_user, :current_tenant
   before_action :clear_referer
   after_action -> { expires_now if user_signed_in? }
 
@@ -31,16 +30,19 @@ class ApplicationController < ActionController::Base
   end
 
   def today_schedules_count
-    @_today_schedules_count ||= current_user.schedules.for_date_of_day(Date.today).count
+    @_today_schedules_count ||= selected_user.schedules.for_date_of_day(Date.today).count
   end
+  helper_method :today_schedules_count
 
   def pending_schedules_past_count
-    @pending_past_count ||= current_user.schedules.past.count
+    @pending_past_count ||= selected_user.schedules.past.count
   end
+  helper_method :pending_schedules_past_count
 
   def pending_schedules_future_count
-    @pending_future_count ||= current_user.schedules.future.count
+    @pending_future_count ||= selected_user.schedules.future.count
   end
+  helper_method :pending_schedules_future_count
 
   def log_exception(exception)
     logger.error(([exception, ''] + exception.backtrace).join("\n"))

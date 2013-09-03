@@ -18,16 +18,15 @@ class Summaries::CloseToExpire
   end
 
   private
+    def sorted(loans)
+      loans.sorted_by_progress
+    end
 
-  def sorted(loans)
-    loans.sorted_by_progress
-  end
+    def loans
+      @current_user.loans.policy
+    end
 
-  def loans
-    @current_user.loans.policy
-  end
-
-  def value(loans)
-    loans.where('progress >= 75').count
-  end 
+    def value(loans)
+      loans.where('progress >= 75').count
+    end
 end

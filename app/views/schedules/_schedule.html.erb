@@ -8,12 +8,14 @@
       <span class="muted">|</span>
     <% end %>
     <%= schedule.description %>
-
+    <%= show_owner(schedule) %>
     <span class="hidden-print">
       <% if schedule.editable? %>
         <% if can?(:update, schedule) %>
           <span class="muted">|</span>
-          <%= link_to_edit edit_polymorphic_path([schedule.schedulable, schedule]), remote: true %>
+          <%= link_to_edit(
+            edit_polymorphic_path([schedule.schedulable, schedule]), remote: true
+          ) %>
         <% end %>
 
         <% if can?(:read, Note) %>

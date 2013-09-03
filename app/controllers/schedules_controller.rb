@@ -16,7 +16,7 @@ class SchedulesController < ApplicationController
   # GET /schedules/1
   def show
     @title = t('view.schedules.show_title')
-    @total_debt = current_user.loans.sum('total_debt')
+    @total_debt = selected_user.loans.sum('total_debt')
   end
 
   # GET /schedules/new
@@ -33,18 +33,14 @@ class SchedulesController < ApplicationController
   def create
     @title = t('view.schedules.new_title')
 
-    if @schedule.save
-      redirect_to :back
-    end
+    redirect_to :back if @schedule.save
   end
 
   # PATCH /schedules/1
   def update
     @title = t('view.schedules.edit_title')
 
-    if @schedule.update(schedule_params)
-      redirect_to :back
-    end
+    redirect_to :back if @schedule.update(schedule_params)
   rescue ActiveRecord::StaleObjectError
     redirect_to edit_schedule_url(@schedule), alert: t('view.schedules.stale_object_error')
   end

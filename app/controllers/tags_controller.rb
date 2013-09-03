@@ -1,9 +1,8 @@
 class TagsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_parent_tag, only: [:create, :new]
   
   check_authorization
-  load_and_authorize_resource through: :current_user 
+  load_and_authorize_resource through: :selected_user 
 
   layout ->(c) { c.request.xhr? ? false : 'application' }
 
@@ -25,8 +24,6 @@ class TagsController < ApplicationController
 
   # POST /tags
   def create
-    @tag.path = @parent_tag.path if @parent_tag
-
     @tag.save
   end
 
@@ -51,12 +48,7 @@ class TagsController < ApplicationController
   end
 
   private
-
-  def set_parent_tag
-    @parent_tag = Tag.find_by(id: params[:tag_id])
-  end
-
-  def tag_params
-    params.require(:tag).permit(:name, :category)
-  end
+    def tag_params
+      params.require(:tag).permit(:name, :category)
+    end
 end

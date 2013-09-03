@@ -6,12 +6,12 @@ class LoansController < ApplicationController
 
   before_action :set_filter, :load_resources, except: :show
 
-  load_and_authorize_resource through: :current_user, only: :show
+  load_and_authorize_resource through: :selected_user, only: :show
 
   layout ->(c) { c.request.xhr? ? false : 'columns' }
 
   def show
-    @total_debt = current_user.loans.sum('total_debt')
+    @total_debt = selected_user.loans.sum('total_debt')
   end
 
   def expired
@@ -45,7 +45,7 @@ class LoansController < ApplicationController
   
   def load_resources
     @searchable = true
-    @summary = "Summaries::#{action_name.camelize}".constantize.new(current_user, @filter, params[:q])
+    @summary = "Summaries::#{action_name.camelize}".constantize.new(selected_user, @filter, params[:q])
 
     @loans = @summary.loans_sorted.page(params[:page]).uniq
   end

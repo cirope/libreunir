@@ -76,8 +76,8 @@
       empty_index:
         html: 'No se encontraron préstamos'
     notes:
-      created_at:
-        html: '<span class="muted">Creada hace %{distance_time}</span>' 
+      created_by:
+        html: '<span class="muted">Creado hace %{distance_time} por <strong>%{user}</strong></span>'
     schedules:
       index_title: 'Listado de eventos'
       show_title: 'Detalle de evento'

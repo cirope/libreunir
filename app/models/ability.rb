@@ -20,6 +20,7 @@ class Ability
   def regular_rules(user)
     can :edit_profile, User
     can :update_profile, User
+    can :switch, User
   end
 
   def default_rules(user)

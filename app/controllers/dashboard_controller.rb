@@ -9,6 +9,6 @@ class DashboardController < ApplicationController
   private
 
   def load_summaries
-    @summaries = Summaries::Summary.classes.map { |klass| klass.new(current_user) }
+    @summaries = Summaries::Summary.classes.map { |klass| klass.new(selected_user) }
   end
 end

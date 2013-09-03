@@ -1,0 +1,18 @@
+<% parent = selected_user.parent %>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+    <span><%= selected_user.name %></span>
+    <b class="caret"></b>
+  </a>
+  <ul class="dropdown-menu">
+    <% if parent && current_user.can_show?(parent) %>
+      <li><%= link_to parent.name, switch_path(parent) %></li>
+    <% end %>
+    <% if current_user.can_show?(parent) && selected_user.children.count > 0 %>
+      <li class="divider"></li>
+    <% end %>
+    <% selected_user.children.each do |child| %>
+      <li><%= link_to child.name, switch_path(child) %></li>
+    <% end %>
+  </ul>
+</li>

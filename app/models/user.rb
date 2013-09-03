@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   include Users::MagickColumns
   include Users::Overrides
   include Users::Roles
+  include NestedSet
 
   has_paper_trail
 
@@ -12,8 +13,8 @@ class User < ActiveRecord::Base
 
   # Validations
   validates :name, :username, presence: true
-  validates :name, :email, length: { maximum: 255 }, 
-    allow_nil: true, allow_blank: true
+  validates :name, :email, length: { maximum: 255 }, allow_nil: true, allow_blank: true
+  validates :username, uniqueness: { case_sensitive: false }, allow_nil: true, allow_blank: true
 
   # Relations
   belongs_to :branch

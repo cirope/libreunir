@@ -5,8 +5,9 @@ class Note < ActiveRecord::Base
   default_scope -> { order("#{table_name}.created_at ASC") }
 
   # Validations
-  validates :note, presence: true
+  validates :note, :user_id, presence: true
 
   # Relations
+  belongs_to :user
   belongs_to :noteable, polymorphic: true
 end
