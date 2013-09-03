@@ -51,4 +51,10 @@ module SchedulesHelper
       tags.join(' ')
     end
   end
+
+  def show_owner(schedule)
+    if (owner = schedule.versions.first.whodunnit) != selected_user.id
+      content_tag :span, "(#{User.find(owner)})", class: 'muted'
+    end
+  end
 end

@@ -8,9 +8,7 @@
       <span class="muted">|</span>
     <% end %>
     <%= schedule.description %>
-    <% if schedule.tenant %>
-      <span class="muted">(<%= schedule.tenant %>)</span>
-    <% end %>
+    <%= show_owner(schedule) %>
     <span class="hidden-print">
       <% if schedule.editable? %>
         <% if can?(:update, schedule) %>
