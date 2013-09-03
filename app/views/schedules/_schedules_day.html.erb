@@ -32,7 +32,5 @@
     </div>
   <% end %>
 <% end %>
-<% if session[:referer] %>
-  <%= link_to t('label.back'), session[:referer] %>
-<% end %>
+<%= link_to(t('label.back'), session[:referer]) if session[:referer] %>
 <div data-schedule-modal="true"></div>

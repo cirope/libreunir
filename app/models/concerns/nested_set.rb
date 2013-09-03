@@ -52,7 +52,7 @@ module NestedSet
     end
 
     def update_self_and_descendents
-      self.self_and_descendents.each { |o| update_path(o, o.parent.try(:path)) }
+      self.self_and_descendents.each { |o| update_path(o, o.parent.try(:path)) } if self.path_changed?
     end
 
     def update_path(o, path)
