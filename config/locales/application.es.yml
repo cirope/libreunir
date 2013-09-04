@@ -60,7 +60,7 @@
     dashboard:
       index_title: 'Tablero'
       greetings:
-        html: 'Hola %{user}<small>, este es tu resumen de préstamos semanales</small>'
+        html: 'Hola %{user}<small>, este es tu resumen de préstamos</small>'
       empty_index:
         html: 'No se encontraron préstamos'
     loans:

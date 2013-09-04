@@ -10,10 +10,10 @@
       <% if user_signed_in? %>
         <div class="nav-collapse hidden-print">
           <ul class="nav">
+            <%= render 'shared/menu_dropdowns/hierarchy' if current_user.children.count > 0 %>
             <%= show_menu_link(
               name: 'users', controllers: 'users', path: users_path
             ) if can?(:read, User) %>
-            <%= render 'shared/menu_dropdowns/hierarchy' if current_user.children.count > 0 %>
             <%= show_menu_link(
               name: 'dashboard', controllers: 'dashboard', path: dashboard_path
             ) %>
