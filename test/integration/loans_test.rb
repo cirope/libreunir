@@ -102,11 +102,10 @@ class LoansTest < ActionDispatch::IntegrationTest
   end
 
   private
-
-  def fabricate_expired
-    Fabricate(
-      :loan, user_id: @user.id, expired_payments_count: 1,
-      next_payment_expire_at: 2.days.ago.to_date, delayed_at: 2.days.ago.to_date
-    )
-  end
+    def fabricate_expired
+      Fabricate(
+        :loan, user_id: @user.id, expired_payments_count: 1,
+        next_payment_expire_at: 2.days.ago.to_date, delayed_at: 2.days.ago.to_date
+      )
+    end
 end
