@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   has_paper_trail
 
   # Scopes
-  default_scope -> { order("#{table_name}.username ASC") }
+  default_scope -> { order("#{table_name}.name ASC") }
 
   # Validations
   validates :name, :username, presence: true

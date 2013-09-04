@@ -75,15 +75,22 @@ class UsersController < ApplicationController
 
   def switch
     session[:tenant_id] = params[:tenant_id] if params[:tenant_id].present?
-    redirect_to :back
+    redirect_to valid_path
   end
 
   private
-  
-  def user_params
-    params.require(:user).permit(
-      :name, :email, :username, :password, :password_confirmation,
-      :identification, :branch_id, :parent_id, :role, :remember_me, :lock_version
-    )
-  end
+    def user_params
+      params.require(:user).permit(
+        :name, :email, :username, :password, :password_confirmation,
+        :identification, :branch_id, :parent_id, :role, :remember_me, :lock_version
+      )
+    end
+
+    def valid_path
+      if Rails.application.routes.recognize_path(request.referrer)[:controller] == 'users'
+        dashboard_path
+      else
+        :back
+      end
+    end
 end
