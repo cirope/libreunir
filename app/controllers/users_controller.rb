@@ -6,6 +6,8 @@ class UsersController < ApplicationController
   check_authorization
   load_and_authorize_resource
 
+  before_action :load_tenant, only: [:switch]
+
   # GET /users
   def index
     @title = t 'view.users.index_title'
@@ -74,8 +76,12 @@ class UsersController < ApplicationController
   end
 
   def switch
-    session[:tenant_id] = params[:tenant_id] if params[:tenant_id].present?
-    redirect_to :back
+    if current_user.can_show?(@tenant)
+      session[:tenant_id] = @tenant.id
+      redirect_to :back
+    else
+      raise CanCan::AccessDenied
+    end
   end
 
   private
@@ -84,5 +90,9 @@ class UsersController < ApplicationController
         :name, :email, :username, :password, :password_confirmation,
         :identification, :branch_id, :parent_id, :role, :remember_me, :lock_version
       )
+    end
+
+    def load_tenant
+      @tenant = User.find_by(id: params[:tenant_id]) if params[:tenant_id].present?
     end
 end
