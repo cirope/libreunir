@@ -85,7 +85,7 @@ class LoansTest < ActionDispatch::IntegrationTest
     end
 
     assert_difference 'Schedule.count' do
-      assert page.has_no_css?('.warning')
+      assert page.has_no_css?('.ene')
 
       within "div[data-schedulable-id=\"#{loan.to_param}\"]" do
         within '.ui-datepicker-calendar' do
@@ -97,7 +97,7 @@ class LoansTest < ActionDispatch::IntegrationTest
         find('.btn.btn-primary').click
       end
 
-      assert page.has_css?('.warning')
+      assert page.has_css?('.ene')
     end
   end
 
