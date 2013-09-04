@@ -15,7 +15,8 @@ class ApplicationController < ActionController::Base
   rescue_from Exception do |exception|
     begin
       case exception
-        when ActionController::RedirectBackError then redirect_to root_url
+        when ActionController::RedirectBackError, CanCan::AccessDenied
+          redirect_to root_url, alert: t('errors.access_denied')
       end
     rescue => ex
       log_exception(ex)
