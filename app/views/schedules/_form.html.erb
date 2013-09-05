@@ -1,4 +1,4 @@
-<% span_size = (@schedulable && @schedule.new_record?) ? 4 : 5 %>
+<% span_size = !@modal ? 4 : 5 %>
 <%= simple_form_for([@schedulable, @schedule], data: { remote: true, scheduled_form: true }) do |f| %>
   <div class="row-fluid">
     <div class="span<%= span_size %>">
@@ -16,9 +16,7 @@
 
       <%= f.button :submit, class: 'btn-primary' %>
       <span class=muted>|</span>
-      <small>
-        <%= link_to_cancel_schedule %>
-      </small>
+      <small><%= link_to_cancel_schedule %></small>
     </div>
   </div>
 

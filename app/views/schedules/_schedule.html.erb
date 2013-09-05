@@ -17,7 +17,6 @@
             edit_polymorphic_path([schedule.schedulable, schedule]), remote: true
           ) %>
         <% end %>
-
         <% if can?(:read, Note) %>
           <span class="muted">|</span>
           <%= link_to_notes polymorphic_path([schedule, Note]), remote: true %>
@@ -29,7 +28,12 @@
         <% end %>
       <% end %>
     </span>
-
-    <div data-info-id="<%= schedule.to_param %>"></div>
   </span>
+  <% if schedule.done? && schedule.schedulable %>
+    <span class="hidden-print">
+      <span class="muted">|</span>
+      <%= link_to_new_schedule(schedule.schedulable) %>
+    </span>
+  <% end %>
+  <div data-info-id="<%= schedule.to_param %>"></div>
 </div>

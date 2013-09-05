@@ -1,4 +1,4 @@
-<% if @schedulable %>
+<% unless @modal %>
   $('.pagination-container').hide();
   $('[data-object-id="<%= @schedulable.to_param %>"]').siblings('tr').hide();
   $('[data-schedule-form-placeholder]').html('<%= j render 'schedulable' %>');
@@ -7,7 +7,7 @@
   $('[data-schedule-modal]').html(
     '<%= j render(template: 'schedules/schedule_modal',
       locals: {
-        header: t('view.schedules.new'),
+        header: (@schedulable.try(:client) || t('view.schedules.new')),
         body: render('form', formats: [:html]),
         cancel: false
       }

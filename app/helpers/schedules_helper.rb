@@ -25,10 +25,7 @@ module SchedulesHelper
 
   def link_to_cancel_schedule
     data = { dismiss: 'modal' }
-
-    if @schedulable && @schedule.new_record?
-      data = { show_siblings: '[data-object-id]' }
-    end
+    data = { show_siblings: '[data-object-id]' } unless @modal
 
     link_to t('label.cancel'), '#', data: data
   end

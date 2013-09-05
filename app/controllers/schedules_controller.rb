@@ -22,11 +22,13 @@ class SchedulesController < ApplicationController
   # GET /schedules/new
   def new
     @title = t('view.schedules.new_title')
+    @modal = Rails.application.routes.recognize_path(request.referer)[:controller] == 'schedules'
   end
 
   # GET /schedules/1/edit
   def edit
     @title = t('view.schedules.edit_title')
+    @modal = true
   end
 
   # POST /schedules
