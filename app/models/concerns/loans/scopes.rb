@@ -7,7 +7,7 @@ module Loans::Scopes
 
   module ClassMethods
     def policy
-      where(canceled_at: nil)
+      where('canceled_at IS NULL AND progress IS NOT NULL')
     end
 
     def expired
