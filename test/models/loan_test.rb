@@ -54,7 +54,7 @@ class LoanTest < ActiveSupport::TestCase
 
   test 'close to expire' do
     assert_no_difference 'Loan.policy.count' do
-      Fabricate(:loan, days_overdue_average: 8)
+      Fabricate(:loan, canceled_at: Time.zone.now)
     end
   end
 

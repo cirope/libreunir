@@ -60,7 +60,7 @@ class LoansControllerTest < ActionController::TestCase
   def fabricate_close_to_expire
     3.times { Fabricate(:loan, user_id: @user.id) }
 
-    Fabricate(:loan, user_id: @user.id, expired_payments_count: 1, progress: 8, days_overdue_average: 8)
+    Fabricate(:loan, user_id: @user.id, expired_payments_count: 1, progress: 8, canceled_at: Time.zone.now)
   end
 
   def fabricate_canceled
