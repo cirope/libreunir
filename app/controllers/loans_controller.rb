@@ -32,6 +32,15 @@ class LoansController < ApplicationController
     end
   end
 
+  def close_to_cancel
+    @title = t 'view.loans.close_to_cancel_title'
+
+    respond_to do |format|
+      format.html # close_to_cancel.html.erb
+      format.js { render 'index' }
+    end
+  end
+
   def not_renewed
     @title = t 'view.loans.not_renewed_title'
 

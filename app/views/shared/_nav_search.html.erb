@@ -2,4 +2,5 @@
 <% classes << 'hidden' unless @searchable %>
 <%= form_for :search, method: :get, html: { class: classes.join(' ') } do |f| %>
   <%= text_field_tag :q, params[:q], class: 'search-query span2', placeholder: t('label.search') %>
+  <%= hidden_field_tag :role, params[:role] %>
 <% end %>

@@ -12,7 +12,7 @@ class UsersController < ApplicationController
   def index
     @title = t 'view.users.index_title'
     @searchable = true
-    @users = @users.filtered_list(params[:q]).page(params[:page])
+    @users = @users.filtered_role(params[:role]).filtered_list(params[:q]).page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb

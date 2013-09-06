@@ -1,4 +1,4 @@
-class Summaries::CloseToExpire
+class Summaries::CloseToCancel
   include Summaries::Summary
 
   attr_reader :current_user, :filter, :query
@@ -10,7 +10,7 @@ class Summaries::CloseToExpire
   end
 
   def action
-    :close_to_expire
+    :close_to_cancel
   end
 
   def value_formatted(value)
@@ -23,7 +23,7 @@ class Summaries::CloseToExpire
     end
 
     def loans
-      @current_user.loans.close_to_expire
+      @current_user.branch.loans.close_to_cancel
     end
 
     def value(loans)

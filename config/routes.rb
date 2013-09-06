@@ -6,6 +6,7 @@ Libreunir::Application.routes.draw do
         get 'expired', to: 'loans#expired', as: 'expired'
         get 'close_to_expire', to: 'loans#close_to_expire', as: 'close_to_expire'
         get 'not_renewed', to: 'loans#not_renewed', as: 'not_renewed'
+        get 'close_to_cancel', to: 'loans#close_to_cancel', as: 'close_to_cancel'
       end
     end
 
@@ -19,6 +20,7 @@ Libreunir::Application.routes.draw do
         get 'expired', to: 'loans#expired', as: 'expired'
         get 'close_to_expire', to: 'loans#close_to_expire', as: 'close_to_expire'
         get 'not_renewed', to: 'loans#not_renewed', as: 'not_renewed'
+        get 'close_to_cancel', to: 'loans#close_to_cancel', as: 'close_to_cancel'
       end
     end
   end
@@ -43,6 +45,7 @@ Libreunir::Application.routes.draw do
     collection do
       get 'expired', to: 'loans#expired', as: 'expired'
       get 'close_to_expire', to: 'loans#close_to_expire', as: 'close_to_expire'
+      get 'close_to_cancel', to: 'loans#close_to_cancel', as: 'close_to_cancel'
       get 'not_renewed', to: 'loans#not_renewed', as: 'not_renewed'
     end
 

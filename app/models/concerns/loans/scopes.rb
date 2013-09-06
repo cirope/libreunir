@@ -6,16 +6,20 @@ module Loans::Scopes
   end
 
   module ClassMethods
-    def policy
-      where('canceled_at IS NULL AND progress IS NOT NULL')
-    end
-
     def expired
       where('canceled_at IS NULL AND expired_payments_count > ?', 0)
     end
 
-    def canceled
+    def not_renewed
       where.not(canceled_at: nil)
+    end
+
+    def close_to_expire
+      where('canceled_at IS NULL AND progress IS NOT NULL')
+    end
+
+    def close_to_cancel
+      where('payments_to_expire_count <= 2')
     end
 
     def sorted_by_total_debt
