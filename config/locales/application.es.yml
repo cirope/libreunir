@@ -122,4 +122,6 @@
       edit_profile: 'Editar perfil'
       roles:
         admin: 'Administrador'
-        regular: 'Normal'
+        advisor: 'Asesor'
+        collector: 'Cobrador'
+        manager: 'Gerente'

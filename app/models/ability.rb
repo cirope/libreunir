@@ -17,13 +17,13 @@ class Ability
     can :manage, :all
   end
 
-  def regular_rules(user)
-    can :edit_profile, User
-    can :update_profile, User
+  def advisor_rules(user)
     can :switch, User
   end
 
   def default_rules(user)
+    can :edit_profile, User
+    can :update_profile, User
     can [:read, :expired, :close_to_expire], Loan
     can :manage, Schedule, { user_id: user.id }
     can :read, Client
