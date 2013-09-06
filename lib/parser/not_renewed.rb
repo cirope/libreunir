@@ -11,6 +11,7 @@ module Parser
         payment: row[18],
         capital: row[19],
         progress: 100,
+        days_overdue_average: row[21].to_f.round,
         canceled_at: row[25],
         user_id: ::User.where('name ILIKE ?', "%#{row[22]}%").first.try(:id),
         branch_id: ::Branch.where('name ILIKE ?', "%#{row[23]}%").first.try(:id),

@@ -11,11 +11,11 @@ module Loans::Scopes
     end
 
     def expired
-      where('canceled_at IS NULL AND expired_payments_count > ?', 0)
+      where('canceled_at IS NULL AND expired_payments_count > 0')
     end
 
     def canceled
-      where.not(canceled_at: nil)
+      where('canceled_at IS NOT NULL AND days_overdue_average <= 7')
     end
 
     def sorted_by_total_debt
