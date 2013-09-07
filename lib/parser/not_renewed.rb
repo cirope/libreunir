@@ -13,9 +13,9 @@ module Parser
         progress: 100,
         days_overdue_average: row[21].to_f.round,
         canceled_at: row[25],
-        user_id: ::User.where('name ILIKE ?', "%#{row[22]}%").first.try(:id),
-        branch_id: ::Branch.where('name ILIKE ?', "%#{row[23]}%").first.try(:id),
-        segment_id: ::Segment.where('short_description ILIKE ?', "%#{row[20]}%").first.try(:id),
+        user_id: ::User.find_by(username: row[26]).try(:id),
+        segment_id: ::Segment.find_by(segment_id: row[27]).try(:id),
+        branch_id: ::Branch.find_by(branch_id: row[28].to_i).try(:id),
         client_id: client.id
       }
 
