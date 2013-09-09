@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130902141416) do
+ActiveRecord::Schema.define(version: 20130909153718) do
 
   create_table "branches", force: true do |t|
     t.integer  "branch_id",                null: false
@@ -23,6 +23,16 @@ ActiveRecord::Schema.define(version: 20130902141416) do
   end
 
   add_index "branches", ["branch_id"], name: "index_branches_on_branch_id", unique: true, using: :btree
+
+  create_table "branches_users", force: true do |t|
+    t.integer  "branch_id",  null: false
+    t.integer  "user_id",    null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "branches_users", ["branch_id"], name: "index_branches_users_on_branch_id", using: :btree
+  add_index "branches_users", ["user_id"], name: "index_branches_users_on_user_id", using: :btree
 
   create_table "clients", force: true do |t|
     t.string   "name",                       null: false
@@ -183,15 +193,15 @@ ActiveRecord::Schema.define(version: 20130902141416) do
     t.string   "name",                      null: false
     t.string   "category",                  null: false
     t.integer  "path",         default: [],              array: true
-    t.integer  "user_id",                   null: false
     t.integer  "lock_version", default: 0,  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "branch_id"
   end
 
+  add_index "tags", ["branch_id"], name: "index_tags_on_branch_id", using: :btree
   add_index "tags", ["name"], name: "index_tags_on_name", using: :btree
   add_index "tags", ["path"], name: "index_tags_on_path", using: :gin
-  add_index "tags", ["user_id"], name: "index_tags_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "name",                                null: false

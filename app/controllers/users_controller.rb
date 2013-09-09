@@ -78,7 +78,7 @@ class UsersController < ApplicationController
   def switch
     if current_user.can_show?(@tenant)
       session[:tenant_id] = @tenant.id
-      redirect_to :back
+      redirect_to root_url
     else
       raise CanCan::AccessDenied
     end

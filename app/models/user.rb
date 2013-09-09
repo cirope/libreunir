@@ -25,4 +25,9 @@ class User < ActiveRecord::Base
   has_many :clients, -> { uniq }, through: :loans
   has_many :tags, dependent: :destroy
   has_many :zones, -> { uniq }, through: :loans
+  has_many :branches_users
+  has_many :branches, through: :branches_users
+  has_many :branches_loans, through: :branches, source: :loans
+  has_many :branches_zones, through: :branches, source: :zones
+  has_many :branches_tags, through: :branches, source: :tags
 end
