@@ -35,7 +35,7 @@ module Loans::Scopes
     end
 
     def debtor
-      where(debtor: true)
+      where('debtor IS TRUE AND progress IS NOT NULL')
     end
 
     def sorted_by_total_debt
