@@ -8,5 +8,5 @@ class Branch < ActiveRecord::Base
   has_many :loans
   has_many :users, dependent: :destroy
   has_many :zones
-  has_many :tags, through: :users
+  has_many :tags
 end

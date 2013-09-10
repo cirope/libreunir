@@ -1,4 +1,4 @@
-<% tags = selected_user.tags %>
+<% tags = current_scope.tags %>
 <div class="accordion">
   <%= render partial: 'tags/nested_set', locals: { tags: tags }, collection: roots(tags), as: :root_tag %>
 </div>

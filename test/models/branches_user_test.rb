@@ -6,7 +6,7 @@ class BranchesUserTest < ActiveSupport::TestCase
   end
 
   test 'create' do
-    assert_difference ['BranchesUser.count', 'Version.count'] do
+    assert_difference 'BranchesUser.count' do
       @branches_user = BranchesUser.create(Fabricate.attributes_for(:branches_user))
     end 
   end
@@ -14,11 +14,11 @@ class BranchesUserTest < ActiveSupport::TestCase
   test 'update' do
     assert_difference 'Version.count' do
       assert_no_difference 'BranchesUser.count' do
-        assert @branches_user.update_attributes(attr: 'Updated')
+        assert @branches_user.update_attributes(branch_id: 5)
       end
     end
 
-    assert_equal 'Updated', @branches_user.reload.attr
+    assert_equal 5, @branches_user.reload.branch_id
   end
     
   test 'destroy' do 
@@ -28,21 +28,14 @@ class BranchesUserTest < ActiveSupport::TestCase
   end
     
   test 'validates blank attributes' do
-    @branches_user.attr = ''
+    @branches_user.branch_id = ''
+    @branches_user.user_id = nil
     
     assert @branches_user.invalid?
-    assert_equal 1, @branches_user.errors.size
-    assert_equal [error_message_from_model(@branches_user, :attr, :blank)],
-      @branches_user.errors[:attr]
-  end
-    
-  test 'validates unique attributes' do
-    new_branches_user = Fabricate(:branches_user)
-    @branches_user.attr = new_branches_user.attr
-
-    assert @branches_user.invalid?
-    assert_equal 1, @branches_user.errors.size
-    assert_equal [error_message_from_model(@branches_user, :attr, :taken)],
-      @branches_user.errors[:attr]
+    assert_equal 2, @branches_user.errors.size
+    assert_equal [error_message_from_model(@branches_user, :branch_id, :blank)],
+      @branches_user.errors[:branch_id]
+    assert_equal [error_message_from_model(@branches_user, :user_id, :blank)],
+      @branches_user.errors[:user_id]
   end
 end

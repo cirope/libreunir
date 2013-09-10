@@ -2,7 +2,7 @@ class TagsController < ApplicationController
   before_action :authenticate_user!
   
   check_authorization
-  load_and_authorize_resource through: :selected_user 
+  load_and_authorize_resource through: :current_scope
 
   layout ->(c) { c.request.xhr? ? false : 'application' }
 
@@ -24,6 +24,9 @@ class TagsController < ApplicationController
 
   # POST /tags
   def create
+    @tag.user_id = current_user.id
+    @tag.branch_id = selected_user.branch.id
+
     @tag.save
   end
 
@@ -38,9 +41,7 @@ class TagsController < ApplicationController
 
   # DELETE /tags/1
   def destroy
-    @tag.self_and_descendents.each do |child|
-      child.destroy
-    end
+    @tag.self_and_descendents.each { |child| child.destroy }
 
     respond_to do |format|
       format.js
@@ -49,6 +50,6 @@ class TagsController < ApplicationController
 
   private
     def tag_params
-      params.require(:tag).permit(:name, :category)
+      params.require(:tag).permit(:name, :category, :parent_id)
     end
 end

@@ -4,7 +4,7 @@ module Users::Roles
   included do
     include RoleModel
 
-    roles :admin, :manager, :advisor, :collector
+    roles :admin, :advisor, :manager, :collector
 
     after_initialize :set_default_role
   end

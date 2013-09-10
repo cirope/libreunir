@@ -75,6 +75,7 @@
       expired_summary: 'Mora'
       close_to_expire_summary: 'Renovación'
       not_renewed_summary: 'No renovados'
+      close_to_cancel_summary: 'Por cancelar'
       empty_index:
         html: 'No se encontraron préstamos'
     notes:

@@ -17,24 +17,16 @@ class Summaries::CloseToCancel
     value
   end
 
-  def zones
-    @current_user.branches_zones.filter_by_loans(loans)
-  end 
-
-  def tags
-    @current_user.branches_tags.filter_by_loans(loans)
-  end
-
   private
     def sorted(loans)
       loans.sorted_by_progress
     end
 
     def loans
-      @current_user.branches_loans.close_to_cancel
+      @current_user.loans.close_to_cancel
     end
 
     def value(loans)
-      loans.where('progress >= 75').count
+      loans.count
     end
 end
