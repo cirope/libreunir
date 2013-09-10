@@ -7,4 +7,6 @@ class Branch < ActiveRecord::Base
   # Relations
   has_many :loans
   has_many :users, dependent: :destroy
+  has_many :zones
+  has_many :tags
 end

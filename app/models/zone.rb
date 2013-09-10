@@ -17,6 +17,8 @@ class Zone < ActiveRecord::Base
   end
 
   def self.filter_by_loans(loans)
-    where("#{Loan.table_name}.id" => loans.ids).order("#{table_name}.name ASC")
+    joins(:loans).where(
+      "#{Loan.table_name}.id" => loans.pluck("#{Loan.table_name}.id")
+    ).order("#{table_name}.name ASC").uniq
   end
 end

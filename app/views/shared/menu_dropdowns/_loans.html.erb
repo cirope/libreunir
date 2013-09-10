@@ -1,11 +1,20 @@
-<li class="dropdown<%== ' active' if controller_name == 'loans' %>">
+<li class="dropdown <%== 'active' if controller_name == 'loans' %>">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
     <%= t('menu.clients') %>
     <b class="caret"></b>
   </a>
   <ul class="dropdown-menu">
-    <li><%= link_to t('view.loans.close_to_expire'), close_to_expire_loans_path %></li>
-    <li><%= link_to t('view.loans.expired'), expired_loans_path %></li>
-    <li><%= link_to t('view.loans.not_renewed'), not_renewed_loans_path %></li>
+    <% if can?(:close_to_cancel, Loan) %>
+      <li><%= link_to t('view.loans.close_to_cancel'), close_to_cancel_loans_path %></li>
+    <% end %>
+    <% if can?(:close_to_expire, Loan) %>
+      <li><%= link_to t('view.loans.close_to_expire'), close_to_expire_loans_path %></li>
+    <% end %>
+    <% if can?(:expired, Loan) %>
+      <li><%= link_to t('view.loans.expired'), expired_loans_path %></li>
+    <% end %>
+    <% if can?(:not_renewed, Loan) %>
+      <li><%= link_to t('view.loans.not_renewed'), not_renewed_loans_path %></li>
+    <% end %>
   </ul>
 </li>

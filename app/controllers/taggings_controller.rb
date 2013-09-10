@@ -5,7 +5,6 @@ class TaggingsController < ApplicationController
   load_resource :loan, only: :destroy
 
   before_action :set_taggable, only: :destroy
-
   load_resource :tagging, through: :taggable, only: :destroy
 
   respond_to :html, :js
@@ -15,7 +14,7 @@ class TaggingsController < ApplicationController
   # POST /taggings
   def create
     if params[:taggable_ids].present? && @tag
-      @taggables = selected_user.loans.where(id: params[:taggable_ids])
+      @taggables = current_scope.loans.where(id: params[:taggable_ids])
       @taggables.each { |taggable| taggable.taggings.create(tag_id: @tag.id) }
     end
   end
@@ -26,8 +25,7 @@ class TaggingsController < ApplicationController
   end
 
   private
-
-  def set_taggable
-    @taggable = @loan
-  end
+    def set_taggable
+      @taggable = @loan
+    end
 end

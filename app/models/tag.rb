@@ -32,6 +32,8 @@
   end
 
   def self.filter_by_loans(loans)
-    joins(:loans).where("#{Loan.table_name}.id" => loans.ids).uniq
+    joins(:loans).where(
+      "#{Loan.table_name}.id" => loans.pluck("#{Loan.table_name}.id")
+    ).order("#{table_name}.name ASC").uniq
   end
 end

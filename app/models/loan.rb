@@ -31,7 +31,7 @@ class Loan < ActiveRecord::Base
     self.expired_payments_count > 0
   end
 
-  def closest_schedule
-    self.schedules.where(user_id: self.user.id, done: false).first
+  def closest_schedule(user)
+    self.schedules.where(user_id: user.id, done: false).first
   end
 end

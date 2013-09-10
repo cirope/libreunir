@@ -1,0 +1,17 @@
+<li class="dropdown <%== 'active' if controller_name == 'users' %>">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+    <% if User.valid_roles.include?(params[:role].to_s.to_sym) %>
+      <%= t("view.users.roles.#{params[:role]}") %>
+    <% else %>
+      <%= t('menu.users') %>
+    <% end %>
+    <b class="caret"></b>
+  </a>
+  <ul class="dropdown-menu">
+    <li><%= link_to t('label.all'), users_path %></li>
+    <li><%= link_to t('view.users.roles.admin'), users_path(role: 'admin') %></li>
+    <li><%= link_to t('view.users.roles.manager'), users_path(role: 'manager') %></li>
+    <li><%= link_to t('view.users.roles.collector'), users_path(role: 'collector') %></li>
+    <li><%= link_to t('view.users.roles.advisor'), users_path(role: 'advisor') %></li>
+  </ul>
+</li>

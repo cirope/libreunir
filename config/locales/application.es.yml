@@ -37,7 +37,7 @@
     clients: 'Clientes'
     dashboard: 'Tablero'
     schedules: 'Eventos'
-    users: 'Asesores'
+    users: 'Usuarios'
 
   messages:
     confirmation: '¿Está seguro?'
@@ -66,6 +66,8 @@
     loans:
       expired: 'Morosos'
       expired_title: 'Listado de préstamos morosos'
+      close_to_cancel: 'Por cancelar'
+      close_to_cancel_title: 'Listado de préstamos por cancelar'
       close_to_expire: 'Renovación'
       close_to_expire_title: 'Listado de préstamos por renovación'
       not_renewed: 'No renovados'
@@ -73,6 +75,7 @@
       expired_summary: 'Mora'
       close_to_expire_summary: 'Renovación'
       not_renewed_summary: 'No renovados'
+      close_to_cancel_summary: 'Por cancelar'
       empty_index:
         html: 'No se encontraron préstamos'
     notes:
@@ -122,4 +125,6 @@
       edit_profile: 'Editar perfil'
       roles:
         admin: 'Administrador'
-        regular: 'Normal'
+        advisor: 'Asesor'
+        collector: 'Cobrador'
+        manager: 'Gerente'

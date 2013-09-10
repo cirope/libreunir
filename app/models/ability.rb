@@ -17,14 +17,23 @@ class Ability
     can :manage, :all
   end
 
-  def regular_rules(user)
-    can :edit_profile, User
-    can :update_profile, User
-    can :switch, User
+  def manager_rules(user)
+    can [:expired, :close_to_expire, :close_to_cancel, :not_renewed], Loan
+  end
+
+  def collector_rules(user)
+    can [:close_to_cancel], Loan
+  end
+
+  def advisor_rules(user)
+    can [:expired, :close_to_expire, :not_renewed], Loan
   end
 
   def default_rules(user)
-    can [:read, :expired, :close_to_expire], Loan
+    can :switch, User # WARNING
+    can :edit_profile, User
+    can :update_profile, User
+    can :read, Loan
     can :manage, Schedule, { user_id: user.id }
     can :read, Client
     can [:read, :create], Note

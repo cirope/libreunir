@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130902141416) do
+ActiveRecord::Schema.define(version: 20130909213225) do
 
   create_table "branches", force: true do |t|
     t.integer  "branch_id",                null: false
@@ -23,6 +23,16 @@ ActiveRecord::Schema.define(version: 20130902141416) do
   end
 
   add_index "branches", ["branch_id"], name: "index_branches_on_branch_id", unique: true, using: :btree
+
+  create_table "branches_users", force: true do |t|
+    t.integer  "branch_id",  null: false
+    t.integer  "user_id",    null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "branches_users", ["branch_id"], name: "index_branches_users_on_branch_id", using: :btree
+  add_index "branches_users", ["user_id"], name: "index_branches_users_on_user_id", using: :btree
 
   create_table "clients", force: true do |t|
     t.string   "name",                       null: false
@@ -51,7 +61,7 @@ ActiveRecord::Schema.define(version: 20130902141416) do
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
   create_table "loans", force: true do |t|
-    t.integer  "loan_id",                                                       null: false
+    t.integer  "loan_id",                                                           null: false
     t.decimal  "capital",                  precision: 15, scale: 5
     t.decimal  "payment",                  precision: 15, scale: 5
     t.decimal  "total_debt",               precision: 15, scale: 5
@@ -66,17 +76,19 @@ ActiveRecord::Schema.define(version: 20130902141416) do
     t.integer  "user_id"
     t.integer  "branch_id"
     t.integer  "zone_id"
-    t.integer  "lock_version",                                      default: 0, null: false
+    t.integer  "lock_version",                                      default: 0,     null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.date     "canceled_at"
     t.integer  "segment_id"
+    t.boolean  "debtor",                                            default: false, null: false
   end
 
   add_index "loans", ["branch_id"], name: "index_loans_on_branch_id", using: :btree
   add_index "loans", ["canceled_at"], name: "index_loans_on_canceled_at", using: :btree
   add_index "loans", ["client_id"], name: "index_loans_on_client_id", using: :btree
   add_index "loans", ["days_overdue_average"], name: "index_loans_on_days_overdue_average", using: :btree
+  add_index "loans", ["debtor"], name: "index_loans_on_debtor", using: :btree
   add_index "loans", ["delayed_at"], name: "index_loans_on_delayed_at", using: :btree
   add_index "loans", ["loan_id"], name: "index_loans_on_loan_id", unique: true, using: :btree
   add_index "loans", ["progress"], name: "index_loans_on_progress", using: :btree
@@ -187,8 +199,10 @@ ActiveRecord::Schema.define(version: 20130902141416) do
     t.integer  "lock_version", default: 0,  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "branch_id"
   end
 
+  add_index "tags", ["branch_id"], name: "index_tags_on_branch_id", using: :btree
   add_index "tags", ["name"], name: "index_tags_on_name", using: :btree
   add_index "tags", ["path"], name: "index_tags_on_path", using: :gin
   add_index "tags", ["user_id"], name: "index_tags_on_user_id", using: :btree

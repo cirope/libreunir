@@ -24,10 +24,10 @@ class Summaries::NotRenewed
   end
 
   def loans
-    @current_user.loans.canceled
+    @current_user.loans.not_renewed
   end
 
   def value(loans)
-    ((loans.count * 100) / @current_user.loans.canceled.count).to_f rescue 0
+    ((loans.count * 100) / @current_user.loans.not_renewed.count).to_f rescue 0
   end 
 end
