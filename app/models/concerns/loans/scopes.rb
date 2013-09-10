@@ -27,15 +27,9 @@ module Loans::Scopes
     end
 
     def prevision
-      loans = not_canceled.debtor
+      start, finish = (Date.today - 90).midnight, (Date.today - 60).midnight
 
-      loan_ids = loans.select do |l|
-        payment = l.payments.where(paid_at: nil).order('number ASC').try(:first)
-
-        payment && payment.expired_at.between?((Date.today - 90).midnight, (Date.today - 60).midnight)
-      end.map &:id
-
-      loans.where(id: loan_ids)
+      not_canceled.debtor.where(delayed_at: start..finish)
     end
 
     def not_canceled
