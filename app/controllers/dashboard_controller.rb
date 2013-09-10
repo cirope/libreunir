@@ -9,6 +9,13 @@ class DashboardController < ApplicationController
   private
 
   def load_summaries
-    @summaries = Summaries::Summary.classes.map { |klass| klass.new(selected_user) }
+    klasses = case current_scope
+      when Branch
+        [Summaries::Capital, Summaries::Prevision, Summaries::CloseToCancel]
+      when User
+        [Summaries::Expired, Summaries::CloseToExpire, Summaries::NotRenewed]
+    end
+
+    @summaries = klasses.map { |klass| klass.new(current_scope) }
   end
 end
