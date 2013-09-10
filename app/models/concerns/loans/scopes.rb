@@ -19,7 +19,7 @@ module Loans::Scopes
     end
 
     def close_to_cancel
-      not_canceled.debtor.where('payments_to_expire_count <= 2')
+      not_canceled.debtor.where('expired_payments_count + payments_to_expire_count <= ?', 2)
     end
 
     def capital
@@ -27,7 +27,15 @@ module Loans::Scopes
     end
 
     def prevision
-      not_canceled.debtor
+      loans = not_canceled.debtor
+
+      loan_ids = loans.select do |l|
+        payment = l.payments.where(paid_at: nil).order('number ASC').try(:first)
+
+        payment && payment.expired_at.between?((Date.today - 90).midnight, (Date.today - 60).midnight)
+      end.map &:id
+
+      loans.where(id: loan_ids)
     end
 
     def not_canceled

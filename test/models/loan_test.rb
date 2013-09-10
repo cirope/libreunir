@@ -70,6 +70,10 @@ class LoanTest < ActiveSupport::TestCase
     end
   end
 
+  test 'prevision' do
+    skip 'Test it =)'
+  end
+
   test 'magick search' do
     5.times {
       Fabricate(:loan,
