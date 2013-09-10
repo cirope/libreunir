@@ -18,11 +18,11 @@ class Ability
   end
 
   def manager_rules(user)
-    can [:expired, :close_to_expire, :close_to_cancel, :not_renewed, :capital], Loan
+    can [:expired, :close_to_expire, :close_to_cancel, :not_renewed, :prevision, :capital], Loan
   end
 
   def collector_rules(user)
-    can [:close_to_cancel, :capital], Loan
+    can [:close_to_cancel, :capital, :prevision], Loan
   end
 
   def advisor_rules(user)

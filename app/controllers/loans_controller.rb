@@ -58,6 +58,15 @@ class LoansController < ApplicationController
     end
   end
 
+  def prevision
+    @title = t 'view.loans.prevision_title'
+
+    respond_to do |format|
+      format.html # prevision.html.erb
+      format.js { render 'index' }
+    end
+  end
+
   private
     def load_resources
       @searchable = true

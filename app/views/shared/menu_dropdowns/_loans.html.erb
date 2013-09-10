@@ -7,6 +7,9 @@
     <% if can?(:capital, Loan) %>
       <li><%= link_to t('view.loans.capital'), capital_loans_path %></li>
     <% end %>
+    <% if can?(:prevision, Loan) %>
+      <li><%= link_to t('view.loans.prevision'), prevision_loans_path %></li>
+    <% end %>
     <% if can?(:close_to_cancel, Loan) %>
       <li><%= link_to t('view.loans.close_to_cancel'), close_to_cancel_loans_path %></li>
     <% end %>

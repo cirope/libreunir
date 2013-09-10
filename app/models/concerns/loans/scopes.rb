@@ -7,7 +7,7 @@ module Loans::Scopes
 
   module ClassMethods
     def expired
-      where('canceled_at IS NULL AND expired_payments_count > 0')
+      not_canceled.where('expired_payments_count > 0')
     end
 
     def not_renewed
@@ -15,15 +15,27 @@ module Loans::Scopes
     end
 
     def close_to_expire
-      where('canceled_at IS NULL AND progress IS NOT NULL')
+      not_canceled.where.not(progress: nil)
     end
 
     def close_to_cancel
-      where('debtor IS TRUE AND canceled_at IS NULL AND payments_to_expire_count <= 2')
+      not_canceled.debtor.where('payments_to_expire_count <= 2')
     end
 
     def capital
-      where(debtor: true, canceled_at: nil)
+      not_canceled.debtor
+    end
+
+    def prevision
+      not_canceled.debtor
+    end
+
+    def not_canceled
+      where(canceled_at: nil)
+    end
+
+    def debtor
+      where(debtor: true)
     end
 
     def sorted_by_total_debt

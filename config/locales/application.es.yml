@@ -73,12 +73,15 @@
       not_renewed: 'No renovados'
       not_renewed_title: 'Listado de préstamos no renovados'
       capital: 'Por capital'
-      capital_title: 'Listado de préstamos deudores'
+      capital_title: 'Listado de préstamos por capital'
+      prevision: 'Por previsión'
+      prevision_title: 'Listado de préstamos por previsión'
       expired_summary: 'Mora'
       close_to_expire_summary: 'Renovación'
       not_renewed_summary: 'No renovados'
       close_to_cancel_summary: 'Por cancelar'
       capital_summary: 'Deuda'
+      prevision_summary: 'Deuda'
       empty_index:
         html: 'No se encontraron préstamos'
     notes:
