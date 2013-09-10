@@ -22,6 +22,10 @@ module Loans::Scopes
       where('debtor IS TRUE AND canceled_at IS NULL AND payments_to_expire_count <= 2')
     end
 
+    def capital
+      where(debtor: true, canceled_at: nil)
+    end
+
     def sorted_by_total_debt
       order('total_debt DESC')
     end

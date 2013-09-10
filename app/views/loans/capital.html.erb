@@ -1,0 +1,36 @@
+<%= render 'shared/summary' %>
+<%= render 'sidebar' %>
+
+<% if @loans.present? %>
+  <%= form_tag nil, method: :post, data: { action: tag_taggings_path('tag_id', action_name: action_name),
+    remote: true, form_container: true } do %>
+    <table class="table table-condensed" data-endless-container="true">
+      <thead>
+        <tr>
+          <th></th>
+          <th><%= Schedule.model_name.human(count: 1) %></th>
+          <th><%= Loan.human_attribute_name('client_id') %></th>
+          <th><%= Loan.human_attribute_name('total_debt') %></th>
+          <th><%= Loan.human_attribute_name('delayed_at') %></th>
+          <th><%= Phone.human_attribute_name('phone') %></th>
+          <th colspan="2"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <%= render partial: 'capital', collection: @loans, as: :loan %>
+      </tbody>
+    </table>
+  <% end %>
+
+  <div data-schedule-form-placeholder="true"></div>
+
+  <div class="pagination-container">
+    <%= pagination_links(@loans) %>
+  </div>
+  <div class="pagination-print visible-print pull-right">
+    <%= pagination_print(@loans) %>
+  </div>
+<% else %>
+  <%= render 'shared/empty_index' %>
+<% end %>

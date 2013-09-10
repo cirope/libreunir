@@ -7,6 +7,7 @@ Libreunir::Application.routes.draw do
         get 'close_to_expire', to: 'loans#close_to_expire', as: 'close_to_expire'
         get 'not_renewed', to: 'loans#not_renewed', as: 'not_renewed'
         get 'close_to_cancel', to: 'loans#close_to_cancel', as: 'close_to_cancel'
+        get 'capital', to: 'loans#capital', as: 'capital'
       end
     end
 
@@ -21,6 +22,7 @@ Libreunir::Application.routes.draw do
         get 'close_to_expire', to: 'loans#close_to_expire', as: 'close_to_expire'
         get 'not_renewed', to: 'loans#not_renewed', as: 'not_renewed'
         get 'close_to_cancel', to: 'loans#close_to_cancel', as: 'close_to_cancel'
+        get 'capital', to: 'loans#capital', as: 'capital'
       end
     end
   end
@@ -47,6 +49,7 @@ Libreunir::Application.routes.draw do
       get 'close_to_expire', to: 'loans#close_to_expire', as: 'close_to_expire'
       get 'close_to_cancel', to: 'loans#close_to_cancel', as: 'close_to_cancel'
       get 'not_renewed', to: 'loans#not_renewed', as: 'not_renewed'
+      get 'capital', to: 'loans#capital', as: 'capital'
     end
 
     get '/schedules(/:date)', to: 'schedules#index', as: 'schedules', constraints: { date: /\d{4}-\d{2}-\d{2}/ }

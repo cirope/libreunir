@@ -26,7 +26,7 @@ class LoansController < ApplicationController
     @title = t 'view.loans.close_to_expire_title'
 
     respond_to do |format|
-      format.html # close_to_expired.html.erb
+      format.html # close_to_expire.html.erb
       format.js { render 'index' }
     end
   end
@@ -45,6 +45,15 @@ class LoansController < ApplicationController
 
     respond_to do |format|
       format.html # not_renewed.html.erb
+      format.js { render 'index' }
+    end
+  end
+
+  def capital
+    @title = t 'view.loans.capital_title'
+
+    respond_to do |format|
+      format.html # capital.html.erb
       format.js { render 'index' }
     end
   end
