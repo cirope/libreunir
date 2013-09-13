@@ -32,6 +32,6 @@
   end
 
   def self.filter_by_loans(loans)
-    joins(:loans).where("#{Loan.table_name}.id" => loans.ids).uniq
+    joins(:loans).where("#{Loan.table_name}.id" => loans.ids)
   end
 end
