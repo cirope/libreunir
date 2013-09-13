@@ -11,6 +11,7 @@ Fabricator(:loan) do
   progress 50
   next_payment_expire_at { 10.days.from_now.to_date }
   canceled_at nil
+  debtor false
   client_id { Fabricate(:client).id }
   user_id { Fabricate(:user).id }
   branch_id { Fabricate(:branch).id }
