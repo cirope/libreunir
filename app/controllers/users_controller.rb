@@ -54,7 +54,7 @@ class UsersController < ApplicationController
     @title = t 'view.users.edit_title'
 
     respond_to do |format|
-      if @user.update_attributes(user_params)
+      if @user.update(user_params)
         format.html { redirect_to @user, notice: t('view.users.correctly_updated') }
       else
         format.html { render action: 'edit' }
@@ -76,7 +76,7 @@ class UsersController < ApplicationController
   end
 
   def switch
-    if current_user.can_show?(@tenant)
+    if @tenant && @tenant.has_ancestor?(current_user)
       session[:tenant_id] = @tenant.id
       redirect_to root_url
     else

@@ -22,7 +22,7 @@
         <%= f.input :username %>
         <%= f.input :identification %>
         <%= f.association :branch, prompt: t('label.select') %>
-        <%= f.input :parent_id, collection: User.all %>
+        <%= f.input :parent_id, collection: User.all, prompt: t('label.select') %>
       </div>
     </div>
   </div>

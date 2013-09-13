@@ -5,11 +5,11 @@
     <b class="caret"></b>
   </a>
   <ul class="dropdown-menu">
-    <% if parent && current_user.can_show?(parent) %>
+    <% if parent && parent.has_ancestor?(current_user) %>
       <li><%= link_to parent.name, switch_path(parent) %></li>
-    <% end %>
-    <% if current_user.can_show?(parent) && selected_user.children.count > 0 %>
-      <li class="divider"></li>
+      <% if selected_user.has_children? %>
+        <li class="divider"></li>
+      <% end %>
     <% end %>
     <% selected_user.children.each do |child| %>
       <li><%= link_to child.name, switch_path(child) %></li>

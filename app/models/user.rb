@@ -4,9 +4,9 @@ class User < ActiveRecord::Base
   include Users::MagickColumns
   include Users::Overrides
   include Users::Roles
-  include NestedSet
 
   has_paper_trail
+  has_ancestry
 
   # Scopes
   default_scope -> { order("#{table_name}.name ASC") }
@@ -30,4 +30,8 @@ class User < ActiveRecord::Base
   has_many :branches_loans, through: :branches, source: :loans
   has_many :branches_zones, through: :branches, source: :zones
   has_many :branches_tags, through: :branches, source: :tags
+
+  def has_ancestor?(user)
+    self.path_ids.include?(user.id)
+  end
 end

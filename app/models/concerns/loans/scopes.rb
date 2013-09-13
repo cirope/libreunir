@@ -64,7 +64,7 @@ module Loans::Scopes
     end
 
     def filter_by_tag(tag)
-      joins(:tags).where("#{Tag.table_name}.path && ARRAY[?]", tag.id)
+      joins(:tags).where("#{Tag.table_name}.id" => tag.path_ids)
     end
   end
 end

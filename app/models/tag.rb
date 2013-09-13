@@ -1,8 +1,8 @@
  class Tag < ActiveRecord::Base
-  include NestedSet
 
   has_paper_trail
-  
+  has_ancestry
+
   CATEGORIES = ['default', 'success', 'warning', 'important', 'info', 'inverse']
 
   # Scopes

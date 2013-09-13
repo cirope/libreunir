@@ -1,6 +1,5 @@
-<%= simple_form_for([@tag.parent, @tag], data: { remote: true }) do |f| %>
+<%= simple_form_for([@parent, @tag], data: { remote: true }) do |f| %>
   <%= f.input :name, label: false, input_html: { class: 'span12' } %>
-  <%= f.input :parent_id, as: :hidden %>
 
   <div class="btn-group">
     <% Tag::CATEGORIES.each do |category| %>
