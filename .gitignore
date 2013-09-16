@@ -1,4 +1,3 @@
-*.swp
 /.bundle
 /.sass-cache/
 /config/app_config.yml

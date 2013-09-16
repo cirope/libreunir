@@ -81,10 +81,11 @@ GEM
       term-ansicolor
       thor
     database_cleaner (1.1.1)
-    devise (3.0.3)
+    devise (3.1.0)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 3.2.6, < 5)
+      thread_safe (~> 0.1)
       warden (~> 1.2.3)
     erubis (2.7.0)
     execjs (2.0.1)
@@ -125,7 +126,7 @@ GEM
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
     orm_adapter (0.4.0)
-    pg (0.16.0)
+    pg (0.17.0)
     polyglot (0.3.3)
     rack (1.5.2)
     rack-test (0.6.2)
@@ -236,7 +237,7 @@ DEPENDENCIES
   coffee-rails
   coveralls
   database_cleaner
-  devise (= 3.0.3)
+  devise
   fabrication
   faker
   jquery-rails
