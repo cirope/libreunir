@@ -21,6 +21,7 @@ gem 'whenever', require: false
 gem 'capistrano'
 gem 'unicorn', require: false
 gem 'newrelic_rpm'
+gem 'ancestry'
 
 # Old assets group
 gem 'sass-rails'

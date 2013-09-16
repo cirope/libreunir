@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130909213225) do
+ActiveRecord::Schema.define(version: 20130912175228) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -195,19 +195,19 @@ ActiveRecord::Schema.define(version: 20130909213225) do
   add_index "taggings", ["taggable_id", "taggable_type"], name: "index_taggings_on_taggable_id_and_taggable_type", using: :btree
 
   create_table "tags", force: true do |t|
-    t.string   "name",                      null: false
-    t.string   "category",                  null: false
-    t.integer  "path",         default: [],              array: true
-    t.integer  "user_id",                   null: false
-    t.integer  "lock_version", default: 0,  null: false
+    t.string   "name",                     null: false
+    t.string   "category",                 null: false
+    t.integer  "user_id",                  null: false
+    t.integer  "lock_version", default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "branch_id",    default: 0,  null: false
+    t.integer  "branch_id",    default: 0, null: false
+    t.string   "ancestry"
   end
 
+  add_index "tags", ["ancestry"], name: "index_tags_on_ancestry", using: :btree
   add_index "tags", ["branch_id"], name: "index_tags_on_branch_id", using: :btree
   add_index "tags", ["name"], name: "index_tags_on_name", using: :btree
-  add_index "tags", ["path"], name: "index_tags_on_path", using: :gin
   add_index "tags", ["user_id"], name: "index_tags_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
@@ -231,12 +231,12 @@ ActiveRecord::Schema.define(version: 20130909213225) do
     t.integer  "lock_version",           default: 0,  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "path",                   default: [],              array: true
+    t.string   "ancestry"
   end
 
+  add_index "users", ["ancestry"], name: "index_users_on_ancestry", using: :btree
   add_index "users", ["branch_id"], name: "index_users_on_branch_id", using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["path"], name: "index_users_on_path", using: :gin
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 

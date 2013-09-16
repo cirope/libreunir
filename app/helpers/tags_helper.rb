@@ -1,10 +1,10 @@
 module TagsHelper
   def roots(nestedable)
-    nestedable.select { |n| n.path.length == 1 }
+    nestedable.select { |n| n.root? }
   end
 
   def children(nestedable, root)
-    nestedable.select { |n| n.path.length > root.path.length && n.path.include?(root.id) }
+    nestedable.select { |n| n.ancestry.to_i == root.id }
   end
 
   def truncate_tag_name(tag, length = nil)

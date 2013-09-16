@@ -1,7 +1,7 @@
 Libreunir::Application.routes.draw do
 
-  resources :tags do
-    resources :loans, only: [] do
+  concern :resources_loans do |options|
+    resources :loans, options do
       collection do
         get 'expired', to: 'loans#expired', as: 'expired'
         get 'close_to_expire', to: 'loans#close_to_expire', as: 'close_to_expire'
@@ -11,22 +11,24 @@ Libreunir::Application.routes.draw do
         get 'prevision', to: 'loans#prevision', as: 'prevision'
       end
     end
+  end
 
+  resources :loans, only: [] do
+    get '/schedules(/:date)', to: 'schedules#index', as: 'schedules', constraints: { date: /\d{4}-\d{2}-\d{2}/ }
+    resources :schedules, only: [:new, :create, :edit, :update]
+    resources :taggings, only: [:destroy]
+  end
+
+  concerns :resources_loans, only: [:show]
+
+  resources :tags do
+    concerns :resources_loans, only: []
     resources :tags, only: [:create, :new]
     resources :taggings, only: [:create]
   end
 
   resources :zones, only: [] do
-    resources :loans, only: [] do
-      collection do
-        get 'expired', to: 'loans#expired', as: 'expired'
-        get 'close_to_expire', to: 'loans#close_to_expire', as: 'close_to_expire'
-        get 'not_renewed', to: 'loans#not_renewed', as: 'not_renewed'
-        get 'close_to_cancel', to: 'loans#close_to_cancel', as: 'close_to_cancel'
-        get 'capital', to: 'loans#capital', as: 'capital'
-        get 'prevision', to: 'loans#prevision', as: 'prevision'
-      end
-    end
+    concerns :resources_loans, only: []
   end
 
   get '/schedules(/:date)', to: 'schedules#index', as: 'schedules', constraints: { date: /\d{4}-\d{2}-\d{2}/ }
@@ -44,21 +46,6 @@ Libreunir::Application.routes.draw do
   devise_for :users
 
   get :dashboard, to: 'dashboard#index'
-
-  resources :loans, only: [:show] do
-    collection do
-      get 'expired', to: 'loans#expired', as: 'expired'
-      get 'close_to_expire', to: 'loans#close_to_expire', as: 'close_to_expire'
-      get 'close_to_cancel', to: 'loans#close_to_cancel', as: 'close_to_cancel'
-      get 'not_renewed', to: 'loans#not_renewed', as: 'not_renewed'
-      get 'capital', to: 'loans#capital', as: 'capital'
-      get 'prevision', to: 'loans#prevision', as: 'prevision'
-    end
-
-    get '/schedules(/:date)', to: 'schedules#index', as: 'schedules', constraints: { date: /\d{4}-\d{2}-\d{2}/ }
-    resources :schedules, only: [:new, :create, :edit, :update]
-    resources :taggings, only: [:destroy]
-  end
 
   get '/switch/:tenant_id', to: 'users#switch', as: 'switch'
   resources :users do

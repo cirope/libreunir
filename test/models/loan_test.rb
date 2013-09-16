@@ -71,7 +71,21 @@ class LoanTest < ActiveSupport::TestCase
   end
 
   test 'prevision' do
-    skip 'Test it =)'
+    assert_difference 'Loan.prevision.count' do
+      Fabricate(:loan, debtor: true, delayed_at: Date.today - 75)
+    end
+  end
+
+  test 'close to cancel' do
+    assert_difference 'Loan.close_to_cancel.count' do
+      Fabricate(:loan, debtor: true, expired_payments_count: 1, payments_to_expire_count: 1)
+    end
+  end
+
+  test 'capital' do
+    assert_difference 'Loan.capital.count' do
+      Fabricate(:loan, debtor: true)
+    end
   end
 
   test 'magick search' do

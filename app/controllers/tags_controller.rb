@@ -1,6 +1,7 @@
 class TagsController < ApplicationController
   before_action :authenticate_user!
-  
+  before_action :load_parent, only: [:create, :new]
+
   check_authorization
   load_and_authorize_resource through: :current_scope
 
@@ -24,6 +25,7 @@ class TagsController < ApplicationController
 
   # POST /tags
   def create
+    @tag.parent_id = @parent.id if @parent
     @tag.user_id = current_user.id
     @tag.branch_id = selected_user.branch.id
 
@@ -41,7 +43,7 @@ class TagsController < ApplicationController
 
   # DELETE /tags/1
   def destroy
-    @tag.self_and_descendents.each { |child| child.destroy }
+    @tag.destroy
 
     respond_to do |format|
       format.js
@@ -51,5 +53,9 @@ class TagsController < ApplicationController
   private
     def tag_params
       params.require(:tag).permit(:name, :category, :parent_id)
+    end
+
+    def load_parent
+      @parent = Tag.find_by(id: params[:tag_id])
     end
 end

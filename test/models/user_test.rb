@@ -30,13 +30,16 @@ class UserTest < ActiveSupport::TestCase
   test 'validates blank attributes' do
     @user.name = ''
     @user.email = ''
+    @user.username = nil
 
     assert @user.invalid?
-    assert_equal 2, @user.errors.size
+    assert_equal 3, @user.errors.size
     assert_equal [error_message_from_model(@user, :name, :blank)],
       @user.errors[:name]
     assert_equal [error_message_from_model(@user, :email, :blank)],
       @user.errors[:email]
+    assert_equal [error_message_from_model(@user, :username, :blank)],
+      @user.errors[:username]
   end
 
   test 'validates well formated attributes' do
@@ -51,11 +54,14 @@ class UserTest < ActiveSupport::TestCase
   test 'validates unique attributes' do
     new_user = Fabricate(:user)
     @user.email = new_user.email
+    @user.username = new_user.username
 
     assert @user.invalid?
-    assert_equal 1, @user.errors.size
+    assert_equal 2, @user.errors.size
     assert_equal [error_message_from_model(@user, :email, :taken)],
       @user.errors[:email]
+    assert_equal [error_message_from_model(@user, :username, :taken)],
+      @user.errors[:username]
   end
 
   test 'validates confirmed attributes' do

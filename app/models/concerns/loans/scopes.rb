@@ -64,7 +64,8 @@ module Loans::Scopes
     end
 
     def filter_by_tag(tag)
-      joins(:tags).where("#{Tag.table_name}.path && ARRAY[?]", tag.id)
+      # tag.subtree_ids dont work
+      joins(:tags).where("#{Tag.table_name}.id" => tag.subtree.pluck('id'))
     end
   end
 end
