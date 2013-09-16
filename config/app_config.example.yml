@@ -17,3 +17,4 @@ ftps:
 zip:
   filename: 'data.zip'
   password: 'data'
+  export_password: 'data'

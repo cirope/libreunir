@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20130912175228) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "branches", force: true do |t|
     t.integer  "branch_id",                null: false
     t.string   "name",                     null: false
