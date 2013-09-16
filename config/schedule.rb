@@ -11,3 +11,7 @@ end
 every 1.day, at: '17:55' do
   rake 'reminders:send_summaries'
 end
+
+every 1.day, at: '20:30' do
+  rake 'exporter:run'
+end

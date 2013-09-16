@@ -1,82 +1,64 @@
-require 'csv'
-
 namespace :exporter do
-  task export: :environment do
-    write_schedules_csv
-    write_notes_csv
+  desc 'Export schedules into a JSON file and then ZIP it and then ship it =)'
+  task run: :environment do
+    write_schedules_json
 
     make_zip
+    upload_zip
+    remove_zip
   end
 
   private
 
   # Schedules
 
-  def write_schedules_csv
-    CSV.open schedules_file, 'w' do |csv|
-      csv << schedule_columns
-
-      schedules.find_each { |schedule| csv << schedule_row(schedule) }
+  def write_schedules_json
+    File.open schedules_file, 'w' do |file|
+      schedules.each { |schedule| file << schedule_row(schedule) }
     end
   end
 
   def schedules_file
-    'eventos.csv'
-  end
-
-  def schedule_columns
-    ['ID', 'Descripción', 'Realizar el', 'Realizado', 'ID Préstamo']
+    'eventos.json'
   end
 
   def schedules
-    Schedule.where.not(schedulable_id: nil)
+    Schedule.includes(:notes, :schedulable).where.not(schedulable_id: nil)
   end
 
   def schedule_row schedule
-    [
-      schedule.id,
-      schedule.description,
-      schedule.scheduled_at.to_s(:db),
-      schedule.done ? 'Si' : 'No',
-      schedule.schedulable.loan_id
-    ]
-  end
+    Jbuilder.encode do |json|
+      json.id schedule.id
+      json.usuario schedule.user.username
+      json.descripcion schedule.description
+      json.hacer_el schedule.scheduled_at.utc
+      json.creado_el schedule.created_at.utc
+      json.hecho schedule.done
+      json.prestamo_id schedule.schedulable.loan_id
 
-  # Notes
-
-  def write_notes_csv
-    CSV.open notes_file, 'w' do |csv|
-      csv << note_columns
-
-      notes.find_each { |note| csv << note_row(note) }
+      json.notas schedule.notes.map { |n| { nota: n.note } }
     end
-  end
-
-  def notes_file
-    'notas.csv'
-  end
-
-  def note_columns
-    ['ID', 'Nota', 'Evento ID']
-  end
-
-  def notes
-    Note.joins(
-      "JOIN schedules ON noteable_type = 'Schedule' AND noteable_id = schedules.id"
-    ).references(:schedules).where('schedules.schedulable_id IS NOT NULL')
-  end
-
-  def note_row note
-    [note.id, note.note, note.noteable_id]
   end
 
   # Zip
   
   def make_zip
-    zip_file = APP_CONFIG['zip']['filename']
-    zip_password = APP_CONFIG['zip']['password']
-    files = [schedules_file, notes_file].join ' '
+    zip_password = APP_CONFIG['zip']['export_password']
 
-    %x{zip #{zip_file} #{files} -m -P #{zip_password}}
+    %x{zip #{zip_file} #{schedules_file} -m -P #{zip_password}}
+  end
+
+  def zip_file
+    "#{Rails.root}/tmp/EVENTOS#{Date.today.strftime '%Y%m%d'}.zip"
+  end
+
+  def upload_zip
+    ftps = Parser::Ftps.new
+
+    ftps.put_file zip_file
+  end
+
+  def remove_zip
+    %x{rm #{zip_file}}
   end
 end
