@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20130909213225) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "branches", force: true do |t|
     t.integer  "branch_id",                null: false
     t.string   "name",                     null: false
@@ -199,7 +202,7 @@ ActiveRecord::Schema.define(version: 20130909213225) do
     t.integer  "lock_version", default: 0,  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "branch_id"
+    t.integer  "branch_id",    default: 0,  null: false
   end
 
   add_index "tags", ["branch_id"], name: "index_tags_on_branch_id", using: :btree
