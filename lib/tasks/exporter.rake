@@ -1,11 +1,13 @@
 namespace :exporter do
   desc 'Export schedules into a JSON file and then ZIP it and then ship it =)'
   task run: :environment do
-    write_schedules_json
+    if APP_CONFIG['zip']['export_password']
+      write_schedules_json
 
-    make_zip
-    upload_zip
-    remove_zip
+      make_zip
+      upload_zip
+      remove_zip
+    end
   end
 
   private
