@@ -14,7 +14,7 @@ namespace :exporter do
 
   def write_schedules_json
     File.open schedules_file, 'w' do |file|
-      schedules.each { |schedule| file << schedule_row(schedule) }
+      file << Jbuilder.encode { |json| schedules_to_json json }
     end
   end
 
@@ -26,17 +26,19 @@ namespace :exporter do
     Schedule.includes(:notes, :schedulable).where.not(schedulable_id: nil)
   end
 
-  def schedule_row schedule
-    Jbuilder.encode do |json|
-      json.id schedule.id
-      json.usuario schedule.user.username
-      json.descripcion schedule.description
-      json.hacer_el schedule.scheduled_at.utc
-      json.creado_el schedule.created_at.utc
-      json.hecho schedule.done
-      json.prestamo_id schedule.schedulable.loan_id
+  def schedules_to_json json
+    json.set! :Eventos do
+      json.array! schedules do |schedule|
+        json.id schedule.id
+        json.usuario schedule.user.username
+        json.descripcion schedule.description
+        json.hacer_el schedule.scheduled_at.utc
+        json.creado_el schedule.created_at.utc
+        json.hecho schedule.done
+        json.prestamo_id schedule.schedulable.loan_id
 
-      json.notas schedule.notes.map { |n| { nota: n.note } }
+        json.notas schedule.notes.map { |n| { nota: n.note } }
+      end
     end
   end
 
