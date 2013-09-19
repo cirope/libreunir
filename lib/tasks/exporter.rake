@@ -25,7 +25,7 @@ namespace :exporter do
   end
 
   def schedules
-    Schedule.includes(:notes, :schedulable).where.not(schedulable_id: nil)
+    Schedule.includes(:notes, :schedulable).where('schedules.updated_at > ?', 3.days.ago).where.not(schedulable_id: nil)
   end
 
   def schedules_to_json json
