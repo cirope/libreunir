@@ -9,6 +9,7 @@ class Schedule < ActiveRecord::Base
 
   # Scopes
   default_scope -> { order("scheduled_at ASC") }
+  scope :reverse_order, -> { order("scheduled_at DESC") }
 
   # Validations
   validates :user_id, :description, :scheduled_at, presence: true

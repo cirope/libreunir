@@ -4,7 +4,7 @@
   <%== show_tags(schedule.schedulable) %>
   <span <%== 'class="muted strike"' if schedule.done? %>>
     <% if schedule.schedulable %>
-      <%= link_to_schedulable(schedule)%>
+      <%= link_to(schedule.label, schedule,  data: { remote: true }) %>
       <span class="muted">|</span>
     <% end %>
     <%= schedule.description %>
