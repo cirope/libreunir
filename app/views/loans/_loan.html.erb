@@ -25,15 +25,15 @@
   </dl>
 
   <h5><%= Client.human_attribute_name('phones') %></h5>
-  <%= show_phones(loan) %>
+  <ul>
+    <% if loan.phones.present? %>
+      <% loan.phones.each do |phone| %>
+        <li><%= [phone.carrier, phone.phone].join(' - ') %></li>
+      <% end %>
+    <% else %>
+      <li><span>-</span></li>
+    <% end %>
+  </ul>
 
-  <% if loan.schedules.present? %>
-    <h5><%= Schedule.model_name.human(count: 0) %></h5>
-    <%= show_schedules(loan) %>
-  <% end %>
-
-  <% if loan.comments.present? %>
-    <h5><%= Loan.human_attribute_name('last_comments') %></h5>
-    <%= show_last_comments(loan) %>
-  <% end %>
+  <%= render partial: 'loans/schedules', locals: { loan: loan } %>
 </div>
