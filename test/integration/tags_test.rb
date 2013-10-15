@@ -61,7 +61,7 @@ class TagsTest < ActionDispatch::IntegrationTest
 
     assert_difference 'Tagging.count', -1 do
       within "tr[data-object-id=\"#{loan.id}\"]" do
-        click_link 'x'
+        find('[data-method="delete"]').click
 
         page.driver.browser.switch_to.alert.accept
       end

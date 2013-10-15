@@ -18,7 +18,7 @@ gem 'validates_timeliness'
 gem 'sidekiq'
 gem 'archive-zip'
 gem 'whenever', require: false
-gem 'capistrano'
+gem 'capistrano', '~> 2.15'
 gem 'unicorn', require: false
 gem 'newrelic_rpm'
 gem 'ancestry'

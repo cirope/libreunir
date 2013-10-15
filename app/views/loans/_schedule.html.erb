@@ -1,0 +1,6 @@
+<span class="<%= "#{ t('date.abbr_month_names')[schedule.scheduled_at.month]}" %>">
+  <%= link_to(
+    l(schedule.scheduled_at.to_date, format: :mini_short),
+    loan_schedules_path(loan, l(schedule.scheduled_at.to_date, format: :minimal))
+  ) %>
+</span>

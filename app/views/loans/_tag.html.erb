@@ -1,0 +1,8 @@
+<span class="tagging label label-<%= tag.category %>">
+  <%= link_to truncate_tag_name(tag), [action, tag, 'loans'] %> |
+  <%= link_to(
+    '&times;'.html_safe,
+    loan_tagging_path(loan, loan.find_tagging_by(tag), action_name: action),
+    data: { remote: true, method: :delete, confirm: t('messages.confirmation') }
+  ) %>
+</span>

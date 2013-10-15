@@ -16,14 +16,7 @@ module LoansHelper
     action = params[:action_name] || action_name
 
     loan.tags.each do |tag|
-      tags << content_tag(:span, class: "tagging label label-#{tag.category}") do
-        concat link_to truncate_tag_name(tag), [action, tag, 'loans']
-        concat ' | '
-        concat link_to('x',
-          loan_tagging_path(loan, loan.find_tagging_by(tag), action_name: action),
-          data: { remote: true, method: :delete, confirm: t('messages.confirmation') }
-        )
-      end
+      tags << render('loans/tag', loan: loan, tag: tag, action: action)
     end
 
     tags.join(' ')
@@ -63,11 +56,7 @@ module LoansHelper
   def show_schedule(loan)
     user = current_user.collector? ? current_user : selected_user
     if schedule = loan.closest_schedule(user)
-      content_tag(:span, class: "#{ t('date.abbr_month_names')[schedule.scheduled_at.month]}") do
-        link_to((l schedule.scheduled_at.to_date, format: :mini_short),
-          loan_schedules_path(loan, (l schedule.scheduled_at.to_date, format: :minimal))
-        )
-      end
+      render 'loans/schedule', loan: loan, schedule: schedule
     end
   end
 
