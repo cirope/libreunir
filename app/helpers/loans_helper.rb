@@ -35,16 +35,6 @@ module LoansHelper
     end
   end
 
-  def show_phone(phone)
-    if phone
-      if phone.carrier.present?
-        content_tag(:abbr, phone.phone, title: phone.carrier)
-      else
-        phone.phone
-      end
-    end
-  end
-
   def show_debt_percentage(loan)
     number_to_percentage(loan.total_debt.to_f * 100.0 / @total_debt) if @total_debt > 0
   end
