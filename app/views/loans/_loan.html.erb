@@ -12,6 +12,8 @@
     <dd><%= number_to_currency loan.payment %></dd>
     <dt><%= Loan.human_attribute_name('payments_count') %></dt>
     <dd><%= loan.payments_count %></dd>
+    <dt><%= Loan.human_attribute_name('days_overdue_average') %></dt>
+    <dd><%= loan.days_overdue_average.to_f %></dd>
     <% unless loan.canceled_at %>
     <dt><%= Loan.human_attribute_name('expired_payments_count') %></dt>
     <dd><%= loan.expired_payments_count %></dd>

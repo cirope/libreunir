@@ -4,6 +4,8 @@
   <td><%== loan_category(loan) %> <%= show_client_info(loan) %></td>
   <td><%= number_to_currency loan.total_debt %></td>
   <td><%= show_distance_in_words(loan.delayed_at) %></td>
+  <td><%= number_to_currency loan.capital %></td>
+  <td><%= loan.days_overdue_average.to_f %></td>
   <td class="hidden-print"><%= link_to_loan_info(loan) %></td>
   <td class="hidden-print"><%= link_to_new_schedule(loan) %></td>
 </tr>
