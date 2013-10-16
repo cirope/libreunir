@@ -7,12 +7,12 @@
     <table class="table table-condensed" data-endless-container="true">
       <thead>
         <tr>
-          <th></th>
-          <th><%= Schedule.model_name.human(count: 1) %></th>
+          <th class="hidden-print"></th>
+          <th class="hidden-print"><%= Schedule.model_name.human(count: 1) %></th>
           <th><%= Loan.human_attribute_name  'client_id'  %></th>
           <th><%= Loan.human_attribute_name  'capital' %></th>
           <th><%= Loan.human_attribute_name  'canceled_at' %></th>
-          <th colspan="2"></th>
+          <th colspan="2" class="hidden-print"></th>
         </tr>
       </thead>
 

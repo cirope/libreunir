@@ -1,6 +1,6 @@
 <tr data-object-id="<%= loan.to_param %>">
-  <td><%= check_box_tag "taggable_ids[]", loan.id, false, id: nil %></td>
-  <td><%= show_schedule(loan) %></td>
+  <td class="hidden-print"><%= check_box_tag "taggable_ids[]", loan.id, false, id: nil %></td>
+  <td class="hidden-print"><%= show_schedule(loan) %></td>
   <td><%== loan_category(loan) %> <%= show_client_info(loan) %></td>
   <td><%= number_to_currency loan.capital %></td>
   <td><%= show_distance_in_words(loan.canceled_at) %></td>
