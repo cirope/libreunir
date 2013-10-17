@@ -53,8 +53,8 @@ class LoanTest < ActiveSupport::TestCase
   end
 
   test 'close to expire' do
-    assert_no_difference 'Loan.close_to_expire.count' do
-      Fabricate(:loan, canceled_at: Time.zone.now)
+    assert_difference 'Loan.close_to_expire.count' do
+      Fabricate(:loan, progress: 90)
     end
   end
 
@@ -66,7 +66,7 @@ class LoanTest < ActiveSupport::TestCase
 
   test 'not renewed' do
     assert_difference 'Loan.not_renewed.count' do
-      Fabricate(:loan, canceled_at: 3.day.ago)
+      Fabricate(:loan, state: 'not_renewed', canceled_at: 3.day.ago)
     end
   end
 

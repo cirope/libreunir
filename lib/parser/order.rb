@@ -9,7 +9,8 @@ module Parser
         branch_id: ::Branch.find_by(branch_id: row[3].to_i).try(:id),
         user_id: ::User.find_by(username: row[5]).try(:id),
         zone_id: ::Zone.find_by(zone_id: row[1]).try(:id),
-        created_at: row[4]
+        created_at: row[4],
+        state: 'current'
       }
       loan.without_versioning { loan.touch } if loan.try(:persisted?)
 

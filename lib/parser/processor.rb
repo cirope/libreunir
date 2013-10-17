@@ -31,18 +31,18 @@ module Parser
     end
 
     def cleanup
-      ::Loan.where('updated_at < :date AND canceled_at IS NULL', date: Time.now.midnight).find_each do |l|
+      ::Loan.not_renewed.find_each do |l|
         l.without_versioning do
-          l.update(
-            total_debt: nil,
-            progress: nil,
-            days_overdue_average: nil,
-            expired_payments_count: nil,
-            payments_to_expire_count: nil,
-            delayed_at: nil,
-            next_payment_expire_at: nil
-          )
+          if ::Loan.current.joins(:client).where(
+            "#{::Client.table_name}.identification = ?", l.client.identification
+          ).exists?
+            l.update(state: 'history')
+          end
         end
+      end
+
+      ::Loan.current.where('updated_at < :date', date: Time.now.midnight).find_each do |l|
+        l.without_versioning { l.update(state: 'standby') }
       end
     end
   end

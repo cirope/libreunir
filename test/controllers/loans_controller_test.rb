@@ -23,7 +23,7 @@ class LoansControllerTest < ActionController::TestCase
     xhr :get, :close_to_expire, format: :js
 
     assert_response :success
-    assert_equal 3, assigns(:loans).size
+    assert_equal 4, assigns(:loans).size
     assert_template 'loans/_close_to_expire'
   end
 
@@ -89,11 +89,11 @@ class LoansControllerTest < ActionController::TestCase
     def fabricate_close_to_expire
       3.times { Fabricate(:loan, user_id: @user.id) }
 
-      Fabricate(:loan, user_id: @user.id, expired_payments_count: 1, progress: 8, canceled_at: Time.zone.now)
+      Fabricate(:loan, user_id: @user.id, expired_payments_count: 1, progress: 8)
     end
 
     def fabricate_canceled
-      3.times { Fabricate(:loan, user_id: @user.id, canceled_at: 3.days.ago.to_date) }
+      3.times { Fabricate(:loan, user_id: @user.id, state: 'not_renewed', canceled_at: 3.days.ago.to_date) }
 
       Fabricate(:loan, user_id: @user.id)
     end

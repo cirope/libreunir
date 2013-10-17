@@ -11,10 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130912175228) do
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+ActiveRecord::Schema.define(version: 20131017120203) do
 
   create_table "branches", force: true do |t|
     t.integer  "branch_id",                null: false
@@ -64,7 +61,7 @@ ActiveRecord::Schema.define(version: 20130912175228) do
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
   create_table "loans", force: true do |t|
-    t.integer  "loan_id",                                                           null: false
+    t.integer  "loan_id",                                                               null: false
     t.decimal  "capital",                  precision: 15, scale: 5
     t.decimal  "payment",                  precision: 15, scale: 5
     t.decimal  "total_debt",               precision: 15, scale: 5
@@ -79,12 +76,13 @@ ActiveRecord::Schema.define(version: 20130912175228) do
     t.integer  "user_id"
     t.integer  "branch_id"
     t.integer  "zone_id"
-    t.integer  "lock_version",                                      default: 0,     null: false
+    t.integer  "lock_version",                                      default: 0,         null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.date     "canceled_at"
     t.integer  "segment_id"
-    t.boolean  "debtor",                                            default: false, null: false
+    t.boolean  "debtor",                                            default: false,     null: false
+    t.string   "state",                                             default: "current", null: false
   end
 
   add_index "loans", ["branch_id"], name: "index_loans_on_branch_id", using: :btree
@@ -96,6 +94,7 @@ ActiveRecord::Schema.define(version: 20130912175228) do
   add_index "loans", ["loan_id"], name: "index_loans_on_loan_id", unique: true, using: :btree
   add_index "loans", ["progress"], name: "index_loans_on_progress", using: :btree
   add_index "loans", ["segment_id"], name: "index_loans_on_segment_id", using: :btree
+  add_index "loans", ["state"], name: "index_loans_on_state", using: :btree
   add_index "loans", ["total_debt"], name: "index_loans_on_total_debt", using: :btree
   add_index "loans", ["user_id"], name: "index_loans_on_user_id", using: :btree
   add_index "loans", ["zone_id"], name: "index_loans_on_zone_id", using: :btree

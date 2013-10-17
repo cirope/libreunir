@@ -11,7 +11,8 @@ module Parser
         payments_count: row[20],
         expired_payments_count: expired_payments_count(loan),
         payments_to_expire_count: payments_to_expire_count(loan),
-        next_payment_expire_at: row[97]
+        next_payment_expire_at: row[97],
+        state: 'current'
       }
 
       loan = save_instance(loan, ::Loan, attributes)

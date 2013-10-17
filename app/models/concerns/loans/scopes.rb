@@ -7,29 +7,29 @@ module Loans::Scopes
 
   module ClassMethods
     def expired
-      not_canceled.where('expired_payments_count > 0')
+      current.where('expired_payments_count > 0')
     end
 
     def not_renewed
-      where.not(canceled_at: nil)
+      where(state: 'not_renewed')
     end
 
     def close_to_expire
-      not_canceled.where.not(progress: nil)
+      current.where.not(progress: nil)
     end
 
     def close_to_cancel
-      not_canceled.debtor.where('expired_payments_count + payments_to_expire_count <= ?', 2)
+      current.debtor.where('expired_payments_count + payments_to_expire_count <= ?', 2)
     end
 
     def capital
-      not_canceled.debtor
+      current.debtor
     end
 
     def prevision
       start, finish = (Date.today - 90).midnight, (Date.today - 60).midnight
 
-      not_canceled.debtor.where(delayed_at: start..finish)
+      current.debtor.where(delayed_at: start..finish)
     end
 
     def not_canceled
@@ -37,7 +37,19 @@ module Loans::Scopes
     end
 
     def debtor
-      where('debtor IS TRUE AND progress IS NOT NULL')
+      where(debtor: true)
+    end
+
+    def current
+      where(state: 'current')
+    end
+
+    def history
+      where(state: 'history')
+    end
+
+    def standby
+      where(state: 'standby')
     end
 
     def sorted_by_total_debt
