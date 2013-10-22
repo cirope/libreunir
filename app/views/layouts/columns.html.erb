@@ -16,28 +16,31 @@
   <%= favicon_link_tag '/favicon.ico' %>
 </head>
 <body id="c_<%= controller_name %>" data-action="<%= action_name %>" <%= raw 'class="logged_in"' if user_signed_in? %>>
-  <%= render 'shared/menu' %>
-  <div id="loading_caption" class="alert" style="display: none;">
-    <strong><%= t('label.loading') %></strong>
-  </div>
-  <div class="container">
-    <div class="content">
-      <%= yield :summary %>
-      <div class="columns-container">
-        <div class="row-fluid">
-          <div class="span3 hidden-print">
-            <%= yield :sidebar %>
-          </div>
-          <div class="span9">
-            <%= yield %>
+  <div data-hidden-print="true">
+    <%= render 'shared/menu' %>
+    <div id="loading_caption" class="alert" style="display: none;">
+      <strong><%= t('label.loading') %></strong>
+    </div>
+    <div class="container">
+      <div class="content">
+        <%= yield :summary %>
+        <div class="columns-container">
+          <div class="row-fluid">
+            <div class="span3 hidden-print">
+              <%= yield :sidebar %>
+            </div>
+            <div class="span9">
+              <%= yield %>
+            </div>
           </div>
         </div>
+        <div class="form-actions"></div>
       </div>
-      <div class="form-actions"></div>
     </div>
-  </div>
 
-  <%= render 'shared/notice' if flash.notice %>
-  <%= render 'shared/alert' if flash.alert %>
+    <%= render 'shared/notice' if flash.notice %>
+    <%= render 'shared/alert' if flash.alert %>
+  </div>
+  <div class="visible-print" data-visible-print="true"></div>
 </body>
 </html>

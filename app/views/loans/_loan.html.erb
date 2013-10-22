@@ -27,15 +27,7 @@
   </dl>
 
   <h5><%= Client.human_attribute_name('phones') %></h5>
-  <ul>
-    <% if loan.phones.present? %>
-      <% loan.phones.each do |phone| %>
-        <li><%= [phone.carrier, phone.phone].join(' - ') %></li>
-      <% end %>
-    <% else %>
-      <li><span>-</span></li>
-    <% end %>
-  </ul>
+  <ul><%= show_phones(loan) %></ul>
 
   <%= render partial: 'loans/schedules', locals: { loan: loan } %>
 </div>

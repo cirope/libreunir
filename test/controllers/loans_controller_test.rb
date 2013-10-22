@@ -77,6 +77,16 @@ class LoansControllerTest < ActionController::TestCase
     assert_template 'loans/show'
   end
 
+  test 'should print' do
+    fabricate_close_to_expire
+
+    xhr :get, :close_to_expire, print: 'true', format: :js
+
+    assert_response :success
+    assert_equal 4, assigns(:loans).size
+    assert_template 'loans/print'
+  end
+
   private
     def fabricate_expired
       3.times do

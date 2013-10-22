@@ -13,4 +13,8 @@ class Comment < ActiveRecord::Base
   # Relations
   belongs_to :loan
   belongs_to :user
+
+  def to_s
+    self.comment
+  end
 end

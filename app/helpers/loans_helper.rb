@@ -53,4 +53,17 @@ module LoansHelper
   def show_client_info(loan)
     content_tag(:abbr, loan.client, title: loan.segment)
   end
+
+  def show_phones(loan)
+    phones = []
+    if loan.phones.present?
+      loan.phones.each do |phone|
+        phones << content_tag(:li, [phone.carrier, phone.phone].compact.join(' - '))
+      end
+    else
+      return content_tag(:li, '-')
+    end
+
+    phones.join().html_safe
+  end
 end

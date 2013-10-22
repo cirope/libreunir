@@ -1,0 +1,72 @@
+<div class="pull-left"><h4><%= t('app_name') %></h4></div>
+<div class="pull-right"><h4><%= @title %></h4></div>
+
+<div class="clearfix">
+  <% if @loans.present? %>
+    <table class="table table-condensed" style="font-size: 8px;">
+      <thead>
+        <tr>
+          <th><%= Zone.model_name.human(count: 1) %></th>
+          <th><%= Loan.human_attribute_name('client_id') %></th>
+          <% if action_name == 'not_renewed' %>
+            <th><%= Loan.human_attribute_name('canceled_at') %></th>
+          <% else %>
+            <th><%= Loan.human_attribute_name('total_debt') %></th>
+            <th><%= Loan.human_attribute_name('progress') %></th>
+            <th><%= Loan.human_attribute_name('delayed_at') %></th>
+          <% end %>
+          <th><%= Loan.human_attribute_name('capital') %></th>
+          <th><%= Loan.human_attribute_name('days_overdue_average') %></th>
+          <th><%= Client.human_attribute_name('phones') %></th>
+          <th><%= Schedule.model_name.human(count: 1) %></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @loans.each do |loan| %>
+          <tr>
+            <td><%= loan.tags.first if loan.tags %></td>
+            <td><%= loan.client %> <%= "(#{loan.segment})" %></td>
+            <% if action_name == 'not_renewed' %>
+              <td><%= show_distance_in_words(loan.canceled_at) %></td>
+            <% else %>
+              <td><%= number_to_currency loan.total_debt %></td>
+              <td><%= number_to_percentage loan.progress, precision: 0 %></td>
+              <td><%= show_distance_in_words(loan.delayed_at) %></td>
+            <% end %>
+            <td><%= number_to_currency loan.capital %></td>
+            <td><%= loan.days_overdue_average.to_f %></td> 
+            <td>
+              <ul class="nowrap nav"><%= show_phones(loan) %></ul>
+            </td>
+            <td>
+              <ul class="nav">
+                <% if schedule = loan.schedules.last %>
+                  <li>
+                    <%= l schedule.created_at.to_date %> - <%= schedule.description %>
+                  <li>
+                  <% if schedule.notes.present? %>
+                    <li>
+                      <ul>
+                        <% schedule.notes.each do |note| %>
+                          <li><%= note.note %></li>
+                        <% end %>
+                      </ul>
+                    </li>
+                  <% end %>
+                <% elsif comment = loan.comments.last %>
+                  <li>
+                    <%= l comment.created_at.to_date %> - <%= comment.comment %>
+                    (<%= Comment.human_attribute_name('comment') %>)
+                  </li>
+                <% end %>
+              </ul>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <%= render 'shared/empty_index' %>
+  <% end %>
+</div>

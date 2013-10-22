@@ -1,0 +1,3 @@
+$('[data-hidden-print]').addClass('hidden-print');
+$('[data-visible-print]').html('<%= j render(template: 'loans/print', formats: [:html]) %>');
+window.print();

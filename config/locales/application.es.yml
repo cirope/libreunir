@@ -25,6 +25,7 @@
     new: 'Agregar'
     none: 'Ninguno'
     pending: 'Pendientes'
+    print: 'Imprimir'
     scheduler: 'Agendar'
     search: 'Buscar'
     select: 'Seleccionar'

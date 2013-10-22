@@ -13,8 +13,18 @@ footer.alert {
   right: 4em;
 }
 
+form[data-form-container="true"] {
+  .progress {
+    margin-bottom: 0px;
+  }
+}
+
 html, body {
   background-color: #efefef;
+}
+
+#c_schedules, #c_loans {
+  .columns-container { margin: 40px 10px 0 15px; }
 }
 
 #loading_caption {
@@ -76,20 +86,18 @@ html, body {
   }
 }
 
-#c_schedules, #c_loans {
-  .columns-container { margin: 40px 10px 0 15px; }
+.print {
+  margin: 6px 10px;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+.tooltip {
+  position: fixed;
 }
 
 .ui-datepicker-trigger {
   display: none;
-}
-
-form[data-form-container="true"] {
-  .progress {
-    margin-bottom: 0px;
-  }
-}  
-
-.tooltip {
-  position: fixed;
 }
