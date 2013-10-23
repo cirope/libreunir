@@ -7,30 +7,13 @@ module Parser
 
       attributes = { 
         loan_id: loan_id,
-        payments_count: row[17],
-        payment: row[18],
-        capital: row[19],
-        days_overdue_average: row[21].to_f.round,
-        canceled_at: row[25],
         user_id: ::User.find_by(username: row[26]).try(:id),
         segment_id: ::Segment.find_by(segment_id: row[27]).try(:id),
         branch_id: ::Branch.find_by(branch_id: row[28].to_i).try(:id),
         client_id: client.id
-      }.merge(default_attributes)
+      }.merge(row_attributes).merge(default_attributes)
 
       loan = save_instance(loan, ::Loan, attributes)
-    end
-
-    def default_attributes
-      {
-        debtor: false,
-        progress: 100,
-        delayed_at: nil,
-        state: 'not_renewed',
-        expired_payments_count: 0,
-        payments_to_expire_count: 0,
-        next_payment_expire_at: nil
-      }
     end
 
     def client_first_or_create(row)
@@ -53,5 +36,28 @@ module Parser
         Parser::Phone.new(attributes, client).parse
       end
     end
+
+    private
+      def row_attributes(row)
+        {
+          payments_count: row[17],
+          payment: row[18],
+          capital: row[19],
+          days_overdue_average: row[21].to_f.round,
+          canceled_at: row[25],
+        }
+      end
+
+      def default_attributes
+        {
+          debtor: false,
+          progress: 100,
+          delayed_at: nil,
+          state: 'not_renewed',
+          expired_payments_count: 0,
+          payments_to_expire_count: 0,
+          next_payment_expire_at: nil
+        }
+      end
   end
 end
