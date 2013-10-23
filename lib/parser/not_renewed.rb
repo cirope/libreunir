@@ -19,8 +19,6 @@ module Parser
       }.merge(default_attributes)
 
       loan = save_instance(loan, ::Loan, attributes)
-
-      loan.payments.where(paid_at: nil).each { |p| p.update(paid_at: (loan.canceled_at || Time.now)) }
     end
 
     def default_attributes

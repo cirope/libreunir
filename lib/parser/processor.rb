@@ -31,23 +31,43 @@ module Parser
     end
 
     def cleanup
-      ::Loan.not_renewed.find_each do |l|
-        l.without_versioning do
-          if ::Loan.current.joins(:client).where(
-            "#{::Client.table_name}.identification = ?", l.client.identification
-          ).exists?
-            l.update(state: 'history')
+      not_renewed_to_history
+      current_to_standby
+      no_delayed_is_not_debtor
+      not_renewed_has_all_payments_paid
+    end
+
+    private
+      def current_to_standby
+        ::Loan.current.where('updated_at < :date', date: Time.now.midnight).find_each do |l|
+          l.without_versioning { l.update(state: 'standby') }
+        end
+      end
+
+      def not_renewed_to_history
+        ::Loan.not_renewed.find_each do |l|
+          l.without_versioning do
+            if ::Loan.current.joins(:client).where(
+              "#{::Client.table_name}.identification = ?", l.client.identification
+            ).exists?
+              l.update(state: 'history')
+            end
           end
         end
       end
 
-      ::Loan.current.where('updated_at < :date', date: Time.now.midnight).find_each do |l|
-        l.without_versioning { l.update(state: 'standby') }
+      def no_delayed_is_not_debtor
+        ::Loan.debtor.where(delayed_at: nil).find_each do |l|
+          l.without_versioning { l.update(debtor: false) }
+        end
       end
 
-      ::Loan.debtor.where(delayed_at: nil).find_each do |l|
-        l.without_versioning { l.update(debtor: false) }
+      def not_renewed_has_all_payments_paid
+        ::Loan.not_renewed.find_each do |l|
+          l.payments.where(paid_at: nil).each do |p|
+            p.without_versioning { p.update(paid_at: (loan.canceled_at || Time.now)) }
+          end
+        end
       end
-    end
   end
 end
