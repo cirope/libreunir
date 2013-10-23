@@ -11,7 +11,7 @@ module Parser
         segment_id: ::Segment.find_by(segment_id: row[27]).try(:id),
         branch_id: ::Branch.find_by(branch_id: row[28].to_i).try(:id),
         client_id: client.id
-      }.merge(row_attributes).merge(default_attributes)
+      }.merge(row_attributes(row)).merge(default_attributes)
 
       loan = save_instance(loan, ::Loan, attributes)
     end
