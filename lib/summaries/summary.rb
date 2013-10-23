@@ -40,6 +40,10 @@ module Summaries::Summary
     @current_loans_count ||= current_loans.count
   end
 
+  def total_capital
+    @current_loans.sum('capital')
+  end
+
   def loans_summary
     value(current_loans)
   end

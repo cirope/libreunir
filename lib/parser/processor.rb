@@ -44,6 +44,10 @@ module Parser
       ::Loan.current.where('updated_at < :date', date: Time.now.midnight).find_each do |l|
         l.without_versioning { l.update(state: 'standby') }
       end
+
+      ::Loan.debtor.where(delayed_at: nil).find_each do |l|
+        l.without_versioning { l.update(debtor: false) }
+      end
     end
   end
 end

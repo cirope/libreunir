@@ -66,4 +66,43 @@ module LoansHelper
 
     phones.join().html_safe
   end
+
+  def show_payments_summary(loan)
+    "#{loan.payments_count} (#{payments_paid(loan)}, #{payments_expired(loan)}, #{payments_to_expire(loan)})"
+  end
+
+  def interest_header
+    content_tag(
+      :abbr, payment_text('interest'),
+      title: "#{payment_text('interest')} + #{payment_text('insurance')} + #{payment_text('tax')}"
+    )
+  end
+
+  def show_expire_at(loan)
+    if loan.delayed_at
+      content_tag(:span, l(loan.delayed_at), class: 'text-error')
+    elsif loan.next_payment_expire_at
+      content_tag(:span, l(loan.next_payment_expire_at))
+    end
+  end
+
+  private
+    def payments_paid(loan)
+      payments_paid_count =
+        loan.payments_count - (loan.expired_payments_count + loan.payments_to_expire_count)
+
+      "#{payments_paid_count} #{Loan.human_attribute_name('payments_paid_count')}"
+    end
+
+    def payments_expired(loan)
+      "#{loan.expired_payments_count} #{Loan.human_attribute_name('expired_payments_count')}"
+    end
+
+    def payments_to_expire(loan)
+      "#{loan.payments_to_expire_count} #{Loan.human_attribute_name('payments_to_expire_count')}"
+    end
+
+    def payment_text(attr)
+      Payment.human_attribute_name(attr)
+    end
 end

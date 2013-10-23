@@ -8,23 +8,63 @@
   <dl class="dl-horizontal">
     <dt><%= Loan.human_attribute_name('capital') %></dt>
     <dd><%= number_to_currency loan.capital %></dd>
+    <dt><%= Loan.human_attribute_name('payments_count') %></dt>
+    <dd><%= show_payments_summary(loan) %></dd>
+    <dt><%= Loan.human_attribute_name('anticipated_debt_cancellation') %></dt>
+    <dd><%= number_to_currency loan.anticipated_debt_cancellation %></dd>
+    <% if loan.expired_payments_count == 0 && loan.payments_to_expire_count > 0 %>
     <dt><%= Loan.human_attribute_name('payment') %></dt>
     <dd><%= number_to_currency loan.payment %></dd>
-    <dt><%= Loan.human_attribute_name('payments_count') %></dt>
-    <dd><%= loan.payments_count %></dd>
+    <% end %>
     <dt><%= Loan.human_attribute_name('days_overdue_average') %></dt>
     <dd><%= loan.days_overdue_average.to_f %></dd>
     <% unless loan.canceled_at %>
-    <dt><%= Loan.human_attribute_name('expired_payments_count') %></dt>
-    <dd><%= loan.expired_payments_count %></dd>
-    <dt><%= Loan.human_attribute_name('payments_to_expire_count') %></dt>
-    <dd><%= loan.payments_to_expire_count %></dd>
     <dt><%= Loan.human_attribute_name('debt_percentage') %></dt>
     <dd><%= show_debt_percentage(loan) %></dd>
     <% end %>
     <dt><%= Client.human_attribute_name('address') %></dt>
     <dd><%= loan.client_address.present? ? loan.client_address : '-' %></dd>
   </dl>
+
+  <% if (exp_pays = loan.expired_payments).count > 0 %>
+    <table class="table table-condensed table-info">
+      <caption class="text-left"><h5>Cuotas vencidas</h5></caption>
+      <thead>
+        <tr>
+          <th><%= Payment.human_attribute_name('number') %></th>
+          <th><%= Payment.human_attribute_name('total_paid') %></th>
+          <th><%= Payment.human_attribute_name('capital') %></th>
+          <th><%= interest_header %></th>
+          <th><%= Payment.human_attribute_name('additional') %></th>
+          <th><%= Payment.human_attribute_name('expired_at') %></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% exp_pays.each do |payment| %>
+        <tr>
+          <td><%= payment.number %></td>
+          <td><%= number_to_currency payment.total_paid %></td>
+          <td><%= number_to_currency payment.capital %></td>
+          <td><%= number_to_currency payment.interest %></td>
+          <td><%= number_to_currency payment.additional %></td>
+          <td><%= l payment.expired_at %></td>
+        </tr>
+        <% end %>
+      </tbody>
+
+      <tfoot>
+        <tr>
+          <td><strong><%= Payment.human_attribute_name('total_paid') %></strong></td>
+          <td><strong><%= number_to_currency exp_pays.map(&:total_paid).sum %></strong></td>
+          <td><strong><%= number_to_currency exp_pays.map(&:capital).sum %></strong></td>
+          <td><strong><%= number_to_currency exp_pays.map(&:interest).sum %></strong></td>
+          <td><strong><%= number_to_currency exp_pays.map(&:additional).sum %></strong></td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+  <% end %>
 
   <h5><%= Client.human_attribute_name('phones') %></h5>
   <ul><%= show_phones(loan) %></ul>

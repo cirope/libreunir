@@ -5,9 +5,13 @@ module Loans::Scopes
     taggings.find_by(tag_id: tag.id)
   end
 
+  def expired_payments
+    payments.where('paid_at IS NULL AND expired_at < ?', Date.today).order('number ASC')
+  end
+
   module ClassMethods
     def expired
-      current.where('expired_payments_count > 0')
+      current.no_debtor.where('expired_payments_count > 0')
     end
 
     def not_renewed
@@ -15,7 +19,7 @@ module Loans::Scopes
     end
 
     def close_to_expire
-      current.where.not(progress: nil)
+      current.no_debtor.where.not(progress: nil)
     end
 
     def close_to_cancel
@@ -38,6 +42,10 @@ module Loans::Scopes
 
     def debtor
       where(debtor: true)
+    end
+
+    def no_debtor
+      where(debtor: false)
     end
 
     def current

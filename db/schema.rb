@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131017120203) do
+ActiveRecord::Schema.define(version: 20131022150859) do
 
   create_table "branches", force: true do |t|
     t.integer  "branch_id",                null: false
@@ -124,6 +124,8 @@ ActiveRecord::Schema.define(version: 20131017120203) do
     t.integer  "lock_version",                          default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal  "capital",      precision: 15, scale: 5
+    t.decimal  "additional",   precision: 15, scale: 5
   end
 
   add_index "payments", ["expired_at"], name: "index_payments_on_expired_at", using: :btree

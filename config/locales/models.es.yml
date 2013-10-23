@@ -55,18 +55,22 @@
       comment:
         comment: 'Comentario externo'
       loan:
-        approved_at: 'Aprovación'
+        anticipated_debt_cancellation: 'Deuda canc. anticipada'
+        approved_at: 'Aprobación'
         canceled_at: 'Cancelado'
         capital: 'Monto'
         days_overdue_average: 'DAP'
         debt_percentage: 'Porcentaje de deuda'
         delayed_at: 'Atraso'
-        expired_payments_count: 'Cuotas pendientes'
+        expired_payments_count: 'vencidas'
         last_comments: 'Últimos comentarios'
-        payment: 'Valor de cuota'
+        next_payment_expire_at: 'Próximo vencimiento'
+        payment: 'Cuota'
         payments_count: 'Cuotas'
-        payments_to_expire_count: 'Cuotas restantes'
+        payments_paid_count: 'pagas'
+        payments_to_expire_count: 'restantes'
         progress: 'Avance'
+        total_capital: 'Monto Total'
         total_debt: 'Deuda'
         client_id: 'Cliente'
         branch_id: 'Sucursal'
@@ -75,9 +79,15 @@
       note:
         note: 'Nota'
       payment:
-        number: 'Número'
+        additional: 'Adicionales'
+        capital: 'Capital'
         expired_at: 'Vencimiento'
+        interest: 'Interés'
+        insurance: 'Seguro'
+        tax: 'Impuestos'
+        number: 'Número'
         paid_at: 'Fecha de pago'
+        total_paid: 'Total'
       phone:
         phone: 'Teléfono'
       reminder:

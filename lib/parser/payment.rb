@@ -12,6 +12,8 @@ module Parser
         number: row[1],
         days_overdue: days_overdue(row[2], row[16]),
         expired_at: row[2], 
+        capital: row[4],
+        additional: row[14],
         paid_at: row[16],
         amount_paid: row[17], 
         total_paid: row[41], 

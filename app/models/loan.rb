@@ -31,6 +31,10 @@ class Loan < ActiveRecord::Base
     self.expired_payments_count > 0
   end
 
+  def anticipated_debt_cancellation
+    self.payments.where("#{Payment.table_name}.amount_paid IS NULL").sum('capital')
+  end
+
   def closest_schedule(user)
     self.schedules.where(user_id: user.id, done: false).first
   end
