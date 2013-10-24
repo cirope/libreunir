@@ -35,6 +35,7 @@ module Parser
       current_to_standby
       no_delayed_is_not_debtor
       not_renewed_has_all_payments_paid
+      segments_to_standby
     end
 
     private
@@ -68,6 +69,14 @@ module Parser
             p.without_versioning { p.update(paid_at: (loan.canceled_at || Time.now)) }
           end
         end
+      end
+
+      def segments_to_standby
+        segments = ['DCHT', 'PLCH']
+
+        ::Loan.close_to_expire.where(
+          progress: 100, segment_id: ::Segment.where(segment_id: segments).pluck('id')
+        ).find_each { |l| l.without_versioning { l.update(state: 'standby') } }
       end
   end
 end
