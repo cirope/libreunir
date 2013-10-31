@@ -66,7 +66,7 @@ module Parser
       def not_renewed_has_all_payments_paid
         ::Loan.not_renewed.find_each do |l|
           l.payments.where(paid_at: nil).each do |p|
-            p.without_versioning { p.update(paid_at: (loan.canceled_at || Time.now)) }
+            p.without_versioning { p.update(paid_at: (l.canceled_at || Time.now)) }
           end
         end
       end
