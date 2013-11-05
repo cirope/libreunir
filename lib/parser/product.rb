@@ -7,11 +7,11 @@ module Parser
       attributes = { 
         loan_id: loan_id,
         delayed_at: row[3], 
-        total_debt: row[8],
-        payments_count: row[20],
+        total_debt: row[5],
+        payments_count: row[8],
         expired_payments_count: expired_payments_count(loan),
         payments_to_expire_count: payments_to_expire_count(loan),
-        next_payment_expire_at: row[97],
+        next_payment_expire_at: row[12],
         state: 'current'
       }
 
