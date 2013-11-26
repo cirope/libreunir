@@ -12,7 +12,7 @@ class ZoneTest < ActiveSupport::TestCase
   end
     
   test 'update' do
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_no_difference 'Zone.count' do
         assert @zone.update_attributes(name: 'Updated')
       end
@@ -22,7 +22,7 @@ class ZoneTest < ActiveSupport::TestCase
   end
     
   test 'destroy' do 
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_difference('Zone.count', -1) { @zone.destroy }
     end
   end

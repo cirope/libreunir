@@ -12,7 +12,7 @@ class ScheduleTest < ActiveSupport::TestCase
   end
     
   test 'update' do
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_no_difference 'Schedule.count' do
         assert @schedule.update_attributes(description: 'Updated')
       end
@@ -22,7 +22,7 @@ class ScheduleTest < ActiveSupport::TestCase
   end
     
   test 'destroy' do 
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_difference('Schedule.count', -1) { @schedule.destroy }
     end
   end

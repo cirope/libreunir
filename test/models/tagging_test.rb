@@ -18,7 +18,7 @@ class TaggingTest < ActiveSupport::TestCase
   test 'update' do
     tag = Fabricate(:tag)
 
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_no_difference 'Tagging.count' do
         assert @tagging.update_attributes(tag_id: tag.id)
       end 
@@ -28,7 +28,7 @@ class TaggingTest < ActiveSupport::TestCase
   end
 
   test 'destroy' do  
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_difference('Tagging.count', -1) { @tagging.destroy }
     end 
   end

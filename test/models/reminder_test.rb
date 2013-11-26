@@ -12,7 +12,7 @@ class ReminderTest < ActiveSupport::TestCase
   end
     
   test 'update' do
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_no_difference 'Reminder.count' do
         assert @reminder.update_attributes(
           remind_at: @reminder.scheduled_at - 5.hours
@@ -24,7 +24,7 @@ class ReminderTest < ActiveSupport::TestCase
   end
     
   test 'destroy' do 
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_difference('Reminder.count', -1) { @reminder.destroy }
     end
   end

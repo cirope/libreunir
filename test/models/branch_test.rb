@@ -12,7 +12,7 @@ class BranchTest < ActiveSupport::TestCase
   end
 
   test 'update' do
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_no_difference 'Branch.count' do
         assert @branch.update_attributes(name: 'Updated')
       end
@@ -22,7 +22,7 @@ class BranchTest < ActiveSupport::TestCase
   end
 
   test 'destroy' do
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_difference('Branch.count', -1) { @branch.destroy }
     end
   end

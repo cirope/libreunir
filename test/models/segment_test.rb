@@ -12,7 +12,7 @@ class SegmentTest < ActiveSupport::TestCase
   end
 
   test 'update' do
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_no_difference 'Segment.count' do
         assert @segment.update_attributes(description: 'Updated')
       end
@@ -22,7 +22,7 @@ class SegmentTest < ActiveSupport::TestCase
   end
 
   test 'destroy' do
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_difference('Segment.count', -1) { @segment.destroy }
     end
   end

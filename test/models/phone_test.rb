@@ -12,7 +12,7 @@ class PhoneTest < ActiveSupport::TestCase
   end
     
   test 'update' do
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_no_difference 'Phone.count' do
         assert @phone.update_attributes(phone: 'Updated')
       end
@@ -22,7 +22,7 @@ class PhoneTest < ActiveSupport::TestCase
   end
     
   test 'destroy' do 
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_difference('Phone.count', -1) { @phone.destroy }
     end
   end
