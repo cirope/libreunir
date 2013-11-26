@@ -12,7 +12,7 @@ class PaymentTest < ActiveSupport::TestCase
   end
 
   test 'update' do
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_no_difference 'Payment.count' do
         assert @payment.update_attributes(expired_at: Date.today)
       end
@@ -22,7 +22,7 @@ class PaymentTest < ActiveSupport::TestCase
   end
 
   test 'destroy' do
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_difference('Payment.count', -1) { @payment.destroy }
     end
   end

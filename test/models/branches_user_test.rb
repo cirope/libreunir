@@ -12,7 +12,7 @@ class BranchesUserTest < ActiveSupport::TestCase
   end
     
   test 'update' do
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_no_difference 'BranchesUser.count' do
         assert @branches_user.update_attributes(branch_id: 5)
       end
@@ -22,7 +22,7 @@ class BranchesUserTest < ActiveSupport::TestCase
   end
     
   test 'destroy' do 
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_difference('BranchesUser.count', -1) { @branches_user.destroy }
     end
   end

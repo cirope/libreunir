@@ -12,7 +12,7 @@ class LoanTest < ActiveSupport::TestCase
   end
 
   test 'update' do
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_no_difference 'Loan.count' do
         assert @loan.update_attributes(capital: 100.0)
       end
@@ -22,7 +22,7 @@ class LoanTest < ActiveSupport::TestCase
   end
 
   test 'destroy' do 
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_difference('Loan.count', -1) { @loan.destroy }
     end
   end

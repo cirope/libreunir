@@ -12,7 +12,7 @@ class ClientTest < ActiveSupport::TestCase
   end
 
   test 'update' do
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_no_difference 'Client.count' do
         assert @client.update_attributes(name: 'Updated')
       end
@@ -22,7 +22,7 @@ class ClientTest < ActiveSupport::TestCase
   end
 
   test 'destroy' do
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_difference('Client.count', -1) { @client.destroy }
     end
   end
