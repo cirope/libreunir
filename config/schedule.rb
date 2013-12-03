@@ -15,3 +15,7 @@ end
 every 1.day, at: '20:30' do
   rake 'exporter:run'
 end
+
+every 1.month, at: '8am' do
+  rake 'debtors:move_to_collectors'
+end
