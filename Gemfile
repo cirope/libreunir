@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.0.1'
+gem 'rails', '4.0.2'
 
 gem 'pg'
 gem 'jquery-rails'
@@ -12,7 +12,7 @@ gem 'simple_form'
 gem 'devise'
 gem 'cancan', github: 'francocatena/cancan'
 gem 'role_model'
-gem 'paper_trail', '3.0.0.rc2'
+gem 'paper_trail'
 gem 'magick_columns'
 gem 'validates_timeliness'
 gem 'sidekiq'
@@ -24,7 +24,7 @@ gem 'ancestry'
 gem 'capistrano'
 gem 'capistrano-bundler'
 gem 'capistrano-rails'
-gem 'capistrano-rbenv', github: 'capistrano/rbenv'
+gem 'capistrano-rbenv'
 
 # Old assets group
 gem 'sass-rails'
