@@ -21,10 +21,7 @@ gem 'whenever', require: false
 gem 'newrelic_rpm'
 gem 'ancestry'
 
-gem 'capistrano'
-gem 'capistrano-bundler'
-gem 'capistrano-rails'
-gem 'capistrano-rbenv'
+gem 'unicorn'
 
 # Old assets group
 gem 'sass-rails'
@@ -32,7 +29,10 @@ gem 'coffee-rails'
 gem 'uglifier'
 
 group :development do
-  gem 'unicorn'
+  gem 'capistrano'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rails'
+  gem 'capistrano-rbenv', '~> 2.0'
   gem 'unicorn-rails'
 end
 
