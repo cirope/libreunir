@@ -2,8 +2,8 @@ common: &common
   adapter: postgresql
   encoding: unicode
   pool: 5
-  username: <%= ENV['TRAVIS'] ? 'postgres' : 'postman' %>
-  password: <%= ENV['TRAVIS'] ? '' : 'postman' %>
+  username: <%= ENV['TRAVIS'] ? 'postgres' : 'libreunir' %>
+  password: <%= ENV['TRAVIS'] ? '' : 'libreunir' %>
 
 development:
   database: libreunir_development

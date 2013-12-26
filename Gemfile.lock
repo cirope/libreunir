@@ -236,6 +236,7 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails
   magick_columns
+  minitest
   newrelic_rpm
   paper_trail
   pg
