@@ -27,5 +27,8 @@ module Libreunir
       g.test_framework :test_unit, fixture_replacement: :fabrication
       g.fixture_replacement :fabrication, dir: 'test/fabricators'
     end
+
+    # TLD
+    ActionDispatch::Http::URL.tld_length = 4
   end
 end
