@@ -19,8 +19,6 @@ namespace :parser do
     { model: :not_renewed, name: 'clientessinrenovar.txt' }
   ]
 
-  @processor = Parser::Processor.new
-
   task process: :environment do
     files.each do |file|
       path = Dir.glob(
@@ -30,13 +28,15 @@ namespace :parser do
       Parser::Logger.log "[ Parsing #{file[:name]} .... ========================================= ]"
 
       "Parser::#{file[:model].to_s.camelize}".constantize.new(path).parse
-
-      @processor.move_processed(path)
     end
   end
 
   task cleanup: :environment do
+    @processor = Parser::Processor.new
+
     Parser::Logger.log "Cleaning loans..."
+
     @processor.cleanup
+    @processor.cleanup_files
   end
 end
