@@ -1,4 +1,6 @@
 class Notifier < ActionMailer::Base
+  include MandrillHeaders
+
   default from: 'Libreunir <soporte@libreunir.com>'
 
   def remind(reminder)
