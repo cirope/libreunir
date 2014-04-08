@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.0.3'
+gem 'rails', '~> 4.0.4'
 
 gem 'pg'
 gem 'jquery-rails'
@@ -25,7 +25,7 @@ gem 'ancestry'
 gem 'unicorn'
 
 # Old assets group
-gem 'sass-rails'
+gem 'sass-rails', '4.0.3'
 gem 'coffee-rails'
 gem 'uglifier'
 
@@ -41,8 +41,8 @@ end
 group :test do
   gem 'turn'
   gem 'minitest'
-  gem 'capybara', require: false
-  gem 'selenium-webdriver'
+  gem 'capybara'
+  gem 'poltergeist'
   gem 'database_cleaner'
   gem 'fabrication'
   gem 'faker'
