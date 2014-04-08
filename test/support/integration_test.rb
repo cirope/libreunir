@@ -13,7 +13,6 @@ class ActionDispatch::IntegrationTest
     Capybara.default_driver = :poltergeist
     Capybara.server_port     = '54163'
     Capybara.app_host        = 'http://www.lvh.me:54163'
-    Capybara.default_wait_time = ENV['TRAVIS'] ? 4 : 10
   end
 
   teardown do

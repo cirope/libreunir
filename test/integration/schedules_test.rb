@@ -102,10 +102,8 @@ class SchedulesTest < ActionDispatch::IntegrationTest
         find('.btn-primary').click
       end
 
-      assert page.has_no_css?('#schedule_modal')
+      assert page.has_css?('[data-schedule-id]')
     end
-
-    assert page.has_css?('[data-schedule-id]')
   end
 
   test 'should edit schedule' do
@@ -132,14 +130,14 @@ class SchedulesTest < ActionDispatch::IntegrationTest
         find('.btn-primary').click
       end
 
-      assert page.has_no_css?('#schedule_modal')
-      assert page.has_no_css?('td.has_event')
+      page.has_no_css?('#schedule_modal')
+      page.has_no_css?('td.has_event')
     end
     assert_equal schedule_attrs[:description], schedule.reload.description
   end
 
   test 'should move schedules' do
-    date = 5.days.from_now
+    date = 1.month.from_now
     3.times { Fabricate(:schedule, user_id: @user.id, scheduled_at: 1.hour.from_now) }
     login(user: @user)
 
@@ -163,10 +161,12 @@ class SchedulesTest < ActionDispatch::IntegrationTest
       assert find('#schedule_modal').visible?
 
       within '#schedule_modal' do
+        find('.ui-datepicker-next').click
         click_link(date.day)
       end
 
-      assert page.has_no_css?('#schedule_modal')
+      page.has_no_css?('#schedule_modal')
+      page.has_no_css?('td.has_event')
 
       within 'td.has_event' do
         assert page.has_content?(date.day)

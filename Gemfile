@@ -39,8 +39,6 @@ group :development do
 end
 
 group :test do
-  gem 'turn'
-  gem 'minitest'
   gem 'capybara'
   gem 'poltergeist'
   gem 'database_cleaner'

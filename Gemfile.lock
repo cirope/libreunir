@@ -33,7 +33,6 @@ GEM
       tzinfo (~> 0.3.37)
     ancestry (2.0.0)
       activerecord (>= 3.0.0)
-    ansi (1.4.3)
     archive-zip (0.6.0)
       io-like (>= 0.3.0)
     arel (4.0.2)
@@ -191,9 +190,6 @@ GEM
       polyglot (>= 0.3.1)
     turbolinks (2.2.2)
       coffee-rails
-    turn (0.9.7)
-      ansi
-      minitest (~> 4)
     tzinfo (0.3.39)
     uglifier (2.5.0)
       execjs (>= 0.3.0)
@@ -240,7 +236,6 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails
   magick_columns
-  minitest
   newrelic_rpm
   paper_trail
   pg
@@ -252,7 +247,6 @@ DEPENDENCIES
   simple_form
   timecop
   turbolinks
-  turn
   uglifier
   unicorn
   unicorn-rails

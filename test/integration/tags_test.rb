@@ -62,8 +62,6 @@ class TagsTest < ActionDispatch::IntegrationTest
     assert_difference 'Tagging.count', -1 do
       within "tr[data-object-id=\"#{loan.id}\"]" do
         find('[data-method="delete"]').click
-
-        page.driver.browser.switch_to.alert.accept
       end
 
       assert page.has_no_css?('.label.label-important')
